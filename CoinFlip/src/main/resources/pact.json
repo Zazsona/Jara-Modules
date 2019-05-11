@@ -1,0 +1,12 @@
+{
+  "commandKey": "CoinFlip",
+  "aliases": [
+    "FlipCoin",
+    "TossCoin",
+    "FC",
+    "FlipACoin"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Flips a coin."
+}
