@@ -1,0 +1,9 @@
+{
+  "commandKey": "Ping",
+  "aliases": [
+    "Pong"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Tests the connection."
+}
