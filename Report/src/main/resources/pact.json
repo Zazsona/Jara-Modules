@@ -1,0 +1,9 @@
+{
+  "commandKey": "Report",
+  "aliases": [
+    "Status"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Shows bot status."
+}
