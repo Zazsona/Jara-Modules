@@ -1,0 +1,12 @@
+{
+  "commandKey": "Randomizer",
+  "aliases": [
+    "Randomize",
+    "Randomise",
+    "Randomiser",
+    "RandomNumber"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Generates a random value."
+}

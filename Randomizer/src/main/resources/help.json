@@ -1,0 +1,7 @@
+{
+  "params": [
+    "Randomise [LowerNumber] [HigherNumber]",
+    "Randomise [Item1], [Item2]... (ItemN)"
+  ],
+  "description": "Generates a random number from the bounds (inclusive) or selects an item from a list."
+}
