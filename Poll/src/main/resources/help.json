@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Poll [Option1], [Option2]... (OptionN)"
+  ],
+  "description": "Launches a poll, where users can vote via reactions."
+}
