@@ -1,0 +1,7 @@
+{
+  "params": [
+    "MCServer [IP]:(Port)",
+    "MCServer [IP] (Port)"
+  ],
+  "description": "Gets the status of a Minecraft server, specified by the IP and port."
+}

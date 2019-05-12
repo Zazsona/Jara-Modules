@@ -1,0 +1,11 @@
+{
+  "commandKey": "MCServer",
+  "aliases": [
+    "MinecraftServer",
+    "MinecraftQuery",
+    "MinecraftServerStatus"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Fetches Minecraft server info."
+}
