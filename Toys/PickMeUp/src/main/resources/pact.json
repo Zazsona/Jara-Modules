@@ -1,0 +1,11 @@
+{
+  "commandKey": "PickMeUp",
+  "aliases": [
+    "PickUp",
+    "Aww",
+    "PetPic"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Cute animals for a rainy day."
+}
