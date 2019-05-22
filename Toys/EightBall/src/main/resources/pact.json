@@ -1,0 +1,11 @@
+{
+  "commandKey": "EightBall",
+  "aliases": [
+    "8ball",
+    "helix",
+    "fortune"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Tells your fortune."
+}
