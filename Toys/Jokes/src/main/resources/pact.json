@@ -1,0 +1,12 @@
+{
+  "commandKey": "Jokes",
+  "aliases": [
+    "Joke",
+    "TellAJoke",
+    "TellMeAJoke",
+    "MakeMeLaugh"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Tells a joke."
+}
