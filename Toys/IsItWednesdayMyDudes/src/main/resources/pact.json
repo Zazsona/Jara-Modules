@@ -1,0 +1,16 @@
+{
+  "commandKey": "IsItWednesdayMyDudes",
+  "aliases": [
+    "IsItWednesdayMyDudes?",
+    "ItIsWednesdayMyDudes",
+    "ItIsNotWednesdayMyDudes",
+    "Wednesday",
+    "IIWMD",
+    "IINWMD",
+    "WednesdayFrog",
+    "IsItWednesday"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Is it Wednesday?"
+}
