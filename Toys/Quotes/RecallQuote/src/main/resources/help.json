@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Quote [QuoteName]"
+  ],
+  "description": "Recall the message specified by QuoteName.\n"
+}

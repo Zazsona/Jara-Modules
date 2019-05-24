@@ -1,0 +1,10 @@
+{
+  "commandKey": "Quote",
+  "aliases": [
+    "RecallQuote",
+    "ReadQuote"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Recall messages."
+}
