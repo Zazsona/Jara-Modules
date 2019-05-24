@@ -1,0 +1,6 @@
+{
+  "params": [
+    "DeleteQuote [QuoteName]"
+  ],
+  "description": "Deletes the specified quote.\n"
+}
