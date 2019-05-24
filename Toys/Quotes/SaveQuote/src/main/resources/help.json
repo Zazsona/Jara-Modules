@@ -1,0 +1,6 @@
+{
+  "params": [
+    "SaveQuote [MsgID/Username] [QuoteName]"
+  ],
+  "description": "Saves a message to the quote book.\nMessages can be specified by message id (Discord Developer Mode must be enabled) or Usernames/Nicknames, in which case the bot will take the last non-command message they sent."
+}
