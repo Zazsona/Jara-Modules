@@ -1,0 +1,11 @@
+{
+  "commandKey": "WouldYouRather",
+  "aliases": [
+    "WYR",
+    "WouldYouRather?",
+    "WYR?"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "'Would you rather?' questions."
+}
