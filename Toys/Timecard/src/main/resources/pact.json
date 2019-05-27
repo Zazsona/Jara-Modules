@@ -1,0 +1,10 @@
+{
+  "commandKey": "Timecard",
+  "aliases": [
+    "Timescreen",
+    "SpongebobCard"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Spongebob Timecards."
+}
