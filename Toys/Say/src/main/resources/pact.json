@@ -1,0 +1,11 @@
+{
+  "commandKey": "Say",
+  "aliases": [
+    "Speak",
+    "RepeatAfterMe",
+    "Echo"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Repeats a phrase."
+}

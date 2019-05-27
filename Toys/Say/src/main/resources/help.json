@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Say [Phrase]"
+  ],
+  "description": "Repeats the given phrase."
+}
