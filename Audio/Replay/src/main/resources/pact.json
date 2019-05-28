@@ -1,0 +1,9 @@
+{
+  "commandKey": "Replay",
+  "aliases": [
+    "Repeat"
+  ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Replays current audio track."
+}
