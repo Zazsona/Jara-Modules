@@ -1,0 +1,10 @@
+{
+  "commandKey": "Pause",
+  "aliases": [
+    "Resume",
+    "Hold"
+  ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Pauses the track."
+}
