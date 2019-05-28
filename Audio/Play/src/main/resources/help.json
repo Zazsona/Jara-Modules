@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Play [URL]"
+  ],
+  "description": "Plays the track at the link. Supports:\nYouTube\nSoundCloud\nBandcamp\nVimeo\nTwitch\nHTTP URLs"
+}

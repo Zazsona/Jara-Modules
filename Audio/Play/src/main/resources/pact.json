@@ -1,0 +1,15 @@
+{
+  "commandKey": "Play",
+  "aliases": [
+    "PlayAudio",
+    "PlayMusic",
+    "PlaySound",
+    "Music",
+    "Radio",
+    "Stream",
+    "DJ"
+  ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Plays audio."
+}
