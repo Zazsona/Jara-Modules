@@ -1,0 +1,11 @@
+{
+  "commandKey": "Skip",
+  "aliases": [
+    "Stop",
+    "Pass",
+    "Next"
+  ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Vote to skip the track."
+}
