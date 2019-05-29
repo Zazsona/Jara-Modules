@@ -1,0 +1,9 @@
+{
+  "commandKey": "Kazoo",
+  "aliases": [
+    "Kazood"
+    ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Plays the kazoo."
+}
