@@ -1,0 +1,21 @@
+{
+  "commandKey": "NowPlaying",
+  "aliases": [
+    "NP",
+    "CP",
+    "CurrentlyPlaying",
+    "TrackInfo",
+    "SongInfo",
+    "AudioInfo",
+    "MusicInfo",
+    "CurrentTrack",
+    "CurrentSong",
+    "CurrentAudio",
+    "WhatsOn",
+    "What'sOn",
+    "Shazam"
+  ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Current track details."
+}
