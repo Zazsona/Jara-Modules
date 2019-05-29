@@ -1,0 +1,14 @@
+{
+  "commandKey": "ForceSkip",
+  "aliases": [
+    "ForceStop",
+    "ForcePass",
+    "ForceNext",
+    "FireTheDJ",
+    "AdminSkip",
+    "InstaSkip"
+  ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Forcefully skip the track."
+}
