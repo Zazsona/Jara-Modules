@@ -1,0 +1,10 @@
+{
+  "commandKey": "UTC",
+  "aliases": [
+    "UTCTime",
+    "UTCInfo"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Displays UTC time."
+}
