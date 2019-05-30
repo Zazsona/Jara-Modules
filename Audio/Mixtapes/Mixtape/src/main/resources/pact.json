@@ -1,0 +1,11 @@
+{
+  "commandKey": "Mixtape",
+  "aliases": [
+    "PlayMixtape",
+    "Playlist",
+    "PlayPlaylist"
+    ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Schedules a mixtape."
+}
