@@ -1,0 +1,16 @@
+{
+  "commandKey": "MixtapeManager",
+  "aliases": [
+    "ManageMixtapes",
+    "MixtapeConfig",
+    "MixtapeSettings",
+    "PlaylistManager",
+    "ManagePlaylists",
+    "PlaylistConfig",
+    "PlaylistSettings",
+    "MM"
+    ],
+  "category": "AUDIO",
+  "disableable": true,
+  "description": "Modifies mixtapes."
+}

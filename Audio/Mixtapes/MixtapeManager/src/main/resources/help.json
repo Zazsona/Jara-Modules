@@ -1,0 +1,9 @@
+{
+  "params": [
+    "MixtapeManager Create [Name] [Track1 URL] (Track2 URL) ...(TrackN URL)",
+    "MixtapeManager AddTracks [Name] [Track1 URL] (Track2 URL) ...(TrackN URL)",
+    "MixtapeManager RemoveTracks [Name] [Track1 URL] (Track2 URL) ...(TrackN URL)",
+    "MixtapeManager Remove [Name]"
+  ],
+  "description": "Create, modify and remove mixtapes."
+}
