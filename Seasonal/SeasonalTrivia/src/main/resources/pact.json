@@ -1,0 +1,17 @@
+{
+  "commandKey": "SeasonalTrivia",
+  "aliases": [
+    "SeasonTrivia",
+    "SpringTrivia",
+    "SummerTrivia",
+    "AutumnTrivia",
+    "FallTrivia",
+    "WinterTrivia",
+    "EasterTrivia",
+    "ChristmasTrivia",
+    "XmasTrivia"
+  ],
+  "category": "SEASONAL",
+  "disableable": true,
+  "description": "Seasonal trivia."
+}
