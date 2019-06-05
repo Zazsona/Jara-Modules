@@ -1,0 +1,12 @@
+{
+  "commandKey": "XmasPresent",
+  "aliases": [
+    "Present",
+    "XmasGift",
+    "ChristmasPresent",
+    "ChristmasGift"
+  ],
+  "category": "SEASONAL",
+  "disableable": true,
+  "description": "Awards a present."
+}
