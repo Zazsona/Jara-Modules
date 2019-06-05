@@ -1,0 +1,12 @@
+{
+  "commandKey": "EasterEggHunt",
+  "aliases": [
+    "EggHunt",
+    "EggSearch",
+    "EasterHunt",
+    "EasterSearch"
+  ],
+  "category": "SEASONAL",
+  "disableable": true,
+  "description": "Find the egg!"
+}
