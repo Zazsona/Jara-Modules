@@ -1,0 +1,10 @@
+{
+  "commandKey": "XmasCountdown",
+  "aliases": [
+    "ChristmasCountdown",
+    "XmasDays"
+  ],
+  "category": "SEASONAL",
+  "disableable": true,
+  "description": "Days until Xmas."
+}
