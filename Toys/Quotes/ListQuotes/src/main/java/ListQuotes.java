@@ -1,67 +1,51 @@
-import Json.QuoteJson;
-import Json.QuoteListJson;
-import com.google.gson.Gson;
 import commands.CmdUtil;
 import commands.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class ListQuotes extends Command
 {
 
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
+        int pageNo = getPageNo(parameters);
+        int listingsPerPage = 15;
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        try
+        FileManager fm = new FileManager(msgEvent.getGuild().getId());
+        ArrayList<Quote> quotes = fm.getQuotes();
+
+        if (quotes.size() > 0)
         {
-            Gson gson = new Gson();
-            QuoteListJson quoteListJson = gson.fromJson(new String(Files.readAllBytes(getQuoteFile(msgEvent.getGuild().getId()).toPath())), QuoteListJson.class);
-            if (quoteListJson != null && quoteListJson.QuoteList.size() > 0)
+            double totalPages = Math.ceil((double) quotes.size()/(double) listingsPerPage);
+            int startingIndex = (listingsPerPage*pageNo)-listingsPerPage;
+            int endIndex = (quotes.size() < startingIndex+listingsPerPage) ? quotes.size() : (startingIndex+listingsPerPage);
+
+            StringBuilder listBuilder = new StringBuilder();
+            for (int i = startingIndex; i<endIndex; i++)
             {
-                StringBuilder listBuilder = new StringBuilder();
-                for (QuoteJson quote : quoteListJson.QuoteList)
-                {
-                    listBuilder.append(quote.name+" - "+quote.date);
-                }
-                embed.setDescription(listBuilder.toString());
+                listBuilder.append("**").append(quotes.get(i).name).append("** - ").append(quotes.get(i).date).append("\n");
             }
-            else
-            {
-                embed.setDescription("You have no quotes!");
-            }
-
-        }
-        catch (IOException e)
-        {
-            embed.setDescription("Error: Unable to access quotes.");
-        }
-        msgEvent.getChannel().sendMessage(embed.build()).queue();
-
-
-    }
-
-    private File getQuoteFile(String guildID) throws IOException
-    {
-        File quoteFile;
-        String operatingSystem = System.getProperty("os.name").toLowerCase();
-        if (operatingSystem.startsWith("windows"))
-        {
-            quoteFile = new File(System.getProperty("user.home")+"\\AppData\\Roaming\\Jara\\Quotes\\"+guildID+".json");
+            embed.setDescription(listBuilder.toString());
+            embed.setFooter("Page "+pageNo+" / "+(int) totalPages, null);
         }
         else
         {
-            quoteFile = new File(System.getProperty("user.home")+"/.Jara/Quotes/"+guildID+".json");
+            embed.setDescription("You have no quotes!");
         }
-        if (!quoteFile.exists())
+        msgEvent.getChannel().sendMessage(embed.build()).queue();
+    }
+
+    private int getPageNo(String[] parameters)
+    {
+        if (parameters.length > 1)
         {
-            quoteFile.getParentFile().mkdirs();
-            quoteFile.createNewFile();
+            if (parameters[1].matches("[0-9]+"))
+            {
+                return Integer.parseInt(parameters[1]);
+            }
         }
-        return quoteFile;
+        return 1;
     }
 }
