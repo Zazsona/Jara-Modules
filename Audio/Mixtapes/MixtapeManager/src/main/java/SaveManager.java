@@ -13,7 +13,7 @@ public class SaveManager
 
     private static String getSavePath()
     {
-        return SettingsUtil.getDirectory().getAbsolutePath()+"/Mixtapes.jara";
+        return SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/Mixtapes.jara";
     }
     private static synchronized void save()
     {

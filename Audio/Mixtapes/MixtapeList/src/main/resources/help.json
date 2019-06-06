@@ -1,3 +1,7 @@
 {
-  "description": "Lists all mixtapes."
+  "params": [
+    "Mixtapes (PageNo)",
+    "Mixtapes [Mixtape Name] (PageNo)"
+  ],
+  "description": "Lists all mixtapes, or specify a mixtape to list its tracks."
 }
