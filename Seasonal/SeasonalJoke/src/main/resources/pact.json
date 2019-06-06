@@ -1,0 +1,19 @@
+{
+  "commandKey": "SeasonalJoke",
+  "aliases": [
+    "SeasonalJokes",
+    "SeasonJokes",
+    "SeasonJoke",
+    "SpringJoke",
+    "SummerJoke",
+    "AutumnJoke",
+    "FallJoke",
+    "WinterJoke",
+    "EasterJoke",
+    "ChristmasJoke",
+    "XmasJoke"
+  ],
+  "category": "SEASONAL",
+  "disableable": true,
+  "description": "Seasonal jokes."
+}
