@@ -3,7 +3,8 @@ import commands.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 public class Report extends Command
@@ -14,7 +15,7 @@ public class Report extends Command
         StringBuilder reportSB = new StringBuilder();
         reportSB.append("Bot User: "+msgEvent.getJDA().getSelfUser().getName()+"#"+msgEvent.getJDA().getSelfUser().getDiscriminator()+"\n");
         reportSB.append("Status: Online\n");
-        reportSB.append("DateTime: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss")) + "\n");
+        reportSB.append("DateTime: " + OffsetDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss")) + "(UTC) \n");
         reportSB.append("Shard: "+msgEvent.getJDA().getShardInfo().getShardId()+"\n");
         reportSB.append("Shard Total: "+msgEvent.getJDA().getShardInfo().getShardTotal()+"\n");
         reportSB.append("Server: "+msgEvent.getGuild().getName()+"\n");
