@@ -1,6 +1,7 @@
 import commands.CmdUtil;
 import commands.Command;
 import commands.GameCommand;
+import configuration.SettingsUtil;
 import jara.MessageManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
@@ -8,8 +9,6 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.Random;
 
 public class EasterEggHunt extends GameCommand
@@ -50,6 +49,12 @@ public class EasterEggHunt extends GameCommand
     private boolean applyPosition(TextChannel channel, String position, String[][] grid, int winColumn, int winRow)
     {
         position = position.toLowerCase();
+        if (position.equals(SettingsUtil.getGuildSettings(channel.getGuild().getId()).getCommandPrefix()+"quit"))
+        {
+            channel.sendMessage("The game has been quit.").complete();
+            return true;
+        }
+
         if (position.matches("[1-5][a-e]"))
         {
             char[] swapArray = position.toCharArray();
