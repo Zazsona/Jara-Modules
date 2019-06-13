@@ -1,0 +1,10 @@
+{
+  "commandKey": "QuizNight",
+  "aliases": [
+    "QuizDay",
+    "QN"
+  ],
+  "category": "ADMIN",
+  "disableable": true,
+  "description": "Trivia questions."
+}

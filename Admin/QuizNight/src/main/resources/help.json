@@ -1,0 +1,9 @@
+{
+  "params": [
+    "QuizNight Start",
+    "QuizNight Days (Monday) (Tuesday)...(Sunday)",
+    "QuizNight Time [ HH:MM ](AM/PM)",
+    "QuizNight Roles (Role1) (Role2)... (RoleN)"
+  ],
+  "description": "10 questions. Get as many as you can correct to win!\n\n**- Join (Team Name)**\nJoins a Quiz Night. Enter an existing team name to join that one.\n\n**- QuizNight Start**\nStarts a Quiz Night with 30 seconds for players to join.\n\n**- QuizNight Days**\nSet which days Quiz Nights should be on.\n\n**- QuizNight Time**\nSet the time (UTC) Quiz Nights should start. Supports 12 hour (AM/PM) and 24 hour clocks.\n\n**- QuizNight Roles**\nSpecify roles that can join Quiz Nights. Everyone can join by default."
+}
