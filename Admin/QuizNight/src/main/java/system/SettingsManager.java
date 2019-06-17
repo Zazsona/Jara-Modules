@@ -54,7 +54,7 @@ public class SettingsManager
         }
         catch (IOException | ClassNotFoundException e)
         {
-            logger.error("Unable to save Quiz Night settings file.\n"+e.getMessage());
+            logger.error("Unable to read Quiz Night settings file.\n"+e.getMessage());
         }
         return quizSettings;
     }

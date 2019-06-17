@@ -11,6 +11,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.apache.commons.text.StringEscapeUtils;
+import system.UserStatManager;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -19,29 +20,27 @@ public class AnswerHandler
 {
     private HashMap<String, QuizTeam> quizTeams;
     private HashMap<TextChannel, Boolean> teamsWithAnswers;
+    private TriviaJson.TriviaQuestion[] questions;
     private Category quizCategory;
     private TextChannel questionChannel;
-
-    private TriviaJson.TriviaQuestion triviaQuestion;
     private int questionNo;
 
-    public AnswerHandler(Category quizCategory, TextChannel questionChannel, HashMap<String, QuizTeam> quizTeams)
+    public AnswerHandler(Category quizCategory, TextChannel questionChannel, HashMap<String, QuizTeam> quizTeams, TriviaJson.TriviaQuestion[] questions)
     {
         this.quizCategory = quizCategory;
         this.questionChannel = questionChannel;
         this.quizTeams = quizTeams;
+        this.questions = questions;
     }
 
     /**
      * Gets the answers, and sets the result of them to the quiz teams associated with this object.
-     * @param question the question
      * @param questionNo the question number
      * @param secondsToAnswer the seconds players have to answer
      * @return whether the clock ended early (because all players answered)
      */
-    public boolean getAnswers(TriviaJson.TriviaQuestion question, int questionNo, int secondsToAnswer)
+    public boolean getAnswers(int questionNo, int secondsToAnswer)
     {
-        this.triviaQuestion = question;
         this.questionNo = questionNo;
         teamsWithAnswers = new HashMap<>();
         for (QuizTeam quizTeam : quizTeams.values())
@@ -62,28 +61,28 @@ public class AnswerHandler
      * Gets whether the provided answer is valid for the question
      * @param answer the user's answer
      * @param guild the quiz guild
-     * @param tq the question
+     * @param questionNo the question index
      * @return true/false answer is valid
      */
-    private boolean validateAnswer(String answer, Guild guild, TriviaJson.TriviaQuestion tq)
+    private boolean validateAnswer(String answer, Guild guild, int questionNo)
     {
         if (answer.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(guild.getId())+"quit"))
         {
             return true;
         }
-        if (answer.matches("option [1-4]") && tq.type.equals("multiple"))
+        if (answer.matches("option [1-4]") && questions[questionNo].type.equals("multiple"))
         {
             return true;
         }
-        if (answer.matches("option [1-2]") && tq.type.equals("boolean"))
+        if (answer.matches("option [1-2]") && questions[questionNo].type.equals("boolean"))
         {
             return true;
         }
-        if (answer.equals(StringEscapeUtils.unescapeHtml4(tq.correct_answer).toLowerCase()))
+        if (answer.equals(StringEscapeUtils.unescapeHtml4(questions[questionNo].correct_answer).toLowerCase()))
         {
             return true;
         }
-        for (String incorrectAnswer : tq.incorrect_answers)
+        for (String incorrectAnswer : questions[questionNo].incorrect_answers)
         {
             if (answer.equals(StringEscapeUtils.unescapeHtml4(incorrectAnswer).toLowerCase()))
             {
@@ -122,13 +121,14 @@ public class AnswerHandler
             if (message.getTextChannel().getParent().equals(quizCategory))
             {
                 String messageContent = message.getContentDisplay().toLowerCase();
-                if (validateAnswer(messageContent, message.getGuild(), triviaQuestion))
+                if (validateAnswer(messageContent, message.getGuild(), questionNo))
                 {
                     if (messageContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(quizCategory.getGuild().getId())+"quit"))
                     {
                         message.getTextChannel().putPermissionOverride(message.getMember()).setDeny(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
                         questionChannel.putPermissionOverride(message.getMember()).setDeny(Permission.MESSAGE_READ).queue();
                         QuizTeam qt = getQuizTeamByChannel(message.getTextChannel());
+                        UserStatManager.recordMemberStats(message.getMember().getUser(), qt.getCorrectAnswers(), questions, questionNo, false);
                         qt.removeTeamMember(message.getMember());
                         if (!qt.hasMembers())
                         {
@@ -138,7 +138,7 @@ public class AnswerHandler
                     }
                     teamsWithAnswers.put(message.getTextChannel(), true);
                     message.getTextChannel().sendMessage("Answer noted!").queue();
-                    if (messageContent.equalsIgnoreCase(StringEscapeUtils.unescapeHtml4(triviaQuestion.correct_answer)) || messageContent.equalsIgnoreCase("option "+triviaQuestion.correct_answer_id))
+                    if (messageContent.equalsIgnoreCase(StringEscapeUtils.unescapeHtml4(questions[questionNo].correct_answer)) || messageContent.equalsIgnoreCase("option "+questions[questionNo].correct_answer_id))
                     {
                         getQuizTeamByChannel(message.getTextChannel()).setAnswerResult(questionNo, true);
                     }

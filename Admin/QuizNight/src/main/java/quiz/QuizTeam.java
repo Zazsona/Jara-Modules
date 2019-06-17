@@ -60,7 +60,7 @@ public class QuizTeam
 
     public void setAnswerResult(int questionNo, boolean correct)
     {
-        this.correct[questionNo-1] = correct;
+        this.correct[questionNo] = correct;
     }
 
     public int getPoints()
@@ -74,7 +74,12 @@ public class QuizTeam
 
     public boolean isCorrect(int questionNo)
     {
-        return correct[questionNo-1];
+        return correct[questionNo];
+    }
+
+    public boolean[] getCorrectAnswers()
+    {
+        return correct;
     }
 
 

@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import org.apache.commons.text.StringEscapeUtils;
+import system.UserStatManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -52,11 +53,11 @@ public class Quiz
 
             if (quizTeams.size() > 0)
             {
-                AnswerHandler answerHandler = new AnswerHandler(quizCategory, questionsChannel, quizTeams);
+                AnswerHandler answerHandler = new AnswerHandler(quizCategory, questionsChannel, quizTeams, tj.results);
                 for (int i = 0; i<tj.results.length; i++)
                 {
                     questionsChannel.sendMessage(buildEmbed(tj.results[i], i+1).build()).queue();
-                    boolean earlyAnswers = answerHandler.getAnswers(tj.results[i], i+1, 30); //TODO: Revert to two minutes
+                    boolean earlyAnswers = answerHandler.getAnswers(i, 30); //TODO: Revert to two minutes
                     if (earlyAnswers)
                     {
                         questionsChannel.sendMessage("Looks like everyone's got an answer already! So, moving on...").queue();
@@ -141,14 +142,14 @@ public class Quiz
             {
                 for (int i = 0; i<questions.length; i++)
                 {
-                    if (qt.isCorrect(i+1))                          //Tally up points
+                    if (qt.isCorrect(i))                          //Tally up points
                     {
                         qt.addPoints(questions[i].getPoints());
                     }
                 }
             }
 
-            sendLeaderboard();
+            QuizTeam winningTeam = sendLeaderboard();
             if (quizTeams.size() <= 20)
             {
                 for (QuizTeam qt : quizTeams.values())
@@ -156,6 +157,7 @@ public class Quiz
                     sendResults(qt, questions);
                 }
             }
+            UserStatManager.saveQuizNightStats(winningTeam.getTeamName(), questions, quizTeams.values());
             Thread.sleep(10*60*1000);
         }
         catch (InterruptedException e)
@@ -172,7 +174,7 @@ public class Quiz
         }
     }
 
-    private void sendLeaderboard()
+    private QuizTeam sendLeaderboard()
     {
         ArrayList<QuizTeam> leaderboard = new ArrayList<>();
         leaderboard.addAll(quizTeams.values());
@@ -208,12 +210,16 @@ public class Quiz
                 descBuilder.append("\n");
             }
             embedBuilder.setDescription(descBuilder.toString());
+            questionsChannel.sendMessage(embedBuilder.build()).queue();
+            return leaderboard.get(0);
         }
         else
         {
             embedBuilder.setDescription("There were no players.");
+            questionsChannel.sendMessage(embedBuilder.build()).queue();
+            return null;
         }
-        questionsChannel.sendMessage(embedBuilder.build()).queue();
+
     }
 
     private void sendResults(QuizTeam qt, TriviaJson.TriviaQuestion[] questions)
@@ -232,7 +238,7 @@ public class Quiz
         StringBuilder answerBuilder = new StringBuilder();
         for (int i = 0; i<questions.length; i++)
         {
-            if (qt.isCorrect(i+1))
+            if (qt.isCorrect(i))
             {
                 answerBuilder.append("O\n");
             }
