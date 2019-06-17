@@ -1,0 +1,11 @@
+{
+  "commandKey": "QNStats",
+  "aliases": [
+    "QuizStats",
+    "QuizNightStats",
+    "TriviaStats"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Lists Quiz Night stats."
+}

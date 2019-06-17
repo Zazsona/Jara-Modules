@@ -1,0 +1,6 @@
+{
+  "params": [
+      "QNStats (Username)"
+  ],
+  "description": "Retrieves Quiz Night stats, detailing totals, questions, and wins."
+}
