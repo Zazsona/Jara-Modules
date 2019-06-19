@@ -51,13 +51,14 @@ public class Quiz
             joinHandler.stopAcceptingJoins();
             joinHandlerThread.interrupt();
 
+            boolean sendQuestionsToAllChannels = quizTeams.size() <= 5;
             if (quizTeams.size() > 0)
             {
                 AnswerHandler answerHandler = new AnswerHandler(quizCategory, questionsChannel, quizTeams, tj.results);
                 for (int i = 0; i<tj.results.length; i++)
                 {
-                    questionsChannel.sendMessage(buildEmbed(tj.results[i], i+1).build()).queue();
-                    boolean earlyAnswers = answerHandler.getAnswers(i, 30); //TODO: Revert to two minutes
+                    sendQuestion(tj.results[i], i+1, sendQuestionsToAllChannels);
+                    boolean earlyAnswers = answerHandler.getAnswers(i, 90);
                     if (earlyAnswers)
                     {
                         questionsChannel.sendMessage("Looks like everyone's got an answer already! So, moving on...").queue();
@@ -91,6 +92,19 @@ public class Quiz
         introEmbed.setThumbnail("https://i.imgur.com/FSLXDTj.png");
         introEmbed.setDescription("**Welcome to the Quiz!**\n\nQuestions will appear here, and you can answer them in your team channel. You can enter your answer as either what is listed, or as \"Option X\". Good luck!");
         questionsChannel.sendMessage(introEmbed.build()).queue();
+    }
+
+    private void sendQuestion(TriviaJson.TriviaQuestion tq, int questionNo, boolean sendQuestionsToAllChannels)
+    {
+        MessageEmbed embed = buildEmbed(tq, questionNo).build();
+        questionsChannel.sendMessage(embed).queue();
+        if (sendQuestionsToAllChannels)
+        {
+            for (QuizTeam team : quizTeams.values())
+            {
+                team.getTeamChannel().sendMessage(embed).queue();
+            }
+        }
     }
 
     private EmbedBuilder buildEmbed(TriviaJson.TriviaQuestion tq, int questionNo)
@@ -178,7 +192,7 @@ public class Quiz
     {
         ArrayList<QuizTeam> leaderboard = new ArrayList<>();
         leaderboard.addAll(quizTeams.values());
-        leaderboard.sort(Comparator.comparingInt(QuizTeam::getPoints));
+        leaderboard.sort(Comparator.comparingInt(QuizTeam::getPoints).reversed());
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(CmdUtil.getHighlightColour(quizCategory.getGuild().getSelfMember()));

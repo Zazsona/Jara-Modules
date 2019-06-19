@@ -141,7 +141,8 @@ public class UserStatManager
         }
         else
         {
-            userStatMap.put(player.getId(), new UserStats(1, easyQuestions, mediumQuestions, hardQuestions, 1, easyQuestionsCorrect, mediumQuestionsCorrect, hardQuestionsCorrect));
+            int winCount = (winner) ? 1 : 0;
+            userStatMap.put(player.getId(), new UserStats(1, easyQuestions, mediumQuestions, hardQuestions, winCount, easyQuestionsCorrect, mediumQuestionsCorrect, hardQuestionsCorrect));
         }
         //There is no save here, as a save is conducted at the end of a quiz night.
     }
