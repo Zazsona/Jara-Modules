@@ -1,0 +1,12 @@
+{
+  "commandKey": "OWStats",
+  "aliases": [
+    "OverwatchStats",
+    "OverwatchStatistics",
+    "OWProfile",
+    "OverwatchProfile"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Gets Overwatch Stats."
+}

@@ -1,0 +1,6 @@
+{
+  "params": [
+    "OWStats [BattleTag#Discrim]"
+  ],
+  "description": "Fetches Overwatch stats for the specified user.\nE.g: OWStats Player#1234"
+}
