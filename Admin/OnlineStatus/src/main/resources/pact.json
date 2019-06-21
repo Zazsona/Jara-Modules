@@ -1,0 +1,9 @@
+{
+  "commandKey": "OnlineStatus",
+  "aliases": [
+    "SetStatus"
+  ],
+  "category": "ADMIN",
+  "disableable": true,
+  "description": "Toggles presence."
+}

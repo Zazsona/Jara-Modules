@@ -1,0 +1,6 @@
+{
+  "params": [
+    "OnlineStatus [Status]"
+  ],
+  "description": "Toggles bot presence.\n\nPossible statuses:\nOnline\nIdle\nDND\nInvisible"
+}
