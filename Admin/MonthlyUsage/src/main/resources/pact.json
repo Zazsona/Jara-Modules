@@ -1,0 +1,10 @@
+{
+  "commandKey": "MonthlyUsage",
+  "aliases": [
+    "MonthlyCommandUsage",
+    "MonthlyBotUsage"
+  ],
+  "category": "TOYS",
+  "disableable": true,
+  "description": "Tracks usage."
+}
