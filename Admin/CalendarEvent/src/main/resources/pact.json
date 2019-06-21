@@ -1,0 +1,11 @@
+{
+  "commandKey": "CalendarEvent",
+  "aliases": [
+    "CalEvent",
+    "DayEvent",
+    "EventMessage"
+  ],
+  "category": "ADMIN",
+  "disableable": true,
+  "description": "Event messages."
+}
