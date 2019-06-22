@@ -1,0 +1,10 @@
+{
+  "commandKey": "EmojiGuess",
+  "aliases": [
+    "EmojiCode",
+    "DecipherTheEmoji"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Decipher the emojis."
+}
