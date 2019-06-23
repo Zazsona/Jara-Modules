@@ -9,9 +9,7 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class DealOrNoDeal extends GameCommand
 {
@@ -32,7 +30,7 @@ public class DealOrNoDeal extends GameCommand
             int roundNo = 1;
             while (boxes.size() > 1 && !offerAccepted)
             {
-                offerAccepted = playRound(channel, player, mm, roundNo);
+                offerAccepted = playRound(channel, player, mm, roundNo, selectedBoxValue);
                 roundNo++;
             }
             if (!offerAccepted)
@@ -118,7 +116,7 @@ public class DealOrNoDeal extends GameCommand
         return stringBuilder.deleteCharAt(stringBuilder.lastIndexOf("-")).toString().trim();
     }
 
-    private boolean playRound(TextChannel channel, Member player, MessageManager mm, int roundNo) throws GameOverException
+    private boolean playRound(TextChannel channel, Member player, MessageManager mm, int roundNo, double playerBoxValue) throws GameOverException
     {
         int boxesToOpen = (roundNo == 1) ? 5 : 3;
         EmbedBuilder embed = new EmbedBuilder();
@@ -148,16 +146,17 @@ public class DealOrNoDeal extends GameCommand
                 }
             }
         }
-        return makeOffer(channel, player, mm, roundNo);
+        return makeOffer(channel, player, mm, roundNo, playerBoxValue);
     }
 
-    private boolean makeOffer(TextChannel channel, Member player, MessageManager mm, int roundNo) throws GameOverException
+    private boolean makeOffer(TextChannel channel, Member player, MessageManager mm, int roundNo, double playerBoxValue) throws GameOverException
     {
         long timeOfferMade = Instant.now().toEpochMilli();
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.red);
         embed.setTitle("=== :telephone: ===");
-        embed.setDescription("*ring ring*\n\nI'll make you an offer you can't refuse. **$"+String.format("%,.2f", getOfferValue(roundNo))+"**.\nDeal or no deal?");
+        embed.setDescription("*ring ring*\n\nI'll make you an offer you can't refuse. **$"+String.format("%,.2f", getOfferValue(roundNo, playerBoxValue))+"**.\nDeal or no deal?");
+        embed = addRemainingValuesFields(embed, playerBoxValue);
         channel.sendMessage(embed.build()).queue();
 
         while (true)
@@ -183,23 +182,45 @@ public class DealOrNoDeal extends GameCommand
         }
     }
 
-    private double getOfferValue(int roundNo)
+    private EmbedBuilder addRemainingValuesFields(EmbedBuilder embed, double playerBoxValue)
     {
+        ArrayList<Double> boxValues = new ArrayList<Double>();
+        boxValues.addAll(boxes.values());
+        boxValues.add(playerBoxValue);
+        boxValues.sort(Double::compareTo);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i<boxValues.size()/2; i++)
+        {
+            sb.append(String.format("%,.2f", boxValues.get(i))).append("\n");
+        }
+        embed.addField("Remaining Values", sb.toString(), true);
+        sb = new StringBuilder();
+        for (int i = boxValues.size()/2; i<boxValues.size(); i++)
+        {
+            sb.append(String.format("%,.2f", boxValues.get(i))).append("\n");
+        }
+        embed.addField("", sb.toString(), true);
+        return embed;
+    }
 
+    private double getOfferValue(int roundNo, double playerBoxValue)
+    {
         double estimatedValue = 0;
-        double lowestValue = Double.MAX_VALUE;
-        double highestValue = -1;
+        double lowestValue = playerBoxValue;
+        double highestValue = playerBoxValue;
         for (double value : boxes.values())
         {
             estimatedValue += value;
             lowestValue = (lowestValue > value) ? value : lowestValue;
             highestValue = (highestValue < value) ? value : highestValue;
         }
-        estimatedValue = estimatedValue/boxes.size();
+        estimatedValue += playerBoxValue;
+        estimatedValue = estimatedValue/(boxes.size()+1);
         int percentage = (6*roundNo)+31;
 
-        int volatilityWeight = 10; //The amount volatility can affect the final sum.
-        double volatilityRisk = volatilityWeight-(((highestValue-lowestValue)/249999.0)*volatilityWeight); //249999 is the largest disparity. //TODO: Consistently negative
+        int volatilityWeight = 5; //The amount volatility can affect the final sum.
+        double volatilityRisk = volatilityWeight-(((highestValue-lowestValue)/249999.99)*volatilityWeight); //249999.99 is the largest disparity.
+        volatilityRisk = (volatilityRisk == 0) ? volatilityWeight : volatilityRisk; //Edge case for when it's 1/1, as 1-1=0.
 
         int confidenceWeight = 5;
         double clampedOfferTime = (timeToAnswerLastDeal > 60000.0) ? 60000.0 : timeToAnswerLastDeal;
@@ -287,6 +308,21 @@ public class DealOrNoDeal extends GameCommand
     {
         TextChannel channel = createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-DealOrNoDeal");
         Random r = new Random();
+        LinkedList<Double> boxValues = getDefaultBoxValues();
+        int boxNo = -1;
+        for (int i = 0; i<22; i++)
+        {
+            while (boxes.containsKey(boxNo) || boxNo == -1)
+            {
+                boxNo = (r.nextInt(22)+1);
+            }
+            boxes.put(boxNo, boxValues.removeFirst());
+        }
+        return channel;
+    }
+
+    private LinkedList<Double> getDefaultBoxValues()
+    {
         LinkedList<Double> boxValues = new LinkedList<>();
         boxValues.add(0.01);
         boxValues.add(0.10);
@@ -310,15 +346,6 @@ public class DealOrNoDeal extends GameCommand
         boxValues.add(75000.0);
         boxValues.add(100000.0);
         boxValues.add(250000.0);
-        int boxNo = -1;
-        for (int i = 0; i<22; i++)
-        {
-            while (boxes.containsKey(boxNo) || boxNo == -1)
-            {
-                boxNo = (r.nextInt(22)+1);
-            }
-            boxes.put(boxNo, boxValues.removeFirst());
-        }
-        return channel;
+        return boxValues;
     }
 }
