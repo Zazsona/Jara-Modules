@@ -1,0 +1,10 @@
+{
+  "commandKey": "DealOrNoDeal",
+  "aliases": [
+    "DOND",
+    "BankerGame"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Deal or No Deal."
+}
