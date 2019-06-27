@@ -1,0 +1,11 @@
+{
+  "commandKey": "LastWord",
+  "aliases": [
+    "TheLastWord",
+    "Scattergories",
+    "TopicWords"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Get the last word in."
+}
