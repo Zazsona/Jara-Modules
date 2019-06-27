@@ -1,0 +1,9 @@
+{
+  "commandKey": "Countdown",
+  "aliases": [
+    "CD"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Make the longest word you can."
+}

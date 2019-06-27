@@ -1,0 +1,7 @@
+{
+  "params": [
+    "Countdown",
+    "Countdown (Selection1) (Selection2) ... (Selection9)"
+  ],
+  "description": "Select nine consonants/vowels and form the longest word you can."
+}
