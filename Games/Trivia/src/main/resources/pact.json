@@ -1,0 +1,10 @@
+{
+  "commandKey": "Trivia",
+  "aliases": [
+    "TestYourKnowledge",
+    "TriviaQuestion"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Trivia questions."
+}
