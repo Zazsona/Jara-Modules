@@ -1,0 +1,15 @@
+{
+  "commandKey": "NaughtsAndCrosses",
+  "aliases": [
+    "TicTacToe",
+    "O&Xs",
+    "OAndXs",
+    "OX",
+    "N&C",
+    "NandC",
+    "NC"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "3 in a row."
+}
