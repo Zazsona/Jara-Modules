@@ -1,0 +1,9 @@
+{
+  "commandKey": "RockPaperScissors",
+  "aliases": [
+    "RPS"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "The classic hand game."
+}
