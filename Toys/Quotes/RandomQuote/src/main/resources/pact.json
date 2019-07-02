@@ -1,7 +1,8 @@
 {
-  "commandKey": "RandomQuote",
+  "commandKey": "QuoteRandom",
   "aliases": [
-    "RandQuote"
+    "RandQuote",
+	"RandomQuote"
   ],
   "category": "TOYS",
   "disableable": true,

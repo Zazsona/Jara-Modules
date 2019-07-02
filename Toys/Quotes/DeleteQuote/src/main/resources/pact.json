@@ -1,7 +1,9 @@
 {
-  "commandKey": "DeleteQuote",
+  "commandKey": "QuoteDelete",
   "aliases": [
-    "RemoveQuote"
+    "RemoveQuote",
+	"DeleteQuote",
+	"QuoteRemove"
   ],
   "category": "TOYS",
   "disableable": true,
