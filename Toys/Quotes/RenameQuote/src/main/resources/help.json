@@ -1,0 +1,6 @@
+{
+  "params": [
+    "RenameQuote [Quote Name] [New Quote Name]"
+  ],
+  "description": "Renames an existing quote."
+}
