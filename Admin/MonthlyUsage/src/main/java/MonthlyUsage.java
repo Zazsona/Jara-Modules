@@ -32,11 +32,12 @@ public class MonthlyUsage extends Command
             }
             else
             {
-                descBuilder.append("**").append(utc.getMonth().minus(1).name()).append(" ");//
+                descBuilder.append("**").append(utc.getMonth().minus(1).name()).append(" ");
                 if (utc.getMonthValue() != 1)
                     descBuilder.append(utc.getYear()).append("\n\n");
                 else
                     descBuilder.append((utc.getYear()-1)).append("\n\n");
+                descBuilder.append("**");
             }
 
             descBuilder.append("Total Commands Used: ").append(getTotal(guildCommandUsage)).append("\n");

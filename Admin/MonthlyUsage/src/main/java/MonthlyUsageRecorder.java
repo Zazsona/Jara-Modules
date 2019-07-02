@@ -41,9 +41,13 @@ public class MonthlyUsageRecorder extends Load
         Timer broadcastScheduler = new Timer();
         Calendar broadcastTime = Calendar.getInstance();
         if (fm.getLastReset().getMonthValue() == utc.getMonthValue() && fm.getLastReset().getYear() == utc.getYear())
-            broadcastTime.set(Calendar.MONTH, utc.getMonthValue()+1);
-        else
+        {
             broadcastTime.set(Calendar.MONTH, utc.getMonthValue());
+        }
+        else
+        {
+            broadcastTime.set(Calendar.MONTH, utc.getMonthValue()-1);
+        }
         broadcastTime.set(Calendar.DAY_OF_MONTH, 1);
         broadcastTime.set(Calendar.HOUR_OF_DAY, 0);
         broadcastTime.set(Calendar.MINUTE, 0);
