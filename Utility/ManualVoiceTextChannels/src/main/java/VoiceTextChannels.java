@@ -1,39 +1,65 @@
 import commands.CmdUtil;
-import commands.Load;
+import commands.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.ShutdownEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.HashMap;
 
-public class VoiceTextChannelsLoader extends Load
+public class VoiceTextChannels extends Command
 {
-    private static FileManager fm;
+    private static HashMap<String, TextChannel> voiceToTextChannel = new HashMap<>();
 
     @Override
-    public void load()
+    public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
-        fm = new FileManager();
-        ChannelJoinListener cjl = new ChannelJoinListener();
-        CmdUtil.getJDA().addEventListener(cjl);
+        if (msgEvent.getMember().getVoiceState().inVoiceChannel())
+        {
+            VoiceChannel vc = msgEvent.getMember().getVoiceState().getChannel();
+            if (voiceToTextChannel.get(vc.getId()) == null)
+            {
+                if (vc.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL) || vc.getParent().getPermissionOverride(vc.getGuild().getSelfMember()).getAllowed().contains(Permission.MANAGE_CHANNEL))
+                {
+                    TextChannel tc = (TextChannel) vc.getParent().createTextChannel("Text-"+vc.getName()).complete();
+                    tc.putPermissionOverride(msgEvent.getGuild().getPublicRole()).setDeny(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
+                    sendScreenshareURL(vc.getGuild(), vc, tc);
+                    voiceToTextChannel.put(vc.getId(), tc);
+                    for (Member member : vc.getMembers())
+                    {
+                        tc.createPermissionOverride(member).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
+                    }
+                }
+            }
+            else
+            {
+                voiceToTextChannel.get(vc.getId()).delete().queue();
+                voiceToTextChannel.remove(vc.getId());
+            }
+        }
+        else
+        {
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
+            embed.setDescription("You must be in a voice channel to use this command!");
+            msgEvent.getChannel().sendMessage(embed.build()).queue();
+        }
     }
 
-    public class ChannelJoinListener extends ListenerAdapter
+    public static class VoiceChannelListener extends ListenerAdapter
     {
-        private HashMap<String, TextChannel> voiceToTextChannel = new HashMap<>();
         @Override
         public void onGuildVoiceJoin(GuildVoiceJoinEvent event)
         {
-            if (fm.isGuildEnabled(event.getGuild().getId()) && !voiceToTextChannel.containsKey(event.getChannelJoined().getId()))
+            if (event.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL) || event.getChannelJoined().getParent().getPermissionOverride(event.getGuild().getSelfMember()).getAllowed().contains(Permission.MANAGE_CHANNEL))
             {
-                if (event.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL) || event.getChannelJoined().getParent().getPermissionOverride(event.getGuild().getSelfMember()).getAllowed().contains(Permission.MANAGE_CHANNEL))
+                if (voiceToTextChannel.containsKey(event.getChannelJoined().getId()))
                 {
-                    TextChannel channel = (TextChannel) event.getChannelJoined().getParent().createTextChannel("Text-"+event.getChannelJoined().getName()).complete();
+                    TextChannel channel = voiceToTextChannel.get(event.getChannelJoined().getId());
                     for (Member member : event.getChannelJoined().getMembers())
                     {
                         if (channel.getPermissionOverride(member) == null)
@@ -41,8 +67,6 @@ public class VoiceTextChannelsLoader extends Load
                             channel.createPermissionOverride(member).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
                         }
                     }
-                    sendScreenshareURL(event.getGuild(), event.getChannelJoined(), channel);
-                    voiceToTextChannel.put(event.getChannelJoined().getId(), channel);
                 }
             }
         }
@@ -50,7 +74,7 @@ public class VoiceTextChannelsLoader extends Load
         @Override
         public void onGuildVoiceLeave(GuildVoiceLeaveEvent event)
         {
-            if (fm.isGuildEnabled(event.getGuild().getId()))
+            if (event.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL) || event.getChannelLeft().getParent().getPermissionOverride(event.getGuild().getSelfMember()).getAllowed().contains(Permission.MANAGE_CHANNEL))
             {
                 if (event.getChannelLeft().getMembers().size() > 0)
                 {
@@ -77,7 +101,7 @@ public class VoiceTextChannelsLoader extends Load
         @Override
         public void onGuildVoiceMove(GuildVoiceMoveEvent event)
         {
-            if (fm.isGuildEnabled(event.getGuild().getId()))
+            if (event.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL) || event.getChannelLeft().getParent().getPermissionOverride(event.getGuild().getSelfMember()).getAllowed().contains(Permission.MANAGE_CHANNEL))
             {
                 if (event.getChannelLeft().getMembers().size() > 0)
                 {
@@ -98,13 +122,10 @@ public class VoiceTextChannelsLoader extends Load
                         voiceToTextChannel.remove(event.getChannelLeft().getId());
                     }
                 }
-            }
 
-            if (fm.isGuildEnabled(event.getGuild().getId()) && !voiceToTextChannel.containsKey(event.getChannelJoined().getId()))
-            {
-                if (event.getGuild().getSelfMember().getPermissions().contains(Permission.MANAGE_CHANNEL) || event.getChannelJoined().getParent().getPermissionOverride(event.getGuild().getSelfMember()).getAllowed().contains(Permission.MANAGE_CHANNEL))
+                if (voiceToTextChannel.containsKey(event.getChannelJoined().getId()))
                 {
-                    TextChannel channel = (TextChannel) event.getChannelJoined().getParent().createTextChannel("Text-"+event.getChannelJoined().getName()).complete();
+                    TextChannel channel = voiceToTextChannel.get(event.getChannelJoined().getId());
                     for (Member member : event.getChannelJoined().getMembers())
                     {
                         if (channel.getPermissionOverride(member) == null)
@@ -112,21 +133,9 @@ public class VoiceTextChannelsLoader extends Load
                             channel.createPermissionOverride(member).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
                         }
                     }
-                    sendScreenshareURL(event.getGuild(), event.getChannelJoined(), channel);
-                    voiceToTextChannel.put(event.getChannelJoined().getId(), channel);
                 }
             }
         }
-
-        /*@Override
-        public void onShutdown(ShutdownEvent event)
-        {
-            for (TextChannel channel : voiceToTextChannel.values())
-            {
-                channel.delete().queue();
-            }
-            voiceToTextChannel = new HashMap<>();
-        }*/
     }
 
     private void sendScreenshareURL(Guild guild, VoiceChannel vc, TextChannel tc)
@@ -140,10 +149,5 @@ public class VoiceTextChannelsLoader extends Load
         {
             ssMsg.pin().queue();
         }
-    }
-
-    public static FileManager getFileManager()
-    {
-        return fm;
     }
 }

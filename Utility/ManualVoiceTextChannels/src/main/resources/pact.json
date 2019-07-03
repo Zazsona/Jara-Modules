@@ -1,0 +1,14 @@
+{
+  "commandKey": "VoiceTextChannels",
+  "aliases": [
+    "TextVoiceChannels",
+    "MuteChannels",
+    "VTC",
+    "TVC",
+    "ToggleVoiceText",
+    "ToggleTextVoice"
+  ],
+  "category": "UTILITY",
+  "disableable": true,
+  "description": "Text for voice channels."
+}

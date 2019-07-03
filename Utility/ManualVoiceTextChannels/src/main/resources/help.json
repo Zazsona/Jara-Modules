@@ -1,0 +1,3 @@
+{
+  "description": "Creates a text channel to associate with a Voice Channel session.\nUsers are removed from the text channel when they leave the voice channel, and if all members leave the voice channel, the text channel is deleted."
+}
