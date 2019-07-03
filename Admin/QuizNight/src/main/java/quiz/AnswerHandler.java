@@ -118,7 +118,7 @@ public class AnswerHandler
         public void onGuildMessageReceived(GuildMessageReceivedEvent msgEvent)
         {
             Message message = msgEvent.getMessage();
-            if (message.getTextChannel().getParent().equals(quizCategory))
+            if (message.getTextChannel().getParent().equals(quizCategory) && !message.getChannel().equals(questionChannel))
             {
                 String messageContent = message.getContentDisplay().toLowerCase();
                 if (validateAnswer(messageContent, message.getGuild(), questionNo))

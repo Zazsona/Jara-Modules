@@ -102,6 +102,7 @@ public class UserStatManager
     private static void recordMemberStats(User player, boolean[] correctAnswers, TriviaJson.TriviaQuestion[] questions, boolean winner)
     {
         recordMemberStats(player, correctAnswers, questions, questions.length, winner);
+        //There is no save here, as a save is conducted at the end of a quiz night.
     }
 
     public static void recordMemberStats(User player, boolean[] correctAnswers, TriviaJson.TriviaQuestion[] questions, int currentQuestion, boolean winner)
@@ -115,22 +116,28 @@ public class UserStatManager
 
         for (int i = 0; i<currentQuestion; i++)
         {
-            switch (questions[i].difficulty)        //Bloody hell this is ugly.
+            switch (questions[i].difficulty)
             {
                 case "easy":
                     easyQuestions++;
                     if (correctAnswers[i])
+                    {
                         easyQuestionsCorrect++;
+                    }
                     break;
                 case "medium":
                     mediumQuestions++;
                     if (correctAnswers[i])
+                    {
                         mediumQuestionsCorrect++;
+                    }
                     break;
                 case "hard":
                     hardQuestions++;
                     if (correctAnswers[i])
+                    {
                         hardQuestionsCorrect++;
+                    }
                     break;
             }
         }

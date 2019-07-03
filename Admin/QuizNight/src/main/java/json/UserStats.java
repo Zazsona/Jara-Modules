@@ -72,7 +72,9 @@ public class UserStats implements Serializable
         this.mediumQuestionsCorrect += mediumQuestionsCorrect;
         this.hardQuestionsCorrect += hardQuestionsCorrect;
         if (winner)
+        {
             wins += 1;
+        }
     }
 
     /**

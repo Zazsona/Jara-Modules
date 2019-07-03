@@ -152,7 +152,9 @@ public class JoinHandler
         QuizTeam quizTeam = quizTeams.get(teamname.toUpperCase());
         if (quizTeam != null)
         {
-            quizTeams.get(teamname.toUpperCase()).addTeamMember(player);
+            quizTeam.addTeamMember(player);
+            quizTeam.getTeamChannel().createPermissionOverride(player).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
+            questionsChannel.createPermissionOverride(player).setAllow(Permission.MESSAGE_READ).queue();
             return true;
         }
         else
