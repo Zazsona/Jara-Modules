@@ -38,6 +38,10 @@ public class Start extends Command
             {
                 updateAllowedRoles(msgEvent.getGuild().getIdLong(), msgEvent.getChannel(), parameters);
             }
+            else if (operation.equals("ping"))
+            {
+                updatePingAnnouncement(msgEvent.getGuild().getIdLong(), msgEvent.getChannel(), parameters);
+            }
             else
             {
                 CmdUtil.sendHelpInfo(msgEvent, getClass());
@@ -49,6 +53,39 @@ public class Start extends Command
         }
     }
 
+    /**
+     * Toggles whether to send an @everyone ping when a quiz is starting.
+     * @param guildId the guild of the quiz
+     * @param channel the current channel
+     * @param parameters the parameters
+     */
+    private void updatePingAnnouncement(long guildId, TextChannel channel, String... parameters) throws InvalidParameterException
+    {
+        if (parameters.length >= 3)
+        {
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
+            if (parameters[2].equalsIgnoreCase("disable"))
+            {
+                SettingsManager.updateAnnouncementPing(guildId, false);
+                embed.setDescription("Quiz pings are now disabled. Members will no longer receive a ping notice when a quiz is about to start.");
+            }
+            else if (parameters[2].equalsIgnoreCase("enable"))
+            {
+                SettingsManager.updateAnnouncementPing(guildId, true);
+                embed.setDescription("Quiz pings have now been enabled.\nA ping to the everyone role will be sent out at the 5 minute notice.");
+            }
+            else
+            {
+                embed.setDescription("Please specify whether you would like to enable or disable pings.\nE.g: QuizNight Ping Enable");
+            }
+            channel.sendMessage(embed.build()).queue();
+        }
+        else
+        {
+            throw new InvalidParameterException();
+        }
+    }
     /**
      * Modifies the days at which quizzes will run in this guild
      * @param channel the current channel

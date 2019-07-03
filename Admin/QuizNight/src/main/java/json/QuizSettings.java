@@ -14,5 +14,6 @@ public class QuizSettings implements Serializable
         public int StartMinute = 1260; //9PM
         public boolean[] Days = new boolean[7];
         public String[] AllowedRoles = new String[0];
+        public boolean PingQuizAnnouncement = false;
     }
 }

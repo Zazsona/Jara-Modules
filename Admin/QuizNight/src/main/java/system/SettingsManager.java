@@ -1,5 +1,6 @@
 package system;
 
+import configuration.GuildSettings;
 import json.QuizSettings;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
@@ -258,6 +259,21 @@ public class SettingsManager
         gqc.StartMinute = startMinute-5; //This launches the quiz 5 minutes before it's scheduled, allowing us to prompt players to join with a 5 minute window.
         save();
         Scheduler.resetScheduling(gqc);
+        return gqc;
+    }
+
+    /**
+     * Sets whether or not to ping when a quiz starts.
+     * @param guildId
+     * @param ping
+     * @return
+     */
+    public static QuizSettings.GuildQuizConfig updateAnnouncementPing(long guildId, boolean ping)
+    {
+        restore();
+        QuizSettings.GuildQuizConfig gqc = getGuildQuizSettings(guildId);
+        gqc.PingQuizAnnouncement = ping;
+        save();
         return gqc;
     }
 

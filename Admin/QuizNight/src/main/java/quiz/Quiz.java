@@ -1,5 +1,6 @@
 package quiz;
 
+import json.QuizSettings;
 import json.TriviaJson;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -9,6 +10,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import org.apache.commons.text.StringEscapeUtils;
+import system.SettingsManager;
 import system.UserStatManager;
 
 import java.awt.*;
@@ -31,6 +33,7 @@ public class Quiz
             Gson gson = new Gson();
             String json = CmdUtil.sendHTTPRequest("https://opentdb.com/api.php?amount=10");
             TriviaJson tj = gson.fromJson(json, TriviaJson.class);
+            QuizSettings.GuildQuizConfig gqc = SettingsManager.getGuildQuizSettings(guild.getIdLong());
             initialiseChannels(guild);
             JoinHandler joinHandler = new JoinHandler(quizCategory, questionsChannel, quizTeams);
             Thread joinHandlerThread = new Thread(() -> joinHandler.acceptJoins(guild));
@@ -41,7 +44,11 @@ public class Quiz
             embed.setTitle("=== Quiz ===");
             if (!quickStart)
             {
-                embed.setDescription("Quiz will start in 5 minutes. Join with "+ SettingsUtil.getGuildCommandPrefix(guild.getId())+"join (Team name)!");
+                embed.getDescriptionBuilder().append("Quiz will start in 5 minutes. Join with "+ SettingsUtil.getGuildCommandPrefix(guild.getId())+"join (Team name)!");
+                if (gqc.PingQuizAnnouncement)
+                {
+                    embed.getDescriptionBuilder().append("\n").append(guild.getPublicRole().getAsMention());
+                }
                 guild.getDefaultChannel().sendMessage(embed.build()).queue();
                 Thread.sleep((5*60*1000)-30*1000); //Minus 30 for the 30 second notice.
             }
@@ -169,6 +176,7 @@ public class Quiz
                 for (QuizTeam qt : quizTeams.values())
                 {
                     sendResults(qt, questions);
+                    qt.getTeamChannel().putPermissionOverride(winningTeam.getTeamChannel().getGuild().getPublicRole()).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
                 }
             }
             UserStatManager.saveQuizNightStats(winningTeam.getTeamName(), questions, quizTeams.values());
