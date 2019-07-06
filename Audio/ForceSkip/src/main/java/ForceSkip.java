@@ -20,9 +20,17 @@ public class ForceSkip extends Command
 
         if (audio.isAudioPlayingInGuild())
         {
+            if (parameters.length > 1)
+            {
+                if (parameters[1].equalsIgnoreCase("all"))
+                {
+                    audio.getTrackQueue().clear();
+                }
+            }
             embed.setDescription("Forcibly skipping track.");
             audio.getPlayer().stopTrack();
             audio.getPlayer().setPaused(false);
+            audio.resetSkipVotes();
         }
         else if(!audio.isAudioPlayingInGuild())
         {

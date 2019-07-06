@@ -1,3 +1,6 @@
 {
-  "description": "Skips the track without a vote. Great for if some cheeky git is playing 'Do you like waffles?' for the 60th time."
+  "params": [
+    "ForceSkip (All)"
+  ],
+  "description": "Skips the track without a vote. Great for if some cheeky git is playing 'Do you like waffles?' for the 60th time.\nAdd \"All\" to empty the queue."
 }
