@@ -1,0 +1,10 @@
+{
+  "commandKey": "Hangman",
+  "aliases": [
+    "Hang",
+    "HM"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Classic Hangman."
+}
