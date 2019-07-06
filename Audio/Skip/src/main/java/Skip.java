@@ -42,7 +42,7 @@ public class Skip extends Command
                 4. Multiply these together, to get the total number of people who need to vote for a track skip to happen
                 5. Round this to a valid integer.
              */
-            int skipVotesRequired = Math.round((SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()).getTrackSkipPercent()/100)*(vChannel.getMembers().size()-1));
+            int skipVotesRequired = Math.round((SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()).getTrackSkipPercent()/100.0f)*(vChannel.getMembers().size()-1.0f));
             if (skipVotesRequired == 0) {skipVotesRequired++;} //This is just for formatting, as otherwise it'd appear as "1/0 skips". It has no bearing on functionality.
 
             descBuilder.append("\n");
