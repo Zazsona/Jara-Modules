@@ -1,3 +1,7 @@
 {
-  "description": "Plays the current playing track again, or adds it to the queue."
+  "params": [
+    "Replay (Current)",
+    "Replay (Last)"
+  ],
+  "description": "Replays the current or last track.\nIf none is specified, the current track is replayed, or, if no music is playing, the last played track."
 }
