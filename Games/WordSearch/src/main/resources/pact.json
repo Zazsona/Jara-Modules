@@ -1,0 +1,12 @@
+{
+  "commandKey": "WordSearch",
+  "aliases": [
+    "WordFind",
+    "SearchWords",
+    "WordHunt",
+    "WordFinder"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Randomly generated Word Search."
+}
