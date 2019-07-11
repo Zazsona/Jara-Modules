@@ -1,0 +1,10 @@
+{
+  "commandKey": "TopTrumps",
+  "aliases": [
+    "TopCards",
+    "TopTrump"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Top Trumps."
+}
