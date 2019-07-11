@@ -7,14 +7,31 @@ import java.util.Random;
 
 public class DeckLoader
 {
+    public static Deck getDeck(String[] parameters)
+    {
+        if (parameters.length > 1)
+        {
+            if (parameters[1].equalsIgnoreCase("Simpsons") || parameters[1].equalsIgnoreCase("TheSimpsons"))
+            {
+                return getSimpsonsDeck();
+            }
+            else if (parameters[1].equalsIgnoreCase("Games") || parameters[1].equalsIgnoreCase("GameCharacters") || parameters[1].equalsIgnoreCase("Gaming"))
+            {
+                return getGameCharacterDeck();
+            }
+        }
+        return getRandomDeck();
+    }
+
     public static Deck getRandomDeck()
     {
         Random r = new Random();
-        switch (r.nextInt(1))
+        switch (r.nextInt(2))
         {
             case 0:
                 return getGameCharacterDeck();
-
+            case 1:
+                return getSimpsonsDeck();
             default:
                 return getGameCharacterDeck();
         }
@@ -50,5 +67,41 @@ public class DeckLoader
         Collections.shuffle(cards);
         Deck gcDeck = new Deck("Game Characters", cards, "HP", "Attack", "IQ", "Speed");
         return gcDeck;
+    }
+
+    public static Deck getSimpsonsDeck()
+    {
+        ArrayList<Card> cards = new ArrayList<Card>();
+        cards.add(new Card("Artie Ziff", "https://i.imgur.com/4U6SpSn.png", 4, 11, 132, 43, 1, 46));
+        cards.add(new Card("Bleeding Gums Murphy", "https://i.imgur.com/OOIO6kW.png", 5, 6, 124, 23, 8, 16));
+        cards.add(new Card("Blinky", "https://i.imgur.com/YAMCCHM.png", 5, 15, 10, 41, 1, 2));
+        cards.add(new Card("Captain McCallister", "https://i.imgur.com/1oSJYrI.png", 5, 9, 111, 17, 2, 72));
+        cards.add(new Card("Carl Carlson", "https://i.imgur.com/BzPfYQo.png", 4, 17, 117, 15, 8, 68));
+        cards.add(new Card("Chief Clancy Wiggum", "https://i.imgur.com/FM9MoNY.png", 1, 5, 117, 43, 6, 80));
+        cards.add(new Card("Crazy Old Man", "https://i.imgur.com/18WhIL8.png", 1, 3, 103, 46, 0, 82));
+        cards.add(new Card("Dolph", "https://i.imgur.com/Rfque7o.png", 2, 5, 91, 40, 3, 78));
+        cards.add(new Card("Dr. Julius Hibbert", "https://i.imgur.com/13aklt3.png", 1, 16, 123, 31, 7, 33));
+        cards.add(new Card("Fat Tony", "https://i.imgur.com/36m0adW.png", 3, 18, 117, 39, 2, 82));
+        cards.add(new Card("Homer Simpson", "https://i.imgur.com/JEwj8Xd.png", 0, 3, 79, 47, 7, 88));
+        cards.add(new Card("Itchy", "https://i.imgur.com/XrJdtMy.png", 2, 13, 129, 47, 0, 99));
+        cards.add(new Card("Jasper", "https://i.imgur.com/zOx42xi.png", 1, 8, 92, 42, 1, 89));
+        cards.add(new Card("Kang & Kodos", "https://i.imgur.com/xILA3Cp.png", 3, 14, 129, 21, 0, 95));
+        cards.add(new Card("Kent Brockman", "https://i.imgur.com/qhIgah6.png", 1, 17, 116, 46, 6, 20));
+        cards.add(new Card("Maggie Simpson", "https://i.imgur.com/oD5JGA3.png", 3, 2, 120, 41, 10, 24));
+        cards.add(new Card("Martin Prince", "https://i.imgur.com/pvCauFP.png", 5, 17, 139, 19, 7, 11));
+        cards.add(new Card("Milhouse", "https://i.imgur.com/7kT4iVM.png", 3, 11, 108, 36, 5, 14));
+        cards.add(new Card("Moe Szyslack", "https://i.imgur.com/Ln5rDwg.png", 2, 4, 94, 44, 0, 90));
+        cards.add(new Card("Principal Skinner", "https://i.imgur.com/UnmfxxF.png", 5, 18, 127, 19, 3, 4));
+        cards.add(new Card("Prof. John Frink", "https://i.imgur.com/wvZLPC1.png", 4, 16, 139, 13, 4, 37));
+        cards.add(new Card("Rod & Todd Flanders", "https://i.imgur.com/vGkhU0U.png", 5, 18, 109, 11, 4, 8));
+        cards.add(new Card("Santa's Little Helper", "https://i.imgur.com/HMrw38Z.png", 2, 7, 61, 35, 8, 93));
+        cards.add(new Card("Sideshow Bob", "https://i.imgur.com/Rs5dvkS.png", 2, 17, 137, 33, 1, 91));
+        cards.add(new Card("Krusty", "https://i.imgur.com/lHMYikv.png", 1, 7, 109, 48, 8, 77));
+        cards.add(new Card("Ned Flanders", "https://i.imgur.com/TuWSUaR.png", 5, 18, 107, 35, 8, 6));
+        cards.add(new Card("Marge Simpson", "https://i.imgur.com/NLBT16G.png", 4, 19, 107, 16, 8, 8));
+        cards.add(new Card("Bart", "https://i.imgur.com/7dlhv0g.png", 1, 5, 95, 37, 7, 88));
+        Collections.shuffle(cards);
+        Deck spDeck = new Deck("The Simpsons", cards, "Good Listener", "Hygiene", "IQ", "Shamelessness", "Huggability", "Mayhem");
+        return spDeck;
     }
 }

@@ -27,7 +27,7 @@ public class TopTrumps extends GameCommand
         boolean hasPermissions = setup.checkPermissions(msgEvent.getGuild().getSelfMember());
         if (hasPermissions)
         {
-            Deck deck = DeckLoader.getRandomDeck();
+            Deck deck = DeckLoader.getDeck(parameters);
             ArrayList<Team> teams = new ArrayList<>();
             teams.addAll(setup.setupTeams(msgEvent.getChannel(), msgEvent.getMember(), deck, 2));
 
