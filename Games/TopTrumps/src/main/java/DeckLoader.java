@@ -1,40 +1,73 @@
 import cards.Card;
 import cards.Deck;
+import configuration.SettingsUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.*;
 
 public class DeckLoader
 {
-    public static Deck getDeck(String[] parameters)
+    public static Deck getDeck(String guildID, String[] parameters)
     {
-        if (parameters.length > 1)
+        try
         {
-            if (parameters[1].equalsIgnoreCase("Simpsons") || parameters[1].equalsIgnoreCase("TheSimpsons"))
+            if (parameters.length > 1)
             {
-                return getSimpsonsDeck();
+                if (parameters[1].equalsIgnoreCase("Simpsons") || parameters[1].equalsIgnoreCase("TheSimpsons"))
+                {
+                    return getSimpsonsDeck();
+                }
+                else if (parameters[1].equalsIgnoreCase("Games") || parameters[1].equalsIgnoreCase("GameCharacters") || parameters[1].equalsIgnoreCase("Gaming"))
+                {
+                    return getGameCharacterDeck();
+                }
+                else
+                {
+                    Deck deck = getCustomDeck(guildID, parameters[1]);
+                    if (deck == null)
+                    {
+                        return getRandomDeck(guildID);
+                    }
+                }
             }
-            else if (parameters[1].equalsIgnoreCase("Games") || parameters[1].equalsIgnoreCase("GameCharacters") || parameters[1].equalsIgnoreCase("Gaming"))
-            {
-                return getGameCharacterDeck();
-            }
+            return getRandomDeck(guildID);
         }
-        return getRandomDeck();
+        catch (IOException e)
+        {
+            LoggerFactory.getLogger(DeckLoader.class).error(e.getLocalizedMessage());
+            return getGameCharacterDeck();
+        }
     }
 
-    public static Deck getRandomDeck()
+    public static Deck getRandomDeck(String guildID) throws IOException
     {
+        int standardDeckCount = 2;
         Random r = new Random();
-        switch (r.nextInt(2))
+        HashMap<String, Deck> customDecksMap = getCustomDeckMap(guildID);
+        int deckCount = customDecksMap.size()+standardDeckCount;
+        int selection = r.nextInt(deckCount);
+        switch (selection)
         {
             case 0:
                 return getGameCharacterDeck();
             case 1:
                 return getSimpsonsDeck();
             default:
-                return getGameCharacterDeck();
+                LinkedList<Deck> deckList = new LinkedList<>();
+                deckList.addAll(customDecksMap.values());
+                return deckList.get(selection-standardDeckCount);
         }
+    }
+
+    public static Deck getCustomDeck(String guildID, String deckName) throws IOException
+    {
+        HashMap<String, Deck> decks = getCustomDeckMap(guildID);
+        return decks.get(deckName.toLowerCase());
     }
 
     public static Deck getGameCharacterDeck()
@@ -103,5 +136,38 @@ public class DeckLoader
         Collections.shuffle(cards);
         Deck spDeck = new Deck("The Simpsons", cards, "Good Listener", "Hygiene", "IQ", "Shamelessness", "Huggability", "Mayhem");
         return spDeck;
+    }
+
+    public static synchronized HashMap<String, Deck> getCustomDeckMap(String guildID) throws IOException
+    {
+        Logger logger = LoggerFactory.getLogger(DeckLoader.class);
+        try
+        {
+            File file = new File(SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/TopTrumpDecks.jara");
+            HashMap<String, HashMap<String, Deck>> guildDeckMap = new HashMap<>();
+            if (file.exists())
+            {
+                FileInputStream fis = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                guildDeckMap = (HashMap<String, HashMap<String, Deck>>) ois.readObject();
+                ois.close();
+                fis.close();
+            }
+            else
+            {
+                guildDeckMap = new HashMap<>();
+            }
+
+            if (!guildDeckMap.containsKey(guildID))
+            {
+                guildDeckMap.put(guildID, new HashMap<>());
+            }
+            return guildDeckMap.get(guildID);
+
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new IOException(e.getMessage());
+        }
     }
 }

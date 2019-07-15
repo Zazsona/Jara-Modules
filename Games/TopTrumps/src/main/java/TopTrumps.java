@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -23,11 +24,17 @@ public class TopTrumps extends GameCommand
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
+        if (parameters[1].equalsIgnoreCase("list"))
+        {
+            listDecks(msgEvent.getChannel());
+            return;
+        }
+
         Setup setup = new Setup();
         boolean hasPermissions = setup.checkPermissions(msgEvent.getGuild().getSelfMember());
         if (hasPermissions)
         {
-            Deck deck = DeckLoader.getDeck(parameters);
+            Deck deck = DeckLoader.getDeck(msgEvent.getGuild().getId(), parameters);
             ArrayList<Team> teams = new ArrayList<>();
             teams.addAll(setup.setupTeams(msgEvent.getChannel(), msgEvent.getMember(), deck, 2));
 
@@ -187,7 +194,7 @@ public class TopTrumps extends GameCommand
         {
             int timeout = Integer.parseInt(SettingsUtil.getGuildSettings(channel.getGuild().getId()).getGameChannelTimeout());
             Message msg = mm.getNextMessage(channel, timeout*60*1000);
-            if (msg == null || msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+            if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
             {
                 channel.putPermissionOverride(msg.getMember()).setDeny(Permission.MESSAGE_READ).queue();
                 team.removeTeamMember(msg.getMember());
@@ -195,6 +202,10 @@ public class TopTrumps extends GameCommand
                 {
                     throw new GameOverException();
                 }
+            }
+            else if (msg == null)
+            {
+                throw new GameOverException();
             }
             else
             {
@@ -245,6 +256,28 @@ public class TopTrumps extends GameCommand
 
         }
     }
+
+    private void listDecks(TextChannel channel)
+    {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
+        StringBuilder descBuilder = new StringBuilder();
+        descBuilder.append("- Gaming\n").append("- TheSimpsons\n");
+        try
+        {
+            for (String deckName : DeckLoader.getCustomDeckMap(channel.getGuild().getId()).keySet())
+            {
+                descBuilder.append("- ").append(deckName).append("\n");
+            }
+            embed.setDescription(descBuilder.toString());
+        }
+        catch (IOException e)
+        {
+            embed.setDescription("\n**ERROR: Unable to access custom decks.**");
+        }
+        channel.sendMessage(embed.build()).queue();
+    }
+
 
 
 

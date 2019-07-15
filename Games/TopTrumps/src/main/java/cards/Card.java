@@ -1,7 +1,10 @@
 package cards;
 
-public class Card
+import java.io.Serializable;
+
+public class Card implements Serializable
 {
+    private static long serialVersionUID = 1L;
     private String name;
     private String imageURL;
     private double[] stats;
