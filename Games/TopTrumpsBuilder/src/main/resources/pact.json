@@ -1,0 +1,15 @@
+{
+  "commandKey": "TopTrumpsBuilder",
+  "aliases": [
+    "TopTrumpsEditor",
+    "CustomTopTrumps",
+    "TopTrumpsSettings",
+    "TTB",
+    "TopTrumpsDecks",
+    "TTD",
+    "TopTrumpsDeckBuilder"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Top Trumps deck builder."
+}

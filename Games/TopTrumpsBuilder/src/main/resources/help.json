@@ -1,0 +1,9 @@
+{
+  "params": [
+    "TopTrumpsBuilder Add [Deck]",
+    "TopTrumpsBuilder Edit [Deck] ",
+    "TopTrumpsBuilder Delete [Deck]",
+    "TopTrumpsBuilder List"
+  ],
+  "description": "Create, modify, and delete custom decks for use in Top Trumps. These decks are server exclusive."
+}
