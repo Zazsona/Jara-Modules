@@ -1,0 +1,6 @@
+{
+  "params": [
+    "[Dice] (Rolls)"
+  ],
+  "description": "Rolls dice.\nSpecify your die type and the number of rolls to get a series of results.\nE.g: /D6 3 will roll 3 6 sided dice.\n\nSupported Dice:\nD2\nD4\nD6\nD8\nD10\nD12\nD20\nD100"
+}
