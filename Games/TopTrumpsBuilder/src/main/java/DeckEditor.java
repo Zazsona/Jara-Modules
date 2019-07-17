@@ -6,17 +6,17 @@ import jara.MessageManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
-
-import javax.xml.soap.Text;
+import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
+import java.security.InvalidParameterException;
+import java.util.concurrent.CancellationException;
 
 public class DeckEditor
 {
-    private Deck deck;
-    private Member user;
-    private TextChannel channel;
-    private MessageManager mm;
+    private final Deck deck;
+    private final Member user;
+    private final TextChannel channel;
+    private final MessageManager mm;
 
     public DeckEditor(Deck deck, Member user, TextChannel channel)
     {
@@ -26,25 +26,38 @@ public class DeckEditor
         mm = new MessageManager();
     }
 
+    /**
+     * Runs the deck editor
+     * @return the edited deck
+     */
     public Deck run()
     {
         return runMainMenu();
     }
 
-    private Message getInput()
+    /**
+     * Gets the next valid response message
+     * @return the response
+     * @throws CancellationException user has quit
+     */
+    private Message getInput() throws CancellationException
     {
         Message msg = null;
         while (msg == null || !msg.getMember().equals(user))
         {
             msg = mm.getNextMessage(channel);
-            if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"));
-            {
-                return null;
-            }
+        }
+        if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+        {
+            throw new CancellationException("User has quit the operation.");
         }
         return msg;
     }
 
+    /**
+     * Sends an embed with a standardised style using the provided description text
+     * @param descriptionText the text to display on the embed
+     */
     private void sendEmbed(String descriptionText)
     {
         EmbedBuilder embed = new EmbedBuilder();
@@ -53,6 +66,10 @@ public class DeckEditor
         channel.sendMessage(embed.build()).queue();
     }
 
+    /**
+     * Shows the main menu, and launches the sub-option based on user input.
+     * @return The edited deck
+     */
     private Deck runMainMenu()
     {
         try
@@ -61,11 +78,11 @@ public class DeckEditor
             String input = getInput().getContentDisplay();
             if (input.equalsIgnoreCase("name"))
             {
-                editName();
+                editName(true);
             }
             else if (input.equalsIgnoreCase("stats") || input.equalsIgnoreCase("categories") || input.equalsIgnoreCase("category") || input.equalsIgnoreCase("categorys"))
             {
-                editCategories();
+                editCategories(true);
             }
             else if (input.equalsIgnoreCase("card") || input.equalsIgnoreCase("cards"))
             {
@@ -76,13 +93,16 @@ public class DeckEditor
                 return deck;
             }
         }
-        catch (NullPointerException e)
+        catch (CancellationException e)
         {
             sendEmbed("Menu closed.");
         }
         return deck;
     }
 
+    /**
+     * Shows the cards menu, and launches the sub-option based on user input.
+     */
     private void runCardsMenu()
     {
         EmbedBuilder embed = new EmbedBuilder();
@@ -125,22 +145,30 @@ public class DeckEditor
         }
     }
 
-    private void editName()
+    /**
+     * Prompts the user to modify the name of the deck
+     * @param showInstructions whether to show accepted inputs and the current value(s).
+     */
+    private void editName(boolean showInstructions)
     {
         try
         {
-            boolean success = false;
-            sendEmbed("Current Name: **"+deck.getName()+"**\n\nPlease enter a new name.");
-            while (!success)
-            {
-                String newName = getInput().getContentDisplay();
-                success = deck.setName(newName);
-                sendEmbed((success) ? "Successfully renamed to "+deck.getName()+"." : "ERROR: Names must be between 2-25 characters.\nPlease try again.");
-            }
+            if (showInstructions)
+                sendEmbed("Current Name: **"+deck.getName()+"**\n\nPlease enter a new name.");
+
+            String newName = getInput().getContentDisplay();
+            deck.setName(newName);
+            sendEmbed("Successfully renamed to "+deck.getName()+".");
         }
-        catch (NullPointerException e)
+        catch (CancellationException e)
         {
-            sendEmbed("Operation cancelled.");
+            sendEmbed(e.getMessage());
+        }
+        catch (InvalidParameterException e)
+        {
+            sendEmbed(e.getMessage()+"\nPlease try again.");
+            editName(false);
+            return;
         }
         finally
         {
@@ -148,49 +176,55 @@ public class DeckEditor
         }
     }
 
-    private void editCategories()
+    /**
+     * Prompts the user to modify the categories of the deck
+     * @param showInstructions whether to show accepted inputs and the current value(s).
+     */
+    private void editCategories(boolean showInstructions)
     {
         try
         {
-            boolean success = false;
-            StringBuilder categoriesBuilder = new StringBuilder();
-            for (String category : deck.getStatNames())
+            if (showInstructions)
             {
-                categoriesBuilder.append(category).append("\n");
-            }
-            sendEmbed("Current Categories: "+categoriesBuilder.toString()+"\n\nPlease enter the new categories, separated by commas (,).");
-            int oldCategoryCount = deck.getStatNames().length;
-            while (!success)
-            {
-                String[] newCategories = getInput().getContentDisplay().split(",");
-                if (newCategories.length <= 1 || newCategories.length > 6)
+                StringBuilder categoriesBuilder = new StringBuilder();
+                for (String category : deck.getStatNames())
                 {
-                    sendEmbed("There must be between 2 and 6 categories. Please enter new categories, separated by commas (,).");
-                    continue;
+                    categoriesBuilder.append(category).append("\n");
                 }
-                if (newCategories.length != oldCategoryCount)
+                sendEmbed("Current Categories: "+categoriesBuilder.toString()+"\n\nPlease enter the new categories, separated by commas (,).");
+            }
+            int oldCategoryCount = deck.getStatNames().length;
+
+            String[] newCategories = getInput().getContentDisplay().split(",");
+            if (newCategories.length != oldCategoryCount)
+            {
+                sendEmbed((newCategories.length > oldCategoryCount) ? "This will add a new category, all cards will have a value of 0 in this category. Continue? (Y/N)" : "This will remove at least one category, and all card data for these categories will be deleted. Continue? (Y/N)");
+                while (true)
                 {
-                    sendEmbed((newCategories.length > oldCategoryCount) ? "This will add a new category, all cards will have a value of 0 in this category. Continue? (Y/N)" : "This will remove at least one category, and all card data for these categories will be deleted. Continue? (Y/N)");
-                    while (true)
+                    String answer = getInput().getContentDisplay().toLowerCase();
+                    if (answer.equals("y") || answer.equals("yes") || answer.equals("yeah") || answer.equals("yup") || answer.equals("continue"))
                     {
-                        String answer = getInput().getContentDisplay().toLowerCase();
-                        if (answer.equals("y") || answer.equals("yes") || answer.equals("yeah") || answer.equals("yup") || answer.equals("continue"))
-                        {
-                            break;
-                        }
-                        else if (answer.equals("n") || answer.equals("no") || answer.equals("nope"))
-                        {
-                            throw new NullPointerException("User cancelled operation");
-                        }
+                        updateStatsToNewCategories(newCategories.length);
+                        break;
+                    }
+                    else if (answer.equals("n") || answer.equals("no") || answer.equals("nope"))
+                    {
+                        throw new CancellationException("Cancelled setting categories.");
                     }
                 }
-                success = deck.setStatNames(newCategories);
-                sendEmbed((success) ? "Successfully modified stats." : "ERROR: Names must be between 2-25 characters.\nPlease try again.");
             }
+            deck.setStatNames(newCategories);
+            sendEmbed("Successfully modified stats.");
         }
-        catch (NullPointerException e)
+        catch (CancellationException e)
         {
-            sendEmbed("Operation cancelled.");
+            sendEmbed(e.getMessage());
+        }
+        catch (InvalidParameterException e)
+        {
+            sendEmbed(e.getMessage()+"\nPlease try again.");
+            editCategories(false);
+            return;
         }
         finally
         {
@@ -198,6 +232,28 @@ public class DeckEditor
         }
     }
 
+    /**
+     * Cycles through each card in the deck and modifies its stats to match the category quantity
+     * @param newCategoryTotal the number of categories in the new category configuration
+     */
+    private void updateStatsToNewCategories(int newCategoryTotal)
+    {
+        for (Card card : deck.getCards())
+        {
+            int loopLimit = (card.getStats().length > newCategoryTotal) ? newCategoryTotal : card.getStats().length; //Loop by the lowest number
+            double[] newStats = new double[newCategoryTotal];
+            for (int i = 0; i<loopLimit; i++)
+            {
+                newStats[i] = card.getStats()[i];
+            }
+            card.setStats(newStats);
+            //In the case of a greater new stat total, the new values will be 0.
+        }
+    }
+
+    /**
+     * Creates a new card and adds it to the deck
+     */
     private void addCard()
     {
         try
@@ -205,18 +261,17 @@ public class DeckEditor
             if (deck.getCards().size() >= 30)
             {
                 sendEmbed("This deck has reached the card limit.");
-                return;
             }
             else
             {
 
                 Card card = editCardWizard(new Card());
-                deck.addCard(card);
+                boolean success = deck.addCard(card);
             }
         }
-        catch (NullPointerException e)
+        catch (CancellationException | DuplicateName | IndexOutOfBoundsException e)
         {
-            sendEmbed("Operation cancelled.");
+            sendEmbed(e.getMessage());
         }
         finally
         {
@@ -224,6 +279,10 @@ public class DeckEditor
         }
     }
 
+    /**
+     * Modifies the information for an existing card
+     * @param cardName the name of the card to modify
+     */
     private void editCard(String cardName)
     {
         try
@@ -232,7 +291,6 @@ public class DeckEditor
             if (card == null)
             {
                 sendEmbed("That card does not exist.");
-                return;
             }
             else
             {
@@ -241,9 +299,9 @@ public class DeckEditor
                 deck.addCard(newCard);
             }
         }
-        catch (NullPointerException e)
+        catch (CancellationException | DuplicateName e)
         {
-            sendEmbed("Operation cancelled.");
+            sendEmbed(e.getMessage());
         }
         finally
         {
@@ -251,74 +309,104 @@ public class DeckEditor
         }
     }
 
+    /**
+     * Removes a card from the deck.
+     * @param cardName The name of the card to remove
+     */
     private void deleteCard(String cardName)
     {
-        try
+        Card card = deck.getCard(cardName);
+        if (card == null)
         {
-            Card card = deck.getCard(cardName);
-            if (card == null)
-            {
-                sendEmbed("That card does not exist.");
-                return;
-            }
-            else
-            {
-                deck.removeCard(card);
-            }
+            sendEmbed("That card does not exist.");
         }
-        catch (NullPointerException e)
+        else
         {
-            sendEmbed("Operation cancelled.");
-        }
-        finally
-        {
-            runCardsMenu();
+            deck.removeCard(card);
         }
     }
 
-    private Card editCardWizard(Card card) throws NullPointerException
+    /**
+     * A wizard that walks the user through modifying/creating a card
+     * @param card the card to edit
+     * @return the edited card
+     * @throws CancellationException user cancelled the editing
+     */
+    private Card editCardWizard(Card card) throws CancellationException
     {
         boolean success = false;
-        sendEmbed("Please input the card name.\nCurrent: "+card.getName());
+        sendEmbed("Please input the card name, or \"next\" to skip.\nCurrent: "+card.getName());
         while (!success)
         {
-            String name = getInput().getContentDisplay();
-            if (deck.getCard(name) != null)
+            try
             {
-                sendEmbed("That name is already taken. Please try again.");
+                String name = getInput().getContentDisplay();
+                if (!name.equalsIgnoreCase("next"))
+                {
+                    if (deck.getCard(name) != null)
+                    {
+                        sendEmbed("That name is already taken. Please try again.");
+                    }
+                    else
+                    {
+                        card.setName(name);
+                        success = true;
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
-            success = card.setName(name);
-            if (!success)
+            catch (InvalidParameterException e)
             {
-                sendEmbed("Names must be between 1 and 25 characters. Please try again.");
+                sendEmbed(e.getMessage()+"\nPlease try again.");
             }
         }
-        sendEmbed("Please input the image URL.\nCurrent: "+card.getImageURL());
+        success = false;
+        sendEmbed("Please input the image URL, or \"next\" to skip.\nCurrent: "+card.getImageURL());
         while (!success)
         {
             String url = getInput().getContentDisplay();
-            success = card.setImageURL(url);
-            if (!success)
+            if (!url.equalsIgnoreCase("next"))
             {
-                sendEmbed("Invalid image URL. Please try again.");
+                success = card.setImageURL(url);
+                if (!success)
+                {
+                    sendEmbed("Invalid image URL. Please try again.");
+                }
+            }
+            else
+            {
+                break;
             }
         }
+        success = false;
         double[] stats = new double[deck.getStatNames().length];
         for (int i = 0; i<stats.length; i++)
         {
             success = false;
-            sendEmbed("Please input a numeric value for the stat \""+deck.getStatNames()[i]+"\".\nCurrent: "+card.getStats()[i]);
+            sendEmbed("Please input a numeric value for the stat \""+deck.getStatNames()[i]+"\", or \"next\" to skip.\nCurrent: "+card.getStats()[i]);
             while (!success)
             {
-                try
+                String input = getInput().getContentDisplay();
+                if (!input.equalsIgnoreCase("next"))
                 {
-                    stats[i] = Double.parseDouble(getInput().getContentDisplay());
-                    success = true;
+                    try
+                    {
+                        stats[i] = Double.parseDouble(input);
+                        success = true;
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        success = false;
+                        sendEmbed("Invalid value. Please enter a numeric value for \""+deck.getStatNames()[i]+"\".");
+                    }
                 }
-                catch (NumberFormatException e)
+                else
                 {
-                    success = false;
-                    sendEmbed("Invalid value. Please enter a numeric value for \""+deck.getStatNames()[i]+"\".");
+                    stats[i] = card.getStats()[i];
+                    break;
                 }
             }
         }

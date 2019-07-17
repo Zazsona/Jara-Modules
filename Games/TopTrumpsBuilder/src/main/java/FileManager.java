@@ -10,7 +10,7 @@ public class FileManager
 {
     private HashMap<String, Deck> deckMap;
     private String guildID;
-    private static Logger logger = LoggerFactory.getLogger("TopTrumps Deck Builder");
+    private static final Logger logger = LoggerFactory.getLogger("TopTrumps Deck Builder");
 
     public FileManager(String guildID) throws IOException
     {
@@ -18,11 +18,18 @@ public class FileManager
         this.guildID = guildID;
     }
 
+    /**
+     * Gets the filepath for decks.
+     * @return
+     */
     private static String getDecksPath()
     {
         return SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/TopTrumpDecks.jara";
     }
 
+    /**
+     * Saves the modifications
+     */
     private synchronized void save()
     {
         try
@@ -46,12 +53,16 @@ public class FileManager
         }
     }
 
+    /**
+     * Loads the current deck data from file
+     * @return the deck data
+     * @throws IOException unable to load deck data
+     */
     private synchronized HashMap<String, HashMap<String, Deck>> restore() throws IOException
     {
-        Logger logger = LoggerFactory.getLogger(FileManager.class);
         try
         {
-            HashMap<String, HashMap<String, Deck>> guildDeckMap = new HashMap<>();
+            HashMap<String, HashMap<String, Deck>> guildDeckMap;
             if (new File(getDecksPath()).exists())
             {
                 FileInputStream fis = new FileInputStream(getDecksPath());
@@ -78,21 +89,39 @@ public class FileManager
         }
     }
 
+    /**
+     * Gets the names of all decks for this guild
+     * @return
+     */
     public Set<String> getDeckNames()
     {
         return deckMap.keySet();
     }
 
+    /**
+     * Gets all decks for this guild
+     * @return
+     */
     public Set<Deck> getDecks()
     {
         return (Set<Deck>) deckMap.values();
     }
-    
-    public Deck getDeck(String deckName) throws IOException
+
+    /**
+     * Gets a deck by name
+     * @param deckName the deck name
+     * @return the deck
+     */
+    public Deck getDeck(String deckName)
     {
         return deckMap.get(deckName.toLowerCase());
     }
 
+    /**
+     * Deletes the deck specified by name
+     * @param deckName the deck
+     * @return true on success
+     */
     public boolean deleteDeck(String deckName)
     {
         Deck result = deckMap.remove(deckName.toLowerCase());
@@ -104,17 +133,13 @@ public class FileManager
         return false;
     }
 
-    public boolean saveDeck(Deck deck)
+    /**
+     * Saves the deck to disk
+     * @param deck the deck to save
+     */
+    public void saveDeck(Deck deck)
     {
-        //if (deck.getCards().size() % 2 == 0)
-        //{
-            deckMap.put(deck.getName().toLowerCase(), deck);
-            save();
-            return true;
-        //}
-        //else
-        //{
-        //    return false;
-        //}
+        deckMap.put(deck.getName().toLowerCase(), deck);
+        save();
     }
 }

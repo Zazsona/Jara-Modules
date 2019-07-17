@@ -1,22 +1,17 @@
-import cards.Card;
 import cards.Deck;
-import com.sun.security.auth.callback.TextCallbackHandler;
 import commands.CmdUtil;
 import commands.GameCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
-
-import javax.xml.soap.Text;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class TopTrumpsBuilder extends GameCommand
 {
-    private static HashMap<String, LinkedList<String>> guildToEditingDecksMap = new HashMap<>();
+    private static final HashMap<String, LinkedList<String>> guildToEditingDecksMap = new HashMap<>();
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -29,7 +24,7 @@ public class TopTrumpsBuilder extends GameCommand
                 if (parameters[1].equalsIgnoreCase("add"))
                 {
                     handleConcurrentModification(msgEvent.getChannel(), parameters[2]);
-                    addDeck(msgEvent.getChannel(), fm, parameters[2]);
+                    addDeck(msgEvent.getChannel(), msgEvent.getMember(), fm, parameters[2]);
                     guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
                 }
                 else if (parameters[1].equalsIgnoreCase("edit"))
@@ -68,7 +63,7 @@ public class TopTrumpsBuilder extends GameCommand
         }
     }
 
-    private void editDeck(TextChannel channel, Member user, FileManager fm, Deck deck) throws IOException
+    private void editDeck(TextChannel channel, Member user, FileManager fm, Deck deck)
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
@@ -110,7 +105,7 @@ public class TopTrumpsBuilder extends GameCommand
         }
     }
 
-    private void addDeck(TextChannel channel, FileManager fm, String deckName) throws IOException
+    private void addDeck(TextChannel channel, Member user, FileManager fm, String deckName) throws IOException
     {
         if (fm.getDeckNames().contains(deckName.toLowerCase()))
         {
@@ -122,23 +117,7 @@ public class TopTrumpsBuilder extends GameCommand
         else
         {
             Deck deck = new Deck(deckName);
-            //TODO: DECKMANAGER CLASS
-        }
-    }
-
-    private void editDeck(TextChannel channel, FileManager fm, String deckName) throws IOException
-    {
-        if (!fm.getDeckNames().contains(deckName.toLowerCase()))
-        {
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
-            embed.setDescription("No deck with name \""+deckName+"\" exists.");
-            channel.sendMessage(embed.build()).queue();
-        }
-        else
-        {
-            Deck deck = fm.getDeck(deckName);
-            //TODO: DECKMANAGER CLASS
+            editDeck(channel, user, fm, deck);
         }
     }
 
@@ -151,7 +130,7 @@ public class TopTrumpsBuilder extends GameCommand
         channel.sendMessage(embed.build()).queue();
     }
 
-    private void listDecks(TextChannel channel, FileManager fm) throws IOException
+    private void listDecks(TextChannel channel, FileManager fm)
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
