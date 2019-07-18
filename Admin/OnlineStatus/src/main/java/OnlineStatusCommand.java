@@ -3,7 +3,7 @@ import commands.Command;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public class IdleComments extends Command
+public class OnlineStatusCommand extends Command
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -14,19 +14,19 @@ public class IdleComments extends Command
             switch (presence)
             {
                 case "online":
-                    CmdUtil.getJDA().asBot().getShardManager().setStatus(OnlineStatus.ONLINE);
+                    CmdUtil.getJDA().asBot().getShardManager().setStatus(net.dv8tion.jda.core.OnlineStatus.ONLINE);
                     break;
                 case "away":
                 case "idle":
-                    CmdUtil.getJDA().asBot().getShardManager().setStatus(OnlineStatus.IDLE);
+                    CmdUtil.getJDA().asBot().getShardManager().setStatus(net.dv8tion.jda.core.OnlineStatus.IDLE);
                     break;
                 case "dnd":
                 case "do not disturb":
-                    CmdUtil.getJDA().asBot().getShardManager().setStatus(OnlineStatus.DO_NOT_DISTURB);
+                    CmdUtil.getJDA().asBot().getShardManager().setStatus(net.dv8tion.jda.core.OnlineStatus.DO_NOT_DISTURB);
                     break;
                 case "offline":
                 case "invisible":
-                    CmdUtil.getJDA().asBot().getShardManager().setStatus(OnlineStatus.INVISIBLE);
+                    CmdUtil.getJDA().asBot().getShardManager().setStatus(net.dv8tion.jda.core.OnlineStatus.INVISIBLE);
                     break;
             }
 

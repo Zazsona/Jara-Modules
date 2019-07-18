@@ -1,0 +1,9 @@
+{
+  "commandKey": "GameStatus",
+  "aliases": [
+    "CurrentGame"
+  ],
+  "category": "ADMIN",
+  "disableable": true,
+  "description": "Toggles bot's game."
+}
