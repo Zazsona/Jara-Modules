@@ -1,6 +1,6 @@
 {
   "params": [
-    "Say [Phrase]"
+    "Say (Channel) [Phrase]"
   ],
-  "description": "Repeats the given phrase."
+  "description": "Repeats the given phrase in the specified or current channel."
 }
