@@ -1,0 +1,9 @@
+{
+  "commandKey": "Dodge",
+  "aliases": [
+    "DodgeGame"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Dodge the lasers!"
+}
