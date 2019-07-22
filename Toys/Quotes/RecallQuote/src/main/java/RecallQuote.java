@@ -28,7 +28,14 @@ public class RecallQuote extends Command
                 if (quote.attachmentUrl != null)
                 {
                     embed.setTitle(quote.name, quote.attachmentUrl);
-                    embed.setImage(quote.attachmentUrl);
+                    if (quote.attachmentUrl.endsWith(".png") || quote.attachmentUrl.endsWith(".jpg") || quote.attachmentUrl.endsWith(".gif"))
+                    {
+                        embed.setImage(quote.attachmentUrl);
+                    }
+                    else
+                    {
+                        embed.getDescriptionBuilder().append("\n\n").append(quote.attachmentUrl);
+                    }
                 }
             }
             else
