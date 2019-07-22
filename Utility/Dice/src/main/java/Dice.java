@@ -10,7 +10,7 @@ public class Dice extends Command
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
-        int rollCount = 0;
+        int rollCount = 1;
         if (parameters.length > 1)
         {
             try
@@ -19,7 +19,7 @@ public class Dice extends Command
             }
             catch (NumberFormatException e)
             {
-                rollCount = 0;
+                rollCount = 1;
             }
         }
         int[] results = new int[rollCount];
@@ -66,7 +66,7 @@ public class Dice extends Command
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("=== Dice ===");
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        for (double result : results)
+        for (int result : results)
         {
             embed.getDescriptionBuilder().append(diceType).append(": **").append(result).append("**\n");
         }

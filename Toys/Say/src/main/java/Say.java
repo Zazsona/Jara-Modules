@@ -13,15 +13,18 @@ public class Say extends Command
     {
         if (parameters.length > 1)
         {
-            TextChannel channel = getChannel(msgEvent.getMessage());
-            StringBuilder message = new StringBuilder();
-            for (int i = 1; i<parameters.length; i++)
+            Message message = msgEvent.getMessage();
+            parameters = message.getContentRaw().split(" ");
+            TextChannel channel = getChannel(message);
+            StringBuilder messageContent = new StringBuilder();
+            int startingParameter = (channel.equals(msgEvent.getChannel())) ? 1 : 2;
+            for (int i = startingParameter; i<parameters.length; i++)
             {
-                message.append(parameters[i]).append(" ");
+                messageContent.append(parameters[i]).append(" ");
             }
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-            embed.setDescription(message.toString());
+            embed.setDescription(messageContent.toString());
             channel.sendMessage(embed.build()).queue();
         }
         else
@@ -39,7 +42,7 @@ public class Say extends Command
         }
         else if (message.getContentDisplay().length() > 2)
         {
-            String channelName = message.getContentDisplay().split(" ")[2];
+            String channelName = message.getContentDisplay().split(" ")[1];
             for (TextChannel channel : message.getGuild().getTextChannels())
             {
                 if (channel.getName().equalsIgnoreCase(channelName))

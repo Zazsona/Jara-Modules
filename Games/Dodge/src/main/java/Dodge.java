@@ -38,13 +38,12 @@ public class Dodge extends GameCommand
             {
                 Thread.sleep(4000); //This ensures the player has enough time to switch channels.
             }
-            gameMessage.editMessage("").complete();
+            gameMessage.editMessage("Dodge:").complete();
             tick(gameMessage, lasers);
         }
         catch (InterruptedException e)
         {
             channel.sendMessage("An error has occurred and the game has been quit.").queue();
-
         }
         finally
         {

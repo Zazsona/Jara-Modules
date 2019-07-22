@@ -35,9 +35,4 @@ public class Report extends Command
 
         msgEvent.getChannel().sendMessage(embed.build()).queue();
     }
-
-    private int getUptimeHours()
-    {
-        return (int)
-    }
 }
