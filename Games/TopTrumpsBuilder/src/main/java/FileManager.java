@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.security.InvalidParameterException;
 import java.util.*;
 
 public class FileManager
@@ -14,8 +15,8 @@ public class FileManager
 
     public FileManager(String guildID) throws IOException
     {
-        deckMap = restore().get(guildID);
         this.guildID = guildID;
+        this.deckMap = restore().get(this.guildID);
     }
 
     /**
@@ -49,7 +50,7 @@ public class FileManager
         }
         catch (IOException e)
         {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 
@@ -60,28 +61,25 @@ public class FileManager
      */
     private synchronized HashMap<String, HashMap<String, Deck>> restore() throws IOException
     {
+        HashMap<String, HashMap<String, Deck>> guildDeckMap;
         try
         {
-            HashMap<String, HashMap<String, Deck>> guildDeckMap;
-            if (new File(getDecksPath()).exists())
-            {
-                FileInputStream fis = new FileInputStream(getDecksPath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                guildDeckMap = (HashMap<String, HashMap<String, Deck>>) ois.readObject();
-                ois.close();
-                fis.close();
-            }
-            else
-            {
-                guildDeckMap = new HashMap<>();
-            }
+            FileInputStream fis = new FileInputStream(getDecksPath());
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            guildDeckMap = (HashMap<String, HashMap<String, Deck>>) ois.readObject();
+            ois.close();
+            fis.close();
+            return guildDeckMap;
 
+        }
+        catch (IOException e)
+        {
+            guildDeckMap = new HashMap<>();
             if (!guildDeckMap.containsKey(guildID))
             {
                 guildDeckMap.put(guildID, new HashMap<>());
             }
             return guildDeckMap;
-
         }
         catch (ClassNotFoundException e)
         {
@@ -124,9 +122,10 @@ public class FileManager
      */
     public boolean deleteDeck(String deckName)
     {
-        Deck result = deckMap.remove(deckName.toLowerCase());
-        if (result == null)
+        Deck deckToDelete = deckMap.get(deckName.toLowerCase());
+        if (deckToDelete != null)
         {
+            deckMap.remove(deckToDelete.getName().toLowerCase());
             save();
             return true;
         }
@@ -137,9 +136,20 @@ public class FileManager
      * Saves the deck to disk
      * @param deck the deck to save
      */
-    public void saveDeck(Deck deck)
+    public void saveDeck(Deck deck) throws InvalidParameterException
     {
-        deckMap.put(deck.getName().toLowerCase(), deck);
-        save();
+        if (deck.getStatNames().length == 0)
+        {
+            throw new InvalidParameterException("This deck has no stats.");
+        }
+        else if (deck.getCards().size() <= 1)
+        {
+            throw new InvalidParameterException("A deck must have at least two cards.");
+        }
+        else
+        {
+            deckMap.put(deck.getName().toLowerCase(), deck);
+            save();
+        }
     }
 }

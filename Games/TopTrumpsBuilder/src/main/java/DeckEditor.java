@@ -13,6 +13,7 @@ import java.util.concurrent.CancellationException;
 
 public class DeckEditor
 {
+    private boolean deckSaved = false;
     private final Deck deck;
     private final Member user;
     private final TextChannel channel;
@@ -30,9 +31,9 @@ public class DeckEditor
      * Runs the deck editor
      * @return the edited deck
      */
-    public Deck run()
+    public void run(FileManager fm)
     {
-        return runMainMenu();
+        runCardsMenu(fm);
     }
 
     /**
@@ -47,7 +48,7 @@ public class DeckEditor
         {
             msg = mm.getNextMessage(channel);
         }
-        if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+        if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit") || msg.getContentDisplay().equalsIgnoreCase("quit"))
         {
             throw new CancellationException("User has quit the operation.");
         }
@@ -70,19 +71,20 @@ public class DeckEditor
      * Shows the main menu, and launches the sub-option based on user input.
      * @return The edited deck
      */
-    private Deck runMainMenu()
+    /*private Deck runMainMenu(FileManager fm)
     {
         try
         {
-            sendEmbed("- Name\n- Stats\n- Cards\n- Quit");
+            sendEmbed("- Stats\n- Cards\n- Quit");
             String input = getInput().getContentDisplay();
             if (input.equalsIgnoreCase("name"))
             {
-                editName(true);
+                editName(true, fm);
             }
-            else if (input.equalsIgnoreCase("stats") || input.equalsIgnoreCase("categories") || input.equalsIgnoreCase("category") || input.equalsIgnoreCase("categorys"))
+            if (input.equalsIgnoreCase("stats") || input.equalsIgnoreCase("categories") || input.equalsIgnoreCase("category") || input.equalsIgnoreCase("categorys"))
             {
                 editCategories(true);
+                fm.saveDeck(deck);
             }
             else if (input.equalsIgnoreCase("card") || input.equalsIgnoreCase("cards"))
             {
@@ -92,64 +94,106 @@ public class DeckEditor
             {
                 return deck;
             }
+            else
+            {
+                runMainMenu(fm);
+            }
         }
         catch (CancellationException e)
         {
             sendEmbed("Menu closed.");
         }
         return deck;
-    }
+    }*/
 
     /**
      * Shows the cards menu, and launches the sub-option based on user input.
      */
-    private void runCardsMenu()
+    private void runCardsMenu(FileManager fm)
     {
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
-        embed.setDescription("- Add\n- Edit [Name]\n- Delete [Name]");
-        StringBuilder valueBuilder = new StringBuilder();
-        int cardNo = 0;
-        for (Card card : deck.getCards())
+        try
         {
-            if (cardNo == deck.getCards().size()/2)
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
+            embed.setDescription("== Deck== \n- Stats\n\n==Cards==\n- Add\n- Edit [Name]\n- Delete [Name]\n\n- Save\n- Quit");
+            StringBuilder valueBuilder = new StringBuilder();
+            int cardNo = 0;
+            for (Card card : deck.getCards())
             {
-                embed.addField("Cards", valueBuilder.toString(), true);
-                valueBuilder.setLength(0);
+                if (cardNo == deck.getCards().size()/2)
+                {
+                    embed.addField("Cards", valueBuilder.toString(), true);
+                    valueBuilder.setLength(0);
+                }
+                cardNo++;
+                valueBuilder.append(card.getName()).append("\n");
             }
-            cardNo++;
-            valueBuilder.append(card.getName()).append("\n");
-        }
-        embed.addField("", valueBuilder.toString(), true);
-        channel.sendMessage(embed.build()).queue();
+            embed.addField("", valueBuilder.toString(), true);
+            channel.sendMessage(embed.build()).queue();
 
-        String[] input = getInput().getContentDisplay().split(" ");
-        if (!input[0].equalsIgnoreCase("add") && input.length < 2)
-        {
-            sendEmbed("Please input a valid operation and card name.");
+            String[] input = getInput().getContentDisplay().split(" ");
+            if (input.length == 1)
+            {
+                if (input[0].equalsIgnoreCase("add"))
+                {
+                    addCard();
+                    deckSaved = false;
+                }
+                else if (input[0].equalsIgnoreCase("stats") || input[0].equalsIgnoreCase("categories") || input[0].equalsIgnoreCase("category") || input[0].equalsIgnoreCase("categorys"))
+                {
+                    editCategories(true);
+                    deckSaved = false;
+                }
+                else if (input[0].equalsIgnoreCase("save"))
+                {
+                    fm.saveDeck(deck);
+                    sendEmbed("Deck saved successfully.");
+                    deckSaved = true;
+                }
+            }
+            else if (input.length == 2)
+            {
+                if (input[0].equalsIgnoreCase("edit"))
+                {
+                    editCard(input[1]);
+                    deckSaved = false;
+                }
+                else if (input[0].equalsIgnoreCase("delete"))
+                {
+                    deleteCard(input[1]);
+                    deckSaved = false;
+                }
+            }
         }
-        else
+        catch (CancellationException e)
         {
-            if (input[0].equalsIgnoreCase("add"))
+            if (!deckSaved)
             {
-                addCard();
+                sendEmbed("You are about to quit without saving. Continue? (Y/N)");
+                String answer = getInput().getContentDisplay().toLowerCase();
+                if (answer.equals("y") || answer.equals("yes") || answer.equals("yeah") || answer.equals("yup") || answer.equals("continue"))
+                {
+                    sendEmbed("Exited without saving.");
+                    return;
+                }
             }
-            else if (input[0].equalsIgnoreCase("edit"))
+            else
             {
-                editCard(input[1]);
-            }
-            else if (input[0].equalsIgnoreCase("delete"))
-            {
-                deleteCard(input[1]);
+                return;
             }
         }
+        catch (InvalidParameterException e)
+        {
+            sendEmbed(e.getMessage());
+        }
+        runCardsMenu(fm);
     }
 
     /**
      * Prompts the user to modify the name of the deck
      * @param showInstructions whether to show accepted inputs and the current value(s).
      */
-    private void editName(boolean showInstructions)
+    /*private void editName(boolean showInstructions, FileManager fm)
     {
         try
         {
@@ -157,7 +201,10 @@ public class DeckEditor
                 sendEmbed("Current Name: **"+deck.getName()+"**\n\nPlease enter a new name.");
 
             String newName = getInput().getContentDisplay();
+            String oldName = deck.getName();
             deck.setName(newName);
+            fm.deleteDeck(oldName);
+            fm.saveDeck(deck);
             sendEmbed("Successfully renamed to "+deck.getName()+".");
         }
         catch (CancellationException e)
@@ -167,14 +214,14 @@ public class DeckEditor
         catch (InvalidParameterException e)
         {
             sendEmbed(e.getMessage()+"\nPlease try again.");
-            editName(false);
+            editName(false, fm);
             return;
         }
         finally
         {
             runMainMenu();
         }
-    }
+    }*/
 
     /**
      * Prompts the user to modify the categories of the deck
@@ -191,7 +238,7 @@ public class DeckEditor
                 {
                     categoriesBuilder.append(category).append("\n");
                 }
-                sendEmbed("Current Categories: "+categoriesBuilder.toString()+"\n\nPlease enter the new categories, separated by commas (,).");
+                sendEmbed("Current Categories:\n "+categoriesBuilder.toString()+"\n\nPlease enter the new categories, separated by commas (,).");
             }
             int oldCategoryCount = deck.getStatNames().length;
 
@@ -225,10 +272,6 @@ public class DeckEditor
             sendEmbed(e.getMessage()+"\nPlease try again.");
             editCategories(false);
             return;
-        }
-        finally
-        {
-            runMainMenu();
         }
     }
 
@@ -273,10 +316,6 @@ public class DeckEditor
         {
             sendEmbed(e.getMessage());
         }
-        finally
-        {
-            runCardsMenu();
-        }
     }
 
     /**
@@ -302,10 +341,6 @@ public class DeckEditor
         catch (CancellationException | DuplicateName e)
         {
             sendEmbed(e.getMessage());
-        }
-        finally
-        {
-            runCardsMenu();
         }
     }
 

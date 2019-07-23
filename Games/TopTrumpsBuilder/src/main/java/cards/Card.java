@@ -5,7 +5,7 @@ import java.security.InvalidParameterException;
 
 public class Card implements Serializable
 {
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private String name;
     private String imageURL;
     private double[] stats;

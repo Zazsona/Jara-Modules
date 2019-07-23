@@ -20,33 +20,36 @@ public class TopTrumpsBuilder extends GameCommand
         {
             if (parameters.length > 2)
             {
+                boolean isDeckCurrentlyOpen = handleConcurrentModification(msgEvent.getChannel(), parameters[2]);
+                if (!isDeckCurrentlyOpen)
+                {
+                    FileManager fm = new FileManager(msgEvent.getGuild().getId());
+                    TextChannel channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TopTrumpsDeckBuild");
+                    if (parameters[1].equalsIgnoreCase("add"))
+                    {
+                        addDeck(channel, msgEvent.getMember(), fm, parameters[2]);
+                        guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
+                    }
+                    else if (parameters[1].equalsIgnoreCase("edit"))
+                    {
+                        editDeck(channel, msgEvent.getMember(), fm, fm.getDeck(parameters[2]));
+                        guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
+                    }
+                    else if (parameters[1].equalsIgnoreCase("delete"))
+                    {
+                        deleteDeck(channel, fm, parameters[2]);
+                        guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
+                    }
+                    else
+                    {
+                        CmdUtil.sendHelpInfo(msgEvent, getClass());
+                    }
+                }
+            }
+            else if (parameters.length > 1 && parameters[1].equalsIgnoreCase("list"))
+            {
                 FileManager fm = new FileManager(msgEvent.getGuild().getId());
-                if (parameters[1].equalsIgnoreCase("add"))
-                {
-                    handleConcurrentModification(msgEvent.getChannel(), parameters[2]);
-                    addDeck(msgEvent.getChannel(), msgEvent.getMember(), fm, parameters[2]);
-                    guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
-                }
-                else if (parameters[1].equalsIgnoreCase("edit"))
-                {
-                    handleConcurrentModification(msgEvent.getChannel(), parameters[2]);
-                    editDeck(msgEvent.getChannel(), msgEvent.getMember(), fm, fm.getDeck(parameters[2]));
-                    guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
-                }
-                else if (parameters[1].equalsIgnoreCase("delete"))
-                {
-                    handleConcurrentModification(msgEvent.getChannel(), parameters[2]);
-                    deleteDeck(msgEvent.getChannel(), fm, parameters[2]);
-                    guildToEditingDecksMap.get(msgEvent.getGuild().getId()).remove(parameters[2].toLowerCase());
-                }
-                else if (parameters[1].equalsIgnoreCase("list"))
-                {
-                    listDecks(msgEvent.getChannel(), fm);
-                }
-                else
-                {
-                    CmdUtil.sendHelpInfo(msgEvent, getClass());
-                }
+                listDecks(msgEvent.getChannel(), fm);
             }
             else
             {
@@ -59,29 +62,28 @@ public class TopTrumpsBuilder extends GameCommand
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
             embed.setDescription("\n**ERROR: Unable to access custom decks.**");
             msgEvent.getChannel().sendMessage(embed.build()).queue();
-            LoggerFactory.getLogger("TopTrumps Deck Builder").error(e.getLocalizedMessage());
+            LoggerFactory.getLogger("TopTrumps Deck Builder").error(e.toString());
+            e.printStackTrace();
         }
     }
 
     private void editDeck(TextChannel channel, Member user, FileManager fm, Deck deck)
     {
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
         if (deck != null)
         {
             DeckEditor de = new DeckEditor(deck, user, channel);
-            deck = de.run();
-            fm.saveDeck(deck);
-            embed.setDescription("Saved edits successfully.");
+            de.run(fm);
         }
         else
         {
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
             embed.setDescription("No deck with that name exists.");
+            channel.sendMessage(embed.build()).queue();
         }
-        channel.sendMessage(embed.build()).queue();
     }
 
-    private void handleConcurrentModification(TextChannel channel, String deckName)
+    private boolean handleConcurrentModification(TextChannel channel, String deckName)
     {
         if (guildToEditingDecksMap.containsKey(channel.getGuild().getId()))
         {
@@ -91,6 +93,7 @@ public class TopTrumpsBuilder extends GameCommand
                 embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
                 embed.setDescription("This deck is currently being modified.");
                 channel.sendMessage(embed.build()).queue();
+                return true;
             }
             else
             {
@@ -103,6 +106,7 @@ public class TopTrumpsBuilder extends GameCommand
             deckNameList.add(deckName.toLowerCase());
             guildToEditingDecksMap.put(channel.getGuild().getId(), deckNameList);
         }
+        return false;
     }
 
     private void addDeck(TextChannel channel, Member user, FileManager fm, String deckName) throws IOException
@@ -134,13 +138,30 @@ public class TopTrumpsBuilder extends GameCommand
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
-        StringBuilder descBuilder = new StringBuilder();
-        for (String deckName : fm.getDeckNames())
+        try
         {
-            descBuilder.append("- ").append(deckName).append("\n");
+            if (fm.getDeckNames().size() > 0)
+            {
+                StringBuilder descBuilder = new StringBuilder();
+                for (String deckName : fm.getDeckNames())
+                {
+                    descBuilder.append("- ").append(deckName).append("\n");
+                }
+                embed.setDescription(descBuilder.toString());
+            }
+            else
+            {
+                throw new NullPointerException("There are no decks.");
+            }
         }
-        embed.setDescription(descBuilder.toString());
-        channel.sendMessage(embed.build()).queue();
+        catch (NullPointerException e)
+        {
+            embed.setDescription("You have no custom decks!");
+        }
+        finally
+        {
+            channel.sendMessage(embed.build()).queue();
+        }
     }
 
 
