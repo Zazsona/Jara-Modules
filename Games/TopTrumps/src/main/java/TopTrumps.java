@@ -24,10 +24,13 @@ public class TopTrumps extends GameCommand
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
-        if (parameters[1].equalsIgnoreCase("list"))
+        if (parameters.length > 1)
         {
-            listDecks(msgEvent.getChannel());
-            return;
+            if (parameters[1].equalsIgnoreCase("list"))
+            {
+                listDecks(msgEvent.getChannel());
+                return;
+            }
         }
 
         Setup setup = new Setup();
@@ -35,16 +38,24 @@ public class TopTrumps extends GameCommand
         if (hasPermissions)
         {
             Deck deck = DeckLoader.getDeck(msgEvent.getGuild().getId(), parameters);
-            ArrayList<Team> teams = new ArrayList<>();
-            teams.addAll(setup.setupTeams(msgEvent.getChannel(), msgEvent.getMember(), deck, 2));
+            if (deck == null)
+            {
+                msgEvent.getChannel().sendMessage("There is no deck by that name.").queue();
+                return;
+            }
+            else
+            {
+                ArrayList<Team> teams = new ArrayList<>();
+                teams.addAll(setup.setupTeams(msgEvent.getChannel(), msgEvent.getMember(), deck, 2));
 
-            Team team1 = teams.get(0);
-            Team team2 = teams.get(1);
+                Team team1 = teams.get(0);
+                Team team2 = teams.get(1);
 
-            boolean isTeam1Turn = new Random().nextBoolean();
-            MessageManager mm = new MessageManager();
+                boolean isTeam1Turn = new Random().nextBoolean();
+                MessageManager mm = new MessageManager();
 
-            runGame(deck, team1, team2, isTeam1Turn, mm, setup);
+                runGame(deck, team1, team2, isTeam1Turn, mm, setup);
+            }
         }
         else
         {
@@ -236,12 +247,20 @@ public class TopTrumps extends GameCommand
         embed.setTitle("Info");
         String turnText = (activeTeam) ? "*It's your turn!*" : "*It's the opponent's turn.*";
         embed.setDescription(turnText+ "\nYour cards: "+team.getCardCount()+"/"+deck.getCards().size()+"\nCards in holding: "+cardsInHolding.size()+"\n\n**"+card.getName()+"**");
-        embed.setThumbnail(card.getImageURL());
         for (int i = 0; i<deck.getStatNames().length; i++)
         {
             embed.addField(deck.getStatNames()[i], String.format("%,.2f", card.getStats()[i]).replace(".00", ""), true);
         }
-        team.getChannel().sendMessage(embed.build()).queue();
+        try
+        {
+            embed.setThumbnail(card.getImageURL());
+            team.getChannel().sendMessage(embed.build()).queue();
+        }
+        catch (IllegalArgumentException e)
+        {
+            embed.setThumbnail(null);
+            team.getChannel().sendMessage(embed.build()).queue();
+        }
     }
 
     private void endGame(Setup setup, Team... teams)
@@ -274,6 +293,7 @@ public class TopTrumps extends GameCommand
         catch (IOException e)
         {
             embed.setDescription("\n**ERROR: Unable to access custom decks.**");
+            e.printStackTrace();
         }
         channel.sendMessage(embed.build()).queue();
     }

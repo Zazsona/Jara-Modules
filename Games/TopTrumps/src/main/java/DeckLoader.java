@@ -29,10 +29,7 @@ public class DeckLoader
                 else
                 {
                     Deck deck = getCustomDeck(guildID, parameters[1]);
-                    if (deck == null)
-                    {
-                        return getRandomDeck(guildID);
-                    }
+                    return deck;
                 }
             }
             return getRandomDeck(guildID);
@@ -140,30 +137,29 @@ public class DeckLoader
 
     public static synchronized HashMap<String, Deck> getCustomDeckMap(String guildID) throws IOException
     {
-        Logger logger = LoggerFactory.getLogger(DeckLoader.class);
+        HashMap<String, HashMap<String, Deck>> guildDeckMap;
         try
         {
-            File file = new File(SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/TopTrumpDecks.jara");
-            HashMap<String, HashMap<String, Deck>> guildDeckMap = new HashMap<>();
-            if (file.exists())
-            {
-                FileInputStream fis = new FileInputStream(file);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                guildDeckMap = (HashMap<String, HashMap<String, Deck>>) ois.readObject();
-                ois.close();
-                fis.close();
-            }
-            else
-            {
-                guildDeckMap = new HashMap<>();
-            }
-
+            FileInputStream fis = new FileInputStream(SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/TopTrumpDecks.jara");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            guildDeckMap = (HashMap<String, HashMap<String, Deck>>) ois.readObject();
+            ois.close();
+            fis.close();
             if (!guildDeckMap.containsKey(guildID))
             {
                 guildDeckMap.put(guildID, new HashMap<>());
             }
             return guildDeckMap.get(guildID);
 
+        }
+        catch (IOException e)
+        {
+            guildDeckMap = new HashMap<>();
+            if (!guildDeckMap.containsKey(guildID))
+            {
+                guildDeckMap.put(guildID, new HashMap<>());
+            }
+            return guildDeckMap.get(guildID);
         }
         catch (ClassNotFoundException e)
         {
