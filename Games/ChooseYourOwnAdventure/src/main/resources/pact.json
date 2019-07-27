@@ -1,0 +1,10 @@
+{
+  "commandKey": "ChooseYourOwnAdventure",
+  "aliases": [
+    "CYOA",
+    "AdventureStory"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "User-created story."
+}
