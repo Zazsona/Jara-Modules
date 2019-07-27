@@ -1,0 +1,10 @@
+{
+  "commandKey": "Kick",
+  "aliases": [
+    "Boot",
+    "Remove"
+  ],
+  "category": "ADMIN",
+  "disableable": true,
+  "description": "Kicks members."
+}

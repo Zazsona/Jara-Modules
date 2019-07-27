@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Kick [@Member1] [@Member2] ... [@MemberN]"
+  ],
+  "description": "Kicks all members mentioned. If any members can't be kicked, the command user will be informed of who and why."
+}
