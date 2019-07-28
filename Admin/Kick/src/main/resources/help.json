@@ -1,6 +1,6 @@
 {
   "params": [
-    "Kick [@Member1] [@Member2] ... [@MemberN]"
+    "Kick [@Member1] [@Member2] ... [@MemberN] (Reason)"
   ],
-  "description": "Kicks all members mentioned. If any members can't be kicked, the command user will be informed of who and why."
+  "description": "Kicks all members mentioned with the reason specified. If any members can't be kicked, the command user will be informed of who and why.\n\nE.g: `/Kick @Bob @John Being a Muppet` would kick users \"Bob\" and \"John\" with the removal reason of \"Being a Muppet\""
 }
