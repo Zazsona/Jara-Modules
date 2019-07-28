@@ -1,0 +1,9 @@
+{
+  "commandKey": "Ban",
+  "aliases": [
+    "BanHammer"
+  ],
+  "category": "ADMIN",
+  "disableable": true,
+  "description": "Bans members."
+}
