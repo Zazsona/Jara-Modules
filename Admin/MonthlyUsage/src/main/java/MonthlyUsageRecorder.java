@@ -39,7 +39,7 @@ public class MonthlyUsageRecorder extends Load
     {
         OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
         Timer broadcastScheduler = new Timer();
-        Calendar broadcastTime = Calendar.getInstance();
+        Calendar broadcastTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         if (fm.getLastReset().getMonthValue() == utc.getMonthValue() && fm.getLastReset().getYear() == utc.getYear())
         {
             broadcastTime.set(Calendar.MONTH, utc.getMonthValue());
