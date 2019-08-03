@@ -1,0 +1,11 @@
+{
+  "commandKey": "Madlibs",
+  "aliases": [
+    "Madlib",
+    "MakeAStory",
+    "WriteAStory"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Make a madlib."
+}
