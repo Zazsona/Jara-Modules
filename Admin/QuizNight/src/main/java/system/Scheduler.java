@@ -55,7 +55,9 @@ public class Scheduler extends Load
                     if (gqc.StartMinute == (utc.getHour()*60)+utc.getMinute())
                     {
                         Quiz qn = new Quiz();
-                        new Thread(() -> qn.startQuiz(CmdUtil.getJDA().getGuildById(gqc.GuildID), false)).start();
+                        Thread quizThread = new Thread(() -> qn.startQuiz(CmdUtil.getJDA().getGuildById(gqc.GuildID), false));
+                        quizThread.setName(gqc.GuildID+"-Quiz");
+                        quizThread.start();
                     }
                 }
                 Thread.sleep((60*1000)-(utc.getSecond()*1000)); //Align to minute.
@@ -63,7 +65,7 @@ public class Scheduler extends Load
         }
         catch (InterruptedException e)
         {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
             //Ignore, we'll just restart.
         }
         quizLauncher();

@@ -42,7 +42,7 @@ public class UserStatManager
         }
         catch (IOException e)
         {
-            logger.error("Unable to create Quiz Night user stats file.\n"+e.getMessage());
+            logger.error("Unable to create Quiz Night user stats file.\n"+e.toString());
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class UserStatManager
         }
         catch (IOException | ClassNotFoundException e)
         {
-            logger.error("Unable to read Quiz Night user stats file.\n"+e.getMessage());
+            logger.error("Unable to read Quiz Night user stats file.\n"+e.toString());
         }
         return userStatMap;
     }
@@ -81,7 +81,7 @@ public class UserStatManager
         }
         catch (IOException e)
         {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 

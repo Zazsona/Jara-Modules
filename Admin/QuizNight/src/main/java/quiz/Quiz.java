@@ -31,14 +31,15 @@ public class Quiz
         {
             quizTeams = new HashMap<>();
             Gson gson = new Gson();
+            QuizSettings.GuildQuizConfig gqc = SettingsManager.getGuildQuizSettings(guild.getIdLong());
             String json = CmdUtil.sendHTTPRequest("https://opentdb.com/api.php?amount=10");
             TriviaJson tj = gson.fromJson(json, TriviaJson.class);
-            QuizSettings.GuildQuizConfig gqc = SettingsManager.getGuildQuizSettings(guild.getIdLong());
             initialiseChannels(guild);
             JoinHandler joinHandler = new JoinHandler(quizCategory, questionsChannel, quizTeams);
             Thread joinHandlerThread = new Thread(() -> joinHandler.acceptJoins(guild));
             joinHandlerThread.start();
 
+            Message quizNoticeMessage = null;
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(CmdUtil.getHighlightColour(quizCategory.getGuild().getSelfMember()));
             embed.setTitle("=== Quiz ===");
@@ -47,16 +48,21 @@ public class Quiz
                 embed.getDescriptionBuilder().append("Quiz will start in 5 minutes. Join with "+ SettingsUtil.getGuildCommandPrefix(guild.getId())+"join (Team name)!");
                 if (gqc.PingQuizAnnouncement)
                 {
-                    embed.getDescriptionBuilder().append("\n").append(guild.getPublicRole().getAsMention());
+                    quizNoticeMessage = guild.getDefaultChannel().sendMessage(guild.getPublicRole().getAsMention()).embed(embed.build()).complete();
                 }
-                guild.getDefaultChannel().sendMessage(embed.build()).queue();
+                else
+                {
+                    quizNoticeMessage = guild.getDefaultChannel().sendMessage(embed.build()).complete();
+                }
                 Thread.sleep((5*60*1000)-30*1000); //Minus 30 for the 30 second notice.
             }
             embed.setDescription("**Quiz will start in 30 seconds!**\nJoin with "+ SettingsUtil.getGuildCommandPrefix(guild.getId())+"join (Team name)!");
-            guild.getDefaultChannel().sendMessage(embed.build()).queue();
+            quizNoticeMessage = (quizNoticeMessage == null) ? guild.getDefaultChannel().sendMessage(embed.build()).complete() : quizNoticeMessage.editMessage(embed.build()).complete();
             Thread.sleep(30*1000);
             joinHandler.stopAcceptingJoins();
             joinHandlerThread.interrupt();
+            embed.setDescription("**The quiz has now begun!**\nGood luck!");
+            quizNoticeMessage.getChannel().sendMessage(embed.build()).queue();
 
             boolean sendQuestionsToAllChannels = quizTeams.size() <= 5;
             if (quizTeams.size() > 0)
@@ -77,7 +83,7 @@ public class Quiz
         }
         catch (JsonSyntaxException e)
         {
-            //The provided question is dodgy. Try again.
+            //The provided question collection is dodgy. Try again.
             startQuiz(guild, quickStart);
         }
         catch (InterruptedException e)
@@ -86,6 +92,27 @@ public class Quiz
             startQuiz(guild, quickStart);
         }
     }
+
+    /*
+    Category toggle system. Due to API limitations, this would require *multiple* calls. Roughly the same number as there is questions, up to 31. This many API calls is unfair and slooow.
+     One possible solution would be to gather 50 questions (the maximum) and only select the first X (question count) with supported categories.
+     If there are insufficient supported questions, and there is at least one allowed category, make continuous API calls, and add questions with matching categories *if* they are not already queued.
+
+     If only one category is available, we can make a special exception for it.
+     */
+    /*private String getRestQuery(QuizSettings.GuildQuizConfig gqc, int questionCount)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("https://opentdb.com/api.php?amount=").append(questionCount);
+        for (int i = 0; i<X; i++)
+        {
+            if (!gqc.BannedCategories.contains(i))
+            {
+                sb.append(i).append("-");
+            }
+        }
+        return sb.toString();
+    }*/
 
     private void initialiseChannels(Guild guild)
     {
@@ -159,28 +186,31 @@ public class Quiz
     {
         try
         {
-            for (QuizTeam qt : quizTeams.values())
-            {
-                for (int i = 0; i<questions.length; i++)
-                {
-                    if (qt.isCorrect(i))                          //Tally up points
-                    {
-                        qt.addPoints(questions[i].getPoints());
-                    }
-                }
-            }
-
-            QuizTeam winningTeam = sendLeaderboard();
-            if (quizTeams.size() <= 20)
+            if (quizTeams.size() > 0)
             {
                 for (QuizTeam qt : quizTeams.values())
                 {
-                    sendResults(qt, questions);
-                    qt.getTeamChannel().putPermissionOverride(winningTeam.getTeamChannel().getGuild().getPublicRole()).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
+                    for (int i = 0; i<questions.length; i++)
+                    {
+                        if (qt.isCorrect(i))                          //Tally up points
+                        {
+                            qt.addPoints(questions[i].getPoints());
+                        }
+                    }
                 }
+
+                QuizTeam winningTeam = sendLeaderboard();
+                UserStatManager.saveQuizNightStats(winningTeam.getTeamName(), questions, quizTeams.values());
+                if (quizTeams.size() <= 20)
+                {
+                    for (QuizTeam qt : quizTeams.values())
+                    {
+                        sendResults(qt, questions);
+                        qt.getTeamChannel().putPermissionOverride(winningTeam.getTeamChannel().getGuild().getPublicRole()).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
+                    }
+                }
+                Thread.sleep(10*60*1000);
             }
-            UserStatManager.saveQuizNightStats(winningTeam.getTeamName(), questions, quizTeams.values());
-            Thread.sleep(10*60*1000);
         }
         catch (InterruptedException e)
         {

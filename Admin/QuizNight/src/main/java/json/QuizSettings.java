@@ -1,6 +1,8 @@
 package json;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class QuizSettings implements Serializable
 {
@@ -15,5 +17,6 @@ public class QuizSettings implements Serializable
         public boolean[] Days = new boolean[7];
         public String[] AllowedRoles = new String[0];
         public boolean PingQuizAnnouncement = false;
+        public HashSet<Integer> BannedCategories = new HashSet<>(); //TODO: All categories enabled by default.
     }
 }

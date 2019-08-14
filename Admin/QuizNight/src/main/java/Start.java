@@ -185,6 +185,10 @@ public class Start extends Command
                     hour += 12;
                     hour = (hour >= 24) ? hour-24 : hour;
                 }
+                else if (param.toLowerCase().contains("am"))
+                {
+                    hour = (hour >= 12) ? hour-12 : hour;
+                }
                 changeOccured = true;
             }
             else if (param.toLowerCase().matches("[0-9]+") || param.toLowerCase().matches("[0-9]+am") || param.toLowerCase().matches("[0-9]+pm"))
@@ -194,7 +198,11 @@ public class Start extends Command
                 if (param.toLowerCase().contains("pm"))
                 {
                     hour += 12;
-                    hour = (hour >= 24) ? hour-24 : hour;
+                    hour = (hour >= 24) ? hour-12 : hour;
+                }
+                else if (param.toLowerCase().contains("am"))
+                {
+                    hour = (hour >= 12) ? hour-12 : hour;
                 }
                 changeOccured = true;
             }
@@ -202,6 +210,10 @@ public class Start extends Command
             {
                 hour += 12;
                 hour = (hour >= 24) ? hour-24 : hour;
+            }
+            else if (param.equalsIgnoreCase("am")) //This allows for both 12:00PM and 12:00 PM.
+            {
+                hour = (hour >= 12) ? hour-12 : hour;
             }
         }
         if (changeOccured)

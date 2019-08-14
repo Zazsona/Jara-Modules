@@ -38,7 +38,7 @@ public class SettingsManager
         }
         catch (IOException e)
         {
-            logger.error("Unable to create Quiz Night settings file.\n"+e.getMessage());
+            logger.error("Unable to create Quiz Night settings file.\n"+e.toString());
             return null;
         }
     }
@@ -55,7 +55,8 @@ public class SettingsManager
         }
         catch (IOException | ClassNotFoundException e)
         {
-            logger.error("Unable to read Quiz Night settings file.\n"+e.getMessage());
+            logger.error("Unable to read Quiz Night settings file.\n"+e.toString());
+            quizSettings = new QuizSettings();
         }
         return quizSettings;
     }
@@ -77,7 +78,7 @@ public class SettingsManager
         }
         catch (IOException e)
         {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
 
@@ -129,7 +130,7 @@ public class SettingsManager
     {
         if (quizSettings.GuildQuizConfigs.length > 0)
         {
-            String lastSign = "";
+            Boolean isLastGreater = null;
             int min = 0;
             int max = quizSettings.GuildQuizConfigs.length;
             while (min != max)
@@ -139,25 +140,25 @@ public class SettingsManager
                 if (midGuild < guildID)
                 {
                     min = mid;
-                    if (lastSign.equals(">"))
+                    if (isLastGreater)
                     {
                         break;
                     }
                     else
                     {
-                        lastSign = "<";
+                        isLastGreater = false;
                     }
                 }
                 else if (midGuild > guildID)                            //Quick binary search to find the general area it will fit.
                 {
                     max = mid;
-                    if (lastSign.equals("<"))
+                    if (!isLastGreater)
                     {
                         break;
                     }
                     else
                     {
-                        lastSign = ">";
+                        isLastGreater = true;
                     }
                 }
             }
