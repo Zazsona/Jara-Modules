@@ -1,0 +1,10 @@
+{
+  "commandKey": "CountdownConundrum",
+  "aliases": [
+    "CC",
+    "Anagram"
+  ],
+  "category": "GAMES",
+  "disableable": true,
+  "description": "Solve the anagram."
+}
