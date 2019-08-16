@@ -11,6 +11,6 @@
     "D100"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Rolls dice."
 }

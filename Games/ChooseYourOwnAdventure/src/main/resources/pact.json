@@ -5,6 +5,6 @@
     "AdventureStory"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "User-created story."
 }

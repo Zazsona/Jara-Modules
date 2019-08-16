@@ -4,6 +4,6 @@
     "SetStatus"
   ],
   "category": "ADMIN",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Toggles presence."
 }

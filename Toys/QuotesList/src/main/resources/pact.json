@@ -1,0 +1,10 @@
+{
+  "commandKey": "Quotes",
+  "aliases": [
+    "QuoteList",
+    "ListQuotes"
+  ],
+  "category": "TOYS",
+  "targetVersion": "0.1",
+  "description": "Lists saved quotes."
+}

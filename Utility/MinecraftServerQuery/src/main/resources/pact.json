@@ -6,6 +6,6 @@
     "MinecraftServerStatus"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Fetches Minecraft server info."
 }

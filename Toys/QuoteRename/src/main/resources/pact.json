@@ -1,0 +1,9 @@
+{
+  "commandKey": "QuoteRename",
+  "aliases": [
+    "RenameQuote"
+  ],
+  "category": "TOYS",
+  "targetVersion": "0.1",
+  "description": "Rename saved quotes."
+}

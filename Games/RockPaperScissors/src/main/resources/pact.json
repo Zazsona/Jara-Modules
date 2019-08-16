@@ -4,6 +4,6 @@
     "RPS"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "The classic hand game."
 }

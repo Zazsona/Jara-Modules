@@ -7,6 +7,6 @@
     "ChristmasGift"
   ],
   "category": "SEASONAL",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Awards a present."
 }

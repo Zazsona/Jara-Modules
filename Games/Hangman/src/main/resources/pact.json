@@ -5,6 +5,6 @@
     "HM"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Classic Hangman."
 }

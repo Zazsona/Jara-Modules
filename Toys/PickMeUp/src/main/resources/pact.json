@@ -6,6 +6,6 @@
     "PetPic"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Cute animals for a rainy day."
 }

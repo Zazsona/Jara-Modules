@@ -4,6 +4,6 @@
     "Status"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Shows bot status."
 }

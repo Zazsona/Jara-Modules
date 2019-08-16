@@ -4,6 +4,6 @@
     "Repeat"
   ],
   "category": "AUDIO",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Replays current audio track."
 }

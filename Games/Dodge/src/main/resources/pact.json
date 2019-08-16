@@ -4,6 +4,6 @@
     "DodgeGame"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Dodge the lasers!"
 }

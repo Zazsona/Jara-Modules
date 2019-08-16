@@ -1,0 +1,11 @@
+{
+  "commandKey": "QuoteDelete",
+  "aliases": [
+    "RemoveQuote",
+	"DeleteQuote",
+	"QuoteRemove"
+  ],
+  "category": "TOYS",
+  "targetVersion": "0.1",
+  "description": "Delete quotes."
+}

@@ -11,6 +11,6 @@
     "IsItWednesday"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Is it Wednesday?"
 }

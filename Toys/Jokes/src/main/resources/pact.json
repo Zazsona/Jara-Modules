@@ -7,6 +7,6 @@
     "MakeMeLaugh"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Tells a joke."
 }

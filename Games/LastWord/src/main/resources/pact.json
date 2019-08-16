@@ -6,6 +6,6 @@
     "TopicWords"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Get the last word in."
 }

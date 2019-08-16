@@ -1,0 +1,13 @@
+{
+  "commandKey": "MixtapeList",
+  "aliases": [
+    "ListMixtapes",
+    "Mixtapes",
+    "PlaylistList",
+    "ListPlaylists",
+    "Playlists"
+    ],
+  "category": "AUDIO",
+  "targetVersion": "0.1",
+  "description": "Lists mixtapes."
+}

@@ -9,6 +9,6 @@
     "ToggleTextVoice"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Text for voice channels."
 }

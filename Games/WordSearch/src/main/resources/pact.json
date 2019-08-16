@@ -7,6 +7,6 @@
     "WordFinder"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Randomly generated Word Search."
 }

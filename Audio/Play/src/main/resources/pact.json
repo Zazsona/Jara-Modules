@@ -10,6 +10,6 @@
     "DJ"
   ],
   "category": "AUDIO",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Plays audio."
 }

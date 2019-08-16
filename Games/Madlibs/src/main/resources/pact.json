@@ -6,6 +6,6 @@
     "WriteAStory"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Make a madlib."
 }

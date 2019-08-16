@@ -6,6 +6,6 @@
     "Echo"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Repeats a phrase."
 }

@@ -6,6 +6,6 @@
     "TriviaStats"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Lists Quiz Night stats."
 }

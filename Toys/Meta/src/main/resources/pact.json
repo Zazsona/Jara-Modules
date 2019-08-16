@@ -4,6 +4,6 @@
     "MetaMeta"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "M E T A."
 }

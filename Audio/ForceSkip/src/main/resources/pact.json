@@ -9,6 +9,6 @@
     "InstaSkip"
   ],
   "category": "AUDIO",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Forcefully skip the track."
 }

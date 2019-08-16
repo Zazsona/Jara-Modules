@@ -5,6 +5,6 @@
     "SpongebobCard"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Spongebob Timecards."
 }

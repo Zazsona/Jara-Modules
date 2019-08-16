@@ -4,6 +4,6 @@
     "CD"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Make the longest word you can."
 }

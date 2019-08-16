@@ -6,6 +6,6 @@
     "fortune"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Tells your fortune."
 }

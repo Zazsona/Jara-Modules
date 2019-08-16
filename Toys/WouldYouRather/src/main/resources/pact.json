@@ -6,6 +6,6 @@
     "WYR?"
   ],
   "category": "TOYS",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "'Would you rather?' questions."
 }

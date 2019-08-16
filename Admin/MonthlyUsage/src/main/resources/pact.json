@@ -4,7 +4,7 @@
     "MonthlyCommandUsage",
     "MonthlyBotUsage"
   ],
-  "category": "TOYS",
-  "disableable": true,
+  "category": "UTILITY",
+  "targetVersion": "0.1",
   "description": "Tracks usage."
 }

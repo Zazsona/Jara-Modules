@@ -5,6 +5,6 @@
     "DecipherTheEmoji"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Decipher the emojis."
 }

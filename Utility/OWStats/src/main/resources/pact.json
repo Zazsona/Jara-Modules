@@ -7,6 +7,6 @@
     "OverwatchProfile"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Gets Overwatch Stats."
 }

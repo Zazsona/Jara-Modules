@@ -4,6 +4,6 @@
     "Pong"
   ],
   "category": "UTILITY",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Tests the connection."
 }

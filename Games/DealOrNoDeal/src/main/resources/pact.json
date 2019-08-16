@@ -5,6 +5,6 @@
     "BankerGame"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Deal or No Deal."
 }

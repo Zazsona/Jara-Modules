@@ -6,6 +6,6 @@
     "EventMessage"
   ],
   "category": "ADMIN",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Event messages."
 }

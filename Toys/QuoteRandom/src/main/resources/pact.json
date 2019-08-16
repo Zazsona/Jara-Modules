@@ -1,0 +1,10 @@
+{
+  "commandKey": "QuoteRandom",
+  "aliases": [
+    "RandQuote",
+	"RandomQuote"
+  ],
+  "category": "TOYS",
+  "targetVersion": "0.1",
+  "description": "Recall a random quote."
+}

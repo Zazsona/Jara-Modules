@@ -10,6 +10,6 @@
     "NC"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "3 in a row."
 }

@@ -10,6 +10,6 @@
     "TopTrumpsDeckBuilder"
   ],
   "category": "GAMES",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Top Trumps deck builder."
 }

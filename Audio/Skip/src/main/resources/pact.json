@@ -6,6 +6,6 @@
     "Next"
   ],
   "category": "AUDIO",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Vote to skip the track."
 }

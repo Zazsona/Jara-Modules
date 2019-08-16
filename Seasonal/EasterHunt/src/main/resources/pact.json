@@ -7,6 +7,6 @@
     "EasterSearch"
   ],
   "category": "SEASONAL",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Find the egg!"
 }

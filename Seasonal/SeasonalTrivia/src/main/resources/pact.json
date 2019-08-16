@@ -12,6 +12,6 @@
     "XmasTrivia"
   ],
   "category": "SEASONAL",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Seasonal trivia."
 }

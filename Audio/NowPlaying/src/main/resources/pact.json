@@ -16,6 +16,6 @@
     "Shazam"
   ],
   "category": "AUDIO",
-  "disableable": true,
+  "targetVersion": "0.1",
   "description": "Current track details."
 }

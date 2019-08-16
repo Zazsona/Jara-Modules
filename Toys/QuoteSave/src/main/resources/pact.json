@@ -1,0 +1,9 @@
+{
+  "commandKey": "QuoteSave",
+  "aliases": [
+    "SaveQuote"
+  ],
+  "category": "TOYS",
+  "targetVersion": "0.1",
+  "description": "Save messages as quotes."
+}
