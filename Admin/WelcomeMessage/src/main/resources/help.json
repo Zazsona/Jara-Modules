@@ -1,0 +1,7 @@
+{
+  "params": [
+    "WelcomeMessage",
+    "WelcomeMessage [Enable/Disable]"
+  ],
+  "description": "Modifies the welcome message sent to new members.\nAppend enable or disable to toggle this feature on or off."
+}

@@ -1,0 +1,11 @@
+{
+  "commandKey": "WelcomeMessage",
+  "aliases": [
+    "ModifyWelcome",
+    "EditWelcome",
+    "JoinMessage"
+  ],
+  "category": "ADMIN",
+  "targetVersion": "0.1",
+  "description": "Sets a welcome message."
+}
