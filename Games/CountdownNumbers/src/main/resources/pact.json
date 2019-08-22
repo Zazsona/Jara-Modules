@@ -1,0 +1,11 @@
+{
+  "commandKey": "CountdownNumbers",
+  "aliases": [
+    "CDN",
+    "CDNR",
+    "CountdownNumbersRound"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Hit the number!"
+}
