@@ -1,0 +1,10 @@
+{
+  "commandKey": "Pokedex",
+  "aliases": [
+    "PokemonDex",
+    "Pokepedia"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Pokemon information."
+}

@@ -1,0 +1,7 @@
+{
+  "params": [
+    "Pokedex [Pokemon]",
+    "Pokedex [Pokemon] (Dex Type)"
+  ],
+  "description": "An info base for all Pokemon.\n\nThere are three different dex types to choose from:\nNormal (Default) - Basic Pokemon information\nBattle - Moves and stats\nBreeding - Egg groups and distances."
+}
