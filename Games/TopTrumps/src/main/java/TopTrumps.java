@@ -20,6 +20,8 @@ import java.util.Random;
 public class TopTrumps extends GameCommand
 {
     private LinkedList<Card> cardsInHolding = new LinkedList<>();
+    private boolean useAI = false;
+    private AI ai;
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -33,7 +35,8 @@ public class TopTrumps extends GameCommand
             }
         }
 
-        Setup setup = new Setup();
+        useAI = checkParametersForAIFlag(parameters);
+        Setup setup = new Setup(useAI);
         boolean hasPermissions = setup.checkPermissions(msgEvent.getGuild().getSelfMember());
         if (hasPermissions)
         {
@@ -46,13 +49,19 @@ public class TopTrumps extends GameCommand
             else
             {
                 ArrayList<Team> teams = new ArrayList<>();
-                teams.addAll(setup.setupTeams(msgEvent.getChannel(), msgEvent.getMember(), deck, 2));
+                teams.addAll(setup.setupTeams(msgEvent.getChannel(), msgEvent.getMember(), deck, (useAI) ? 1 : 2));
 
                 Team team1 = teams.get(0);
                 Team team2 = teams.get(1);
 
                 boolean isTeam1Turn = new Random().nextBoolean();
                 MessageManager mm = new MessageManager();
+
+                if (useAI)
+                {
+                    ai = new AI(deck);
+                    team2.addTeamMember(msgEvent.getGuild().getSelfMember());
+                }
 
                 runGame(deck, team1, team2, isTeam1Turn, mm, setup);
             }
@@ -98,7 +107,8 @@ public class TopTrumps extends GameCommand
             embed.setThumbnail("https://i.imgur.com/scKHMRb.png");
             embed.setDescription(embedDescription);
             team1.getChannel().sendMessage(embed.build()).queue();
-            team2.getChannel().sendMessage(embed.build()).queue();
+            if (!useAI)
+                team2.getChannel().sendMessage(embed.build()).queue();
         }
         catch (GameOverException e)
         {
@@ -111,12 +121,13 @@ public class TopTrumps extends GameCommand
         }
         finally
         {
-            endGame(setup, team1, team2);
+            endGame(setup);
         }
     }
 
     private Team getWinner(Team team1, Team team2, int selection, Deck deck)
     {
+
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.RED);
         String versusMessage = (deck.getStatNames()[selection]+":\n"+team1.getFrontCard().getName()+" vs "+team2.getFrontCard().getName());
@@ -127,9 +138,12 @@ public class TopTrumps extends GameCommand
             embed.setDescription("== **VICTORY** == \n\n"+versusMessage);
             embed.setThumbnail("https://i.imgur.com/scKHMRb.png");
             team1.getChannel().sendMessage(embed.build()).queue();
-            embed.setDescription("== **LOSS** == \n\n"+versusMessage);
-            embed.setThumbnail("https://i.imgur.com/U7JJwRS.png");
-            team2.getChannel().sendMessage(embed.build()).queue();
+            if (!useAI)
+            {
+                embed.setDescription("== **LOSS** == \n\n"+versusMessage);
+                embed.setThumbnail("https://i.imgur.com/U7JJwRS.png");
+                team2.getChannel().sendMessage(embed.build()).queue();
+            }
             return team1;
         }
         else if (team2.getFrontCard().equals(winningCard))
@@ -137,9 +151,12 @@ public class TopTrumps extends GameCommand
             embed.setDescription("== **LOSS** == \n\n"+versusMessage);
             embed.setThumbnail("https://i.imgur.com/U7JJwRS.png");
             team1.getChannel().sendMessage(embed.build()).queue();
-            embed.setDescription("== **VICTORY** == \n\n"+versusMessage);
-            embed.setThumbnail("https://i.imgur.com/scKHMRb.png");
-            team2.getChannel().sendMessage(embed.build()).queue();
+            if (!useAI)
+            {
+                embed.setDescription("== **VICTORY** == \n\n"+versusMessage);
+                embed.setThumbnail("https://i.imgur.com/scKHMRb.png");
+                team2.getChannel().sendMessage(embed.build()).queue();
+            }
             return team2;
         }
         else
@@ -147,7 +164,8 @@ public class TopTrumps extends GameCommand
             embed.setDescription("== **DRAW** == \n\n"+versusMessage);
             embed.setThumbnail("https://i.imgur.com/4TUoYOM.png");
             team1.getChannel().sendMessage(embed.build()).queue();
-            team2.getChannel().sendMessage(embed.build()).queue();
+            if (!useAI)
+                team2.getChannel().sendMessage(embed.build()).queue();
             return null;
         }
     }
@@ -199,32 +217,47 @@ public class TopTrumps extends GameCommand
 
     private int getSelection(Deck deck, Team team, MessageManager mm) throws GameOverException
     {
-        int selectionIndex = -1;
-        TextChannel channel = team.getChannel();
-        while (selectionIndex == -1)
+        if (useAI && team.getChannel() == null)
         {
-            int timeout = Integer.parseInt(SettingsUtil.getGuildSettings(channel.getGuild().getId()).getGameChannelTimeout());
-            Message msg = mm.getNextMessage(channel, timeout*60*1000);
-            if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+            try
             {
-                channel.putPermissionOverride(msg.getMember()).setDeny(Permission.MESSAGE_READ).queue();
-                team.removeTeamMember(msg.getMember());
-                if (team.getMemberCount() == 0)
+                Thread.sleep(3000);
+            }
+            catch (InterruptedException e) {}
+            finally
+            {
+                return ai.getStatSelection(team.getFrontCard());
+            }
+        }
+        else
+        {
+            int selectionIndex = -1;
+            TextChannel channel = team.getChannel();
+            while (selectionIndex == -1)
+            {
+                int timeout = Integer.parseInt(SettingsUtil.getGuildSettings(channel.getGuild().getId()).getGameChannelTimeout());
+                Message msg = mm.getNextMessage(channel, timeout*60*1000);
+                if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+                {
+                    channel.putPermissionOverride(msg.getMember()).setDeny(Permission.MESSAGE_READ).queue();
+                    team.removeTeamMember(msg.getMember());
+                    if (team.getMemberCount() == 0)
+                    {
+                        throw new GameOverException();
+                    }
+                }
+                else if (msg == null)
                 {
                     throw new GameOverException();
                 }
-            }
-            else if (msg == null)
-            {
-                throw new GameOverException();
-            }
-            else
-            {
-                selectionIndex = getSelectionIndex(msg.getContentDisplay(), deck);
-            }
+                else
+                {
+                    selectionIndex = getSelectionIndex(msg.getContentDisplay(), deck);
+                }
 
+            }
+            return selectionIndex;
         }
-        return selectionIndex;
     }
 
     private int getSelectionIndex(String messageContent, Deck deck)
@@ -241,29 +274,32 @@ public class TopTrumps extends GameCommand
 
     private void sendCardEmbed(Deck deck, Team team, boolean activeTeam)
     {
-        Card card = team.getFrontCard();
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setColor(Color.RED);
-        embed.setTitle("Info");
-        String turnText = (activeTeam) ? "*It's your turn!*" : "*It's the opponent's turn.*";
-        embed.setDescription(turnText+ "\nYour cards: "+team.getCardCount()+"/"+deck.getCards().size()+"\nCards in holding: "+cardsInHolding.size()+"\n\n**"+card.getName()+"**");
-        for (int i = 0; i<deck.getStatNames().length; i++)
+        if (team.getChannel() != null)
         {
-            embed.addField(deck.getStatNames()[i], String.format("%,.2f", card.getStats()[i]).replace(".00", ""), true);
-        }
-        try
-        {
-            embed.setThumbnail(card.getImageURL());
-            team.getChannel().sendMessage(embed.build()).queue();
-        }
-        catch (IllegalArgumentException e)
-        {
-            embed.setThumbnail(null);
-            team.getChannel().sendMessage(embed.build()).queue();
+            Card card = team.getFrontCard();
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(Color.RED);
+            embed.setTitle("Info");
+            String turnText = (activeTeam) ? "*It's your turn!*" : "*It's the opponent's turn.*";
+            embed.setDescription(turnText+ "\nYour cards: "+team.getCardCount()+"/"+deck.getCards().size()+"\nCards in holding: "+cardsInHolding.size()+"\n\n**"+card.getName()+"**");
+            for (int i = 0; i<deck.getStatNames().length; i++)
+            {
+                embed.addField(deck.getStatNames()[i], String.format("%,.2f", card.getStats()[i]).replace(".00", ""), true);
+            }
+            try
+            {
+                embed.setThumbnail(card.getImageURL());
+                team.getChannel().sendMessage(embed.build()).queue();
+            }
+            catch (IllegalArgumentException e)
+            {
+                embed.setThumbnail(null);
+                team.getChannel().sendMessage(embed.build()).queue();
+            }
         }
     }
 
-    private void endGame(Setup setup, Team... teams)
+    private void endGame(Setup setup)
     {
         try
         {
@@ -296,6 +332,18 @@ public class TopTrumps extends GameCommand
             e.printStackTrace();
         }
         channel.sendMessage(embed.build()).queue();
+    }
+
+    private boolean checkParametersForAIFlag(String[] parameters)
+    {
+        for (String param : parameters)
+        {
+            if (param.equalsIgnoreCase("ai") || param.equalsIgnoreCase("bot"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 

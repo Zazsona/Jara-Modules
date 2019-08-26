@@ -15,6 +15,12 @@ public class Setup
     private Category gameCategory;
     private Message joinMessage;
     private GameReactionListener grl;
+    private boolean useAI;
+
+    public Setup(boolean useAI)
+    {
+        this.useAI = useAI;
+    }
 
     public boolean checkPermissions(Member selfMember)
     {
@@ -23,9 +29,10 @@ public class Setup
 
     public List<Team> setupTeams(TextChannel commandChannel, Member player, Deck deck, int teamCount)
     {
+        int aiTeams = (useAI) ? 1 : 0;
+        int handSize = (deck.getCards().size())/(teamCount+aiTeams);
         List<TextChannel> teamChannels = setupChannels(commandChannel.getGuild(), player, teamCount);
         LinkedList<Team> teams = new LinkedList<>();
-        int handSize = (deck.getCards().size())/teamCount;
         for (int i = 0; i<teamCount; i++)
         {
             teams.add(new Team(teamChannels.get(i), deck.getCards().subList(handSize*i, handSize*(i+1))));
@@ -41,16 +48,18 @@ public class Setup
         {
             joinMessage.addReaction(((char) (0x31+i))+"\u20E3").queue();
         }
-        /*if (joinMessage.getReactions().size() < 9)
-        {
-            joinMessage.addReaction("\u25B6").queue();
-        }*/
+            /*if (joinMessage.getReactions().size() < 9)
+            {
+                joinMessage.addReaction("\u25B6").queue();
+            }*/
 
         grl = new GameReactionListener();
         grl.teams = teams;
         player.getGuild().getJDA().addEventListener(grl);
-
-
+        if (useAI)
+        {
+            teams.add(new Team(null, deck.getCards().subList(handSize*(teamCount+aiTeams-1), handSize*(teamCount+aiTeams))));
+        }
         return teams;
 
     }
@@ -98,7 +107,10 @@ public class Setup
         joinMessage.clearReactions().queue();
         for (Team team : grl.teams)
         {
-            team.getChannel().delete().queue();
+            if (team.getChannel() != null)
+            {
+                team.getChannel().delete().queue();
+            }
         }
         gameCategory.delete().queue();
     }

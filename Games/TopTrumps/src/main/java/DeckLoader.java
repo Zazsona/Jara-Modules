@@ -1,10 +1,8 @@
 import cards.Card;
 import cards.Deck;
 import configuration.SettingsUtil;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,19 +14,48 @@ public class DeckLoader
     {
         try
         {
-            if (parameters.length > 1)
+            if (parameters.length > 2 || parameters.length == 2 && !(parameters[1].equalsIgnoreCase("ai") || parameters[1].equalsIgnoreCase("bot")))
             {
-                if (parameters[1].equalsIgnoreCase("Simpsons") || parameters[1].equalsIgnoreCase("TheSimpsons"))
+                for (String param : parameters)
+                {
+                    if (param.equalsIgnoreCase("Simpsons") || param.equalsIgnoreCase("TheSimpsons"))
+                    {
+                        return getSimpsonsDeck();
+                    }
+                    else if (param.equalsIgnoreCase("Games") || param.equalsIgnoreCase("GameCharacters") || param.equalsIgnoreCase("Gaming"))
+                    {
+                        return getGameCharacterDeck();
+                    }
+                }
+                Deck deck = getCustomDeck(guildID, parameters);
+                return deck;
+            }
+            return getRandomDeck(guildID);
+        }
+        catch (IOException e)
+        {
+            LoggerFactory.getLogger(DeckLoader.class).error(e.getLocalizedMessage());
+            return getGameCharacterDeck();
+        }
+    }
+
+    public static Deck getDeck(String guildID, String deckName)
+    {
+        try
+        {
+            if (deckName != null)
+            {
+                if (deckName.equalsIgnoreCase("Simpsons") || deckName.equalsIgnoreCase("TheSimpsons"))
                 {
                     return getSimpsonsDeck();
                 }
-                else if (parameters[1].equalsIgnoreCase("Games") || parameters[1].equalsIgnoreCase("GameCharacters") || parameters[1].equalsIgnoreCase("Gaming"))
+                else if (deckName.equalsIgnoreCase("Games") || deckName.equalsIgnoreCase("GameCharacters") || deckName.equalsIgnoreCase("Gaming"))
                 {
                     return getGameCharacterDeck();
                 }
                 else
                 {
-                    Deck deck = getCustomDeck(guildID, parameters[1]);
+                    Deck deck = getCustomDeck(guildID, deckName);
                     return deck;
                 }
             }
@@ -65,6 +92,20 @@ public class DeckLoader
     {
         HashMap<String, Deck> decks = getCustomDeckMap(guildID);
         return decks.get(deckName.toLowerCase());
+    }
+
+    public static Deck getCustomDeck(String guildID, String[] parameters) throws IOException
+    {
+        HashMap<String, Deck> decks = getCustomDeckMap(guildID);
+        for (String param : parameters)
+        {
+            Deck deck = decks.get(param.toLowerCase());
+            if (deck != null)
+            {
+                return deck;
+            }
+        }
+        return null;
     }
 
     public static Deck getGameCharacterDeck()
