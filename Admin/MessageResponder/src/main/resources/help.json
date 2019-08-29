@@ -1,0 +1,8 @@
+{
+  "params": [
+    "MessageResponder List (PageNo)",
+    "MessageResponder Add",
+    "MessageResponder Delete"
+  ],
+  "description": "Create custom responses to non-command messages, such as a user saying \"Hello\".\n\nList - Lists responses\nAdd - Opens response wizard.\nDelete - Opens response removal wizard.\nWizards can be exited at any time with the quit command."
+}

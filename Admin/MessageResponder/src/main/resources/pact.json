@@ -1,0 +1,13 @@
+{
+  "commandKey": "MessageResponder",
+  "aliases": [
+    "MessageResponse",
+    "MessageResponses",
+    "MsgRes",
+    "MR",
+    "MsgResp"
+  ],
+  "category": "ADMIN",
+  "targetVersion": "0.1",
+  "description": "Custom message responses."
+}
