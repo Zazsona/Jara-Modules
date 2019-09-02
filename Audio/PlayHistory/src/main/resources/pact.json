@@ -1,0 +1,10 @@
+{
+  "commandKey": "PlayHistory",
+  "aliases": [
+    "LastPlayed",
+    "PlayPast"
+  ],
+  "category": "AUDIO",
+  "targetVersion": "0.1",
+  "description": "Gets track history."
+}

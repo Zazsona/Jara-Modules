@@ -1,0 +1,6 @@
+{
+  "params": [
+    "PlayHistory (User)"
+  ],
+  "description": "Gets the last 10 played tracks.\nSpecify a user to get just their last tracks."
+}
