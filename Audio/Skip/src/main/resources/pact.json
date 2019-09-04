@@ -1,5 +1,5 @@
 {
-  "commandKey": "Skip",
+  "key": "Skip",
   "aliases": [
     "Stop",
     "Pass",

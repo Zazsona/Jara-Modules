@@ -1,6 +1,6 @@
 import cards.Deck;
 import commands.CmdUtil;
-import commands.GameCommand;
+import module.GameCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;

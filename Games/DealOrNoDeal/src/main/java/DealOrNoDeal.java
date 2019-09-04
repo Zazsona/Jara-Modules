@@ -1,6 +1,6 @@
-import commands.GameCommand;
 import configuration.SettingsUtil;
 import jara.MessageManager;
+import module.GameCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;

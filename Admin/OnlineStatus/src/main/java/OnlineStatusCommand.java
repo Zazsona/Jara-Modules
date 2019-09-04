@@ -1,6 +1,5 @@
 import commands.CmdUtil;
-import commands.Command;
-import net.dv8tion.jda.core.OnlineStatus;
+import module.Command;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class OnlineStatusCommand extends Command

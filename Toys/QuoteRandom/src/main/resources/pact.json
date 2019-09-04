@@ -1,5 +1,5 @@
 {
-  "commandKey": "QuoteRandom",
+  "key": "QuoteRandom",
   "aliases": [
     "RandQuote",
 	"RandomQuote"

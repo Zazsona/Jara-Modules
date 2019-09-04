@@ -1,5 +1,5 @@
 {
-  "commandKey": "MonthlyUsage",
+  "key": "MonthlyUsage",
   "aliases": [
     "MonthlyCommandUsage",
     "MonthlyBotUsage"

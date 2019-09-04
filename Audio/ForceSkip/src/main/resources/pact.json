@@ -1,5 +1,5 @@
 {
-  "commandKey": "ForceSkip",
+  "key": "ForceSkip",
   "aliases": [
     "ForceStop",
     "ForcePass",

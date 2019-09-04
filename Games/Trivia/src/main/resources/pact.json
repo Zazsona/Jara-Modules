@@ -1,5 +1,5 @@
 {
-  "commandKey": "Trivia",
+  "key": "Trivia",
   "aliases": [
     "TestYourKnowledge",
     "TriviaQuestion"

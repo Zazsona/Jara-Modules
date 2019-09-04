@@ -1,4 +1,4 @@
-import commands.GameCommand;
+import module.GameCommand;
 import jara.MessageManager;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;

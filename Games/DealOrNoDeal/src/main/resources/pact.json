@@ -1,5 +1,5 @@
 {
-  "commandKey": "DealOrNoDeal",
+  "key": "DealOrNoDeal",
   "aliases": [
     "DOND",
     "BankerGame"

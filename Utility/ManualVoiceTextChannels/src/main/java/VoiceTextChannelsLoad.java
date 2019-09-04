@@ -1,5 +1,5 @@
 import commands.CmdUtil;
-import commands.Load;
+import module.Load;
 
 public class VoiceTextChannelsLoad extends Load
 {

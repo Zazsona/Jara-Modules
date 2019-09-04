@@ -1,19 +1,16 @@
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import commands.CmdUtil;
-import commands.GameCommand;
+import module.GameCommand;
 import jara.MessageManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.apache.commons.text.StringEscapeUtils;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class Trivia extends GameCommand
 {

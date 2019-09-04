@@ -1,5 +1,5 @@
 {
-  "commandKey": "Say",
+  "key": "Say",
   "aliases": [
     "Speak",
     "RepeatAfterMe",

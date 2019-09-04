@@ -1,5 +1,5 @@
 {
-  "commandKey": "WordSearch",
+  "key": "WordSearch",
   "aliases": [
     "WordFind",
     "SearchWords",

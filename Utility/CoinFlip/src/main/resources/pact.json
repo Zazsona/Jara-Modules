@@ -1,5 +1,5 @@
 {
-  "commandKey": "CoinFlip",
+  "key": "CoinFlip",
   "aliases": [
     "FlipCoin",
     "TossCoin",

@@ -1,5 +1,5 @@
 {
-  "commandKey": "Poll",
+  "key": "Poll",
   "aliases": [
     "Strawpoll"
   ],

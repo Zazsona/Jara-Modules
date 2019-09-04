@@ -1,5 +1,5 @@
 {
-  "commandKey": "UTC",
+  "key": "UTC",
   "aliases": [
     "UTCTime",
     "UTCInfo"

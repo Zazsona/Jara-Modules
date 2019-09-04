@@ -1,5 +1,5 @@
 {
-  "commandKey": "Ping",
+  "key": "Ping",
   "aliases": [
     "Pong"
   ],

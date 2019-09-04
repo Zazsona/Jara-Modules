@@ -1,5 +1,5 @@
 {
-  "commandKey": "Quotes",
+  "key": "Quotes",
   "aliases": [
     "QuoteList",
     "ListQuotes"

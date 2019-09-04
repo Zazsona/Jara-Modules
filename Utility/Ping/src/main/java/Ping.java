@@ -1,4 +1,4 @@
-import commands.Command;
+import module.Command;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class Ping extends Command

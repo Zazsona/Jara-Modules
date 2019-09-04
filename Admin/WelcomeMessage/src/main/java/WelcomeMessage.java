@@ -1,6 +1,6 @@
 import commands.CmdUtil;
-import commands.Command;
 import jara.MessageManager;
+import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;

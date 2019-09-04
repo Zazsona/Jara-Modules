@@ -1,5 +1,5 @@
 {
-  "commandKey": "XmasCountdown",
+  "key": "XmasCountdown",
   "aliases": [
     "ChristmasCountdown",
     "XmasDays"

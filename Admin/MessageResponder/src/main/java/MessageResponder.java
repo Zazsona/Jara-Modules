@@ -1,7 +1,6 @@
 import commands.CmdUtil;
-import commands.Load;
 import configuration.SettingsUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
+import module.Load;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 

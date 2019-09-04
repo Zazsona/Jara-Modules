@@ -1,5 +1,5 @@
 {
-  "commandKey": "MessageResponder",
+  "key": "MessageResponder",
   "aliases": [
     "MessageResponse",
     "MessageResponses",

@@ -1,5 +1,5 @@
 {
-  "commandKey": "Quote",
+  "key": "Quote",
   "aliases": [
     "RecallQuote",
     "ReadQuote"

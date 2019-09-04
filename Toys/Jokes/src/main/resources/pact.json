@@ -1,5 +1,5 @@
 {
-  "commandKey": "Jokes",
+  "key": "Jokes",
   "aliases": [
     "Joke",
     "TellAJoke",

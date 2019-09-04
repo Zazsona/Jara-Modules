@@ -1,14 +1,10 @@
 import commands.CmdUtil;
-import commands.Command;
+import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.PermissionException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Kick extends Command

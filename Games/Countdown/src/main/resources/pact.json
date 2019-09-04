@@ -1,5 +1,5 @@
 {
-  "commandKey": "Countdown",
+  "key": "Countdown",
   "aliases": [
     "CD"
   ],

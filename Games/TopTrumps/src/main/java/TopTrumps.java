@@ -2,7 +2,7 @@ import cards.Card;
 import cards.Deck;
 import cards.Team;
 import commands.CmdUtil;
-import commands.GameCommand;
+import module.GameCommand;
 import configuration.SettingsUtil;
 import exceptions.GameOverException;
 import jara.MessageManager;

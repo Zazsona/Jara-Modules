@@ -1,8 +1,5 @@
 package Json;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class QuoteJson
 {
     public QuoteJson(String name, String user, String message, String date)

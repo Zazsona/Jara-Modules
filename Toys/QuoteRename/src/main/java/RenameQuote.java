@@ -1,5 +1,5 @@
 import commands.CmdUtil;
-import commands.Command;
+import module.Command;
 import configuration.SettingsUtil;
 import jara.MessageManager;
 import net.dv8tion.jda.core.EmbedBuilder;

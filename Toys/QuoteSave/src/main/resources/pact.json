@@ -1,5 +1,5 @@
 {
-  "commandKey": "QuoteSave",
+  "key": "QuoteSave",
   "aliases": [
     "SaveQuote"
   ],

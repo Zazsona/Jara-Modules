@@ -1,5 +1,5 @@
 import commands.CmdUtil;
-import commands.Load;
+import module.Load;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;

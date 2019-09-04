@@ -1,5 +1,5 @@
 {
-  "commandKey": "NowPlaying",
+  "key": "NowPlaying",
   "aliases": [
     "NP",
     "CP",

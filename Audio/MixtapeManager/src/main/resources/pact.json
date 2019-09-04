@@ -1,5 +1,5 @@
 {
-  "commandKey": "MixtapeManager",
+  "key": "MixtapeManager",
   "aliases": [
     "ManageMixtapes",
     "MixtapeConfig",

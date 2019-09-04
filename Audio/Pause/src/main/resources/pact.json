@@ -1,5 +1,5 @@
 {
-  "commandKey": "Pause",
+  "key": "Pause",
   "aliases": [
     "Resume",
     "Hold"

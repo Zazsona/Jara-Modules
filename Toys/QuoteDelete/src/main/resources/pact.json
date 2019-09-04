@@ -1,5 +1,5 @@
 {
-  "commandKey": "QuoteDelete",
+  "key": "QuoteDelete",
   "aliases": [
     "RemoveQuote",
 	"DeleteQuote",

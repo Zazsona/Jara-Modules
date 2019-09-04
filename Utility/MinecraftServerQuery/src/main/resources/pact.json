@@ -1,5 +1,5 @@
 {
-  "commandKey": "MCServer",
+  "key": "MCServer",
   "aliases": [
     "MinecraftServer",
     "MinecraftQuery",

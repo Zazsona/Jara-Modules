@@ -1,7 +1,7 @@
 import audio.Audio;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import commands.CmdUtil;
-import commands.Command;
+import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 

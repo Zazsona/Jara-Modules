@@ -1,5 +1,5 @@
 {
-  "commandKey": "Report",
+  "key": "Report",
   "aliases": [
     "Status"
   ],

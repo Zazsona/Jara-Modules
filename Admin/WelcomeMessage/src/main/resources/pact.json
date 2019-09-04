@@ -1,5 +1,5 @@
 {
-  "commandKey": "WelcomeMessage",
+  "key": "WelcomeMessage",
   "aliases": [
     "ModifyWelcome",
     "EditWelcome",

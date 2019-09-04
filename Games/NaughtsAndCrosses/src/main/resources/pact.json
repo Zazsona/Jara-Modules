@@ -1,5 +1,5 @@
 {
-  "commandKey": "NaughtsAndCrosses",
+  "key": "NaughtsAndCrosses",
   "aliases": [
     "TicTacToe",
     "O&Xs",

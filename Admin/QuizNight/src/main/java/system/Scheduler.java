@@ -1,11 +1,11 @@
 package system;
 
 import json.QuizSettings;
+import module.Load;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quiz.Quiz;
 import commands.CmdUtil;
-import commands.Load;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;

@@ -1,5 +1,5 @@
 {
-  "commandKey": "TopTrumps",
+  "key": "TopTrumps",
   "aliases": [
     "TopCards",
     "TopTrump"

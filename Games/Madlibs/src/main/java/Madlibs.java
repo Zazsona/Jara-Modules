@@ -1,14 +1,12 @@
 import commands.CmdUtil;
-import commands.GameCommand;
 import configuration.SettingsUtil;
 import jara.MessageManager;
+import module.GameCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
-
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Random;

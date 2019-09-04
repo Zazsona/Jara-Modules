@@ -1,5 +1,5 @@
 {
-  "commandKey": "OWStats",
+  "key": "OWStats",
   "aliases": [
     "OverwatchStats",
     "OverwatchStatistics",

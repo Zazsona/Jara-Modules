@@ -1,5 +1,5 @@
 {
-  "commandKey": "QuoteRename",
+  "key": "QuoteRename",
   "aliases": [
     "RenameQuote"
   ],
