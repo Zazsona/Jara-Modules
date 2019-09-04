@@ -1,5 +1,5 @@
 {
-  "commandKey": "Play",
+  "key": "Play",
   "aliases": [
     "PlayAudio",
     "PlayMusic",
