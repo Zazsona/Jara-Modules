@@ -1,3 +1,6 @@
 {
-  "description": "Think of words matching the category and letter, and make sure you're the last one before the buzzer randomly goes off!"
+  "params": [
+    "LastWord (Gamemode)"
+  ],
+  "description": "Think of words matching the category and limiter, and make sure you're the last one before the buzzer randomly goes off!\n\nGame modes:\nLetter (Default)\nColor"
 }
