@@ -9,13 +9,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
 
 public class LastWord extends GameCommand
 {
     private static Logger logger = LoggerFactory.getLogger(LastWord.class);
     private TextChannel channel;
-    private String letter;
+
+    private enum GameMode
+    {
+        LETTER,
+        COLOUR
+    }
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -23,17 +28,23 @@ public class LastWord extends GameCommand
         try
         {
             channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-lastword");
-
-            String[] letters = {"A", "A", "A", "B","B","B", "C", "C", "C", "C", "D","D","D", "E","E","E","E", "F","F", "G","G","G", "H", "I", "J", "K", "L","L","L", "M","M","M", "N","N", "O", "P","P", "Q", "R","R","R", "S", "S", "S", "S", "S", "S", "S", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-            letter = letters[new Random().nextInt(letters.length)];
             EmbedBuilder embed = new EmbedBuilder();
             embed.setTitle("Last Word");
-            embed.setDescription(":game_die: Welcome to The Last Word! :game_die:\nI'm looking for **"+ CmdUtil.getRandomTopic()+"** starting with **"+letter+"**");
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
             embed.setThumbnail("https://i.imgur.com/hvphthX.png");
-            channel.sendMessage(embed.build()).queue();
-
-            runGame(msgEvent);
+            GameMode gm = getGameModeSelection(parameters);
+            switch (gm)
+            {
+                case LETTER:
+                    new LettersGame().runGame(this, msgEvent, embed);
+                    break;
+                case COLOUR:
+                    new ColoursGame().runGame(this, msgEvent, embed);
+                    break;
+                default:
+                    embed.setDescription("Gamemode not recognised.");
+                    msgEvent.getChannel().sendMessage(embed.build()).queue();
+            }
         }
         catch (IOException e)
         {
@@ -42,61 +53,72 @@ public class LastWord extends GameCommand
         }
     }
 
-    private void runGame(GuildMessageReceivedEvent msgEvent)
+    private GameMode getGameModeSelection(String[] parameters)
+    {
+        if (parameters.length > 1)
+        {
+            switch (parameters[1].toLowerCase())
+            {
+                case "letters":
+                case "letter":
+                case "character":
+                    return GameMode.LETTER;
+                case "color":
+                case "colour":
+                case "colors":
+                case "colours":
+                    return GameMode.COLOUR;
+                    default:
+                        return null;
+            }
+        }
+        return GameMode.LETTER;
+    }
+
+    protected Collection<Message> getMessages(TextChannel channel)
     {
         Random r = new Random();
         MessageManager mm = new MessageManager();
-
         Message[] messages = mm.getNextMessages(channel, (r.nextInt(23)+7)*1000, Integer.MAX_VALUE); //7-30 seconds, as many messages as we can take.
-
-        boolean winnerFound = false;
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Last Word");
-        embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        embed.setThumbnail("https://i.imgur.com/hvphthX.png");
         if (messages != null && messages.length > 0)
         {
-            try
+            LinkedList<Message> messagesSet = new LinkedList<>();
+            boolean isCopiedAnswer = false;
+            for (Message message : messages)
             {
-                for (int i = messages.length-1; i>-1; i--)
+                isCopiedAnswer = false;
+                for (Message messagesSetMessage : messagesSet)
                 {
-                    if (messages[i].getContentDisplay().toUpperCase().startsWith(letter))
+                    if (messagesSetMessage.getContentDisplay().equalsIgnoreCase(message.getContentDisplay()))
                     {
-                        if (CmdUtil.getWordList().contains(messages[i].getContentDisplay().toLowerCase()))
-                        {
-                            winnerFound = true;
-                            embed.setDescription("The victory goes to **"+messages[i].getMember().getEffectiveName()+"** with "+messages[i].getContentDisplay()+"! Congratulations.");
-                            break;
-                        }
-                    }
-                }
-            }
-            catch (IOException e)
-            {
-                for (int i = messages.length-1; i>-1; i--)
-                {
-                    if (messages[i].getContentDisplay().toUpperCase().startsWith(letter))
-                    {
-                        winnerFound = true;
-                        embed.setDescription("The victory goes to **"+messages[i].getMember().getEffectiveName()+"** with "+messages[i].getContentDisplay()+"! Congratulations.");
+                        isCopiedAnswer = true;
                         break;
                     }
                 }
-
+                if (!isCopiedAnswer)
+                {
+                    messagesSet.add(message);
+                }
             }
+            return messagesSet;
         }
-
-        if (!winnerFound)
+        else
         {
-            embed.setDescription("You guys got nothing? Wow. Nice going.");
+            return null;
         }
-        channel.sendMessage(embed.build()).queue();
-
-        endGame(msgEvent, messages);
     }
 
-    private void endGame(GuildMessageReceivedEvent msgEvent, Message[] messages)
+    protected void endGame(GuildMessageReceivedEvent msgEvent, EmbedBuilder embed, Message winningMessage)
     {
+        if (winningMessage == null)
+        {
+            embed.setDescription("Nobody got anything? Oh dear.\nBetter luck next time!");
+        }
+        else
+        {
+            embed.setDescription("The victory goes to **"+winningMessage.getMember().getEffectiveName()+"** with "+winningMessage.getContentDisplay()+"! Congratulations.");
+        }
+        msgEvent.getChannel().sendMessage(embed.build()).queue();
         deleteGameChannel();
     }
 
