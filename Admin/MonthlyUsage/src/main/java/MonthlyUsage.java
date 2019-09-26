@@ -133,30 +133,4 @@ public class MonthlyUsage extends Command
         tops[2] = thirdPlaceId;
         return tops;
     }
-
-    /*private void toggleGuild(GuildMessageReceivedEvent msgEvent, FileManager fm)
-    {
-        boolean isGuildEnabled = fm.isGuildEnabled(msgEvent.getGuild().getId());
-        if (isGuildEnabled)
-        {
-            fm.disableGuild(msgEvent.getGuild().getId());
-        }
-        else
-        {
-            fm.enableGuild(msgEvent.getGuild().getId());
-        }
-
-        isGuildEnabled = fm.isGuildEnabled(msgEvent.getGuild().getId());
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        if (isGuildEnabled)
-        {
-            embed.setDescription("Enabled command logging.");
-        }
-        else
-        {
-            embed.setDescription("Disabled command logging.");
-        }
-        msgEvent.getChannel().sendMessage(embed.build()).queue();
-    }*/
 }
