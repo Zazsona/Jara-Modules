@@ -24,7 +24,7 @@ public class ReminderDateTree
     {
         private int yearValue;
         private int[] daysInLeapYearMonths = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        private Month[] months;
+        private HashMap<Integer, Month> months;
 
         public Year()
         {
@@ -32,17 +32,14 @@ public class ReminderDateTree
             {
                 yearValue = OffsetDateTime.now(ZoneOffset.UTC).getYear();
             }
-            months = new Month[12];
-            for (int i = 0; i<months.length; i++)
-            {
-                months[i] = new Month(daysInLeapYearMonths[i]);
-            }
+            months = new HashMap<>();
         }
 
         public Month getMonth(int monthOfYear)
         {
-            monthOfYear = monthOfYear--;
-            return months[monthOfYear];
+            if (!months.containsKey(monthOfYear))
+                months.put(monthOfYear, new Month(daysInLeapYearMonths[monthOfYear-1]));
+            return months.get(monthOfYear);
         }
 
         public Day getDayOfLeapYear(int dayOfLeapYear)
@@ -67,7 +64,7 @@ public class ReminderDateTree
         public HashMap<String, Reminder> getReminders()
         {
             HashMap<String, Reminder> reminders = new HashMap<>();
-            for (Month month : months)
+            for (Month month : months.values())
             {
                 reminders.putAll(month.getReminders());
             }
@@ -77,7 +74,7 @@ public class ReminderDateTree
         public ArrayList<String> getReminderIDs()
         {
             ArrayList<String> reminderIds = new ArrayList<>();
-            for (Month month : months)
+            for (Month month : months.values())
             {
                 reminderIds.addAll(month.getReminderIDs());
             }
@@ -99,21 +96,20 @@ public class ReminderDateTree
     public class Month
     {
         int daysInMonth;
-        private Day[] days;
+        private HashMap<Integer, Day> days;
         public Month(int daysInMonth)
         {
-            days = new Day[daysInMonth];
-            for (int i = 0; i<daysInMonth; i++)
-            {
-                days[i] = new Day();
-            }
+            this.daysInMonth = daysInMonth;
+            days = new HashMap<>();
         }
 
         public Day getDayOfMonth(int dayOfMonth) throws IndexOutOfBoundsException
         {
             if (dayOfMonth > 0 && dayOfMonth <= daysInMonth)
             {
-                return days[dayOfMonth-1];
+                if (!days.containsKey(dayOfMonth))
+                    days.put(dayOfMonth, new Day());
+                return days.get(dayOfMonth);
             }
             else
             {
@@ -129,7 +125,7 @@ public class ReminderDateTree
         public HashMap<String, Reminder> getReminders()
         {
             HashMap<String, Reminder> reminders = new HashMap<>();
-            for (Day day : days)
+            for (Day day : days.values())
             {
                 reminders.putAll(day.getReminders());
             }
@@ -139,7 +135,7 @@ public class ReminderDateTree
         public ArrayList<String> getReminderIDs()
         {
             ArrayList<String> reminderIds = new ArrayList<>();
-            for (Day day : days)
+            for (Day day : days.values())
             {
                 reminderIds.addAll(day.getReminderIDs());
             }
@@ -149,32 +145,30 @@ public class ReminderDateTree
 
     public class Day
     {
-        private Hour[] hours;
+        private HashMap<Integer, Hour> hours;
         public Day()
         {
-            hours = new Hour[24];
-            for (int i = 0; i<hours.length; i++)
-            {
-                hours[i] = new Hour();
-            }
+            hours = new HashMap<>();
         }
 
         public Hour getHour(int hour)
         {
             if (hour >= 0 && hour <= 23)
             {
-                return hours[hour];
+                if (!hours.containsKey(hour))
+                    hours.put(hour, new Hour());
+                return hours.get(hour);
             }
             else
             {
-                throw new IndexOutOfBoundsException("There are only "+hours.length+" hours in a day!");
+                throw new IndexOutOfBoundsException("There are only 24 hours in a day!");
             }
         }
 
         public HashMap<String, Reminder> getReminders()
         {
             HashMap<String, Reminder> reminders = new HashMap<>();
-            for (Hour hour : hours)
+            for (Hour hour : hours.values())
             {
                 reminders.putAll(hour.getReminders());
             }
@@ -184,7 +178,7 @@ public class ReminderDateTree
         public ArrayList<String> getReminderIDs()
         {
             ArrayList<String> reminderIds = new ArrayList<>();
-            for (Hour hour : hours)
+            for (Hour hour : hours.values())
             {
                 reminderIds.addAll(hour.getReminderIDs());
             }
@@ -194,32 +188,30 @@ public class ReminderDateTree
 
     public class Hour
     {
-        private Minute[] minutes;
+        private HashMap<Integer, Minute> minutes;
         public Hour()
         {
-            minutes = new Minute[60];
-            for (int i = 0; i<minutes.length; i++)
-            {
-                minutes[i] = new Minute();
-            }
+            minutes = new HashMap<>();
         }
 
         public Minute getMinute(int minute)
         {
             if (minute >= 0 && minute <= 59)
             {
-                return minutes[minute];
+                if (!minutes.containsKey(minute))
+                    minutes.put(minute, new Minute());
+                return minutes.get(minute);
             }
             else
             {
-                throw new IndexOutOfBoundsException("There are only "+minutes.length+" minutes in an hour!");
+                throw new IndexOutOfBoundsException("There are only 60 minutes in an hour!");
             }
         }
 
         public HashMap<String, Reminder> getReminders()
         {
             HashMap<String, Reminder> reminders = new HashMap<>();
-            for (Minute minute : minutes)
+            for (Minute minute : minutes.values())
             {
                 reminders.putAll(minute.getReminders());
             }
@@ -229,7 +221,7 @@ public class ReminderDateTree
         public ArrayList<String> getReminderIDs()
         {
             ArrayList<String> reminderIds = new ArrayList<>();
-            for (Minute minute : minutes)
+            for (Minute minute : minutes.values())
             {
                 reminderIds.addAll(minute.getReminderIDs());
             }
@@ -239,19 +231,15 @@ public class ReminderDateTree
 
     public class Minute
     {
-        private Second[] seconds;
+        private HashMap<Integer, Second> seconds;
         public Minute()
         {
-            seconds = new Second[60];
-            for (int i = 0; i<seconds.length; i++)
-            {
-                seconds[i] = new Second();
-            }
+            seconds = new HashMap<>();
         }
         public HashMap<String, Reminder> getReminders()
         {
             HashMap<String, Reminder> reminders = new HashMap<>();
-            for (Second second : seconds)
+            for (Second second : seconds.values())
             {
                 reminders.putAll(second.getReminders());
             }
@@ -261,7 +249,7 @@ public class ReminderDateTree
         public ArrayList<String> getReminderIDs()
         {
             ArrayList<String> reminderIds = new ArrayList<>();
-            for (Second second : seconds)
+            for (Second second : seconds.values())
             {
                 reminderIds.addAll(second.getReminderIDs());
             }
@@ -272,11 +260,13 @@ public class ReminderDateTree
         {
             if (second >= 0 && second <= 59)
             {
-                return seconds[second];
+                if (!seconds.containsKey(second))
+                    seconds.put(second, new Second());
+                return seconds.get(second);
             }
             else
             {
-                throw new IndexOutOfBoundsException("There are only "+seconds.length+" seconds in a minute!");
+                throw new IndexOutOfBoundsException("There are only 60 seconds in a minute!");
             }
         }
     }
@@ -296,21 +286,20 @@ public class ReminderDateTree
 
         public HashMap<String, Reminder> getReminders()
         {
-            //TODO
-            return reminders;
+            HashMap<String, Reminder> reminderHashMap = new HashMap<>();
+            for (String UUID : reminderIDs)
+            {
+                reminderHashMap.put(UUID, ReminderManager.getReminderById(UUID));
+            }
+            return reminderHashMap;
         }
 
-        public void addReminder(String reminderUUID)
+        public void addReminderToTime(String reminderUUID)
         {
             reminderIDs.add(reminderUUID);
         }
 
-        public Reminder getReminder(String UUID)
-        {
-            //TODO:
-        }
-
-        public void removeReminder(String UUID)
+        public void removeReminderFromTime(String UUID)
         {
             reminderIDs.remove(UUID);
         }
