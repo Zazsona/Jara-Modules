@@ -37,9 +37,22 @@ public class ReminderDateTree
 
         public Month getMonth(int monthOfYear)
         {
-            if (!months.containsKey(monthOfYear))
-                months.put(monthOfYear, new Month(daysInLeapYearMonths[monthOfYear-1]));
-            return months.get(monthOfYear);
+            if (monthOfYear > 0 && monthOfYear <= 12)
+            {
+                if (!months.containsKey(monthOfYear))
+                    months.put(monthOfYear, new Month(daysInLeapYearMonths[monthOfYear-1]));
+                return months.get(monthOfYear);
+            }
+            else
+            {
+                throw new IndexOutOfBoundsException("There are 12 months in a year!");
+            }
+
+        }
+
+        public void removeMonth(int monthOfYear)
+        {
+            months.remove(monthOfYear);
         }
 
         public Day getDayOfLeapYear(int dayOfLeapYear)
@@ -117,6 +130,11 @@ public class ReminderDateTree
             }
         }
 
+        public void removeDay(int dayOfMonth)
+        {
+            days.remove(dayOfMonth);
+        }
+
         public int getDaysInMonth()
         {
             return daysInMonth;
@@ -165,6 +183,11 @@ public class ReminderDateTree
             }
         }
 
+        public void removeHour(int hourOfDay)
+        {
+            hours.remove(hourOfDay);
+        }
+
         public HashMap<String, Reminder> getReminders()
         {
             HashMap<String, Reminder> reminders = new HashMap<>();
@@ -206,6 +229,11 @@ public class ReminderDateTree
             {
                 throw new IndexOutOfBoundsException("There are only 60 minutes in an hour!");
             }
+        }
+
+        public void removeMinute(int minuteOfHour)
+        {
+            minutes.remove(minuteOfHour);
         }
 
         public HashMap<String, Reminder> getReminders()
@@ -268,6 +296,11 @@ public class ReminderDateTree
             {
                 throw new IndexOutOfBoundsException("There are only 60 seconds in a minute!");
             }
+        }
+
+        public void removeSecond(int secondOfMinute)
+        {
+            seconds.remove(secondOfMinute);
         }
     }
 

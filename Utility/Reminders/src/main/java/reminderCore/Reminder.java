@@ -10,6 +10,7 @@ import reminderCore.enums.GroupType;
 import reminderCore.enums.RepetitionType;
 
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 public class Reminder
 {
@@ -20,12 +21,12 @@ public class Reminder
     private RepetitionType repetitionType;
     private GroupType groupType;
     private String message;
-    private OffsetDateTime firstExecutionTimeUTC;
+    private ZonedDateTime firstExecutionTimeUTC;
 
     private transient Guild guild;
     private transient User user;
 
-    public Reminder(String userID, String creationTimeStamp, String guildID, String channelID, GroupType groupType, RepetitionType repetitionType, String message, OffsetDateTime firstExecutionTimeUTC)
+    public Reminder(String userID, String creationTimeStamp, String guildID, String channelID, GroupType groupType, RepetitionType repetitionType, String message, ZonedDateTime firstExecutionTimeUTC)
     {
         this.userID = userID;
         this.creationTimeStamp = creationTimeStamp;
@@ -133,7 +134,7 @@ public class Reminder
         return groupType;
     }
 
-    public OffsetDateTime getFirstExecutionTimeUTC()
+    public ZonedDateTime getFirstExecutionTimeUTC()
     {
         return firstExecutionTimeUTC;
     }

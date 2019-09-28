@@ -1,8 +1,7 @@
 {
   "key": "Reminder",
   "aliases": [
-    "RemindMe",
-    "UTCInfo"
+    "Reminders"
   ],
   "category": "UTILITY",
   "targetVersion": "0.1",
