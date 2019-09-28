@@ -2,10 +2,7 @@ package reminderCore;
 
 import commands.CmdUtil;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.PrivateChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import reminderCore.enums.GroupType;
 import reminderCore.enums.RepetitionType;
 
@@ -144,24 +141,31 @@ public class Reminder implements Serializable
         Guild guild = getGuild();
         if (guild != null)
         {
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(CmdUtil.getHighlightColour(guild.getSelfMember()));
-            embed.setDescription(message);
-            if (groupType == GroupType.CHANNEL)
+            Member member = guild.getMemberById(userID);
+            if (member != null)
             {
-                TextChannel channel = getChannel();
-                if (channel != null)
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setColor(CmdUtil.getHighlightColour(guild.getSelfMember()));
+                embed.setDescription(message);
+                embed.setFooter("Set by: "+member.getEffectiveName(), null);
+                if (groupType == GroupType.CHANNEL)
                 {
-                    channel.sendMessage(embed.build()).queue();
+                    TextChannel channel = getChannel();
+                    if (channel != null)
+                    {
+                        channel.sendMessage(embed.build()).queue();
+                    }
                 }
-            }
-            else if (groupType == GroupType.USER)
-            {
-                PrivateChannel channel = getPrivateChannel();
-                if (channel != null)
+                else if (groupType == GroupType.USER)
                 {
-                    channel.sendMessage(embed.build()).queue();
+
+                    PrivateChannel channel = getPrivateChannel();
+                    if (channel != null)
+                    {
+                        channel.sendMessage(embed.build()).queue();
+                    }
                 }
+
             }
         }
     }
