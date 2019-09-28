@@ -63,6 +63,31 @@ public class ReminderManager
             }
             FileManager.saveRemindersDateTree(rdt);
         }
+        else if (rt == RepetitionType.WEEKLY)
+        {
+            int dayOfWeek = execution.getDayOfWeek().getValue();
+            for (int monthValue = 1; monthValue<13; monthValue++)
+            {
+                for (int dayValue = 1; dayValue <= rdt.getYear().getMonth(monthValue).getDaysInMonth()+1; dayValue++)
+                {
+                    if (execution.withMonth(monthValue).withDayOfMonth(dayValue).getDayOfWeek().getValue() == dayOfWeek)
+                    {
+                        rdt.getYear().getMonth(monthValue).getDayOfMonth(dayValue).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
+                    }
+                }
+            }
+            ZonedDateTime futurezdt = execution.plusYears(1).withMonth(1);
+            for (int firstWeekOfJanDay = 1; firstWeekOfJanDay<8; firstWeekOfJanDay++)
+            {
+                if (futurezdt.withDayOfMonth(firstWeekOfJanDay).getDayOfWeek().getValue() == dayOfWeek)
+                {
+                    futurezdt = futurezdt.withDayOfMonth(firstWeekOfJanDay);
+                    break;
+                }
+            }
+            //UUID is intentionally matching, as this is technically the same reminder.
+            addFutureReminder(new Reminder(reminder.getUserID(), reminder.getCreationTimeStamp(), reminder.getGuildID(), reminder.getChannelID(), reminder.getGroupType(), reminder.getRepetitionType(), reminder.getMessage(), futurezdt));
+        }
         else if (rt == RepetitionType.SINGLE)
         {
             if (execution.getYear() == ZonedDateTime.now(ZoneOffset.UTC).getYear())
@@ -121,6 +146,23 @@ public class ReminderManager
                 }
             }
             FileManager.saveRemindersDateTree(rdt);
+        }
+        else if (rt == RepetitionType.WEEKLY)
+        {
+            ZonedDateTime timeToClean = reminder.getFirstExecutionTimeUTC();
+            int dayOfWeek = execution.getDayOfWeek().getValue();
+            for (int monthValue = 1; monthValue<13; monthValue++)
+            {
+                for (int dayValue = 1; dayValue <= rdt.getYear().getMonth(monthValue).getDaysInMonth()+1; dayValue++)
+                {
+                    if (execution.withMonth(monthValue).withDayOfMonth(dayValue).getDayOfWeek().getValue() == dayOfWeek)
+                    {
+                        rdt.getYear().getMonth(monthValue).getDayOfMonth(dayValue).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
+                        cleanTree(timeToClean.withMonth(monthValue).withDayOfMonth(dayValue));
+                    }
+                }
+            }
+            deleteFutureReminder(reminder);
         }
         else if (rt == RepetitionType.SINGLE)
         {
