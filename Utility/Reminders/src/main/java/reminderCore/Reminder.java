@@ -9,10 +9,10 @@ import net.dv8tion.jda.core.entities.User;
 import reminderCore.enums.GroupType;
 import reminderCore.enums.RepetitionType;
 
-import java.time.OffsetDateTime;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-public class Reminder
+public class Reminder implements Serializable
 {
     private String userID;
     private String creationTimeStamp;

@@ -1,14 +1,15 @@
 package reminderCore;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class ReminderDateTree
+public class ReminderDateTree implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     Year year;
 
     public ReminderDateTree()
@@ -21,10 +22,11 @@ public class ReminderDateTree
         return year;
     }
 
-    public class Year
+    public class Year implements Serializable
     {
+        private static final long serialVersionUID = 1L;
         private int yearValue;
-        private int[] daysInLeapYearMonths = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        private transient int[] daysInLeapYearMonths = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         private HashMap<Integer, Month> months;
 
         public Year()
@@ -107,9 +109,10 @@ public class ReminderDateTree
 
 
     }
-    public class Month
+    public class Month implements Serializable
     {
-        int daysInMonth;
+        private static final long serialVersionUID = 1L;
+        private int daysInMonth;
         private HashMap<Integer, Day> days;
         public Month(int daysInMonth)
         {
@@ -162,8 +165,9 @@ public class ReminderDateTree
         }
     }
 
-    public class Day
+    public class Day implements Serializable
     {
+        private static final long serialVersionUID = 1L;
         private HashMap<Integer, Hour> hours;
         public Day()
         {
@@ -210,8 +214,9 @@ public class ReminderDateTree
         }
     }
 
-    public class Hour
+    public class Hour implements Serializable
     {
+        private static final long serialVersionUID = 1L;
         private HashMap<Integer, Minute> minutes;
         public Hour()
         {
@@ -258,8 +263,9 @@ public class ReminderDateTree
         }
     }
 
-    public class Minute
+    public class Minute implements Serializable
     {
+        private static final long serialVersionUID = 1L;
         private HashMap<Integer, Second> seconds;
         public Minute()
         {
@@ -305,8 +311,9 @@ public class ReminderDateTree
         }
     }
 
-    public class Second
+    public class Second implements Serializable
     {
+        private static final long serialVersionUID = 1L;
         private ArrayList<String> reminderIDs;
         public Second()
         {

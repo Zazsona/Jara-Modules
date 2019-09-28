@@ -2,8 +2,6 @@ package reminderCore;
 
 import module.Load;
 import org.slf4j.LoggerFactory;
-import reminderCore.enums.GroupType;
-import reminderCore.enums.RepetitionType;
 import reminderCore.enums.TimeType;
 
 import java.time.Instant;
@@ -17,6 +15,17 @@ import java.util.Map;
 public class ReminderScheduler extends Load
 {
     private static HashMap<Long, ArrayList<Reminder>> remindersMap;
+
+    @Override
+    public void load()
+    {
+        remindersMap = new HashMap<>();
+        ReminderDateTree rdt = FileManager.getReminderDateTree();
+        HashMap<String, Integer> futureReminders = FileManager.getFutureReminders();
+        HashMap<String, Reminder> reminders = FileManager.getReminders();
+        ReminderManager.initialise(rdt, futureReminders, reminders);
+        runReminders();
+    }
 
     private static void queueReminderForCurrentExecution(Reminder reminder, ZonedDateTime utc)
     {
@@ -65,10 +74,8 @@ public class ReminderScheduler extends Load
         }
     }
 
-    @Override
-    public void load()
+    private void runReminders()
     {
-        remindersMap = new HashMap<>();
         while (true)
         {
             ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);

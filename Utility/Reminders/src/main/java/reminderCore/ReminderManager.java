@@ -1,8 +1,11 @@
 package reminderCore;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reminderCore.enums.RepetitionType;
 import reminderCore.enums.TimeType;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -14,9 +17,21 @@ public class ReminderManager
     private static HashMap<String, Integer> reminderIDToFutureYearMap = new HashMap<>();
     //TODO: HashMap means easy code and processing efficiency, but memory costs are pretty rough. Perhaps there's a better solution?
     private static HashMap<String, Reminder> idToReminderMap = new HashMap<>();
+    private transient static Logger logger = LoggerFactory.getLogger(ReminderManager.class);
 
+    protected static void initialise(ReminderDateTree rdtArg, HashMap<String, Integer> reminderIDToFutureYearMapArg, HashMap<String, Reminder> idToReminderMapArg)
+    {
+        rdt = rdtArg;
+        reminderIDToFutureYearMap = reminderIDToFutureYearMapArg;
+        idToReminderMap = idToReminderMapArg;
+        if (rdt.getYear().getYearValue() < ZonedDateTime.now(ZoneOffset.UTC).getYear())
+        {
+            tidyReminders(new ArrayList(idToReminderMap.values())); //Expensive operation, but it only runs literally once a year.
+            loadFutureReminders();
+        }
+    }
 
-    public static void addReminder(Reminder reminder)
+    public static void addReminder(Reminder reminder) throws IOException
     {
         idToReminderMap.put(reminder.getUUID(), reminder);
         RepetitionType rt = reminder.getRepetitionType();
@@ -24,6 +39,7 @@ public class ReminderManager
         if (rt == RepetitionType.ANNUALLY)
         {
             rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.MONTHLY)
         {
@@ -34,30 +50,34 @@ public class ReminderManager
                     rdt.getYear().getMonth(i).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
                 }
             }
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.DAILY)
         {
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
-                for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).daysInMonth+1); dayOfMonth++)
+                for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).getDaysInMonth()+1); dayOfMonth++)
                 {
                     rdt.getYear().getMonth(monthValue).getDayOfMonth(dayOfMonth).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
                 }
             }
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.SINGLE)
         {
             if (execution.getYear() == ZonedDateTime.now(ZoneOffset.UTC).getYear())
             {
                 rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
+                FileManager.saveRemindersDateTree(rdt);
             }
             else
             {
                 addFutureReminder(reminder);
+                FileManager.saveFutureReminders(reminderIDToFutureYearMap);
             }
         }
         ReminderScheduler.tryQueueReminderForCurrentExecution(reminder);
-        //TODO: Save
+        FileManager.saveReminders(idToReminderMap);
     }
 
     private static void addFutureReminder(Reminder reminder)
@@ -65,7 +85,7 @@ public class ReminderManager
         reminderIDToFutureYearMap.put(reminder.getUUID(), reminder.getFirstExecutionTimeUTC().getYear());
     }
 
-    public static void deleteReminder(Reminder reminder)
+    public static void deleteReminder(Reminder reminder) throws IOException
     {
         idToReminderMap.remove(reminder.getUUID());
         RepetitionType rt = reminder.getRepetitionType();
@@ -74,6 +94,7 @@ public class ReminderManager
         {
             rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
             cleanTree(reminder.getFirstExecutionTimeUTC());
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.MONTHLY)
         {
@@ -86,18 +107,20 @@ public class ReminderManager
                     cleanTree(timeToClean.withMonth(i));
                 }
             }
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.DAILY)
         {
             ZonedDateTime timeToClean = reminder.getFirstExecutionTimeUTC();
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
-                for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).daysInMonth+1); dayOfMonth++)
+                for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).getDaysInMonth()+1); dayOfMonth++)
                 {
                     rdt.getYear().getMonth(monthValue).getDayOfMonth(dayOfMonth).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
                     cleanTree(timeToClean.withMonth(monthValue).withDayOfMonth(dayOfMonth));
                 }
             }
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.SINGLE)
         {
@@ -105,14 +128,16 @@ public class ReminderManager
             {
                 rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
                 cleanTree(reminder.getFirstExecutionTimeUTC());
+                FileManager.saveRemindersDateTree(rdt);
             }
             else
             {
                 deleteFutureReminder(reminder);
+                FileManager.saveFutureReminders(reminderIDToFutureYearMap);
             }
         }
         ReminderScheduler.removeReminderFromQueue(reminder);
-        //TODO: Save
+        FileManager.saveReminders(idToReminderMap);
     }
 
     private static void cleanTree(ZonedDateTime dateTimeToClean)
@@ -191,33 +216,48 @@ public class ReminderManager
 
     protected static void tidyReminders(ArrayList<Reminder> reminders)
     {
-        OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
-        for (Reminder reminder : reminders)
+        try
         {
-            if (reminder.getRepetitionType() == RepetitionType.SINGLE && reminder.getFirstExecutionTimeUTC().toEpochSecond() <= utc.toEpochSecond())
+            OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
+            for (Reminder reminder : reminders)
             {
-                deleteReminder(reminder);
+                if (reminder.getRepetitionType() == RepetitionType.SINGLE && reminder.getFirstExecutionTimeUTC().toEpochSecond() <= utc.toEpochSecond())
+                {
+                    deleteReminder(reminder);
+                }
             }
+        }
+        catch (IOException e)
+        {
+            logger.error(e.toString());
         }
     }
 
     protected static void loadFutureReminders()
     {
-        int currentYear = OffsetDateTime.now(ZoneOffset.UTC).getYear();
-        if (rdt.getYear().getYearValue() != currentYear)
+        try
         {
-            Iterator<Map.Entry<String, Integer>> iterator = reminderIDToFutureYearMap.entrySet().iterator();
-            while (iterator.hasNext())
+            int currentYear = OffsetDateTime.now(ZoneOffset.UTC).getYear();
+            if (rdt.getYear().getYearValue() != currentYear)
             {
-                 Map.Entry<String, Integer> entry = iterator.next();
-                 if (entry.getValue() == currentYear)
-                 {
-                     addReminder(getReminderById(entry.getKey()));
-                     iterator.remove();
-                 }
+                Iterator<Map.Entry<String, Integer>> iterator = reminderIDToFutureYearMap.entrySet().iterator();
+                while (iterator.hasNext())
+                {
+                    Map.Entry<String, Integer> entry = iterator.next();
+                    if (entry.getValue() == currentYear)
+                    {
+                        addReminder(getReminderById(entry.getKey()));
+                        iterator.remove();
+                    }
+                }
+                rdt.getYear().setYearValue(currentYear);
             }
-            rdt.getYear().setYearValue(currentYear);
         }
+        catch (IOException e)
+        {
+            logger.error("Unable to schedule reminders for this year.");
+        }
+
     }
 
     public Collection<Reminder> getRemindersForUser(String userID)
