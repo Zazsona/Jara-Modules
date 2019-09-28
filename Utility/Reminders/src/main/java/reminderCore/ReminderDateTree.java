@@ -5,6 +5,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class ReminderDateTree
 {
@@ -74,14 +75,14 @@ public class ReminderDateTree
             return getMonth(month).getDayOfMonth(countdown);
         }
 
-        public HashMap<String, Reminder> getReminders()
+        public LinkedList<Reminder> getReminders()
         {
-            HashMap<String, Reminder> reminders = new HashMap<>();
+            LinkedList<Reminder> remindersList = new LinkedList<>();
             for (Month month : months.values())
             {
-                reminders.putAll(month.getReminders());
+                remindersList.addAll(month.getReminders());
             }
-            return reminders;
+            return remindersList;
         }
 
         public ArrayList<String> getReminderIDs()
@@ -140,14 +141,14 @@ public class ReminderDateTree
             return daysInMonth;
         }
 
-        public HashMap<String, Reminder> getReminders()
+        public LinkedList<Reminder> getReminders()
         {
-            HashMap<String, Reminder> reminders = new HashMap<>();
+            LinkedList<Reminder> remindersList = new LinkedList<>();
             for (Day day : days.values())
             {
-                reminders.putAll(day.getReminders());
+                remindersList.addAll(day.getReminders());
             }
-            return reminders;
+            return remindersList;
         }
 
         public ArrayList<String> getReminderIDs()
@@ -188,14 +189,14 @@ public class ReminderDateTree
             hours.remove(hourOfDay);
         }
 
-        public HashMap<String, Reminder> getReminders()
+        public LinkedList<Reminder> getReminders()
         {
-            HashMap<String, Reminder> reminders = new HashMap<>();
+            LinkedList<Reminder> remindersList = new LinkedList<>();
             for (Hour hour : hours.values())
             {
-                reminders.putAll(hour.getReminders());
+                remindersList.addAll(hour.getReminders());
             }
-            return reminders;
+            return remindersList;
         }
 
         public ArrayList<String> getReminderIDs()
@@ -236,14 +237,14 @@ public class ReminderDateTree
             minutes.remove(minuteOfHour);
         }
 
-        public HashMap<String, Reminder> getReminders()
+        public LinkedList<Reminder> getReminders()
         {
-            HashMap<String, Reminder> reminders = new HashMap<>();
+            LinkedList<Reminder> remindersList = new LinkedList<>();
             for (Minute minute : minutes.values())
             {
-                reminders.putAll(minute.getReminders());
+                remindersList.addAll(minute.getReminders());
             }
-            return reminders;
+            return remindersList;
         }
 
         public ArrayList<String> getReminderIDs()
@@ -264,14 +265,14 @@ public class ReminderDateTree
         {
             seconds = new HashMap<>();
         }
-        public HashMap<String, Reminder> getReminders()
+        public LinkedList<Reminder> getReminders()
         {
-            HashMap<String, Reminder> reminders = new HashMap<>();
+            LinkedList<Reminder> remindersList = new LinkedList<>();
             for (Second second : seconds.values())
             {
-                reminders.putAll(second.getReminders());
+                remindersList.addAll(second.getReminders());
             }
-            return reminders;
+            return remindersList;
         }
 
         public ArrayList<String> getReminderIDs()
@@ -317,14 +318,14 @@ public class ReminderDateTree
             return reminderIDs;
         }
 
-        public HashMap<String, Reminder> getReminders()
+        public LinkedList<Reminder> getReminders()
         {
-            HashMap<String, Reminder> reminderHashMap = new HashMap<>();
+            LinkedList<Reminder> remindersList = new LinkedList<>();
             for (String UUID : reminderIDs)
             {
-                reminderHashMap.put(UUID, ReminderManager.getReminderById(UUID));
+                remindersList.add(ReminderManager.getReminderById(UUID));
             }
-            return reminderHashMap;
+            return remindersList;
         }
 
         public void addReminderToTime(String reminderUUID)

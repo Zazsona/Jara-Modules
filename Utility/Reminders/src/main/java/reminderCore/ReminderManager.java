@@ -56,6 +56,7 @@ public class ReminderManager
                 addFutureReminder(reminder);
             }
         }
+        ReminderScheduler.tryQueueReminderForCurrentExecution(reminder);
         //TODO: Save
     }
 
@@ -110,6 +111,7 @@ public class ReminderManager
                 deleteFutureReminder(reminder);
             }
         }
+        ReminderScheduler.removeReminderFromQueue(reminder);
         //TODO: Save
     }
 
@@ -167,18 +169,18 @@ public class ReminderManager
         switch (tt)
         {
             case YEAR:
-                return rdt.getYear().getReminders().values();
+                return rdt.getYear().getReminders();
             case MONTH:
-                return rdt.getYear().getMonth(utc.getMonthValue()).getReminders().values();
+                return rdt.getYear().getMonth(utc.getMonthValue()).getReminders();
             case DAY:
-                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getReminders().values();
+                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getReminders();
             case HOUR:
-                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getHour(utc.getHour()).getReminders().values();
+                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getHour(utc.getHour()).getReminders();
             case MINUTE:
-                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getHour(utc.getHour()).getMinute(utc.getMinute()).getReminders().values();
+                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getHour(utc.getHour()).getMinute(utc.getMinute()).getReminders();
             case SECOND:
             default:
-                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getHour(utc.getHour()).getMinute(utc.getMinute()).getSecond(utc.getSecond()).getReminders().values();
+                return rdt.getYear().getMonth(utc.getMonthValue()).getDayOfMonth(utc.getDayOfMonth()).getHour(utc.getHour()).getMinute(utc.getMinute()).getSecond(utc.getSecond()).getReminders();
         }
     }
 
