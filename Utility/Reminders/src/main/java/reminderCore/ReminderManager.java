@@ -302,9 +302,9 @@ public class ReminderManager
 
     }
 
-    public Collection<Reminder> getRemindersForUser(String userID)
+    public static ArrayList<Reminder> getRemindersForUser(String userID)
     {
-        LinkedList<Reminder> reminders = new LinkedList<>();
+        ArrayList<Reminder> reminders = new ArrayList<>();
         for (String key : idToReminderMap.keySet())
         {
             if (key.startsWith(userID))
