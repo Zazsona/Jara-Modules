@@ -35,7 +35,7 @@ public class ReminderManager
     {
         idToReminderMap.put(reminder.getUUID(), reminder);
         RepetitionType rt = reminder.getRepetitionType();
-        ZonedDateTime execution = reminder.getFirstExecutionTimeUTC();
+        ZonedDateTime execution = reminder.getFirstExecutionTime();
         if (rt == RepetitionType.ANNUALLY)
         {
             rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
@@ -107,23 +107,23 @@ public class ReminderManager
 
     private static void addFutureReminder(Reminder reminder)
     {
-        reminderIDToFutureYearMap.put(reminder.getUUID(), reminder.getFirstExecutionTimeUTC().getYear());
+        reminderIDToFutureYearMap.put(reminder.getUUID(), reminder.getFirstExecutionTime().getYear());
     }
 
     public static void deleteReminder(Reminder reminder) throws IOException
     {
         idToReminderMap.remove(reminder.getUUID());
         RepetitionType rt = reminder.getRepetitionType();
-        ZonedDateTime execution = reminder.getFirstExecutionTimeUTC();
+        ZonedDateTime execution = reminder.getFirstExecutionTime();
         if (rt == RepetitionType.ANNUALLY)
         {
             rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
-            cleanTree(reminder.getFirstExecutionTimeUTC());
+            cleanTree(reminder.getFirstExecutionTime());
             FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.MONTHLY)
         {
-            ZonedDateTime timeToClean = reminder.getFirstExecutionTimeUTC();
+            ZonedDateTime timeToClean = reminder.getFirstExecutionTime();
             for (int i = 1; i<13; i++)
             {
                 if (rdt.getYear().getMonth(i).getDaysInMonth() >= execution.getDayOfMonth())
@@ -136,7 +136,7 @@ public class ReminderManager
         }
         else if (rt == RepetitionType.DAILY)
         {
-            ZonedDateTime timeToClean = reminder.getFirstExecutionTimeUTC();
+            ZonedDateTime timeToClean = reminder.getFirstExecutionTime();
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
                 for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).getDaysInMonth()+1); dayOfMonth++)
@@ -149,7 +149,7 @@ public class ReminderManager
         }
         else if (rt == RepetitionType.WEEKLY)
         {
-            ZonedDateTime timeToClean = reminder.getFirstExecutionTimeUTC();
+            ZonedDateTime timeToClean = reminder.getFirstExecutionTime();
             int dayOfWeek = execution.getDayOfWeek().getValue();
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
@@ -169,7 +169,7 @@ public class ReminderManager
             if (execution.getYear() == ZonedDateTime.now(ZoneOffset.UTC).getYear())
             {
                 rdt.getYear().getMonth(execution.getMonthValue()).getDayOfMonth(execution.getDayOfMonth()).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
-                cleanTree(reminder.getFirstExecutionTimeUTC());
+                cleanTree(reminder.getFirstExecutionTime());
                 FileManager.saveRemindersDateTree(rdt);
             }
             else
@@ -263,7 +263,7 @@ public class ReminderManager
             OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
             for (Reminder reminder : reminders)
             {
-                if (reminder.getRepetitionType() == RepetitionType.SINGLE && reminder.getFirstExecutionTimeUTC().toEpochSecond() <= utc.toEpochSecond())
+                if (reminder.getRepetitionType() == RepetitionType.SINGLE && reminder.getFirstExecutionTime().toEpochSecond() <= utc.toEpochSecond())
                 {
                     deleteReminder(reminder);
                 }

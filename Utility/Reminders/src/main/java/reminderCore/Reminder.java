@@ -7,10 +7,12 @@ import reminderCore.enums.GroupType;
 import reminderCore.enums.RepetitionType;
 
 import java.io.Serializable;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 public class Reminder implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     private String userID;
     private String creationTimeStamp;
     private String guildID;
@@ -23,7 +25,7 @@ public class Reminder implements Serializable
     private transient Guild guild;
     private transient User user;
 
-    public Reminder(String userID, String creationTimeStamp, String guildID, String channelID, GroupType groupType, RepetitionType repetitionType, String message, ZonedDateTime firstExecutionTimeUTC)
+    public Reminder(String userID, String creationTimeStamp, String guildID, String channelID, GroupType groupType, RepetitionType repetitionType, String message, ZonedDateTime firstExecutionTime)
     {
         this.userID = userID;
         this.creationTimeStamp = creationTimeStamp;
@@ -32,7 +34,8 @@ public class Reminder implements Serializable
         this.repetitionType = repetitionType;
         this.groupType = groupType;
         this.message = message;
-        this.firstExecutionTimeUTC = firstExecutionTimeUTC;
+        this.firstExecutionTimeUTC = ZonedDateTime.ofInstant(firstExecutionTime.toInstant(), ZoneOffset.UTC); //Convert to UTC
+
     }
 
     public String getUserID()
@@ -131,13 +134,15 @@ public class Reminder implements Serializable
         return groupType;
     }
 
-    public ZonedDateTime getFirstExecutionTimeUTC()
+    public ZonedDateTime getFirstExecutionTime()
     {
         return firstExecutionTimeUTC;
     }
 
     public void execute()
     {
+        //TODO: Confirm the user has permissions to set/remove reminders before sending
+        //Don't want some pratt admin seeing them set a daily reminder, then locking them into it forever.
         Guild guild = getGuild();
         if (guild != null)
         {

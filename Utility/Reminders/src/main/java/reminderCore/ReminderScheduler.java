@@ -30,7 +30,7 @@ public class ReminderScheduler extends Load
     private static void queueReminderForCurrentExecution(Reminder reminder, ZonedDateTime utc)
     {
         long secondsSinceEpoch = Instant.now().getEpochSecond();
-        long startTime = secondsSinceEpoch+((reminder.getFirstExecutionTimeUTC().getMinute()-utc.getMinute())*60)+reminder.getFirstExecutionTimeUTC().getSecond()-utc.getSecond();
+        long startTime = secondsSinceEpoch+((reminder.getFirstExecutionTime().getMinute()-utc.getMinute())*60)+reminder.getFirstExecutionTime().getSecond()-utc.getSecond();
         if (remindersMap.containsKey(startTime))
         {
             remindersMap.get(startTime).add(reminder);
@@ -45,7 +45,7 @@ public class ReminderScheduler extends Load
     protected static boolean tryQueueReminderForCurrentExecution(Reminder reminder)
     {
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
-        long reminderStartSecond = reminder.getFirstExecutionTimeUTC().toInstant().getEpochSecond();
+        long reminderStartSecond = reminder.getFirstExecutionTime().toInstant().getEpochSecond();
         long minStartTime = Instant.now().getEpochSecond();
         long maxStartTime = minStartTime+utc.plusHours(1).withSecond(0).toEpochSecond();
         if (reminderStartSecond > minStartTime && reminderStartSecond < maxStartTime)
