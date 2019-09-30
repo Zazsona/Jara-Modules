@@ -1,9 +1,0 @@
-{
-  "params": [
-    "CalendarEvent Add [Name] [Month/Day] [Message]",
-    "CalendarEvent Remove [Name]",
-    "CalendarEvent List",
-    "CalendarEvent Time [HH:MM]"
-  ],
-  "description": "Calendar events are yearly repeating events, and send a message to the server's default channel.\nNames may not contain spaces.\n\nDate format: 01/05 (for 5th of Jan)\nTime format: 21:32 or 9:32PM (for 9:32PM UTC)"
-}
