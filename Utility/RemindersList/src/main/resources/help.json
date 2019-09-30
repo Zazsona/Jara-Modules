@@ -1,0 +1,7 @@
+{
+  "params": [
+    "ListReminders (PageNo)"
+  ],
+  "description": "Lists the reminders you have created.\nUse the IDs from here to delete a reminder using the \"RemoveReminder\" command."
+
+}

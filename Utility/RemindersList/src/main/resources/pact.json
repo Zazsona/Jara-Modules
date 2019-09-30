@@ -1,0 +1,11 @@
+{
+  "key": "RemindersList",
+  "aliases": [
+    "ListReminders",
+	"Reminders",
+	"ReminderList"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Lists your reminders"
+}

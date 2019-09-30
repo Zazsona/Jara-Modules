@@ -1,0 +1,7 @@
+{
+  "params": [
+    "RemoveReminder [Id]",
+  ],
+  "description": "Deletes the reminder with the specified id.\nIDs can be found by using the \"ListReminders\" command."
+
+}

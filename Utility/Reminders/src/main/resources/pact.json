@@ -1,9 +1,0 @@
-{
-  "key": "Reminder",
-  "aliases": [
-    "Reminders"
-  ],
-  "category": "UTILITY",
-  "targetVersion": "0.1",
-  "description": "Sets a reminder"
-}

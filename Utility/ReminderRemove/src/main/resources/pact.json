@@ -1,0 +1,11 @@
+{
+  "key": "RemoveReminder",
+  "aliases": [
+    "DeleteReminder",
+	"ReminderRemove",
+	"ClearReminder"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Removes a reminder"
+}
