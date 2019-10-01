@@ -2,7 +2,8 @@
   "key": "Reminder",
   "aliases": [
     "SetReminder",
-	"AddReminder"
+	"AddReminder",
+    "RemindMe"
   ],
   "category": "UTILITY",
   "targetVersion": "0.1",

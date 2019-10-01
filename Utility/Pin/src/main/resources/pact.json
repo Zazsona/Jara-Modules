@@ -1,0 +1,11 @@
+{
+  "key": "Pin",
+  "aliases": [
+    "PinMessage",
+    "MessagePin",
+    "Stamp"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Pin messages."
+}
