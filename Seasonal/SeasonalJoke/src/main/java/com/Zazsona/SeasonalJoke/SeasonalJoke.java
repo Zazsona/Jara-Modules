@@ -1,3 +1,5 @@
+package com.Zazsona.SeasonalJoke;
+
 import commands.CmdUtil;
 import module.GameCommand;
 import net.dv8tion.jda.core.EmbedBuilder;

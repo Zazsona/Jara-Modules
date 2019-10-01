@@ -1,3 +1,5 @@
+package com.Zazsona.SeasonalTrivia;
+
 import commands.CmdUtil;
 import jara.MessageManager;
 import module.GameCommand;

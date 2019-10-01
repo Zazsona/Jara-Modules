@@ -1,3 +1,5 @@
+package com.Zazsona.EasterHunt;
+
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.MessageManager;
