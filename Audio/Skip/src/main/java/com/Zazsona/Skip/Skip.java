@@ -1,3 +1,5 @@
+package com.Zazsona.Skip;
+
 import audio.Audio;
 import commands.CmdUtil;
 import configuration.SettingsUtil;

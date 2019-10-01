@@ -1,3 +1,5 @@
+package com.Zazsona.Mixtape;
+
 import audio.Audio;
 import commands.CmdUtil;
 import configuration.SettingsUtil;

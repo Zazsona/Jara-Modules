@@ -1,3 +1,5 @@
+package com.Zazsona.Kazoo;
+
 import commands.CmdUtil;
 import module.Command;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;

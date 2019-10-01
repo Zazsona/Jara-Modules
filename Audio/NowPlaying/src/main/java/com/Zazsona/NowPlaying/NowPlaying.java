@@ -1,3 +1,5 @@
+package com.Zazsona.NowPlaying;
+
 import audio.Audio;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import commands.CmdUtil;

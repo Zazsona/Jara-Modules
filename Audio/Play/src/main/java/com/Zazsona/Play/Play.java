@@ -1,3 +1,5 @@
+package com.Zazsona.Play;
+
 import audio.Audio;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
@@ -41,7 +43,7 @@ public class Play extends Command
         int remainingQueue = (queuedItems.containsKey(member.getUser().getId())) ? userMaxQueueSize-queuedItems.get(member.getUser().getId()) : userMaxQueueSize;
         int replaysToQueue = (replayCount < remainingQueue) ? replayCount : remainingQueue;
         audio.playWithFeedback(member, query, channel);
-        for (int i = 1; i <replaysToQueue ; i++)
+        for (int i = 1; i <replaysToQueue; i++)
         {
             audio.play(member, query);
         }

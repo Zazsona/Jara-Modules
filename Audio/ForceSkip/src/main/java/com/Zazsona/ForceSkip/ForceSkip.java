@@ -1,3 +1,5 @@
+package com.Zazsona.ForceSkip;
+
 import audio.Audio;
 import commands.CmdUtil;
 import module.Command;

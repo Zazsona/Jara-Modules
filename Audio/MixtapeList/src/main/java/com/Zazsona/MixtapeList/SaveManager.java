@@ -1,3 +1,5 @@
+package com.Zazsona.MixtapeList;
+
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

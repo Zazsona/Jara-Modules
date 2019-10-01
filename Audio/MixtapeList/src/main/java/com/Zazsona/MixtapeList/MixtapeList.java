@@ -1,3 +1,5 @@
+package com.Zazsona.MixtapeList;
+
 import commands.CmdUtil;
 import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
