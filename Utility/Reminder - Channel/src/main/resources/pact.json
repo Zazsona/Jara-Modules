@@ -1,0 +1,15 @@
+{
+  "key": "ChannelReminder",
+  "aliases": [
+    "SetChannelReminder",
+	"AddChannelReminder",
+    "RemindChannel",
+    "SetServerReminder",
+    "AddServerReminder",
+    "RemindServer",
+    "RemindUs"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Sets a channel reminder"
+}

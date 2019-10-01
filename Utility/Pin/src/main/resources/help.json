@@ -1,8 +1,0 @@
-{
-  "params": [
-    "Pin [MessageID]",
-    "Pin [Username]",
-    "Pin [@User]"
-  ],
-  "description": "Pins the specified message.\nNote that the message must be in the channel the command is used."
-}

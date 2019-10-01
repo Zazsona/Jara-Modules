@@ -21,4 +21,5 @@ sourceSets {
 }
 dependencies {
 	compile 'com.Zazsona:Jara:1.0'
+	compile 'com.Zazsona:Jara-ReminderCore:1.0'
 }
