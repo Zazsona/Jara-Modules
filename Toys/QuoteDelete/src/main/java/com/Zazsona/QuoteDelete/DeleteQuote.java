@@ -2,6 +2,7 @@ package com.Zazsona.QuoteDelete;
 
 import commands.CmdUtil;
 import module.Command;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class DeleteQuote extends Command
@@ -20,10 +21,15 @@ public class DeleteQuote extends Command
         {
             FileManager fm = new FileManager(msgEvent.getGuild().getId());
             boolean success = fm.deleteQuote(msgEvent.getGuild().getId(), parameters[1]);
+
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
             if (success)
-                msgEvent.getChannel().sendMessage("Quote \""+parameters[1]+"\" deleted.").queue();
+                embed.setDescription("Quote \""+parameters[1]+"\" deleted.");
             else
-                msgEvent.getChannel().sendMessage("Error: That quote doesn't exist.").queue();
+                embed.setDescription("Error: That quote doesn't exist.");
+
+            msgEvent.getChannel().sendMessage(embed.build()).queue();
         }
         else
         {

@@ -1,11 +1,15 @@
 package com.Zazsona.QuoteSave;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import net.dv8tion.jda.core.entities.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,12 +41,12 @@ public class FileManager
             Quote quote = null;
             if (message.getAttachments().size() > 0)
             {
-                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentRaw(), message.getAttachments().get(0).getUrl(), message.getCreationTime().atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE));
+                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getAttachments().get(0).getUrl(), message.getCreationTime().atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE));
 
             }
             else
             {
-                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentRaw(), message.getCreationTime().atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE));
+                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getCreationTime().atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE));
             }
             quoteList.add(quote);
             save(getQuotesPath(message.getGuild().getId()));
@@ -106,10 +110,12 @@ public class FileManager
                 quoteFile.getParentFile().mkdirs();
                 quoteFile.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(quoteList);
             FileOutputStream fos = new FileOutputStream(path);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(quoteList);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
@@ -124,11 +130,10 @@ public class FileManager
         {
             if (new File(path).exists())
             {
-                FileInputStream fis = new FileInputStream(path);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                quoteList = (ArrayList<Quote>) ois.readObject();
-                ois.close();
-                fis.close();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(new File(path).toPath()));
+                TypeToken<ArrayList<Quote>> token = new TypeToken<ArrayList<Quote>>() {};
+                quoteList = gson.fromJson(json, token.getType());
             }
             else
             {
@@ -141,10 +146,28 @@ public class FileManager
             logger.error(e.getMessage());
             return;
         }
-        catch (ClassNotFoundException e)
+    }
+
+    public Quote renameQuote(String guildID, String originalQuoteName, String newQuoteName)
+    {
+        Quote quote = getQuoteByName(originalQuoteName);
+        if (quote != null)
         {
-            logger.error(e.getMessage());
-            return;
+            quote.name = newQuoteName;
+            save(getQuotesPath(guildID));
+            return quote;
         }
+        return null;
+    }
+
+    public Quote renameQuote(String guildID, Quote quote, String newQuoteName)
+    {
+        if (quote != null)
+        {
+            quote.name = newQuoteName;
+            save(getQuotesPath(guildID));
+            return quote;
+        }
+        return null;
     }
 }
