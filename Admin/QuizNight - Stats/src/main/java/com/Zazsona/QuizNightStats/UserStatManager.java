@@ -1,11 +1,15 @@
 package com.Zazsona.QuizNightStats;
 
 import com.Zazsona.QuizNightStats.json.UserStats;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 public class UserStatManager
@@ -37,7 +41,7 @@ public class UserStatManager
         }
         catch (IOException e)
         {
-            logger.error("Unable to create Quiz Night user stats file.\n"+e.getMessage());
+            logger.error("Unable to create Quiz Night user stats file.\n"+e.toString());
             return null;
         }
     }
@@ -46,15 +50,15 @@ public class UserStatManager
     {
         try
         {
-            FileInputStream fis = new FileInputStream(getQuizUserStatsFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            userStatMap = (HashMap<String, UserStats>) ois.readObject();
-            ois.close();
-            fis.close();
+            File file = getQuizUserStatsFile();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = new String(Files.readAllBytes(file.toPath()));
+            TypeToken<HashMap<String, UserStats>> token = new TypeToken<HashMap<String, UserStats>>() {};
+            userStatMap = gson.fromJson(json, token.getType());
         }
-        catch (IOException | ClassNotFoundException e)
+        catch (IOException e)
         {
-            logger.error("Unable to read Quiz Night user stats file.\n"+e.getMessage());
+            logger.error("Unable to read Quiz Night user stats file.\n"+e.toString());
         }
         return userStatMap;
     }
@@ -68,16 +72,19 @@ public class UserStatManager
             {
                 configFile.createNewFile();
             }
-            FileOutputStream fos = new FileOutputStream(getQuizUserStatsFile());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(userStatMap);
-            oos.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(userStatMap);
+            FileOutputStream fos = new FileOutputStream(configFile.getPath());
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
         {
-            logger.error(e.getMessage());
+            logger.error(e.toString());
         }
     }
+
 
 }

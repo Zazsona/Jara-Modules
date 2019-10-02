@@ -1,11 +1,15 @@
 package com.Zazsona.QuizNight.system;
 
 import com.Zazsona.QuizNight.json.QuizSettings;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class SettingsManager
@@ -46,13 +50,11 @@ public class SettingsManager
     {
         try
         {
-            FileInputStream fis = new FileInputStream(getQuizSettingsFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            quizSettings = (QuizSettings) ois.readObject();
-            ois.close();
-            fis.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = new String(Files.readAllBytes(getQuizSettingsFile().toPath()));
+            quizSettings = gson.fromJson(json, QuizSettings.class);
         }
-        catch (IOException | ClassNotFoundException e)
+        catch (IOException e)
         {
             logger.error("Unable to read Quiz Night settings file.\n"+e.toString());
             quizSettings = new QuizSettings();
@@ -69,10 +71,12 @@ public class SettingsManager
             {
                 configFile.createNewFile();
             }
-            FileOutputStream fos = new FileOutputStream(getQuizSettingsFile());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(quizSettings);
-            oos.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(quizSettings);
+            FileOutputStream fos = new FileOutputStream(configFile);
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
