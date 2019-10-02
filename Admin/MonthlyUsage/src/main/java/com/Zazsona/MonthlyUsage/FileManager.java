@@ -1,10 +1,14 @@
 package com.Zazsona.MonthlyUsage;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
@@ -12,14 +16,9 @@ import java.util.HashMap;
 public class FileManager implements Serializable
 {
     private static long serialVersionUID = 1L;
-    private OffsetDateTime lastReset;
+    private long lastReset;
     private HashMap<String, HashMap<String, Integer>> commandUsage; //GuildID : UserID, CommandCount
     private static transient Logger logger = LoggerFactory.getLogger("CommandUsageLoader");
-
-    public FileManager()
-    {
-        restore();
-    }
 
     private String getSavePath()
     {
@@ -36,10 +35,12 @@ public class FileManager implements Serializable
                 quoteFile.getParentFile().mkdirs();
                 quoteFile.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(this);
             FileOutputStream fos = new FileOutputStream(getSavePath());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
@@ -48,33 +49,27 @@ public class FileManager implements Serializable
         }
     }
 
-    private synchronized void restore()
+    public synchronized void restore()
     {
         try
         {
-            if (new File(getSavePath()).exists())
+            File saveFile = new File(getSavePath());
+            if (saveFile.exists())
             {
-                FileInputStream fis = new FileInputStream(getSavePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                FileManager fm = (FileManager) ois.readObject();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(saveFile.toPath()));
+                FileManager fm = gson.fromJson(json, FileManager.class);
                 this.commandUsage = fm.commandUsage;
                 this.lastReset = fm.lastReset;
-                ois.close();
-                fis.close();
             }
             else
             {
                 commandUsage = new HashMap<>();
-                lastReset = OffsetDateTime.now(ZoneOffset.UTC);
+                lastReset = Instant.now().getEpochSecond();
             }
 
         }
         catch (IOException e)
-        {
-            logger.error(e.getMessage());
-            return;
-        }
-        catch (ClassNotFoundException e)
         {
             logger.error(e.getMessage());
             return;
@@ -102,7 +97,7 @@ public class FileManager implements Serializable
     public void reset()
     {
         commandUsage = new HashMap<>();
-        lastReset = OffsetDateTime.now(ZoneOffset.UTC);
+        lastReset = OffsetDateTime.now(ZoneOffset.UTC).toEpochSecond();
         save();
     }
 
@@ -118,6 +113,6 @@ public class FileManager implements Serializable
 
     public OffsetDateTime getLastReset()
     {
-        return lastReset;
+        return OffsetDateTime.ofInstant(Instant.ofEpochSecond(lastReset), ZoneOffset.UTC);
     }
 }

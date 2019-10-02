@@ -19,6 +19,7 @@ public class MonthlyUsageRecorder extends Load
     public void load()
     {
         fm = new FileManager();
+        fm.restore();
         CommandListener cmdListener = new CommandListener();
         CmdUtil.getJDA().addEventListener(cmdListener);
 
