@@ -1,11 +1,16 @@
 package com.Zazsona.ChooseYourOwnAdventure.story;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StoryManager
 {
@@ -25,11 +30,14 @@ public class StoryManager
             {
                 configFile.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(storyTree);
             FileOutputStream fos = new FileOutputStream(getConfigPath());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(storyTree);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
+
         }
         catch (IOException e)
         {
@@ -41,13 +49,13 @@ public class StoryManager
     {
         try
         {
-            if (new File(getConfigPath()).exists())
+            File configFile = new File(getConfigPath());
+            if (configFile.exists())
             {
-                FileInputStream fis = new FileInputStream(getConfigPath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                storyTree = (ArrayList<StoryNode>) ois.readObject();
-                ois.close();
-                fis.close();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(configFile.toPath()));
+                TypeToken<ArrayList<StoryNode>> token = new TypeToken<ArrayList<StoryNode>>() {};
+                storyTree = gson.fromJson(json, token.getType());
             }
             else
             {
@@ -56,14 +64,8 @@ public class StoryManager
                 rootNode.setNodeID(0);
                 storyTree.add(rootNode);
             }
-
         }
         catch (IOException e)
-        {
-            logger.error(e.getMessage());
-            return;
-        }
-        catch (ClassNotFoundException e)
         {
             logger.error(e.getMessage());
             return;

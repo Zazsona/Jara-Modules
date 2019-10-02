@@ -1,10 +1,15 @@
 package com.Zazsona.ChooseYourOwnAdventure.profile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProfileManager
@@ -26,10 +31,12 @@ public class ProfileManager
             {
                 configFile.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(profiles);
             FileOutputStream fos = new FileOutputStream(getProfilePath());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(profiles);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
@@ -42,13 +49,13 @@ public class ProfileManager
     {
         try
         {
-            if (new File(getProfilePath()).exists())
+            File profileFile = new File(getProfilePath());
+            if (profileFile.exists())
             {
-                FileInputStream fis = new FileInputStream(getProfilePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                profiles = (HashMap<String, Integer>) ois.readObject();
-                ois.close();
-                fis.close();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(profileFile.toPath()));
+                TypeToken<HashMap<String, Integer>> token = new TypeToken<HashMap<String, Integer>>() {};
+                profiles = gson.fromJson(json, token.getType());
             }
             else
             {
@@ -57,11 +64,6 @@ public class ProfileManager
 
         }
         catch (IOException e)
-        {
-            logger.error(e.getMessage());
-            return;
-        }
-        catch (ClassNotFoundException e)
         {
             logger.error(e.getMessage());
             return;
