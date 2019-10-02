@@ -1,11 +1,15 @@
 package com.Zazsona.MessageResponder;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import net.dv8tion.jda.core.entities.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -18,12 +22,6 @@ public class FileManager implements Serializable
     private static long serialVersionUID = 1L;
     private LinkedHashMap<String, HashMap<String, String>> guildToMessagesMap; //GuildID : ReceiveMessage, ResponseMessage
     private static transient Logger logger = LoggerFactory.getLogger("MessageResponseLoader");
-
-    public FileManager()
-    {
-        restore();
-    }
-
 
     private String getSavePath()
     {
@@ -40,10 +38,12 @@ public class FileManager implements Serializable
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(this);
             FileOutputStream fos = new FileOutputStream(getSavePath());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
@@ -52,32 +52,24 @@ public class FileManager implements Serializable
         }
     }
 
-    private synchronized void restore()
+    public synchronized void restore()
     {
         try
         {
-            if (new File(getSavePath()).exists())
+            File configFile = new File(getSavePath());
+            if (configFile.exists())
             {
-                FileInputStream fis = new FileInputStream(getSavePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                FileManager fm = (FileManager) ois.readObject();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(configFile.toPath()));
+                FileManager fm = gson.fromJson(json, this.getClass());
                 this.guildToMessagesMap = fm.guildToMessagesMap;
-                ois.close();
-                fis.close();
             }
             else
             {
                 guildToMessagesMap = new LinkedHashMap<>();
-
             }
-
         }
         catch (IOException e)
-        {
-            logger.error(e.toString());
-            return;
-        }
-        catch (ClassNotFoundException e)
         {
             logger.error(e.toString());
             return;

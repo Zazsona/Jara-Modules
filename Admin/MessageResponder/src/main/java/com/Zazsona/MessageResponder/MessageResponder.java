@@ -14,6 +14,7 @@ public class MessageResponder extends Load
     public void load()
     {
         fm = new FileManager();
+        fm.restore();
         MessageListener msgListener = new MessageListener();
         CmdUtil.getJDA().addEventListener(msgListener);
     }

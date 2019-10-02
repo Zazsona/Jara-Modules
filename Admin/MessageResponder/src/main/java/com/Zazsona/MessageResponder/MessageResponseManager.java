@@ -79,8 +79,8 @@ public class MessageResponseManager extends Command
         responseMessage = msg.getContentRaw();
         fm.addMessageResponse(channel.getGuild().getId(), identifyMessage, responseMessage);
         String identifyMessageSnippet = (identifyMessage.length() > 500) ? identifyMessage.substring(0, 497)+"..." : identifyMessage;
-        String responseMessageSnippet = identifyMessage.substring(0, (identifyMessage.length() > 500) ? 500 : identifyMessage.length());
-        embed.setDescription("Response saved successfully!\n\n**Look for**:\n"+identifyMessage+"\n\n**Respond with**:\n"+responseMessageSnippet);
+        String responseMessageSnippet = (responseMessage.length() > 500) ? responseMessage.substring(0, 497)+"..." : responseMessage;
+        embed.setDescription("Response saved successfully!\n\n**Look for**:\n"+identifyMessageSnippet+"\n\n**Respond with**:\n"+responseMessageSnippet);
         channel.sendMessage(embed.build()).queue();
     }
 
