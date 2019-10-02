@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
@@ -20,7 +21,7 @@ public class Reminder implements Serializable
     private RepetitionType repetitionType;
     private GroupType groupType;
     private String message;
-    private ZonedDateTime firstExecutionTimeUTC;
+    private long executionTimeSecSinceEpoch;
 
     private transient Guild guild;
     private transient User user;
@@ -34,7 +35,7 @@ public class Reminder implements Serializable
         this.repetitionType = repetitionType;
         this.groupType = groupType;
         this.message = message;
-        this.firstExecutionTimeUTC = ZonedDateTime.ofInstant(firstExecutionTime.toInstant(), ZoneOffset.UTC); //Convert to UTC
+        this.executionTimeSecSinceEpoch = firstExecutionTime.toInstant().getEpochSecond();
 
     }
 
@@ -136,7 +137,7 @@ public class Reminder implements Serializable
 
     public ZonedDateTime getFirstExecutionTime()
     {
-        return firstExecutionTimeUTC;
+        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(executionTimeSecSinceEpoch), ZoneOffset.UTC);
     }
 
     public void execute()

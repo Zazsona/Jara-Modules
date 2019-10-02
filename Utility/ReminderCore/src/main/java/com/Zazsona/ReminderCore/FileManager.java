@@ -1,9 +1,13 @@
 package com.Zazsona.ReminderCore;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 public class FileManager
@@ -52,14 +56,16 @@ public class FileManager
     {
         try
         {
-            FileInputStream fis = new FileInputStream(getDateTreeFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ReminderDateTree rdt = (ReminderDateTree) ois.readObject();
-            ois.close();
-            fis.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = new String(Files.readAllBytes(getDateTreeFile().toPath()));
+            ReminderDateTree rdt = gson.fromJson(json, ReminderDateTree.class);
+            if (rdt == null)
+            {
+                rdt = new ReminderDateTree();
+            }
             return rdt;
         }
-        catch (ClassNotFoundException | IOException e)
+        catch (IOException e)
         {
             LoggerFactory.getLogger("Reminders-File-Manager").error("Unable to read reminders date tree file.\n"+e.toString());
             return new ReminderDateTree();
@@ -70,14 +76,17 @@ public class FileManager
     {
         try
         {
-            FileInputStream fis = new FileInputStream(getRemindersFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            HashMap<String, Reminder> reminders = (HashMap<String, Reminder>) ois.readObject();
-            ois.close();
-            fis.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = new String(Files.readAllBytes(getRemindersFile().toPath()));
+            TypeToken<HashMap<String, Reminder>> token = new TypeToken<HashMap<String, Reminder>>() {};
+            HashMap<String, Reminder> reminders = gson.fromJson(json, token.getType());
+            if (reminders == null)
+            {
+                reminders = new HashMap<>();
+            }
             return reminders;
         }
-        catch (ClassNotFoundException | IOException e)
+        catch (IOException e)
         {
             LoggerFactory.getLogger("Reminders-File-Manager").error("Unable to read reminders file.\n"+e.toString());
             return new HashMap<>();
@@ -88,14 +97,17 @@ public class FileManager
     {
         try
         {
-            FileInputStream fis = new FileInputStream(getFutureRemindersFile());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            HashMap<String, Integer> reminders = (HashMap<String, Integer>) ois.readObject();
-            ois.close();
-            fis.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = new String(Files.readAllBytes(getFutureRemindersFile().toPath()));
+            TypeToken<HashMap<String, Integer>> token = new TypeToken<HashMap<String, Integer>>() {};
+            HashMap<String, Integer> reminders = gson.fromJson(json, token.getType());
+            if (reminders == null)
+            {
+                reminders = new HashMap<>();
+            }
             return reminders;
         }
-        catch (ClassNotFoundException | IOException e)
+        catch (IOException e)
         {
             LoggerFactory.getLogger("Reminders-File-Manager").error("Unable to read future reminders file.\n"+e.toString());
             return new HashMap<>();
@@ -104,28 +116,34 @@ public class FileManager
 
     protected static void saveRemindersDateTree(ReminderDateTree rdt) throws IOException
     {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(rdt);
         FileOutputStream fos = new FileOutputStream(getDateTreeFile());
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(rdt);
-        oos.close();
+        PrintWriter pw = new PrintWriter(fos);
+        pw.print(json);
+        pw.close();
         fos.close();
     }
 
     protected static void saveReminders(HashMap<String, Reminder> reminders) throws IOException
     {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reminders);
         FileOutputStream fos = new FileOutputStream(getRemindersFile());
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(reminders);
-        oos.close();
+        PrintWriter pw = new PrintWriter(fos);
+        pw.print(json);
+        pw.close();
         fos.close();
     }
 
     protected static void saveFutureReminders(HashMap<String, Integer> futureReminders) throws IOException
     {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(futureReminders);
         FileOutputStream fos = new FileOutputStream(getFutureRemindersFile());
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(futureReminders);
-        oos.close();
+        PrintWriter pw = new PrintWriter(fos);
+        pw.print(json);
+        pw.close();
         fos.close();
     }
 }

@@ -36,7 +36,7 @@ public class ReminderCommand extends Command
             {
                 RepetitionType rt = getRepetitionType(parameters[1]);
                 ZonedDateTime executionTime = getExecutionTime(msgEvent.getGuild().getId(), rt, parameters);
-                if (rt != null || (rt == null && executionTime.isAfter(ZonedDateTime.now(executionTime.getZone()))))
+                if (rt != RepetitionType.SINGLE || (rt == RepetitionType.SINGLE && executionTime.isAfter(ZonedDateTime.now(executionTime.getZone()))))
                 {
                     String message = getMessage(msgEvent, embed);
                     if (message == null)
@@ -59,7 +59,7 @@ public class ReminderCommand extends Command
                     Reminder reminder = new Reminder(msgEvent.getMember().getUser().getId(), String.valueOf(msgEvent.getMessage().getCreationTime().toInstant().toEpochMilli()), msgEvent.getGuild().getId(), (channelReminder) ? channel.getId() : null, (channelReminder) ? GroupType.CHANNEL : GroupType.USER, rt, message, executionTime);
                     ReminderManager.addReminder(reminder);
                     embed.setDescription("**Reminder Set!**\n" +
-                                                 "Repeat: "+((rt == null) ? "Never": rt.name())+"\n" +
+                                                 "Repeat: "+ rt.name()+"\n" +
                                                  "Year: " + executionTime.getYear() + "\n" +
                                                  "Month: " + executionTime.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + "\n" +
                                                  "Day: " + executionTime.getDayOfMonth() + " (" + executionTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + ")\n" +
@@ -99,7 +99,7 @@ public class ReminderCommand extends Command
         boolean isMonthSet = false;
         boolean isDaySet = false;
         boolean isTimeSet = false;
-        int minArgLength = (rt == null) ? 1 : 2;
+        int minArgLength = (rt == RepetitionType.SINGLE) ? 1 : 2;
         int maxArgLength = minArgLength+4;
         for (int i = maxArgLength-(parameters.length-minArgLength); i<maxArgLength; i++)
         {
@@ -137,7 +137,7 @@ public class ReminderCommand extends Command
                 return repetitionType;
             }
         }
-        return null;
+        return RepetitionType.SINGLE;
     }
 
     private ZonedDateTime getYear(String yearInput, ZonedDateTime zdt) throws NumberFormatException

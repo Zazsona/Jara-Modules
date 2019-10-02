@@ -10,15 +10,13 @@ import java.util.LinkedList;
 public class ReminderDateTree implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    Year year;
-
-    public ReminderDateTree()
-    {
-        year = new Year();
-    }
+    private Year year;
 
     public Year getYear()
     {
+        if (year == null)
+            year = new Year();
+
         return year;
     }
 
