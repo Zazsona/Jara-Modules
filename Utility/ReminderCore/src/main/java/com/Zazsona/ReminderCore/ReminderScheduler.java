@@ -2,6 +2,7 @@ package com.Zazsona.ReminderCore;
 
 import com.Zazsona.ReminderCore.enums.TimeType;
 import module.Load;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
@@ -15,6 +16,8 @@ import java.util.Map;
 public class ReminderScheduler extends Load
 {
     private static HashMap<Long, ArrayList<Reminder>> remindersMap;
+    private static transient boolean remindersAddedDuringPeriod = false;
+    private static transient Logger logger = LoggerFactory.getLogger(ReminderScheduler.class);
 
     @Override
     public void load()
@@ -29,8 +32,7 @@ public class ReminderScheduler extends Load
 
     private static void queueReminderForCurrentExecution(Reminder reminder, ZonedDateTime utc)
     {
-        long secondsSinceEpoch = Instant.now().getEpochSecond();
-        long startTime = secondsSinceEpoch+((reminder.getFirstExecutionTime().getMinute()-utc.getMinute())*60)+reminder.getFirstExecutionTime().getSecond()-utc.getSecond();
+        long startTime = utc.withMinute(reminder.getFirstExecutionTime().getMinute()).withSecond(reminder.getFirstExecutionTime().getSecond()).toEpochSecond();
         if (remindersMap.containsKey(startTime))
         {
             remindersMap.get(startTime).add(reminder);
@@ -47,10 +49,11 @@ public class ReminderScheduler extends Load
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
         long reminderStartSecond = reminder.getFirstExecutionTime().toInstant().getEpochSecond();
         long minStartTime = Instant.now().getEpochSecond();
-        long maxStartTime = minStartTime+utc.plusHours(1).withSecond(0).toEpochSecond();
+        long maxStartTime = utc.withMinute(0).withSecond(0).withHour(utc.getHour()+1).toEpochSecond();
         if (reminderStartSecond > minStartTime && reminderStartSecond < maxStartTime)
         {
             queueReminderForCurrentExecution(reminder, utc);
+            remindersAddedDuringPeriod = true;
             return true;
         }
         return false;
@@ -79,8 +82,7 @@ public class ReminderScheduler extends Load
         while (true)
         {
             ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
-            long secondsSinceEpoch = Instant.now().getEpochSecond();
-            long resetSecond = secondsSinceEpoch+utc.plusHours(1).withSecond(0).toEpochSecond();
+            long resetSecond = utc.withMinute(0).withSecond(0).withHour(utc.getHour()+1).toEpochSecond();
             ArrayList<Reminder> reminders = new ArrayList<>(ReminderManager.getReminders(TimeType.HOUR, utc));
             if (reminders.size() > 0)
             {
@@ -90,7 +92,6 @@ public class ReminderScheduler extends Load
             {
                 try
                 {
-                    Thread.sleep(((Instant.now().getEpochSecond()+1)*1000)-Instant.now().toEpochMilli());
                     long epochSecond = Instant.now().getEpochSecond();
                     if (remindersMap.containsKey(epochSecond))
                     {
@@ -99,14 +100,31 @@ public class ReminderScheduler extends Load
                             reminder.execute();
                         }
                     }
+                    Thread.sleep(((Instant.now().getEpochSecond()+1)*1000)-Instant.now().toEpochMilli());
                 }
                 catch (InterruptedException e)
                 {
-                    LoggerFactory.getLogger(getClass()).error("Reminder scheduler got interrupted! Reminders will not run at this time.");
+                    logger.error("Reminder scheduler got interrupted! Reminders will not run at this time.");
                 }
             }
-            ReminderManager.tidyReminders(reminders);
+            tidyReminders(reminders);
             remindersMap.clear();
         }
+    }
+
+    private void tidyReminders(ArrayList<Reminder> baseReminderQueue)
+    {
+        if (remindersAddedDuringPeriod)
+        {
+            ArrayList<Reminder> reminders = new ArrayList<>();
+            remindersMap.forEach((k, v) -> reminders.addAll(v));
+            ReminderManager.tidyReminders(reminders);
+        }
+        else
+        {
+            ReminderManager.tidyReminders(baseReminderQueue);
+        }
+
+
     }
 }
