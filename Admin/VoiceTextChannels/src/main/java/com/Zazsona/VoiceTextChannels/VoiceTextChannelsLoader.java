@@ -20,6 +20,7 @@ public class VoiceTextChannelsLoader extends Load
     public void load()
     {
         fm = new FileManager();
+        fm.restore();
         ChannelJoinListener cjl = new ChannelJoinListener();
         CmdUtil.getJDA().addEventListener(cjl);
     }

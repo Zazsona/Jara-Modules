@@ -1,21 +1,20 @@
 package com.Zazsona.VoiceTextChannels;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class FileManager implements Serializable
 {
     private ArrayList<String> enabledGuilds;
     private static transient Logger logger = LoggerFactory.getLogger("VoiceTextChannels");
-
-    public FileManager()
-    {
-        restore();
-    }
 
     private String getSavePath()
     {
@@ -32,10 +31,12 @@ public class FileManager implements Serializable
                 quoteFile.getParentFile().mkdirs();
                 quoteFile.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(enabledGuilds);
             FileOutputStream fos = new FileOutputStream(getSavePath());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(enabledGuilds);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
@@ -44,17 +45,17 @@ public class FileManager implements Serializable
         }
     }
 
-    private synchronized void restore()
+    public synchronized void restore()
     {
         try
         {
-            if (new File(getSavePath()).exists())
+            File configFile = new File(getSavePath());
+            if (configFile.exists())
             {
-                FileInputStream fis = new FileInputStream(getSavePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                enabledGuilds = (ArrayList<String>) ois.readObject();
-                ois.close();
-                fis.close();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(configFile.toPath()));
+                TypeToken<ArrayList<String>> token = new TypeToken<ArrayList<String>>() {};
+                enabledGuilds = gson.fromJson(json, token.getType());
             }
             else
             {
@@ -63,11 +64,6 @@ public class FileManager implements Serializable
 
         }
         catch (IOException e)
-        {
-            logger.error(e.getMessage());
-            return;
-        }
-        catch (ClassNotFoundException e)
         {
             logger.error(e.getMessage());
             return;
