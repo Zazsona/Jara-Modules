@@ -1,6 +1,8 @@
 package com.Zazsona.Report;
 
 import commands.CmdUtil;
+import configuration.GuildSettings;
+import configuration.SettingsUtil;
 import module.Command;
 import jara.Core;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -10,18 +12,21 @@ import java.lang.management.ManagementFactory;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class Report extends Command
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
+        GuildSettings guildSettings = SettingsUtil.getGuildSettings(msgEvent.getGuild().getId());
         StringBuilder reportSB = new StringBuilder();
         reportSB.append("Bot User: ").append(msgEvent.getJDA().getSelfUser().getName()).append("#").append(msgEvent.getJDA().getSelfUser().getDiscriminator()).append("\n");
         reportSB.append("Status: Online\n");
         reportSB.append("Version: ").append(Core.getVersion()).append("\n");
         reportSB.append("Uptime: ").append(CmdUtil.formatMillisecondsToHhMmSs(ManagementFactory.getRuntimeMXBean().getUptime())).append("\n");
-        reportSB.append("DateTime: ").append(OffsetDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss"))).append(" (UTC)\n");
+        reportSB.append("DateTime: ").append(OffsetDateTime.now(guildSettings.getTimeZoneId()).format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))).append(" (").append(guildSettings.getTimeZoneId().getDisplayName(TextStyle.NARROW_STANDALONE, Locale.ENGLISH)).append(")\n");
         reportSB.append("Shard: ").append(msgEvent.getJDA().getShardInfo().getShardId()).append("/").append(msgEvent.getJDA().getShardInfo().getShardTotal()).append("\n");
         reportSB.append("Server: ").append(msgEvent.getGuild().getName()).append("\n");
         reportSB.append("Channel: #").append(msgEvent.getChannel().getName()).append("\n");
