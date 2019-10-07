@@ -1,0 +1,15 @@
+{
+  "key": "RemindMember",
+  "aliases": [
+    "SetMemberReminder",
+	"AddMemberReminder",
+    "RemindUser",
+    "SetUserReminder",
+    "AddUserReminder",
+    "MemberReminder",
+    "UserReminder"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Sets a reminder for a server member"
+}

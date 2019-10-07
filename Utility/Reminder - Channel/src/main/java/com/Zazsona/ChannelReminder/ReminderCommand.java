@@ -9,6 +9,7 @@ import configuration.SettingsUtil;
 import jara.MessageManager;
 import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
@@ -28,6 +29,7 @@ public class ReminderCommand extends Command
         if (parameters.length > 1)
         {
             boolean channelReminder = (parameters[0].toLowerCase().contains("group") || parameters[0].toLowerCase().contains("channel") || parameters[0].toLowerCase().contains("server") || parameters[0].toLowerCase().contains("us") || parameters[0].toLowerCase().contains("all"));
+            boolean memberReminder = (parameters[0].toLowerCase().contains("member") || parameters[0].toLowerCase().contains("user"));
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
             embed.setFooter("Reminders", null);
@@ -56,7 +58,18 @@ public class ReminderCommand extends Command
                             return;
                         }
                     }
-                    Reminder reminder = new Reminder(msgEvent.getMember().getUser().getId(), String.valueOf(msgEvent.getMessage().getCreationTime().toInstant().toEpochMilli()), msgEvent.getGuild().getId(), (channelReminder) ? channel.getId() : null, (channelReminder) ? GroupType.CHANNEL : GroupType.USER, rt, message, executionTime);
+                    Member member = msgEvent.getMember();
+                    if (memberReminder)
+                    {
+                        member = getMember(msgEvent, embed);
+                        if (member == null)
+                        {
+                            embed.setDescription("Reminder cancelled.");
+                            msgEvent.getChannel().sendMessage(embed.build()).queue();
+                            return;
+                        }
+                    }
+                    Reminder reminder = new Reminder(member.getUser().getId(), String.valueOf(msgEvent.getMessage().getCreationTime().toInstant().toEpochMilli()), msgEvent.getGuild().getId(), (channelReminder) ? channel.getId() : null, (channelReminder) ? GroupType.CHANNEL : GroupType.USER, rt, message, executionTime);
                     ReminderManager.addReminder(reminder);
                     embed.setDescription("**Reminder Set!**\n" +
                                                  "Repeat: "+ rt.name()+"\n" +
@@ -144,7 +157,7 @@ public class ReminderCommand extends Command
     {
         int year;
         if (yearInput.matches("[0-9]+"))
-            year = Integer.parseInt(yearInput);
+             year = Integer.parseInt(yearInput);
         else
             throw new NumberFormatException(yearInput+" is not a valid year.\nYears must be a number.");
 
@@ -262,10 +275,10 @@ public class ReminderCommand extends Command
                 if ((isYearSet && weekLongZDT.getYear() == yearValue) || !isYearSet)
                 {
                     if (isMonthSet && weekLongZDT.getMonthValue() == monthValue || !isMonthSet)
-                        if (isMonthSet && weekLongZDT.getMonthValue() == monthValue || !isMonthSet)
-                        {
-                            return weekLongZDT;
-                        }
+                    if (isMonthSet && weekLongZDT.getMonthValue() == monthValue || !isMonthSet)
+                    {
+                        return weekLongZDT;
+                    }
                 }
             }
         }
@@ -520,6 +533,34 @@ public class ReminderCommand extends Command
                 else
                 {
                     embed.setDescription("Could not find any channels here. Please try again.\nTo cancel, use "+SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit.");
+                    msgEvent.getChannel().sendMessage(embed.build()).queue();
+                }
+
+            }
+        }
+    }
+
+    private Member getMember(GuildMessageReceivedEvent msgEvent, EmbedBuilder embed)
+    {
+        embed.setDescription("Please mention the member to send the reminder to.\nE.g: "+msgEvent.getMember().getAsMention());
+        msgEvent.getChannel().sendMessage(embed.build()).queue();
+        MessageManager mm = new MessageManager();
+        while (true)
+        {
+            Message msg = mm.getNextMessage(msgEvent.getChannel());
+            if (msg.getMember().equals(msgEvent.getMember()))
+            {
+                if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit"))
+                {
+                    return null;
+                }
+                if (msg.getMentionedMembers().size() > 0)
+                {
+                    return msg.getMentionedMembers().get(0);
+                }
+                else
+                {
+                    embed.setDescription("Could not find any members here. Please try again.\nTo cancel, use "+SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit.");
                     msgEvent.getChannel().sendMessage(embed.build()).queue();
                 }
 

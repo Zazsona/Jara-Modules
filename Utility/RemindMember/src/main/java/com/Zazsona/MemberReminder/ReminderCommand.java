@@ -1,4 +1,4 @@
-package com.Zazsona.Reminder;
+package com.Zazsona.MemberReminder;
 
 import com.Zazsona.ReminderCore.Reminder;
 import com.Zazsona.ReminderCore.ReminderManager;
