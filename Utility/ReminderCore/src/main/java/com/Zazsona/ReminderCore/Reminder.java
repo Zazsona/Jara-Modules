@@ -142,8 +142,6 @@ public class Reminder implements Serializable
 
     public void execute()
     {
-        //TODO: Confirm the user has permissions to set/remove reminders before sending
-        //Don't want some pratt admin seeing them set a daily reminder, then locking them into it forever.
         Guild guild = getGuild();
         if (guild != null)
         {

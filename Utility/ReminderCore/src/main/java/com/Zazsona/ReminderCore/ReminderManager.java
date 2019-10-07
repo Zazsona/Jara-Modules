@@ -21,17 +21,29 @@ public class ReminderManager
 
     protected static void initialise(ReminderDateTree rdtArg, HashMap<String, Integer> reminderIDToFutureYearMapArg, HashMap<String, Reminder> idToReminderMapArg)
     {
-        rdt = rdtArg;
-        reminderIDToFutureYearMap = reminderIDToFutureYearMapArg;
-        idToReminderMap = idToReminderMapArg;
-        if (rdt.getYear().getYearValue() < ZonedDateTime.now(ZoneOffset.UTC).getYear())
+        try
         {
-            tidyReminders(new ArrayList(idToReminderMap.values())); //Expensive operation, but it only runs literally once a year.
-            loadFutureReminders();
+            rdt = rdtArg;
+            reminderIDToFutureYearMap = reminderIDToFutureYearMapArg;
+            idToReminderMap = idToReminderMapArg;
+            getReminders(TimeType.YEAR, ZonedDateTime.now(ZoneOffset.UTC)); //Getting a reminder for a time deletes any null ones it finds. Here we get remove all null reminders.
+            FileManager.saveRemindersDateTree(rdt);
+            if (rdt.getYear().getYearValue() < ZonedDateTime.now(ZoneOffset.UTC).getYear())
+            {
+                logger.info("Preparing reminders for the new year...");
+                tidyReminders(new ArrayList(idToReminderMap.values())); //Expensive operation, but it only runs literally once a year.
+                loadFutureReminders();
+                getReminders(TimeType.YEAR, ZonedDateTime.now(ZoneOffset.UTC)); //Getting a reminder for a time deletes any null ones it finds. Here we get remove all null reminders.
+                FileManager.saveRemindersDateTree(rdt);
+            }
+        }
+        catch (IOException e)
+        {
+            logger.error("Error when preparing reminders data.\n"+e.toString());
         }
     }
 
-    public static void addReminder(Reminder reminder) throws IOException
+    public static synchronized void addReminder(Reminder reminder) throws IOException
     {
         idToReminderMap.put(reminder.getUUID(), reminder);
         RepetitionType rt = reminder.getRepetitionType();
@@ -56,7 +68,7 @@ public class ReminderManager
         {
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
-                for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).getDaysInMonth()+1); dayOfMonth++)
+                for (int dayOfMonth = 1; dayOfMonth <= (rdt.getYear().getMonth(monthValue).getDaysInMonth()); dayOfMonth++)
                 {
                     rdt.getYear().getMonth(monthValue).getDayOfMonth(dayOfMonth).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
                 }
@@ -68,9 +80,13 @@ public class ReminderManager
             int dayOfWeek = execution.getDayOfWeek().getValue();
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
-                for (int dayValue = 1; dayValue <= rdt.getYear().getMonth(monthValue).getDaysInMonth()+1; dayValue++)
+                for (int dayValue = 1; dayValue <= rdt.getYear().getMonth(monthValue).getDaysInMonth(); dayValue++)
                 {
-                    if (execution.withMonth(monthValue).withDayOfMonth(dayValue).getDayOfWeek().getValue() == dayOfWeek)
+                    if (!rdt.getYear().isLeapYear() && monthValue == 2 && dayValue == 29)
+                    {
+                        continue;
+                    }
+                    else if (execution.withMonth(monthValue).withDayOfMonth(dayValue).getDayOfWeek().getValue() == dayOfWeek)
                     {
                         rdt.getYear().getMonth(monthValue).getDayOfMonth(dayValue).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).addReminderToTime(reminder.getUUID());
                     }
@@ -87,6 +103,7 @@ public class ReminderManager
             }
             //UUID is intentionally matching, as this is technically the same reminder.
             addFutureReminder(new Reminder(reminder.getUserID(), reminder.getCreationTimeStamp(), reminder.getGuildID(), reminder.getChannelID(), reminder.getGroupType(), reminder.getRepetitionType(), reminder.getMessage(), futurezdt));
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.SINGLE)
         {
@@ -110,7 +127,7 @@ public class ReminderManager
         reminderIDToFutureYearMap.put(reminder.getUUID(), reminder.getFirstExecutionTime().getYear());
     }
 
-    public static void deleteReminder(Reminder reminder) throws IOException
+    public static synchronized void deleteReminder(Reminder reminder) throws IOException
     {
         idToReminderMap.remove(reminder.getUUID());
         RepetitionType rt = reminder.getRepetitionType();
@@ -139,9 +156,13 @@ public class ReminderManager
             ZonedDateTime timeToClean = reminder.getFirstExecutionTime();
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
-                for (int dayOfMonth = 1; dayOfMonth<(rdt.getYear().getMonth(monthValue).getDaysInMonth()+1); dayOfMonth++)
+                for (int dayOfMonth = 1; dayOfMonth <= (rdt.getYear().getMonth(monthValue).getDaysInMonth()); dayOfMonth++)
                 {
                     rdt.getYear().getMonth(monthValue).getDayOfMonth(dayOfMonth).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
+                    if (!rdt.getYear().isLeapYear() && monthValue == 2 && dayOfMonth == 29)
+                    {
+                        continue;
+                    }
                     cleanTree(timeToClean.withMonth(monthValue).withDayOfMonth(dayOfMonth));
                 }
             }
@@ -153,9 +174,13 @@ public class ReminderManager
             int dayOfWeek = execution.getDayOfWeek().getValue();
             for (int monthValue = 1; monthValue<13; monthValue++)
             {
-                for (int dayValue = 1; dayValue <= rdt.getYear().getMonth(monthValue).getDaysInMonth()+1; dayValue++)
+                for (int dayValue = 1; dayValue <= rdt.getYear().getMonth(monthValue).getDaysInMonth(); dayValue++)
                 {
-                    if (execution.withMonth(monthValue).withDayOfMonth(dayValue).getDayOfWeek().getValue() == dayOfWeek)
+                    if (!rdt.getYear().isLeapYear() && monthValue == 2 && dayValue == 29)
+                    {
+                        continue;
+                    }
+                    else if (execution.withMonth(monthValue).withDayOfMonth(dayValue).getDayOfWeek().getValue() == dayOfWeek)
                     {
                         rdt.getYear().getMonth(monthValue).getDayOfMonth(dayValue).getHour(execution.getHour()).getMinute(execution.getMinute()).getSecond(execution.getSecond()).removeReminderFromTime(reminder.getUUID());
                         cleanTree(timeToClean.withMonth(monthValue).withDayOfMonth(dayValue));
@@ -163,6 +188,7 @@ public class ReminderManager
                 }
             }
             deleteFutureReminder(reminder);
+            FileManager.saveRemindersDateTree(rdt);
         }
         else if (rt == RepetitionType.SINGLE)
         {

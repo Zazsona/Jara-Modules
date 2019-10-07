@@ -114,7 +114,7 @@ public class FileManager
         }
     }
 
-    protected static void saveRemindersDateTree(ReminderDateTree rdt) throws IOException
+    protected static synchronized void saveRemindersDateTree(ReminderDateTree rdt) throws IOException
     {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(rdt);
@@ -125,7 +125,7 @@ public class FileManager
         fos.close();
     }
 
-    protected static void saveReminders(HashMap<String, Reminder> reminders) throws IOException
+    protected static synchronized void saveReminders(HashMap<String, Reminder> reminders) throws IOException
     {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reminders);
@@ -136,7 +136,7 @@ public class FileManager
         fos.close();
     }
 
-    protected static void saveFutureReminders(HashMap<String, Integer> futureReminders) throws IOException
+    protected static synchronized void saveFutureReminders(HashMap<String, Integer> futureReminders) throws IOException
     {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(futureReminders);

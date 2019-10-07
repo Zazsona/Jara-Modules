@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class ReminderDateTree implements Serializable
@@ -24,7 +25,6 @@ public class ReminderDateTree implements Serializable
     {
         private static final long serialVersionUID = 1L;
         private int yearValue;
-        private transient int[] daysInLeapYearMonths = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         private HashMap<Integer, Month> months;
 
         public Year()
@@ -38,10 +38,15 @@ public class ReminderDateTree implements Serializable
 
         public Month getMonth(int monthOfYear)
         {
+            int[] daysInLeapYearMonths = new int[]{31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
             if (monthOfYear > 0 && monthOfYear <= 12)
             {
                 if (!months.containsKey(monthOfYear))
-                    months.put(monthOfYear, new Month(daysInLeapYearMonths[monthOfYear-1]));
+                {
+                    int daysInMonth = daysInLeapYearMonths[monthOfYear];
+                    months.put(monthOfYear, new Month(daysInMonth));
+                }
+
                 return months.get(monthOfYear);
             }
             else
@@ -54,25 +59,6 @@ public class ReminderDateTree implements Serializable
         public void removeMonth(int monthOfYear)
         {
             months.remove(monthOfYear);
-        }
-
-        public Day getDayOfLeapYear(int dayOfLeapYear)
-        {
-            int countdown = dayOfLeapYear;
-            int month = 1;
-            for (int i = 0; i<daysInLeapYearMonths.length; i++)
-            {
-                if (countdown > daysInLeapYearMonths[i])
-                {
-                    countdown -= daysInLeapYearMonths[i];
-                    month++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return getMonth(month).getDayOfMonth(countdown);
         }
 
         public LinkedList<Reminder> getReminders()
@@ -105,6 +91,23 @@ public class ReminderDateTree implements Serializable
             this.yearValue = yearValue;
         }
 
+        public boolean isLeapYear()
+        {
+            int year = yearValue;
+            if (year % 4 != 0)
+            {
+                return false;
+            }
+            else if (year % 400 == 0)
+            {
+                return true;
+            }
+            else if (year % 100 == 0)
+            {
+                return false;
+            }
+            return true;
+        }
 
     }
     public class Month implements Serializable
@@ -326,9 +329,15 @@ public class ReminderDateTree implements Serializable
         public LinkedList<Reminder> getReminders()
         {
             LinkedList<Reminder> remindersList = new LinkedList<>();
-            for (String UUID : reminderIDs)
+            Iterator<String> it = reminderIDs.iterator();
+            while (it.hasNext())
             {
-                remindersList.add(ReminderManager.getReminderById(UUID));
+                String UUID = it.next();
+                Reminder reminder = ReminderManager.getReminderById(UUID);
+                if (reminder != null)
+                    remindersList.add(reminder);
+                else
+                    it.remove();
             }
             return remindersList;
         }

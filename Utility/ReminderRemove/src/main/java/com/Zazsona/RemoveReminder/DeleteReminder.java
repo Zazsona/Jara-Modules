@@ -31,18 +31,20 @@ public class DeleteReminder extends Command
                     {
                         ReminderManager.deleteReminder(reminder);
                         embed.setDescription("Successfully deleted reminder:\n"+reminder.getMessage());
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
                     }
                     else
                     {
                         embed.setDescription("There is no reminder with that ID.");
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
                     }
                 }
                 catch (IOException e)
                 {
                     embed.setDescription("An error occurred when removing the reminder.");
+                    msgEvent.getChannel().sendMessage(embed.build()).queue();
                     LoggerFactory.getLogger(getClass()).error(e.toString());
                 }
-                msgEvent.getChannel().sendMessage(embed.build()).queue();
             }
             else
             {

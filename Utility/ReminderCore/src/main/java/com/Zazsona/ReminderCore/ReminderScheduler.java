@@ -10,7 +10,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ReminderScheduler extends Load
@@ -49,7 +48,7 @@ public class ReminderScheduler extends Load
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
         long reminderStartSecond = reminder.getFirstExecutionTime().toInstant().getEpochSecond();
         long minStartTime = Instant.now().getEpochSecond();
-        long maxStartTime = utc.withMinute(0).withSecond(0).withHour(utc.getHour()+1).toEpochSecond();
+        long maxStartTime = utc.withMinute(0).withSecond(0).plusHours(Long.valueOf(1)).toEpochSecond();
         if (reminderStartSecond > minStartTime && reminderStartSecond < maxStartTime)
         {
             queueReminderForCurrentExecution(reminder, utc);
@@ -59,56 +58,70 @@ public class ReminderScheduler extends Load
         return false;
     }
 
-    protected static void removeReminderFromQueue(Reminder reminder)
+    protected static void removeReminderFromQueue(Reminder reminderToFind)
     {
-        Iterator<Map.Entry<Long, ArrayList<Reminder>>> mapIterator = remindersMap.entrySet().iterator();
-        while (mapIterator.hasNext())
+        long key = -1;
+        int index = -1;
+        for (Map.Entry<Long, ArrayList<Reminder>> entry : remindersMap.entrySet())
         {
-            Iterator<Reminder> arrayIterator = mapIterator.next().getValue().iterator();
-            while (arrayIterator.hasNext())
+            for (Reminder reminder : entry.getValue())
             {
-                Reminder foundReminder = arrayIterator.next();
-                if (foundReminder.getUUID().equals(reminder.getUUID()))
+                if (reminder.getUUID().equals(reminderToFind.getUUID()))
                 {
-                    arrayIterator.remove();
-                    //No break in case it is multi-queued
+                    key = entry.getKey();
+                    index = entry.getValue().indexOf(reminder);
+                    break;
                 }
             }
+        }
+        if (key != -1)
+        {
+            remindersMap.get(key).remove(index);
+            if (remindersMap.get(key).size() == 0)
+                remindersMap.remove(key);
         }
     }
 
     private void runReminders()
     {
-        while (true)
+        try
         {
-            ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
-            long resetSecond = utc.withMinute(0).withSecond(0).withHour(utc.getHour()+1).toEpochSecond();
-            ArrayList<Reminder> reminders = new ArrayList<>(ReminderManager.getReminders(TimeType.HOUR, utc));
-            if (reminders.size() > 0)
+            while (true)
             {
-                reminders.forEach((v) -> queueReminderForCurrentExecution(v, utc));
-            }
-            while (Instant.now().getEpochSecond() < resetSecond)
-            {
-                try
+                ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
+                long resetSecond = utc.withMinute(0).withSecond(0).plusHours(Long.valueOf(1)).toEpochSecond();
+                ArrayList<Reminder> reminders = new ArrayList<>(ReminderManager.getReminders(TimeType.HOUR, utc));
+                if (reminders.size() > 0)
                 {
-                    long epochSecond = Instant.now().getEpochSecond();
-                    if (remindersMap.containsKey(epochSecond))
+                    reminders.forEach((v) -> queueReminderForCurrentExecution(v, utc));
+                }
+                while (Instant.now().getEpochSecond() < resetSecond)
+                {
+                    try
                     {
-                        for (Reminder reminder : remindersMap.get(epochSecond))
+                        long epochSecond = Instant.now().getEpochSecond();
+                        if (remindersMap.containsKey(epochSecond))
                         {
-                            reminder.execute();
+                            for (Reminder reminder : remindersMap.get(epochSecond))
+                            {
+                                reminder.execute();
+                            }
                         }
+                        Thread.sleep(((epochSecond+1)*1000)-Instant.now().toEpochMilli());
                     }
-                    Thread.sleep(((Instant.now().getEpochSecond()+1)*1000)-Instant.now().toEpochMilli());
+                    catch (InterruptedException e)
+                    {
+                        logger.error("Reminder scheduler got interrupted! Reminders will not run at this time.");
+                    }
                 }
-                catch (InterruptedException e)
-                {
-                    logger.error("Reminder scheduler got interrupted! Reminders will not run at this time.");
-                }
+                tidyReminders(reminders);
+                remindersMap.clear();
             }
-            tidyReminders(reminders);
-            remindersMap.clear();
+        }
+        catch (Exception e)
+        {
+            logger.error("The reminder scheduler has stopped. Restarting...", e);
+            load();
         }
     }
 
@@ -124,7 +137,6 @@ public class ReminderScheduler extends Load
         {
             ReminderManager.tidyReminders(baseReminderQueue);
         }
-
-
+        remindersAddedDuringPeriod = false;
     }
 }
