@@ -4,6 +4,7 @@ import com.Zazsona.jaraMinecraftProfile.data.PlayerData;
 import com.Zazsona.jaraMinecraftProfile.data.ResponseData;
 import com.Zazsona.jaraMinecraftProfile.data.StatusCode;
 import com.Zazsona.jaraMinecraftProfile.json.UsernameUUID;
+import com.Zazsona.minecraftCommon.FileManager;
 import com.google.gson.Gson;
 import commands.CmdUtil;
 import module.Command;
@@ -19,7 +20,7 @@ public class MCPCommand extends Command
     {
         if (parameters.length > 1)
         {
-            String ip = (parameters.length >= 3) ? parameters[1] : FileManager.getIpForGuild(msgEvent.getGuild().getId());
+            String ip = (parameters.length >= 3) ? parameters[1] : FileManager.getIpWithoutPort(msgEvent.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
             if (ip != null)

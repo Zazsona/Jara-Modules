@@ -1,4 +1,4 @@
-package com.Zazsona.jaraMinecraftProfile;
+package com.Zazsona.minecraftCommon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -93,5 +93,42 @@ public class FileManager
         getGuildToIPMap();
         guildToIPMap.put(guildID, ip);
         save();
+    }
+
+    public static void resetIpForGuild(String guildID)
+    {
+        getGuildToIPMap();
+        guildToIPMap.remove(guildID);
+        save();
+    }
+
+    public static String getIpWithoutPort(String guildID)
+    {
+        String ip = getIpForGuild(guildID);
+        if (ip != null)
+        {
+            if (ip.contains(":"))
+            {
+                return ip.substring(0, ip.indexOf(":"));
+            }
+        }
+        return null;
+    }
+
+    public static String getPort(String guildID)
+    {
+        String ip = getIpForGuild(guildID);
+        if (ip != null)
+        {
+            if (ip.contains(":"))
+            {
+                return ip.substring(ip.indexOf(":")+1);
+            }
+            else
+            {
+                return "25565";
+            }
+        }
+        return null;
     }
 }

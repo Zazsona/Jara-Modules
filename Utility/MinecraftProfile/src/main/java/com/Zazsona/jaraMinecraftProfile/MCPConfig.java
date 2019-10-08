@@ -1,5 +1,6 @@
 package com.Zazsona.jaraMinecraftProfile;
 
+import com.Zazsona.minecraftCommon.FileManager;
 import configuration.GuildSettings;
 import configuration.SettingsUtil;
 import jara.MessageManager;
@@ -22,7 +23,7 @@ public class MCPConfig extends ModuleConfig
         if (isSetup && ip == null || !isSetup)
         {
             EmbedBuilder embed = getDefaultEmbedStyle(msgEvent);
-            embed.setDescription("Current IP: "+((ip == null) ? "None" : ip)+"\n\nPlease set a default IP for Minecraft server commands, or use quit to cancel.");
+            embed.setDescription("Current IP: "+((ip == null) ? "None" : ip)+"\n\nPlease set a default IP for Minecraft server commands, use reset to remove, or quit to cancel.");
             msgEvent.getChannel().sendMessage(embed.build()).queue();
 
             MessageManager mm = new MessageManager();
@@ -39,6 +40,13 @@ public class MCPConfig extends ModuleConfig
                             embed.setDescription("Menu quit.");
                             msgEvent.getChannel().sendMessage(embed.build()).queue();
                         }
+                        return;
+                    }
+                    else if (content.equalsIgnoreCase("reset"))
+                    {
+                        FileManager.resetIpForGuild(msgEvent.getGuild().getId());
+                        embed.setDescription("IP reset.");
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
                         return;
                     }
                     boolean success = setNewIpAddress(msgEvent, content);
