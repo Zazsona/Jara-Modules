@@ -19,40 +19,49 @@ public class MCPCommand extends Command
     {
         if (parameters.length > 1)
         {
+            String ip = (parameters.length >= 3) ? parameters[1] : FileManager.getIpForGuild(msgEvent.getGuild().getId());
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-            String uuid = getUUIDFromUsername(parameters[parameters.length-1]);
-            if (uuid != null)
+            if (ip != null)
             {
-                ResponseData rd = CommunicationManager.requestPlayerData(parameters[1], uuid);
-                if (rd == null)
+                String uuid = getUUIDFromUsername(parameters[parameters.length-1]);
+                if (uuid != null)
                 {
-                    embed.setDescription("Server does not have the required plugin.");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
+                    ResponseData rd = CommunicationManager.requestPlayerData(ip, uuid);
+                    if (rd == null)
+                    {
+                        embed.setDescription("Server does not have the required plugin.");
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
+                    }
+                    else if (rd.getStatusCode() == StatusCode.SERVER_OFFLINE)
+                    {
+                        embed.setDescription("The server is offline.");
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
+                    }
+                    else if (rd.getStatusCode() == StatusCode.PLUGIN_DISABLED)
+                    {
+                        embed.setDescription("The plugin is disabled on this server.");
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
+                    }
+                    else if (rd.getStatusCode() == StatusCode.UNKNOWN_PLAYER)
+                    {
+                        embed.setDescription("Unable to find "+parameters[parameters.length-1]+" on the server.");
+                        msgEvent.getChannel().sendMessage(embed.build()).queue();
+                    }
+                    else if (rd.getStatusCode() == StatusCode.OK)
+                    {
+                        msgEvent.getChannel().sendMessage(buildEmbed(embed, rd.getPlayerData()).build()).queue();
+                    }
                 }
-                else if (rd.getStatusCode() == StatusCode.SERVER_OFFLINE)
+                else
                 {
-                    embed.setDescription("The server is offline.");
+                    embed.setDescription("No player with that username exists.");
                     msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-                else if (rd.getStatusCode() == StatusCode.PLUGIN_DISABLED)
-                {
-                    embed.setDescription("The plugin is disabled on this server.");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-                else if (rd.getStatusCode() == StatusCode.UNKNOWN_PLAYER)
-                {
-                    embed.setDescription("Unable to find "+parameters[parameters.length-1]+" on the server.");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-                else if (rd.getStatusCode() == StatusCode.OK)
-                {
-                    msgEvent.getChannel().sendMessage(buildEmbed(embed, rd.getPlayerData()).build()).queue();
                 }
             }
             else
             {
-                embed.setDescription("No player with that username exists.");
+                embed.setDescription("No IP has been specified.");
                 msgEvent.getChannel().sendMessage(embed.build()).queue();
             }
         }
