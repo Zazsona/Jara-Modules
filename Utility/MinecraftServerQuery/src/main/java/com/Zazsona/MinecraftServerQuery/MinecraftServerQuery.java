@@ -1,5 +1,6 @@
 package com.Zazsona.MinecraftServerQuery;
 
+import com.Zazsona.minecraftCommon.FileManager;
 import com.google.gson.Gson;
 import commands.CmdUtil;
 import module.Command;
@@ -23,6 +24,7 @@ public class MinecraftServerQuery extends Command
         try
         {
             Gson gson = new Gson();
+
             String[] connectionDetails = validateParameters(msgEvent.getChannel(), parameters);
             if (connectionDetails != null)
             {
@@ -72,6 +74,20 @@ public class MinecraftServerQuery extends Command
             {
                 channel.sendMessage("Invalid server port.").queue();
                 return null;
+            }
+            return connectionDetails;
+        }
+        else if (parameters.length == 1 && FileManager.getIpForGuild(channel.getGuild().getId()) != null)
+        {
+            String savedConnectionDetails = FileManager.getIpForGuild(channel.getGuild().getId());
+            String[] connectionDetails;
+            if (savedConnectionDetails.contains(":"))
+            {
+                connectionDetails = savedConnectionDetails.split(":");
+            }
+            else
+            {
+                connectionDetails = new String[] {savedConnectionDetails, "25565"};
             }
             return connectionDetails;
         }

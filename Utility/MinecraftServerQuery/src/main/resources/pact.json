@@ -3,7 +3,8 @@
   "aliases": [
     "MinecraftServer",
     "MinecraftQuery",
-    "MinecraftServerStatus"
+    "MinecraftServerStatus",
+    "MCS"
   ],
   "category": "UTILITY",
   "targetVersion": "0.1",
