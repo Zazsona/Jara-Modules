@@ -17,32 +17,35 @@ import java.util.Collection;
 public class MonthlyUsageConfig extends ModuleConfig
 {
     @Override
-    public void run(GuildMessageReceivedEvent msgEvent, GuildSettings guildSettings, TextChannel textChannel) throws IOException
+    public void run(GuildMessageReceivedEvent msgEvent, GuildSettings guildSettings, TextChannel textChannel, boolean isSetup) throws IOException
     {
-        EmbedBuilder embed = this.getDefaultEmbedStyle(msgEvent);
-        embed.setDescription("Would you like to enable command usage logging? (Y/N)");
-        textChannel.sendMessage(embed.build()).queue();
-        MessageManager mm = new MessageManager();
-        Message message = null;
-        while (true)
+        if (!isSetup) //Since this is just disabling the command, running it during setup is redundant.
         {
-            try
+            EmbedBuilder embed = this.getDefaultEmbedStyle(msgEvent);
+            embed.setDescription("Would you like to enable command usage logging? (Y/N)");
+            textChannel.sendMessage(embed.build()).queue();
+            MessageManager mm = new MessageManager();
+            Message message = null;
+            while (true)
             {
-                while (true)
+                try
                 {
-                    message = mm.getNextMessage(textChannel);
-                    if (message.getMember().equals(msgEvent.getMember()))
+                    while (true)
                     {
-                        break;
+                        message = mm.getNextMessage(textChannel);
+                        if (message.getMember().equals(msgEvent.getMember()))
+                        {
+                            break;
+                        }
                     }
+                    setEnabledState(msgEvent, message.getContentDisplay(), guildSettings, textChannel);
+                    return;
                 }
-                setEnabledState(msgEvent, message.getContentDisplay(), guildSettings, textChannel);
-                return;
-            }
-            catch (InvalidParameterException e)
-            {
-                embed.setDescription("Invalid response. Yes or No expected.\nPlease try again.");
-                textChannel.sendMessage(embed.build()).queue();
+                catch (InvalidParameterException e)
+                {
+                    embed.setDescription("Invalid response. Yes or No expected.\nPlease try again.");
+                    textChannel.sendMessage(embed.build()).queue();
+                }
             }
         }
     }
@@ -66,7 +69,7 @@ public class MonthlyUsageConfig extends ModuleConfig
         }
         else
         {
-            run(msgEvent, guildSettings, textChannel);
+            run(msgEvent, guildSettings, textChannel, false);
         }
     }
 
