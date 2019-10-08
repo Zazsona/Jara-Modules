@@ -1,0 +1,6 @@
+{
+  "params": [
+    "MCP (IP) [Username/UUID]"
+  ],
+  "description": "Gets your Minecraft status on the specified server.\nThe server must have the Jara plugin installed."
+}

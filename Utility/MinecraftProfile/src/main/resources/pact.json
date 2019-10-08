@@ -1,0 +1,11 @@
+{
+  "key": "MinecraftProfile",
+  "aliases": [
+    "MCP",
+    "MCProfile",
+    "ServerProfile"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Gets a Minecraft server profile."
+}
