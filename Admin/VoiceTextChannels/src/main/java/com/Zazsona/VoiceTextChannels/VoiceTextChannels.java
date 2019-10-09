@@ -14,7 +14,7 @@ public class VoiceTextChannels extends Command
         toggleGuild(msgEvent, fm);
     }
 
-    private void toggleGuild(GuildMessageReceivedEvent msgEvent, FileManager fm)
+    public void toggleGuild(GuildMessageReceivedEvent msgEvent, FileManager fm)
     {
         boolean isGuildEnabled = fm.isGuildEnabled(msgEvent.getGuild().getId());
         if (isGuildEnabled)
