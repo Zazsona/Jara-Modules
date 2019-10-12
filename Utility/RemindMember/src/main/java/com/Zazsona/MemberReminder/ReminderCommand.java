@@ -275,7 +275,6 @@ public class ReminderCommand extends Command
                 if ((isYearSet && weekLongZDT.getYear() == yearValue) || !isYearSet)
                 {
                     if (isMonthSet && weekLongZDT.getMonthValue() == monthValue || !isMonthSet)
-                    if (isMonthSet && weekLongZDT.getMonthValue() == monthValue || !isMonthSet)
                     {
                         return weekLongZDT;
                     }
