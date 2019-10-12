@@ -1,7 +1,7 @@
 {
   "params": [
     "WelcomeMessage",
-    "WelcomeMessage [Enable/Disable]"
+    "WelcomeMessage Config"
   ],
-  "description": "Modifies the welcome message sent to new members.\nAppend enable or disable to toggle this feature on or off."
+  "description": "Prints the welcome message.\nAppending config will open the config."
 }

@@ -1,6 +1,7 @@
 package com.Zazsona.WelcomeMessage;
 
 import commands.CmdUtil;
+import configuration.SettingsUtil;
 import jara.MessageManager;
 import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -8,53 +9,46 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 public class WelcomeMessage extends Command
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
+        embed.setTitle("==== Welcome Message ====");
         if (parameters.length > 1)
         {
-            if (parameters[1].equalsIgnoreCase("enable"))
+            if (parameters[1].equalsIgnoreCase("config") && SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()).isPermitted(msgEvent.getMember(), "Config"))
             {
-                FileManager fm = new FileManager();
-                toggleGuildState(msgEvent, fm, true);
-            }
-            else if (parameters[1].equalsIgnoreCase("disable"))
-            {
-                FileManager fm = new FileManager();
-                toggleGuildState(msgEvent, fm, false);
+                try
+                {
+                    WelcomeMessageConfig config = new WelcomeMessageConfig();
+                    config.run(msgEvent, SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()), msgEvent.getChannel(), false);
+                }
+                catch (IOException e)
+                {
+                    LoggerFactory.getLogger(WelcomeMessageConfig.class).error(e.toString());
+                    embed.setDescription("An error occurred when saving.");
+                    msgEvent.getChannel().sendMessage(embed.build()).queue();
+                }
+
             }
         }
-        else if (parameters.length == 1)
+        else
         {
-            FileManager fm = new FileManager();
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-            embed.setDescription("**Please enter a new welcome message.**\n\nExisting Message:\n"+fm.getWelcomeMessage(msgEvent.getGuild().getId()));
-            msgEvent.getChannel().sendMessage(embed.build()).queue();
-            String message = getInput(msgEvent.getChannel(), msgEvent.getMember());
-            fm.setWelcomeMessage(msgEvent.getGuild().getId(), message);
-            embed.setDescription("**Welcome message set.**\n\n"+message);
-            msgEvent.getChannel().sendMessage(embed.build()).queue();
-            if (!fm.isGuildEnabled(msgEvent.getGuild().getId()))
+            String message = FileManager.getInstance().getWelcomeMessage(msgEvent.getGuild().getId());
+            if (message == null)
             {
-                embed.setDescription("Would you like to enable the Welcome Messages? [Y/N]");
-                msgEvent.getChannel().sendMessage(embed.build()).queue();
-                String response = getInput(msgEvent.getChannel(), msgEvent.getMember());
-                if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yeah"))
-                {
-                    toggleGuildState(msgEvent, fm, true);
-                }
-                else
-                {
-                    toggleGuildState(msgEvent, fm, false);
-                }
+                message = "No welcome message has been set.";
             }
-
+            embed.setDescription(message);
+            msgEvent.getChannel().sendMessage(embed.build()).queue();
         }
-
     }
 
     private String getInput(TextChannel channel, Member member)
@@ -64,6 +58,10 @@ public class WelcomeMessage extends Command
         while (msg == null || !msg.getMember().equals(member) || !msg.getTextChannel().equals(channel))
         {
             msg = mm.getNextMessage(channel);
+            if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msg.getGuild().getId())+"quit") || msg.getContentDisplay().equalsIgnoreCase("quit"))
+            {
+                return null;
+            }
         }
         return msg.getContentRaw();
     }

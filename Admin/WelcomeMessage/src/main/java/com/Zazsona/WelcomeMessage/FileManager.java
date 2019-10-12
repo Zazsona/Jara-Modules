@@ -1,11 +1,14 @@
 package com.Zazsona.WelcomeMessage;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import configuration.SettingsUtil;
 import net.dv8tion.jda.core.entities.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -14,17 +17,31 @@ import java.util.HashMap;
 
 public class FileManager implements Serializable
 {
+    private static transient FileManager fm;
     private static long serialVersionUID = 1L;
-    private static HashMap<String, String> guildToMessageMap; //GuildID : Message
-    private static ArrayList<String> enabledGuilds;
+    private HashMap<String, String> guildToMessageMap; //GuildID : Message
+    private ArrayList<String> enabledGuilds;
     private static transient Logger logger = LoggerFactory.getLogger("WelcomeMessageModifier");
 
-    private String getSavePath()
+    private FileManager()
+    {
+    }
+
+    public static FileManager getInstance()
+    {
+        if (fm == null)
+        {
+            restore();
+        }
+        return fm;
+    }
+
+    private static String getSavePath()
     {
         return SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/WelcomeMessages.jara";
     }
 
-    public synchronized void save()
+    public static synchronized void save()
     {
         try
         {
@@ -34,10 +51,12 @@ public class FileManager implements Serializable
                 quoteFile.getParentFile().mkdirs();
                 quoteFile.createNewFile();
             }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(fm);
             FileOutputStream fos = new FileOutputStream(getSavePath());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this);
-            oos.close();
+            PrintWriter pw = new PrintWriter(fos);
+            pw.print(json);
+            pw.close();
             fos.close();
         }
         catch (IOException e)
@@ -46,33 +65,26 @@ public class FileManager implements Serializable
         }
     }
 
-    private synchronized void restore()
+    private static synchronized void restore()
     {
         try
         {
-            if (new File(getSavePath()).exists())
+            File saveFile = new File(getSavePath());
+            if (saveFile.exists())
             {
-                FileInputStream fis = new FileInputStream(getSavePath());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                FileManager fm = (FileManager) ois.readObject();
-                this.guildToMessageMap = fm.guildToMessageMap;
-                this.enabledGuilds = fm.enabledGuilds;
-                ois.close();
-                fis.close();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = new String(Files.readAllBytes(saveFile.toPath()));
+                fm = gson.fromJson(json, FileManager.class);
             }
             else
             {
-                guildToMessageMap = new HashMap<>();
-                enabledGuilds = new ArrayList<>();
+                fm = new FileManager();
+                fm.guildToMessageMap = new HashMap<>();
+                fm.enabledGuilds = new ArrayList<>();
             }
 
         }
         catch (IOException e)
-        {
-            logger.error(e.toString());
-            return;
-        }
-        catch (ClassNotFoundException e)
         {
             logger.error(e.toString());
             return;
@@ -83,10 +95,10 @@ public class FileManager implements Serializable
     {
         try
         {
-            enabledGuilds.remove(guildID);
+            fm.enabledGuilds.remove(guildID);
             if (enable)
             {
-                enabledGuilds.add(guildID);
+                fm.enabledGuilds.add(guildID);
             }
             save();
         }
@@ -101,7 +113,7 @@ public class FileManager implements Serializable
     {
         try
         {
-            return enabledGuilds.contains(guildID);
+            return fm.enabledGuilds.contains(guildID);
         }
         catch (NullPointerException e)
         {
@@ -114,7 +126,7 @@ public class FileManager implements Serializable
     {
         try
         {
-            guildToMessageMap.put(guildID, message);
+            fm.guildToMessageMap.put(guildID, message);
             save();
         }
         catch (NullPointerException e)
@@ -128,11 +140,7 @@ public class FileManager implements Serializable
     {
         try
         {
-            String message = guildToMessageMap.get(guildID);
-            if (message == null)
-            {
-                message = "None.";
-            }
+            String message = fm.guildToMessageMap.get(guildID);
             return message;
         }
         catch (NullPointerException e)

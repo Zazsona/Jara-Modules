@@ -13,7 +13,7 @@ public class MessageSender extends Load
     @Override
     public void load()
     {
-        fm = new FileManager();
+        fm = FileManager.getInstance();
         GuildJoinListener gjl = new GuildJoinListener();
         CmdUtil.getJDA().addEventListener(gjl);
     }
@@ -23,7 +23,7 @@ public class MessageSender extends Load
         @Override
         public void onGuildMemberJoin(GuildMemberJoinEvent event)
         {
-            if (fm.isGuildEnabled(event.getGuild().getId()))
+            if (fm.isGuildEnabled(event.getGuild().getId()) && fm.getWelcomeMessage(event.getGuild().getId()) != null)
             {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(CmdUtil.getHighlightColour(event.getGuild().getSelfMember()));
