@@ -2,7 +2,9 @@
   "key": "QuizNight",
   "aliases": [
     "QuizDay",
-    "QN"
+    "QN",
+    "QD",
+    "Quiz"
   ],
   "category": "ADMIN",
   "targetVersion": "0.1",
