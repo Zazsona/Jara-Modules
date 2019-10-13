@@ -1,14 +1,12 @@
 package com.Zazsona.QuizNight.quiz;
 
+import com.Zazsona.QuizNight.json.GuildQuizConfig;
 import com.Zazsona.QuizNight.system.SettingsManager;
 import configuration.SettingsUtil;
 import jara.MessageManager;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class JoinHandler
@@ -39,15 +37,7 @@ public class JoinHandler
      */
     public void acceptJoins(Guild guild)
     {
-        String[] allowedRoleIDs = SettingsManager.getGuildQuizSettings(guild.getIdLong()).AllowedRoles;
-        ArrayList<Role> allowedRoles = new ArrayList<>();
-        for (String roleID : allowedRoleIDs)
-        {
-            Role role = guild.getRoleById(roleID);              //Converting roleIDs to roles for more efficient checking.
-            if (role != null)
-                allowedRoles.add(role);
-        }
-
+        GuildQuizConfig gqc = SettingsManager.getInstance().getGuildQuizSettings(guild.getId());
         MessageManager mm = new MessageManager();
         while (!quizStarted)
         {
@@ -55,7 +45,7 @@ public class JoinHandler
             if (!quizStarted) //Second check in case quiz started while waiting for message
             {
                 String msgContent = message.getContentDisplay();
-                if (msgContent.startsWith(SettingsUtil.getGuildCommandPrefix(guild.getId())+"join") && isAllowedToJoin(message.getMember(), allowedRoles))
+                if (msgContent.startsWith(SettingsUtil.getGuildCommandPrefix(guild.getId())+"join") && isAllowedToJoin(message.getMember(), gqc))
                 {
                     if (!isMemberInTeam(message.getMember()))
                     {
@@ -102,14 +92,22 @@ public class JoinHandler
     /**
      * Checks if the user has at least one role enabling them to join
      * @param member the member trying to join
-     * @param allowedRoles the roles allowed to join
+     * @param gqc the guild's quiz config
      * @return true/false on whether they can join
      */
-    private boolean isAllowedToJoin(Member member, Collection<Role> allowedRoles)
+    private boolean isAllowedToJoin(Member member, GuildQuizConfig gqc)
     {
-        if (allowedRoles != null && allowedRoles.size() > 0 && !allowedRoles.contains(member.getGuild().getPublicRole()))
+        if (!gqc.isRoleAllowedToJoin(member.getGuild().getPublicRole().getId()))
         {
-            return !Collections.disjoint(member.getRoles(), allowedRoles);
+            for (Role role : member.getRoles())
+            {
+                boolean success = gqc.isRoleAllowedToJoin(role.getId());
+                if (success)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         else
         {

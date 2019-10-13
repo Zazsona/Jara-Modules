@@ -1,6 +1,6 @@
 package com.Zazsona.QuizNight.system;
 
-import com.Zazsona.QuizNight.json.QuizSettings;
+import com.Zazsona.QuizNight.json.GuildQuizConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SettingsManager
 {
@@ -19,61 +20,69 @@ public class SettingsManager
                                                     Boilerplate
 
      */
-    private static File quizSettingsFile;
+    private static transient SettingsManager settingsManager;
     private transient static Logger logger = LoggerFactory.getLogger(SettingsManager.class);
-    private static QuizSettings quizSettings;
+    private HashMap<String, GuildQuizConfig> guildQuizConfigs;
 
-    private static File getQuizSettingsFile()
+    private SettingsManager()
+    {
+
+    }
+
+    public static SettingsManager getInstance()
+    {
+        if (settingsManager == null)
+        {
+            settingsManager = new SettingsManager();
+            settingsManager.restore();
+        }
+        return settingsManager;
+    }
+
+    private File getQuizSettingsFile()
+    {
+        return new File(SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/QuizSettings.jara");
+    }
+
+    private synchronized void restore()
     {
         try
         {
-            if (quizSettingsFile == null)
+            if (settingsManager.guildQuizConfigs == null)
             {
-                quizSettingsFile = new File(SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/QuizSettings.jara");
-                if (!quizSettingsFile.exists())
+                File quizFile = getQuizSettingsFile();
+                if (quizFile.exists())
                 {
-                    quizSettingsFile.createNewFile();
-                    quizSettings = new QuizSettings();
-                    save();
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String json = new String(Files.readAllBytes(quizFile.toPath()));
+                    TypeToken<HashMap<String, GuildQuizConfig>> token = new TypeToken<HashMap<String, GuildQuizConfig>>() {};
+                    settingsManager.guildQuizConfigs = gson.fromJson(json, token.getType());
+                }
+                else
+                {
+                    settingsManager.guildQuizConfigs = new HashMap<>();
                 }
             }
-            return quizSettingsFile;
         }
         catch (IOException e)
         {
-            logger.error("Unable to create Quiz Night settings file.\n"+e.toString());
-            return null;
+            logger.error(e.getMessage());
+            return;
         }
     }
 
-    public static synchronized QuizSettings restore()
+    public synchronized void save()
     {
         try
         {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = new String(Files.readAllBytes(getQuizSettingsFile().toPath()));
-            quizSettings = gson.fromJson(json, QuizSettings.class);
-        }
-        catch (IOException e)
-        {
-            logger.error("Unable to read Quiz Night settings file.\n"+e.toString());
-            quizSettings = new QuizSettings();
-        }
-        return quizSettings;
-    }
-
-    public static synchronized void save()
-    {
-        try
-        {
-            File configFile = (getQuizSettingsFile());
-            if (!configFile.exists())
+            File quizFile = (getQuizSettingsFile());
+            if (!quizFile.exists())
             {
-                configFile.createNewFile();
+                quizFile.createNewFile();
             }
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(quizSettings);
-            FileOutputStream fos = new FileOutputStream(configFile);
+            String json = gson.toJson(settingsManager.guildQuizConfigs);
+            FileOutputStream fos = new FileOutputStream(quizFile);
             PrintWriter pw = new PrintWriter(fos);
             pw.print(json);
             pw.close();
@@ -85,148 +94,56 @@ public class SettingsManager
         }
     }
 
-    public static QuizSettings.GuildQuizConfig getGuildQuizSettings(long guildID)
+    public GuildQuizConfig getGuildQuizSettings(String guildID)
     {
-        int index = getGuildQuizSettingsIndex(guildID);
-        if (index > -1)
+        GuildQuizConfig gqc =  settingsManager.guildQuizConfigs.get(guildID);
+        if (gqc == null)
         {
-            return quizSettings.GuildQuizConfigs[index];
+            gqc = new GuildQuizConfig(guildID);
+            settingsManager.guildQuizConfigs.put(guildID, gqc);
         }
-        else
-        {
-            return addGuildQuizConfig(guildID);
-        }
-
+        return gqc;
     }
 
-    public static int getGuildQuizSettingsIndex(long guildID)
+    public void addGuildConfig(GuildQuizConfig gqc)
     {
-        int min = 0;
-        int max = quizSettings.GuildQuizConfigs.length;
-        while (min != max)
-        {
-            int mid = (max+min)/2;
-            long midGuild = Long.parseLong(quizSettings.GuildQuizConfigs[mid].GuildID);
-            if (midGuild == guildID)
-            {
-                return mid;
-            }
-            else if (midGuild < guildID)
-            {
-                min = mid;
-            }
-            else if (midGuild > guildID)
-            {
-                max = mid;
-            }
-        }
-        return -1;
+        settingsManager.guildQuizConfigs.put(gqc.getGuildID(), gqc);
+        save();
     }
 
-    /**
-     * Adds a guild to the database with default settings.<br>
-     * Overall, this is quite an expensive operation. Only call if the guild config doesn't exist at all.
-     * @param guildID
-     * @return
-     */
-    private static QuizSettings.GuildQuizConfig addGuildQuizConfig(long guildID)
+    public void updateGuildConfig(GuildQuizConfig gqc)
     {
-        if (quizSettings.GuildQuizConfigs.length > 0)
-        {
-            Boolean isLastGreater = null;
-            int min = 0;
-            int max = quizSettings.GuildQuizConfigs.length;
-            while (min != max)
-            {
-                int mid = (max+min)/2;
-                long midGuild = Long.parseLong(quizSettings.GuildQuizConfigs[mid].GuildID);
-                if (midGuild < guildID)
-                {
-                    min = mid;
-                    if (isLastGreater)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        isLastGreater = false;
-                    }
-                }
-                else if (midGuild > guildID)                            //Quick binary search to find the general area it will fit.
-                {
-                    max = mid;
-                    if (!isLastGreater)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        isLastGreater = true;
-                    }
-                }
-            }
+        settingsManager.guildQuizConfigs.replace(gqc.getGuildID(), gqc);
+        save();
+    }
 
-            int location = 0;
-            for (int i = min; i<(max+1); i++)
-            {
-                long currentGuild = Long.parseLong(quizSettings.GuildQuizConfigs[i].GuildID);
-                if (currentGuild > guildID)                                                         //Less efficient linear search on the small area found by binary search
-                {
-                    location = i;
-                }
-            }
+    public void removeGuildConfig(GuildQuizConfig gqc)
+    {
+        settingsManager.guildQuizConfigs.remove(gqc.getGuildID());
+        save();
+    }
 
-            QuizSettings.GuildQuizConfig[] newGuildQuizConfigs = new QuizSettings.GuildQuizConfig[quizSettings.GuildQuizConfigs.length+1];
-            for (int i = 0; i<quizSettings.GuildQuizConfigs.length; i++)
-            {
-                if (i<location)
-                {
-                    newGuildQuizConfigs[i] = quizSettings.GuildQuizConfigs[i];
-                }
-                else if (i == location)
-                {
-                    QuizSettings.GuildQuizConfig newGuildQuizConfig = new QuizSettings.GuildQuizConfig();
-                    newGuildQuizConfig.GuildID = String.valueOf(guildID);
-                    newGuildQuizConfigs[i] = newGuildQuizConfig;
-                }
-                else
-                {
-                    newGuildQuizConfigs[i+1] = quizSettings.GuildQuizConfigs[i];
-                }
-            }
-            quizSettings.GuildQuizConfigs = newGuildQuizConfigs;
-            save();
-            Scheduler.resetScheduling(quizSettings.GuildQuizConfigs[location]);
-            return quizSettings.GuildQuizConfigs[location];
-        }
-        else
-        {
-            quizSettings.GuildQuizConfigs = new QuizSettings.GuildQuizConfig[1];
-            quizSettings.GuildQuizConfigs[0] = new QuizSettings.GuildQuizConfig();
-            quizSettings.GuildQuizConfigs[0].GuildID = String.valueOf(guildID);
-            save();
-            Scheduler.resetScheduling(quizSettings.GuildQuizConfigs[0]);
-            return quizSettings.GuildQuizConfigs[0];
-        }
-
-
+    public void removeGuildConfig(String guildID)
+    {
+        settingsManager.guildQuizConfigs.remove(guildID);
+        save();
     }
 
     //==================================================================================================================
 
     /**
-     * Gets the guild ids and times for the specified day.<br>
+     * Gets the GuildQuizConfig and times for the specified day.<br>
      * Days are set by ISO-8601 (1 is Monday, 7 is Sunday).
-     * @param dayOfWeek
+     * @param dayValue
      * @return
      */
-    public static ArrayList<QuizSettings.GuildQuizConfig> getDayQuizzes(int dayOfWeek)
+    public ArrayList<GuildQuizConfig> getDayQuizzes(int dayValue)
     {
         restore();
-        ArrayList<QuizSettings.GuildQuizConfig> todaysQuizzes = new ArrayList<>();
-        for (QuizSettings.GuildQuizConfig guildQuizConfig : quizSettings.GuildQuizConfigs)
+        ArrayList<GuildQuizConfig> todaysQuizzes = new ArrayList<>();
+        for (GuildQuizConfig guildQuizConfig : guildQuizConfigs.values())
         {
-            if (guildQuizConfig.Days[(dayOfWeek-1)])
+            if (guildQuizConfig.getDay(dayValue).hasQuiz())
             {
                 todaysQuizzes.add(guildQuizConfig);
             }
@@ -235,87 +152,23 @@ public class SettingsManager
     }
 
     /**
-     * Sets whether to run a quiz on the specified day. All days are disabled by default.<br>
+     * Gets the guild ids and times for the specified day.<br>
      * Days are set by ISO-8601 (1 is Monday, 7 is Sunday).
-     * @param guildID the guild to modify
-     * @param dayOfWeek the day of the week
-     * @param runQuiz whether to run a quiz on this day
-     */
-    public static QuizSettings.GuildQuizConfig setGuildQuizDay(long guildID, int dayOfWeek, boolean runQuiz)
-    {
-        restore();
-        QuizSettings.GuildQuizConfig gqc = getGuildQuizSettings(guildID);
-        gqc.Days[dayOfWeek-1] = runQuiz;
-        save();
-        Scheduler.resetScheduling(gqc);
-        return gqc;
-    }
-
-    /**
-     * The minute of the day with which to start the quiz.<br>
-     * @param guildID the guild to edit
-     * @param startMinute
-     */
-    public static QuizSettings.GuildQuizConfig setGuildQuizTime(long guildID, int startMinute)
-    {
-        restore();
-        QuizSettings.GuildQuizConfig gqc = getGuildQuizSettings(guildID);
-        gqc.StartMinute = startMinute-5; //This launches the quiz 5 minutes before it's scheduled, allowing us to prompt players to join with a 5 minute window.
-        save();
-        Scheduler.resetScheduling(gqc);
-        return gqc;
-    }
-
-    /**
-     * Sets whether or not to ping when a quiz starts.
-     * @param guildId
-     * @param ping
+     * @param dayValue
      * @return
      */
-    public static QuizSettings.GuildQuizConfig updateAnnouncementPing(long guildId, boolean ping)
+    public ArrayList<String> getDayQuizzesGuildIDs(int dayValue)
     {
         restore();
-        QuizSettings.GuildQuizConfig gqc = getGuildQuizSettings(guildId);
-        gqc.PingQuizAnnouncement = ping;
-        save();
-        return gqc;
-    }
-
-    /**
-     * Returns true if a quiz will run of the specified day.
-     * @param guildID the guild config
-     * @param dayOfWeek the day of the week
-     * @return
-     */
-    public static boolean isGuildQuizDay(long guildID, int dayOfWeek)
-    {
-        QuizSettings.GuildQuizConfig gqc = getGuildQuizSettings(guildID);
-        return gqc.Days[dayOfWeek-1];
-    }
-
-    public static QuizSettings.GuildQuizConfig toggleAllowedRoles(long guildID, String... roleIDs)
-    {
-        restore();
-        ArrayList<String> allowedRoles = new ArrayList<>();
-        int index = getGuildQuizSettingsIndex(guildID);
-        for (String role : roleIDs)
+        ArrayList<String> todaysQuizzes = new ArrayList<>();
+        for (GuildQuizConfig guildQuizConfig : guildQuizConfigs.values())
         {
-            allowedRoles.add(role);
-        }
-        for (String role : quizSettings.GuildQuizConfigs[index].AllowedRoles)
-        {
-            if (allowedRoles.contains(role))
+            if (guildQuizConfig.getDay(dayValue).hasQuiz())
             {
-                allowedRoles.remove(role);
-            }
-            else
-            {
-                allowedRoles.add(role);
+                todaysQuizzes.add(guildQuizConfig.getGuildID());
             }
         }
-        quizSettings.GuildQuizConfigs[index].AllowedRoles = allowedRoles.toArray(new String[0]);
-        save();
-        return quizSettings.GuildQuizConfigs[index];
+        return todaysQuizzes;
     }
 
 }

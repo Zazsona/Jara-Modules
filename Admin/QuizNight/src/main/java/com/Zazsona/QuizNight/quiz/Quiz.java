@@ -1,6 +1,6 @@
 package com.Zazsona.QuizNight.quiz;
 
-import com.Zazsona.QuizNight.json.QuizSettings;
+import com.Zazsona.QuizNight.json.GuildQuizConfig;
 import com.Zazsona.QuizNight.json.TriviaJson;
 import com.Zazsona.QuizNight.system.SettingsManager;
 import com.Zazsona.QuizNight.system.UserStatManager;
@@ -31,7 +31,7 @@ public class Quiz
         {
             quizTeams = new HashMap<>();
             Gson gson = new Gson();
-            QuizSettings.GuildQuizConfig gqc = SettingsManager.getGuildQuizSettings(guild.getIdLong());
+            GuildQuizConfig gqc = SettingsManager.getInstance().getGuildQuizSettings(guild.getId());
             String json = CmdUtil.sendHTTPRequest("https://opentdb.com/api.php?amount=10");
             TriviaJson tj = gson.fromJson(json, TriviaJson.class);
             initialiseChannels(guild);
@@ -46,7 +46,7 @@ public class Quiz
             if (!quickStart)
             {
                 embed.getDescriptionBuilder().append("Quiz will start in 5 minutes. Join with "+ SettingsUtil.getGuildCommandPrefix(guild.getId())+"join (Team name)!");
-                if (gqc.PingQuizAnnouncement)
+                if (gqc.isPingQuizAnnouncement())
                 {
                     quizNoticeMessage = guild.getDefaultChannel().sendMessage(guild.getPublicRole().getAsMention()).embed(embed.build()).complete();
                 }
@@ -92,27 +92,6 @@ public class Quiz
             startQuiz(guild, quickStart);
         }
     }
-
-    /*
-    Category toggle system. Due to API limitations, this would require *multiple* calls. Roughly the same number as there is questions, up to 31. This many API calls is unfair and slooow.
-     One possible solution would be to gather 50 questions (the maximum) and only select the first X (question count) with supported categories.
-     If there are insufficient supported questions, and there is at least one allowed category, make continuous API calls, and add questions with matching categories *if* they are not already queued.
-
-     If only one category is available, we can make a special exception for it.
-     */
-    /*private String getRestQuery(QuizSettings.GuildQuizConfig gqc, int questionCount)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("https://opentdb.com/api.php?amount=").append(questionCount);
-        for (int i = 0; i<X; i++)
-        {
-            if (!gqc.BannedCategories.contains(i))
-            {
-                sb.append(i).append("-");
-            }
-        }
-        return sb.toString();
-    }*/
 
     private void initialiseChannels(Guild guild)
     {
