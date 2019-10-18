@@ -1,0 +1,12 @@
+{
+  "key": "Quiz",
+  "aliases": [
+    "QuizDay",
+    "QN",
+    "QD",
+    "QuizNight"
+  ],
+  "category": "ADMIN",
+  "targetVersion": "0.1",
+  "description": "Trivia questions."
+}

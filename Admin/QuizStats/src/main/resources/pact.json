@@ -1,0 +1,12 @@
+{
+  "key": "QuizStats",
+  "aliases": [
+    "QNStats",
+    "QS",
+    "QuizNightStats",
+    "TriviaStats"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Lists quiz stats."
+}
