@@ -1,26 +1,27 @@
-package com.Zazsona.utc;
+package com.Zazsona.time;
 
 import commands.CmdUtil;
+import configuration.SettingsUtil;
 import module.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
-public class UTC extends Command
+public class Time extends Command
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
-        OffsetDateTime utc = OffsetDateTime.now(ZoneOffset.UTC);
+        OffsetDateTime time = OffsetDateTime.now(SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()).getTimeZoneId());
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        embed.setTitle("=== UTC Timezone ===");
+        embed.setTitle("==== Timezone ====");
         StringBuilder descBuilder = new StringBuilder();
-        descBuilder.append("**Time:** ").append(getTime(utc)).append("\n\n");
-        descBuilder.append("**Date:** ").append(utc.getYear()).append("/").append(utc.getMonthValue()).append("/").append(utc.getDayOfMonth()).append("\n\n");
-        descBuilder.append("**Weekday:** ").append(getDayOfWeekPretty(utc.getDayOfWeek().getValue()));
+        descBuilder.append("**ID:** UTC (").append(time.getOffset()).append(")\n");
+        descBuilder.append("**Time:** ").append(getTime(time)).append("\n");
+        descBuilder.append("**Date:** ").append(time.getYear()).append("/").append(time.getMonthValue()).append("/").append(time.getDayOfMonth()).append("\n");
+        descBuilder.append("**Weekday:** ").append(getDayOfWeekPretty(time.getDayOfWeek().getValue()));
         embed.setDescription(descBuilder.toString());
         msgEvent.getChannel().sendMessage(embed.build()).queue();
     }

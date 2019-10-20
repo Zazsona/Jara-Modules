@@ -1,0 +1,11 @@
+{
+  "key": "Time",
+  "aliases": [
+    "Timezone",
+    "ServerTime",
+    "GuildTime"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Displays guild time."
+}
