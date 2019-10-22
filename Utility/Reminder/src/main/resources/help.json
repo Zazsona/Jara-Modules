@@ -6,6 +6,6 @@
     "Reminder Weekly (Day) [Time]",
     "Reminder Daily [Time]"
   ],
-  "description": "Sets a reminder for one-time or repeated execution at the date/time specified.\n\nRepetition types: Annually, Monthly, Weekly, Daily\n.    - Note: Repeating reminders will not send if set for a day that does not occur in the month/year\n\nYear - The year to first run the reminder\n\nMonth (1-12) - The month to first run the reminder\n\nDay (1-31 or Monday-Friday) - The day to first run the reminder\n\nTime (12 or 24 hour) - The time to run the reminder\n.    - Supports any combination of hours/minutes/seconds. E.g: 12PM, 12:00PM, or 12:00:00PM"
+  "description": "Sets a reminder for one-time or repeated execution at the date/time specified. You can set your reminder message after the time, or in a separate message.\n\nAccepted formats:\nYear: 2000+\nMonth: 1-12\nDay: 1-31 or Monday-Friday\nTime: 12 or 24 hour"
 
 }

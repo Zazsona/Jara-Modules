@@ -1,110 +1,21 @@
-package com.Zazsona.ChannelReminder;
+package com.Zazsona.Reminder;
 
-import com.Zazsona.ReminderCore.Reminder;
-import com.Zazsona.ReminderCore.ReminderManager;
-import com.Zazsona.ReminderCore.enums.GroupType;
 import com.Zazsona.ReminderCore.enums.RepetitionType;
-import commands.CmdUtil;
+import com.sun.org.apache.xpath.internal.operations.Number;
 import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.time.ZonedDateTime;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
-public class ReminderCommand extends Command
+public class TimeParser
 {
+    private ReminderCommand rc;
 
-    @Override
-    public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
+    public TimeParser(ReminderCommand reminderCommand)
     {
-        if (parameters.length > 1)
-        {
-            boolean channelReminder = (parameters[0].toLowerCase().contains("group") || parameters[0].toLowerCase().contains("channel") || parameters[0].toLowerCase().contains("server") || parameters[0].toLowerCase().contains("us") || parameters[0].toLowerCase().contains("all"));
-            boolean memberReminder = (parameters[0].toLowerCase().contains("member") || parameters[0].toLowerCase().contains("user"));
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-            embed.setFooter("Reminders", null);
-            embed.setTitle("New Reminder");
-            try
-            {
-                RepetitionType rt = getRepetitionType(parameters[1]);
-                ZonedDateTime executionTime = getExecutionTime(msgEvent.getGuild().getId(), rt, parameters);
-                if (rt != RepetitionType.SINGLE || (rt == RepetitionType.SINGLE && executionTime.isAfter(ZonedDateTime.now(executionTime.getZone()))))
-                {
-                    String message = getMessage(msgEvent, embed);
-                    if (message == null)
-                    {
-                        embed.setDescription("Reminder cancelled.");
-                        msgEvent.getChannel().sendMessage(embed.build()).queue();
-                        return;
-                    }
-                    TextChannel channel = null;
-                    if (channelReminder)
-                    {
-                        channel = getChannel(msgEvent, embed);
-                        if (channel == null)
-                        {
-                            embed.setDescription("Reminder cancelled.");
-                            msgEvent.getChannel().sendMessage(embed.build()).queue();
-                            return;
-                        }
-                    }
-                    Member member = msgEvent.getMember();
-                    if (memberReminder)
-                    {
-                        member = getMember(msgEvent, embed);
-                        if (member == null)
-                        {
-                            embed.setDescription("Reminder cancelled.");
-                            msgEvent.getChannel().sendMessage(embed.build()).queue();
-                            return;
-                        }
-                    }
-                    Reminder reminder = new Reminder(member.getUser().getId(), String.valueOf(msgEvent.getMessage().getCreationTime().toInstant().toEpochMilli()), msgEvent.getGuild().getId(), (channelReminder) ? channel.getId() : null, (channelReminder) ? GroupType.CHANNEL : GroupType.USER, rt, message, executionTime);
-                    ReminderManager.addReminder(reminder);
-                    embed.setDescription("**Reminder Set!**\n" +
-                                                 "Repeat: "+ rt.name()+"\n" +
-                                                 "Year: " + executionTime.getYear() + "\n" +
-                                                 "Month: " + executionTime.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + "\n" +
-                                                 "Day: " + executionTime.getDayOfMonth() + " (" + executionTime.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + ")\n" +
-                                                 "Time: " + ((executionTime.getHour() < 10) ? "0"+executionTime.getHour() : executionTime.getHour()) + ":" + ((executionTime.getMinute() < 10) ? "0"+executionTime.getMinute() : executionTime.getMinute()) + ":" + ((executionTime.getSecond() < 10) ? "0"+executionTime.getSecond() : executionTime.getSecond()) + " (" + executionTime.getOffset().getId() + ")\n" +
-                                                 "Message: " + reminder.getMessage());
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-                else
-                {
-                    embed.setDescription("You can't set a single reminder for the past!");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-            }
-            catch (IllegalArgumentException e)
-            {
-                embed.setDescription(e.getMessage());
-                msgEvent.getChannel().sendMessage(embed.build()).queue();
-            }
-            catch (IOException e)
-            {
-                embed.setDescription("An error occurred while saving reminder.");
-                msgEvent.getChannel().sendMessage(embed.build()).queue();
-                LoggerFactory.getLogger(getClass()).error(e.toString());
-            }
-        }
-        else
-        {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
-        }
+        this.rc = reminderCommand;
     }
 
-    private ZonedDateTime getExecutionTime(String guildId, RepetitionType rt, String... parameters)
+    protected ZonedDateTime getExecutionTime(String guildId, RepetitionType rt, String... parameters)
     {
         ZonedDateTime firstExecutionTime = ZonedDateTime.now(SettingsUtil.getGuildSettings(guildId).getTimeZoneId());
         ZonedDateTime currentTime = ZonedDateTime.now(firstExecutionTime.getZone());
@@ -114,9 +25,11 @@ public class ReminderCommand extends Command
         boolean isTimeSet = false;
         int minArgLength = (rt == RepetitionType.SINGLE) ? 1 : 2;
         int maxArgLength = minArgLength+4;
-        for (int i = maxArgLength-(parameters.length-minArgLength); i<maxArgLength; i++)
+        int argEndIndex = getArgEndIndex(parameters, firstExecutionTime, currentTime);
+        for (int i = maxArgLength-(argEndIndex-minArgLength); i<maxArgLength; i++)
         {
-            int index = parameters.length-maxArgLength+i;
+            int index = argEndIndex-maxArgLength+i;
+            rc.setLastIndex(index);
             if (i == maxArgLength-1)
             {
                 firstExecutionTime = getTime(parameters[index], isDaySet, firstExecutionTime, currentTime);
@@ -141,23 +54,30 @@ public class ReminderCommand extends Command
         return firstExecutionTime;
     }
 
-    private RepetitionType getRepetitionType(String repetitionInput)
+    private int getArgEndIndex(String[] parameters, ZonedDateTime zdt, ZonedDateTime currentTime)
     {
-        for (RepetitionType repetitionType : RepetitionType.values())
+        int parameterIndex = 0;
+        for (String parameter : parameters)
         {
-            if (repetitionType.name().equalsIgnoreCase(repetitionInput))
+            try
             {
-                return repetitionType;
+                parameterIndex++;
+                getTime(parameter, false, zdt, currentTime);
+                return parameterIndex;
+            }
+            catch (NumberFormatException e)
+            {
+                //Continue looping
             }
         }
-        return RepetitionType.SINGLE;
+        throw new IllegalArgumentException("A reminder cannot be set without a time.");
     }
 
     private ZonedDateTime getYear(String yearInput, ZonedDateTime zdt) throws NumberFormatException
     {
         int year;
         if (yearInput.matches("[0-9]+"))
-             year = Integer.parseInt(yearInput);
+            year = Integer.parseInt(yearInput);
         else
             throw new NumberFormatException(yearInput+" is not a valid year.\nYears must be a number.");
 
@@ -206,6 +126,10 @@ public class ReminderCommand extends Command
         if (dayInput.matches("[0-9]+"))
         {
             return getDay(dayInput, isMonthSet, isYearSet, zdt, currentTime);
+        }
+        else if (dayInput.equals("tomorrow"))
+        {
+            return zdt.plusDays(Long.valueOf(1));
         }
         else
         {
@@ -370,30 +294,38 @@ public class ReminderCommand extends Command
 
     private ZonedDateTime getTime(String timeInput, boolean isDaySet, ZonedDateTime zdt, ZonedDateTime currentTime) throws NumberFormatException
     {
-        timeInput = timeInput.toLowerCase();
-        String[] splitInput = timeInput.replace("am", "").replace("pm", "").split(":");
-        int[] timeValues = new int[splitInput.length];
-        for (int i = 0; i<splitInput.length; i++)
+        timeInput = timeInput.toLowerCase().trim();
+        if (timeInput.contains("am") || timeInput.contains("pm") || timeInput.contains(":"))
         {
-            if (splitInput[i].matches("[0-9]+"))
-                timeValues[i] = Integer.parseInt(splitInput[i]);
-            else
-                throw new NumberFormatException(timeInput+" is not a valid clock.");
-        }
-        if (timeValues.length == 0)
-            throw new NumberFormatException(timeInput+" is not a valid clock.");
+            String[] splitInput = timeInput.replace("am", "").replace("pm", "").split(":");
+            int[] timeValues = new int[splitInput.length];
+            for (int i = 0; i<splitInput.length; i++)
+            {
+                if (splitInput[i].matches("[0-9]+"))
+                    timeValues[i] = Integer.parseInt(splitInput[i]);
+                else
+                    throw new NumberFormatException(timeInput+" is not a valid clock 1.");
+            }
+            if (timeValues.length == 0)
+                throw new NumberFormatException(timeInput+" is not a valid clock 2.");
 
-        if (timeInput.contains("am") || timeInput.contains("pm"))
-        {
-            zdt = parseTwelveHourClock(timeValues, timeInput.contains("am"), zdt);
+            if (timeInput.contains("am") || timeInput.contains("pm"))
+            {
+                zdt = parseTwelveHourClock(timeValues, timeInput.contains("am"), zdt);
+            }
+            else if (timeInput.contains(":"))
+            {
+                zdt = parseTwentyFourHourClock(timeValues, zdt);
+            }
+            if (!isDaySet && zdt.isBefore(currentTime))
+                zdt = zdt.plusDays(1);
+            return zdt;
         }
         else
         {
-            zdt = parseTwentyFourHourClock(timeValues, zdt);
+            throw new NumberFormatException(timeInput+" is not a valid clock 3.");
         }
-        if (!isDaySet && zdt.isBefore(currentTime))
-            zdt = zdt.plusDays(1);
-        return zdt;
+
     }
 
     private ZonedDateTime parseTwelveHourClock(int[] timeValues, boolean isAM, ZonedDateTime zdt) throws NumberFormatException
@@ -485,85 +417,5 @@ public class ReminderCommand extends Command
             }
         }
         return zdt.withHour(hour).withMinute(minute).withSecond(second);
-    }
-
-    private String getMessage(GuildMessageReceivedEvent msgEvent, EmbedBuilder embed)
-    {
-        embed.setDescription("Please enter your reminder message.");
-        msgEvent.getChannel().sendMessage(embed.build()).queue();
-        MessageManager mm = new MessageManager();
-        String message;
-        while (true)
-        {
-            Message msg = mm.getNextMessage(msgEvent.getChannel());
-            if (msg.getMember().equals(msgEvent.getMember()))
-            {
-                message = msg.getContentRaw();
-                if (message.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit"))
-                {
-                    return null;
-                }
-                else
-                {
-                    return message;
-                }
-            }
-        }
-    }
-
-    private TextChannel getChannel(GuildMessageReceivedEvent msgEvent, EmbedBuilder embed)
-    {
-        embed.setDescription("Please mention the channel to send the reminder in.\nE.g: "+msgEvent.getGuild().getDefaultChannel().getAsMention());
-        msgEvent.getChannel().sendMessage(embed.build()).queue();
-        MessageManager mm = new MessageManager();
-        while (true)
-        {
-            Message msg = mm.getNextMessage(msgEvent.getChannel());
-            if (msg.getMember().equals(msgEvent.getMember()))
-            {
-                if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit"))
-                {
-                    return null;
-                }
-                if (msg.getMentionedChannels().size() > 0)
-                {
-                    return msg.getMentionedChannels().get(0);
-                }
-                else
-                {
-                    embed.setDescription("Could not find any channels here. Please try again.\nTo cancel, use "+SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit.");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-
-            }
-        }
-    }
-
-    private Member getMember(GuildMessageReceivedEvent msgEvent, EmbedBuilder embed)
-    {
-        embed.setDescription("Please mention the member to send the reminder to.\nE.g: "+msgEvent.getMember().getAsMention());
-        msgEvent.getChannel().sendMessage(embed.build()).queue();
-        MessageManager mm = new MessageManager();
-        while (true)
-        {
-            Message msg = mm.getNextMessage(msgEvent.getChannel());
-            if (msg.getMember().equals(msgEvent.getMember()))
-            {
-                if (msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit"))
-                {
-                    return null;
-                }
-                if (msg.getMentionedMembers().size() > 0)
-                {
-                    return msg.getMentionedMembers().get(0);
-                }
-                else
-                {
-                    embed.setDescription("Could not find any members here. Please try again.\nTo cancel, use "+SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit.");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                }
-
-            }
-        }
     }
 }

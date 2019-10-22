@@ -1,4 +1,4 @@
-package com.Zazsona.MemberReminder;
+package com.Zazsona.Reminder;
 
 import com.Zazsona.ReminderCore.ReminderManager;
 import module.Load;
@@ -15,7 +15,7 @@ public class ReminderCoreCheck extends Load
         }
         catch (NoClassDefFoundError e)
         {
-            LoggerFactory.getLogger(getClass()).error("Reminder Core is missing. User reminders WILL NOT work.");
+            LoggerFactory.getLogger(getClass()).error("Reminder Core is missing. Reminders WILL NOT work.");
         }
     }
 }
