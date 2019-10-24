@@ -9,6 +9,8 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 public class WouldYouRather extends Command
 {
+    public static final String NSFW_FILTER_KEY = "com.Zazsona.WouldYouRather.NSFWFilter";
+
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
@@ -17,7 +19,7 @@ public class WouldYouRather extends Command
         String response = CmdUtil.sendHTTPRequest("http://www.rrrather.com/botapi");
         ResponseJSON json = gson.fromJson(response, ResponseJSON.class);
 
-        if (!channel.isNSFW())
+        if (!channel.isNSFW() && WYRConfig.isNSFWFilterEnabled(msgEvent.getGuild().getId()))
         {
             while (json.nsfw)                                                           //We're ensuring that this question is tagged as safe for work ONLY if the channel has NSFW disabled.
             {
