@@ -9,12 +9,14 @@ import java.util.Random;
 
 public class Jokes extends Command
 {
+    public static final String NSFW_FILTER_KEY = "com.Zazsona.Jokes.NSFWFilter";
+
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
         ArrayList<String> jokes = new ArrayList<>();
         jokes.addAll(getSFWJokes());
-        if (msgEvent.getChannel().isNSFW())
+        if (msgEvent.getChannel().isNSFW() || !JokesConfig.isNSFWFilterEnabled(msgEvent.getGuild().getId()))
         {
             jokes.addAll(getNSFWJokes());
         }
@@ -69,9 +71,9 @@ public class Jokes extends Command
         jokes.add("My dog used to chase people on a bike a lot. It got so bad, finally I had to take his bike away.");
         jokes.add("In a boomerang shop: \"I'd like to buy a new boomerang please. Also, can you tell me how to throw the old one away?\"");
         jokes.add("I can't believe I forgot to go to the gym today. That's 7 years in a row now.");
-        jokes.add("I thought I'd tell you a good time travel joke ' but you didn't like it.");
+        jokes.add("I thought I'd tell you a good time travel joke, but you didn't like it.");
         jokes.add("I heard a report about a bad outbreak of the tummy bug, apparently 9 out of 10 people there suffered from diarrhea. I can't stop thinking about that tenth person who apparently enjoyed it.");
-        jokes.add("They threw me out of the cinema today for bringing my own food. But come on ' the prices are way too high, plus I haven't had a barbecue in months.");
+        jokes.add("They threw me out of the cinema today for bringing my own food. But, come on, the prices are way too high, plus I haven't had a BBQ in months.");
         jokes.add("Why haven't you ever seen any elephants hiding up trees? Because they're really, really good at it.");
         jokes.add("We have a strange custom in our office. The food has names there. Yesterday for example I got me a sandwich out of the fridge and its name was \"Michael\".");
         jokes.add("I really don't know which kid I'm supposedly being unfair to, according to my wife. Thomas, Anton, or the fat, ugly one?");
@@ -94,7 +96,7 @@ public class Jokes extends Command
         jokes.add("Here, I bought you a calendar. Your days are numbered now.");
         jokes.add("Talk is cheap, yeah? Have you ever talked to a lawyer?!");
         jokes.add("When everything's coming your way, perhaps you're in the wrong direction on the motorway?");
-        jokes.add("If I got 50 pence for every failed maths exam, I'd have '6.30 now.");
+        jokes.add("If I got 50 pence for every failed maths exam, I'd have £6.30 now.");
         jokes.add("Do I lose when the police officer says papers and I say scissors?");
         jokes.add("Famous last words of a postman: What a lovely dog you have!");
         jokes.add("It's cleaning day today. I've already polished off a whole chocolate bar.");
