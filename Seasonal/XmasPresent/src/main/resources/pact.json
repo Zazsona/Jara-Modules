@@ -8,5 +8,7 @@
   ],
   "category": "SEASONAL",
   "targetVersion": "0.1",
-  "description": "Awards a present."
+  "description": "Awards a present.",
+  "startingDayOfYear": 319,
+  "endingDayOfYear": 7
 }

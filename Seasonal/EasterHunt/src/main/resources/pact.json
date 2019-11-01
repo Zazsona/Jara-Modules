@@ -8,5 +8,7 @@
   ],
   "category": "SEASONAL",
   "targetVersion": "0.1",
-  "description": "Find the egg!"
+  "description": "Find the egg!",
+  "startingDayOfYear": 74,
+  "endingDayOfYear": 135
 }

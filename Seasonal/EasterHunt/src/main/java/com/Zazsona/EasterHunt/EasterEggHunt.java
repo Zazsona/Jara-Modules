@@ -19,32 +19,29 @@ public class EasterEggHunt extends GameCommand
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        if (CmdUtil.getSeason().equals(CmdUtil.Season.SPRING))
+        TextChannel channel = createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-Egg-Hunt");
+        String[][] grid = new String[5][5];
+        for (int i = 0; i<5; i++)
         {
-            TextChannel channel = createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-Egg-Hunt");
-            String[][] grid = new String[5][5];
-            for (int i = 0; i<5; i++)
+            for (int j = 0; j<5; j++)
             {
-                for (int j = 0; j<5; j++)
-                {
-                    grid[i][j] = " ";
-                }
+                grid[i][j] = " ";
             }
-            Random r = new Random();
-            int winX = r.nextInt(5);
-            int winY = r.nextInt(5);
-            embed = getBoardEmbed(channel, grid);
-            embed.setDescription(embed.getDescriptionBuilder().append("\nSend co-ordinates such as 'A2' to select a square!").toString());
-            msgEvent.getChannel().sendMessage(embed.build()).complete();
-            MessageManager mm = new MessageManager();
-            boolean eggFound = false;
-            while (!eggFound)
-            {
-                Message msg = mm.getNextMessage(channel);
-                eggFound = applyPosition(channel, msg.getContentDisplay(), grid, winX, winY);
-            }
-            end();
         }
+        Random r = new Random();
+        int winX = r.nextInt(5);
+        int winY = r.nextInt(5);
+        embed = getBoardEmbed(channel, grid);
+        embed.setDescription(embed.getDescriptionBuilder().append("\nSend co-ordinates such as 'A2' to select a square!").toString());
+        msgEvent.getChannel().sendMessage(embed.build()).complete();
+        MessageManager mm = new MessageManager();
+        boolean eggFound = false;
+        while (!eggFound)
+        {
+            Message msg = mm.getNextMessage(channel);
+            eggFound = applyPosition(channel, msg.getContentDisplay(), grid, winX, winY);
+        }
+        end();
     }
 
     private boolean applyPosition(TextChannel channel, String position, String[][] grid, int winColumn, int winRow)

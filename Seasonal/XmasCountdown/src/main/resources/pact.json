@@ -6,5 +6,7 @@
   ],
   "category": "SEASONAL",
   "targetVersion": "0.1",
-  "description": "Days until Xmas."
+  "description": "Days until Xmas.",
+  "startingDayOfYear": 319,
+  "endingDayOfYear": 7
 }
