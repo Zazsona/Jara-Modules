@@ -1,3 +1,7 @@
 {
-  "description": "Shows information about the guild's timezone."
+  "params": [
+    "GuildTime",
+    "GuildTime (TimeZone)"
+  ],
+  "description": "Shows information about the guild's timezone, or the specified timezone.\n\nTimezones can be set using the timezone code or [TZDB value](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)"
 }
