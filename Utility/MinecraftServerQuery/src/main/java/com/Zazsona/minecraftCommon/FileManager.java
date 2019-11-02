@@ -111,6 +111,10 @@ public class FileManager
             {
                 return ip.substring(0, ip.indexOf(":"));
             }
+            else
+            {
+                return ip;
+            }
         }
         return null;
     }
