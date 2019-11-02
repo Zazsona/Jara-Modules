@@ -1,4 +1,4 @@
-package com.Zazsona.QuoteRandom;
+package com.Zazsona.Quote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,12 +41,12 @@ public class FileManager
             Quote quote = null;
             if (message.getAttachments().size() > 0)
             {
-                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getAttachments().get(0).getUrl(), message.getCreationTime().atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE));
+                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getAttachments().get(0).getUrl(), message.getCreationTime().toEpochSecond());
 
             }
             else
             {
-                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getCreationTime().atZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.ISO_LOCAL_DATE));
+                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getCreationTime().toEpochSecond());
             }
             quoteList.add(quote);
             save(getQuotesPath(message.getGuild().getId()));

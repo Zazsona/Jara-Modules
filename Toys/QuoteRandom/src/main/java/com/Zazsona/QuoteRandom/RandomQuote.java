@@ -1,12 +1,14 @@
 package com.Zazsona.QuoteRandom;
 
-import module.Command;
+import com.Zazsona.Quote.FileManager;
+import com.Zazsona.Quote.Quote;
+import module.ModuleCommand;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RandomQuote extends Command
+public class RandomQuote extends ModuleCommand
 {
 
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)

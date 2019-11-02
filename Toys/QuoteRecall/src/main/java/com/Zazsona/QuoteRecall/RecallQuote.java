@@ -1,12 +1,19 @@
 package com.Zazsona.QuoteRecall;
 
+import com.Zazsona.Quote.FileManager;
+import com.Zazsona.Quote.Quote;
 import commands.CmdUtil;
-import module.Command;
+import configuration.SettingsUtil;
+import module.ModuleCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public class RecallQuote extends Command
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class RecallQuote extends ModuleCommand
 {
 
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -49,18 +56,19 @@ public class RecallQuote extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
 
     }
 
     private EmbedBuilder formatQuote(Member selfMember, Quote quote)
     {
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(quote.timestamp), SettingsUtil.getGuildSettings(selfMember.getGuild().getId()).getTimeZoneId());
         EmbedBuilder quoteEmbed = new EmbedBuilder();
         quoteEmbed.setColor(CmdUtil.getHighlightColour(selfMember));
         quoteEmbed.setTitle("===== "+quote.name+" =====");
         quoteEmbed.setDescription(quote.message+"\n\n~"+quote.user);
-        quoteEmbed.setFooter(quote.date, null);
+        quoteEmbed.setFooter(zdt.format(DateTimeFormatter.ofPattern("YYYY-MM-dd")), null);
         return quoteEmbed;
     }
 

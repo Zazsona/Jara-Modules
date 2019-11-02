@@ -1,18 +1,26 @@
 package com.Zazsona.QuotesList;
 
+import com.Zazsona.Quote.FileManager;
+import com.Zazsona.Quote.Quote;
 import commands.CmdUtil;
-import module.Command;
+import configuration.SettingsUtil;
+import module.ModuleCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class ListQuotes extends Command
+public class ListQuotes extends ModuleCommand
 {
 
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
         int pageNo = getPageNo(parameters);
-        int listingsPerPage = 15;
+        int listingsPerPage = 25;
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
         FileManager fm = new FileManager(msgEvent.getGuild().getId());
@@ -20,6 +28,7 @@ public class ListQuotes extends Command
 
         if (quotes.size() > 0)
         {
+            ZoneId zoneID = SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()).getTimeZoneId();
             double totalPages = Math.ceil((double) quotes.size()/(double) listingsPerPage);
             int startingIndex = (listingsPerPage*pageNo)-listingsPerPage;
             int endIndex = (quotes.size() < startingIndex+listingsPerPage) ? quotes.size() : (startingIndex+listingsPerPage);
@@ -27,7 +36,7 @@ public class ListQuotes extends Command
             StringBuilder listBuilder = new StringBuilder();
             for (int i = startingIndex; i<endIndex; i++)
             {
-                listBuilder.append("**").append(quotes.get(i).name).append("** - ").append(quotes.get(i).date).append("\n");
+                listBuilder.append("**").append(quotes.get(i).name).append("** - ").append(ZonedDateTime.ofInstant(Instant.ofEpochSecond(quotes.get(i).timestamp), zoneID).format(DateTimeFormatter.ofPattern("YYYY-MM-dd"))).append("\n");
             }
             embed.setDescription(listBuilder.toString());
             embed.setFooter("Page "+pageNo+" / "+(int) totalPages, null);

@@ -1,11 +1,12 @@
 package com.Zazsona.QuoteDelete;
 
+import com.Zazsona.Quote.FileManager;
 import commands.CmdUtil;
-import module.Command;
+import module.ModuleCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 
-public class DeleteQuote extends Command
+public class DeleteQuote extends ModuleCommand
 {
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
@@ -33,7 +34,7 @@ public class DeleteQuote extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 }
