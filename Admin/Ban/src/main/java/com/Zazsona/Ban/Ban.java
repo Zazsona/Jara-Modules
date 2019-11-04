@@ -1,15 +1,15 @@
 package com.Zazsona.Ban;
 
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.PermissionException;
 import java.util.List;
 
-public class Ban extends Command
+public class Ban extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -48,7 +48,7 @@ public class Ban extends Command
             }
             else
             {
-                CmdUtil.sendHelpInfo(msgEvent, getClass());
+                CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
             }
         }
         else
@@ -72,12 +72,12 @@ public class Ban extends Command
                 {
                     if (banMessage == null)
                     {
-                        msgEvent.getGuild().getController().ban(member, delDays).queue();
+                        msgEvent.getGuild().ban(member, delDays).queue();
                         banCount++;
                     }
                     else
                     {
-                        msgEvent.getGuild().getController().ban(member, delDays, banMessage).queue();
+                        msgEvent.getGuild().ban(member, delDays, banMessage).queue();
                         banCount++;
                     }
                 }

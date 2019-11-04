@@ -1,12 +1,12 @@
 package com.Zazsona.MessageResponder;
 
-import commands.CmdUtil;
 import configuration.SettingsUtil;
-import module.Load;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import jara.Core;
+import module.ModuleLoad;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class MessageResponder extends Load
+public class MessageResponder extends ModuleLoad
 {
     private static FileManager fm;
 
@@ -16,7 +16,7 @@ public class MessageResponder extends Load
         fm = new FileManager();
         fm.restore();
         MessageListener msgListener = new MessageListener();
-        CmdUtil.getJDA().addEventListener(msgListener);
+        Core.getShardManagerNotNull().addEventListener(msgListener);
     }
 
     public class MessageListener extends ListenerAdapter

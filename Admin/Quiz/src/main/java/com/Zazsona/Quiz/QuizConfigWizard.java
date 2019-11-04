@@ -6,12 +6,12 @@ import configuration.GuildSettings;
 import configuration.SettingsUtil;
 import jara.MessageManager;
 import module.ModuleConfig;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -102,12 +102,14 @@ public class QuizConfigWizard extends ModuleConfig
             if (response.equals("y") || response.equals("enable") || response.equals("yes"))
             {
                 gqc.setPingQuizAnnouncement(true);
+                SettingsManager.getInstance().save();
                 embed.setDescription("Ping enabled.");
                 textChannel.sendMessage(embed.build()).queue();
             }
             else if (response.equals("n") || response.equals("disable") || response.equals("no"))
             {
                 gqc.setPingQuizAnnouncement(false);
+                SettingsManager.getInstance().save();
                 embed.setDescription("Ping disabled.");
                 textChannel.sendMessage(embed.build()).queue();
             }
@@ -156,6 +158,7 @@ public class QuizConfigWizard extends ModuleConfig
                 else
                     gqc.removeAllowedRole(role.getId());
             }
+            SettingsManager.getInstance().save();
             embed.setDescription("Roles "+((addRoles) ? "added." : "removed."));
             textChannel.sendMessage(embed.build()).queue();
         }

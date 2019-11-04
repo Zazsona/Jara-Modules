@@ -2,8 +2,9 @@ package com.Zazsona.Quiz.system;
 
 import com.Zazsona.Quiz.json.GuildQuizConfig;
 import com.Zazsona.Quiz.quiz.Quiz;
-import commands.CmdUtil;
-import module.Load;
+import configuration.SettingsUtil;
+import jara.Core;
+import module.ModuleLoad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class QuizScheduler extends Load
+public class QuizScheduler extends ModuleLoad
 {
     private static HashMap<Long, ArrayList<String>> quizMap;
     private static transient Logger logger = LoggerFactory.getLogger(QuizScheduler.class);
@@ -27,7 +28,8 @@ public class QuizScheduler extends Load
 
     private static void queueQuizForCurrentExecution(String guildID, long startTime, long dayStartSecond)
     {
-        long epochStartTime = (dayStartSecond+startTime-(5*60)); //Subtract 5 minutes, as this starts the 5 minute start notice.
+        long localDayStartSecond = ZonedDateTime.now(SettingsUtil.getGuildSettings(guildID).getTimeZoneId()).withHour(0).withMinute(0).withSecond(0).toEpochSecond();
+        long epochStartTime = (localDayStartSecond+startTime-(5*60)); //Subtract 5 minutes, as this starts the 5 minute start notice.
         if (quizMap.containsKey(epochStartTime))
         {
             if (!quizMap.get(epochStartTime).contains(guildID))
@@ -93,7 +95,7 @@ public class QuizScheduler extends Load
             while (true)
             {
                 ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
-            ArrayList<GuildQuizConfig> quizConfigs = SettingsManager.getInstance().getDayQuizzes(utc.getDayOfWeek().getValue());
+                ArrayList<GuildQuizConfig> quizConfigs = SettingsManager.getInstance().getDayQuizzes(utc.getDayOfWeek().getValue());
                 long dayStartSecond = utc.withSecond(0).withMinute(0).withHour(0).toEpochSecond();
                 long resetSecond = utc.withMinute(0).withSecond(0).withHour(0).plusDays(Long.valueOf(1)).toEpochSecond();
                 int dayValue = utc.getDayOfWeek().getValue();
@@ -113,7 +115,7 @@ public class QuizScheduler extends Load
                             for (String guildID : quizMap.get(epochSecond))
                             {
                                 Quiz qn = new Quiz();
-                                Thread quizThread = new Thread(() -> qn.startQuiz(CmdUtil.getJDA().getGuildById(guildID), false));
+                                Thread quizThread = new Thread(() -> qn.startQuiz(Core.getShardManager().getGuildById(guildID), false));
                                 quizThread.setName(guildID+"-Quiz");
                                 quizThread.start();
                             }

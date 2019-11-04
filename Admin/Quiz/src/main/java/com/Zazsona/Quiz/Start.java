@@ -2,16 +2,16 @@ package com.Zazsona.Quiz;
 
 import com.Zazsona.Quiz.quiz.Quiz;
 import configuration.SettingsUtil;
-import module.Command;
 import commands.CmdUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
 
-public class Start extends Command
+public class Start extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -32,7 +32,7 @@ public class Start extends Command
         }
         catch (ArrayIndexOutOfBoundsException | InvalidParameterException e)
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
         catch (IOException e)
         {

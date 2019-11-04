@@ -1,17 +1,17 @@
 package com.Zazsona.MonthlyUsage;
 
-import commands.CmdUtil;
 import configuration.SettingsUtil;
-import module.Load;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import jara.Core;
+import module.ModuleLoad;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 
-public class MonthlyUsageRecorder extends Load
+public class MonthlyUsageRecorder extends ModuleLoad
 {
     private static FileManager fm;
 
@@ -21,7 +21,7 @@ public class MonthlyUsageRecorder extends Load
         fm = new FileManager();
         fm.restore();
         CommandListener cmdListener = new CommandListener();
-        CmdUtil.getJDA().addEventListener(cmdListener);
+        Core.getShardManagerNotNull().addEventListener(cmdListener);
 
 
         Timer autosaveScheduler = new Timer();
@@ -89,7 +89,7 @@ public class MonthlyUsageRecorder extends Load
         {
             if (SettingsUtil.getGuildSettings(guildID).isCommandEnabled("MonthlyUsage"))
             {
-                Guild guild = CmdUtil.getJDA().getGuildById(guildID);
+                Guild guild = Core.getShardManager().getGuildById(guildID);
                 guild.getDefaultChannel().sendMessage(mu.buildEmbed(fm, guild, true).build()).queue();
             }
         }

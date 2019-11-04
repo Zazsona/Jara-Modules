@@ -8,9 +8,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.awt.*;
@@ -95,7 +95,7 @@ public class Quiz
 
     private void initialiseChannels(Guild guild)
     {
-        quizCategory = (Category) guild.getController().createCategory("quiz").complete();
+        quizCategory = (Category) guild.createCategory("quiz").complete();
         quizCategory.createPermissionOverride(guild.getPublicRole()).setDeny(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
         questionsChannel = (TextChannel) quizCategory.createTextChannel("Questions").complete();
 

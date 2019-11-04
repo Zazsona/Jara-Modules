@@ -1,12 +1,13 @@
 package com.Zazsona.WelcomeMessage;
 
 import commands.CmdUtil;
-import module.Load;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import jara.Core;
+import module.ModuleLoad;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class MessageSender extends Load
+public class MessageSender extends ModuleLoad
 {
     FileManager fm;
 
@@ -15,7 +16,7 @@ public class MessageSender extends Load
     {
         fm = FileManager.getInstance();
         GuildJoinListener gjl = new GuildJoinListener();
-        CmdUtil.getJDA().addEventListener(gjl);
+        Core.getShardManagerNotNull().addEventListener(gjl);
     }
 
     private class GuildJoinListener extends ListenerAdapter

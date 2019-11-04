@@ -1,11 +1,11 @@
 package com.Zazsona.GameStatus;
 
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class GameStatusCommand extends Command
+public class GameStatusCommand extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -19,16 +19,16 @@ public class GameStatusCommand extends Command
                 {
                     message.append(parameters[i]).append(" ");
                 }
-                CmdUtil.getJDA().asBot().getShardManager().setGame(Game.playing(message.toString()));
+                msgEvent.getJDA().getPresence().setActivity(Activity.playing(message.toString()));
             }
             else
             {
-                CmdUtil.getJDA().asBot().getShardManager().setGame(null);
+                msgEvent.getJDA().getPresence().setActivity(null);
             }
         }
         catch (IllegalArgumentException e)
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
 
     }

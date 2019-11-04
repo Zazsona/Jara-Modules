@@ -1,15 +1,16 @@
 package com.Zazsona.Kick;
 
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.PermissionException;
+
 import java.util.List;
 
-public class Kick extends Command
+public class Kick extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -46,7 +47,7 @@ public class Kick extends Command
             }
             else
             {
-                CmdUtil.sendHelpInfo(msgEvent, getClass());
+                CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
             }
         }
         else
@@ -69,12 +70,12 @@ public class Kick extends Command
                 {
                     if (kickMessage == null)
                     {
-                        msgEvent.getGuild().getController().kick(member).queue();
+                        msgEvent.getGuild().kick(member).queue();
                         kickCount++;
                     }
                     else
                     {
-                        msgEvent.getGuild().getController().kick(member, kickMessage).queue();
+                        msgEvent.getGuild().kick(member, kickMessage).queue();
                         kickCount++;
                     }
                 }

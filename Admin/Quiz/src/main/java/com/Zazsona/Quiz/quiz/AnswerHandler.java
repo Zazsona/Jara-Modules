@@ -2,15 +2,14 @@ package com.Zazsona.Quiz.quiz;
 
 import com.Zazsona.Quiz.json.TriviaJson;
 import com.Zazsona.Quiz.system.UserStatManager;
-import commands.CmdUtil;
 import configuration.SettingsUtil;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Category;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.time.Instant;
@@ -50,10 +49,10 @@ public class AnswerHandler
         }
 
         MessageReceiver mr = new MessageReceiver();
-        Thread listenerThread = new Thread(() -> CmdUtil.getJDA().addEventListener(mr));
+        Thread listenerThread = new Thread(() -> quizCategory.getJDA().addEventListener(mr));
         listenerThread.start();
         boolean earlyExit = runClock(secondsToAnswer);
-        CmdUtil.getJDA().removeEventListener(mr);
+        quizCategory.getJDA().removeEventListener(mr);
         return earlyExit;
     }
 

@@ -4,8 +4,8 @@ import com.Zazsona.Quiz.json.GuildQuizConfig;
 import com.Zazsona.Quiz.system.SettingsManager;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
 
 import java.util.HashMap;
 

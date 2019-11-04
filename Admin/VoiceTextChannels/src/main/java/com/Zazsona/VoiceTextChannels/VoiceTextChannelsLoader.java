@@ -1,18 +1,19 @@
 package com.Zazsona.VoiceTextChannels;
 
 import commands.CmdUtil;
-import module.Load;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import jara.Core;
+import module.ModuleLoad;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.HashMap;
 
-public class VoiceTextChannelsLoader extends Load
+public class VoiceTextChannelsLoader extends ModuleLoad
 {
     private static FileManager fm;
 
@@ -22,7 +23,7 @@ public class VoiceTextChannelsLoader extends Load
         fm = new FileManager();
         fm.restore();
         ChannelJoinListener cjl = new ChannelJoinListener();
-        CmdUtil.getJDA().addEventListener(cjl);
+        Core.getShardManager().addEventListener(cjl);
     }
 
     public class ChannelJoinListener extends ListenerAdapter
