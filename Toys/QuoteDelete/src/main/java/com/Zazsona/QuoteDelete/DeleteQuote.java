@@ -3,8 +3,8 @@ package com.Zazsona.QuoteDelete;
 import com.Zazsona.Quote.FileManager;
 import commands.CmdUtil;
 import module.ModuleCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class DeleteQuote extends ModuleCommand
 {

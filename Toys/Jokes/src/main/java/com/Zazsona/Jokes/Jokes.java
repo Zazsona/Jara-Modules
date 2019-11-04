@@ -1,13 +1,13 @@
 package com.Zazsona.Jokes;
 
-import module.Command;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
-public class Jokes extends Command
+public class Jokes extends ModuleCommand
 {
     public static final String NSFW_FILTER_KEY = "com.Zazsona.Jokes.NSFWFilter";
 

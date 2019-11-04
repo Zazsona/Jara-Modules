@@ -5,11 +5,11 @@ import com.Zazsona.Quote.Quote;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import module.ModuleCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -72,7 +72,7 @@ public class SaveQuote extends ModuleCommand
 
     private Message getMessageToQuoteByID(TextChannel channel, String messageID)
     {
-        return channel.getMessageById(messageID).complete();
+        return channel.retrieveMessageById(messageID).complete();
     }
 
     private Message getMessageToQuoteByUsername(TextChannel channel, String name)

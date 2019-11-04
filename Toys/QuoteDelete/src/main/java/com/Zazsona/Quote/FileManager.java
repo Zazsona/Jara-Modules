@@ -4,14 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class FileManager
@@ -41,12 +39,12 @@ public class FileManager
             Quote quote = null;
             if (message.getAttachments().size() > 0)
             {
-                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getAttachments().get(0).getUrl(), message.getCreationTime().toEpochSecond());
+                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getAttachments().get(0).getUrl(), message.getTimeCreated().toEpochSecond());
 
             }
             else
             {
-                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getCreationTime().toEpochSecond());
+                quote = new Quote(quoteName, message.getMember().getEffectiveName(), message.getContentDisplay(), message.getTimeCreated().toEpochSecond());
             }
             quoteList.add(quote);
             save(getQuotesPath(message.getGuild().getId()));

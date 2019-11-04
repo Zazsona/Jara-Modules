@@ -2,12 +2,12 @@ package com.Zazsona.WouldYouRather;
 
 import com.google.gson.Gson;
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class WouldYouRather extends Command
+public class WouldYouRather extends ModuleCommand
 {
     public static final String NSFW_FILTER_KEY = "com.Zazsona.WouldYouRather.NSFWFilter";
 
