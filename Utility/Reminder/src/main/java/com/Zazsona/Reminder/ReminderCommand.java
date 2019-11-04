@@ -5,12 +5,12 @@ import com.Zazsona.ReminderCore.ReminderManager;
 import com.Zazsona.ReminderCore.enums.GroupType;
 import com.Zazsona.ReminderCore.enums.RepetitionType;
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class ReminderCommand extends Command
+public class ReminderCommand extends ModuleCommand
 {
 
     private int lastIndex = 0;
@@ -62,13 +62,13 @@ public class ReminderCommand extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 
     private void createReminder(GuildMessageReceivedEvent msgEvent, boolean channelReminder, EmbedBuilder embed, RepetitionType rt, ZonedDateTime executionTime, String message, TextChannel channel, Member member) throws IOException
     {
-        Reminder reminder = new Reminder(member.getUser().getId(), String.valueOf(msgEvent.getMessage().getCreationTime().toInstant().toEpochMilli()), msgEvent.getGuild().getId(), (channelReminder) ? channel.getId() : null, (channelReminder) ? GroupType.CHANNEL : GroupType.USER, rt, message, executionTime);
+        Reminder reminder = new Reminder(member.getUser().getId(), String.valueOf(msgEvent.getMessage().getTimeCreated().toInstant().toEpochMilli()), msgEvent.getGuild().getId(), (channelReminder) ? channel.getId() : null, (channelReminder) ? GroupType.CHANNEL : GroupType.USER, rt, message, executionTime);
         ReminderManager.addReminder(reminder);
         embed.setDescription("**Reminder Set!**\n" +
                                      "Repeat: "+ rt.name()+"\n" +

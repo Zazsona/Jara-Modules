@@ -7,13 +7,13 @@ import com.Zazsona.jaraMinecraftProfile.json.UsernameUUID;
 import com.Zazsona.minecraftCommon.FileManager;
 import com.google.gson.Gson;
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.time.Instant;
 
-public class MCPCommand extends Command
+public class MCPCommand extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -68,7 +68,7 @@ public class MCPCommand extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 

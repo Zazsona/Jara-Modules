@@ -3,14 +3,14 @@ package com.Zazsona.RemoveReminder;
 import com.Zazsona.ReminderCore.Reminder;
 import com.Zazsona.ReminderCore.ReminderManager;
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class DeleteReminder extends Command
+public class DeleteReminder extends ModuleCommand
 {
 
     @Override
@@ -48,12 +48,12 @@ public class DeleteReminder extends Command
             }
             else
             {
-                CmdUtil.sendHelpInfo(msgEvent, getClass());
+                CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
             }
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 }

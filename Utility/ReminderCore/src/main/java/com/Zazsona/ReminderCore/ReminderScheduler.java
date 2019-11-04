@@ -1,7 +1,7 @@
 package com.Zazsona.ReminderCore;
 
 import com.Zazsona.ReminderCore.enums.TimeType;
-import module.Load;
+import module.ModuleLoad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReminderScheduler extends Load
+public class ReminderScheduler extends ModuleLoad
 {
     private static HashMap<Long, ArrayList<Reminder>> remindersMap;
     private static transient boolean remindersAddedDuringPeriod = false;

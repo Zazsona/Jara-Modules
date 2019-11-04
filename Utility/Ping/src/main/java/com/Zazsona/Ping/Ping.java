@@ -1,9 +1,9 @@
 package com.Zazsona.Ping;
 
-import module.Command;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class Ping extends Command
+public class Ping extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)

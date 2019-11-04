@@ -3,19 +3,18 @@ package com.Zazsona.Report;
 import commands.CmdUtil;
 import configuration.GuildSettings;
 import configuration.SettingsUtil;
-import module.Command;
 import jara.Core;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.lang.management.ManagementFactory;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class Report extends Command
+public class Report extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -30,7 +29,7 @@ public class Report extends Command
         reportSB.append("Shard: ").append(msgEvent.getJDA().getShardInfo().getShardId()).append("/").append(msgEvent.getJDA().getShardInfo().getShardTotal()).append("\n");
         reportSB.append("Server: ").append(msgEvent.getGuild().getName()).append("\n");
         reportSB.append("Channel: #").append(msgEvent.getChannel().getName()).append("\n");
-        reportSB.append("Ping: ").append(msgEvent.getJDA().getPing()).append("ms\n");
+        reportSB.append("Ping: ").append(msgEvent.getGuild().getJDA().getRestPing().complete()).append("ms\n");
         reportSB.append("Command Author: ").append(msgEvent.getAuthor().getName()).append("#").append(msgEvent.getAuthor().getDiscriminator());
         if (msgEvent.getMember().getNickname() != null)
         {

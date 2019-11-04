@@ -2,7 +2,7 @@ package com.Zazsona.RemindersList;
 
 import com.Zazsona.ReminderCore.Reminder;
 import com.Zazsona.ReminderCore.ReminderManager;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.ArrayList;
 import java.util.Comparator;

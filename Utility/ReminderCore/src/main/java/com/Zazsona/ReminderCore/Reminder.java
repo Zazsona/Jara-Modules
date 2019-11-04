@@ -3,8 +3,9 @@ package com.Zazsona.ReminderCore;
 import com.Zazsona.ReminderCore.enums.GroupType;
 import com.Zazsona.ReminderCore.enums.RepetitionType;
 import commands.CmdUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.*;
+import jara.Core;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -63,7 +64,7 @@ public class Reminder implements Serializable
     {
         if (guild == null)
         {
-            guild = CmdUtil.getJDA().getGuildById(guildID);
+            guild = Core.getShardManager().getGuildById(guildID);
         }
         return guild;
     }
@@ -99,7 +100,7 @@ public class Reminder implements Serializable
             }
             else
             {
-                user = CmdUtil.getJDA().getUserById(userID);
+                user = Core.getShardManager().getUserById(userID);
             }
         }
         return user;

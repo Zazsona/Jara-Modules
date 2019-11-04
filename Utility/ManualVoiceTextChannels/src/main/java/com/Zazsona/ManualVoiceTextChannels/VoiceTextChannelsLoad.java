@@ -1,14 +1,14 @@
 package com.Zazsona.ManualVoiceTextChannels;
 
-import commands.CmdUtil;
-import module.Load;
+import jara.Core;
+import module.ModuleLoad;
 
-public class VoiceTextChannelsLoad extends Load
+public class VoiceTextChannelsLoad extends ModuleLoad
 {
     @Override
     public void load()
     {
         VoiceTextChannels.VoiceChannelListener vcl = new VoiceTextChannels.VoiceChannelListener();
-        CmdUtil.getJDA().addEventListener(vcl);
+        Core.getShardManagerNotNull().addEventListener(vcl);
     }
 }

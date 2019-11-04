@@ -1,10 +1,10 @@
 package com.Zazsona.Reminder;
 
 import com.Zazsona.ReminderCore.ReminderManager;
-import module.Load;
+import module.ModuleLoad;
 import org.slf4j.LoggerFactory;
 
-public class ReminderCoreCheck extends Load
+public class ReminderCoreCheck extends ModuleLoad
 {
     @Override
     public void load()

@@ -2,11 +2,11 @@ package com.Zazsona.Pokedex;
 
 import com.Zazsona.Pokedex.json.*;
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class PokeDex extends Command
+public class PokeDex extends ModuleCommand
 {
     private enum DexType
     {
@@ -52,7 +52,7 @@ public class PokeDex extends Command
             }
             else
             {
-                CmdUtil.sendHelpInfo(msgEvent, getClass());
+                CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
             }
         }
         catch (IllegalArgumentException e)

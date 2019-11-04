@@ -1,12 +1,12 @@
 package com.Zazsona.Randomizer;
 
-import module.Command;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Random;
 
-public class Randomizer extends Command
+public class Randomizer extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -81,21 +81,6 @@ public class Randomizer extends Command
     {
         Random r = new Random();
         Message randMsg = msgEvent.getChannel().sendMessage(""+(r.nextInt(upperBound+1-lowerBound)+lowerBound)).complete();
-
-        /*try
-        {
-            for (int interval = 100; interval<400; interval=interval+100)
-            {
-                randMsg.editMessage(""+(r.nextInt(upperBound+1-lowerBound)+lowerBound)).queue();
-                Thread.sleep(interval);
-            }
-
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            randMsg.editMessage(""+(r.nextInt(upperBound+1-lowerBound)+lowerBound)).queue();
-        }*/
     }
 
     /**
@@ -133,19 +118,5 @@ public class Randomizer extends Command
     {
         Random r = new Random();
         Message randMsg = msgEvent.getChannel().sendMessage(list[r.nextInt(list.length-1)+1]).complete(); //-1/+1 is being used here as this ignores 0 (the command trigger) without hitting the bounds of the parameters array.
-
-        /*try
-        {
-            for (int interval = 100; interval<400; interval=interval+100)
-            {
-                randMsg.editMessage(parameters[r.nextInt(parameters.length-1)+1]).queue();
-                Thread.sleep(interval);
-            }
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            randMsg.editMessage(parameters[r.nextInt(parameters.length-1)+1]).queue();
-        }*/
     }
 }

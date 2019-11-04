@@ -1,11 +1,11 @@
 package com.Zazsona.RemindersList;
 
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class ListReminders extends Command
+public class ListReminders extends ModuleCommand
 {
 
     @Override
