@@ -1,14 +1,14 @@
 package com.Zazsona.SeasonalJoke;
 
 import commands.CmdUtil;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 import java.util.Random;
 
-public class SeasonalJoke extends GameCommand
+public class SeasonalJoke extends ModuleGameCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
