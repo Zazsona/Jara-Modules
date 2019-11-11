@@ -1,11 +1,11 @@
 package com.Zazsona.MixtapeManager;
 
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class MixtapeManager extends Command
+public class MixtapeManager extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -30,12 +30,12 @@ public class MixtapeManager extends Command
             }
             else
             {
-                CmdUtil.sendHelpInfo(msgEvent, getClass());
+                CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
             }
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 
@@ -64,7 +64,7 @@ public class MixtapeManager extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 
@@ -93,7 +93,7 @@ public class MixtapeManager extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 
@@ -122,7 +122,7 @@ public class MixtapeManager extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 
@@ -139,7 +139,7 @@ public class MixtapeManager extends Command
         }
         else
         {
-            CmdUtil.sendHelpInfo(msgEvent, getClass());
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
     }
 }

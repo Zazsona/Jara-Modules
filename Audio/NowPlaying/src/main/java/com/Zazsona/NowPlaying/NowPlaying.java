@@ -3,11 +3,11 @@ package com.Zazsona.NowPlaying;
 import audio.Audio;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class NowPlaying extends Command
+public class NowPlaying extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)

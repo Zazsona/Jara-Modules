@@ -3,13 +3,13 @@ package com.Zazsona.Skip;
 import audio.Audio;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
-import module.Command;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-public class Skip extends Command
+public class Skip extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)

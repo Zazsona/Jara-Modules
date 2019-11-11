@@ -1,12 +1,12 @@
 package com.Zazsona.Kazoo;
 
 import commands.CmdUtil;
-import module.Command;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleCommand;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Random;
 
-public class Kazoo extends Command
+public class Kazoo extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
