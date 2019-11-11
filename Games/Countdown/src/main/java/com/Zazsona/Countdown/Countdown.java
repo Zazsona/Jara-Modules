@@ -3,17 +3,17 @@ package com.Zazsona.Countdown;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Countdown extends GameCommand
+public class Countdown extends ModuleGameCommand
 {
     /**
      * The channel to send & receive messages with

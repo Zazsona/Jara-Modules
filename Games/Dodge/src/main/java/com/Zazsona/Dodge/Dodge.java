@@ -1,17 +1,17 @@
 package com.Zazsona.Dodge;
 
 import commands.CmdUtil;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.security.SecureRandom;
 import java.util.*;
 
-public class Dodge extends GameCommand
+public class Dodge extends ModuleGameCommand
 {
     private final int BOARD_LENGTH = 7;
     private final int BOARD_HEIGHT = 5;

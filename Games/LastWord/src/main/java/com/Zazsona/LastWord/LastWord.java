@@ -2,18 +2,18 @@ package com.Zazsona.LastWord;
 
 import commands.CmdUtil;
 import jara.MessageManager;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
 import java.util.*;
 
-public class LastWord extends GameCommand
+public class LastWord extends ModuleGameCommand
 {
     private static Logger logger = LoggerFactory.getLogger(LastWord.class);
     private TextChannel channel;

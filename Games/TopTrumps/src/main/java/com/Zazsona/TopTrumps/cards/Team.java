@@ -1,10 +1,7 @@
 package com.Zazsona.TopTrumps.cards;
 
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.TextChannel;
-import sun.awt.image.ImageWatched;
-
-import java.time.Instant;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

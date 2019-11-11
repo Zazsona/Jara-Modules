@@ -3,18 +3,18 @@ package com.Zazsona.Trivia;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import commands.CmdUtil;
-import module.GameCommand;
 import jara.MessageManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Trivia extends GameCommand
+public class Trivia extends ModuleGameCommand
 {
     private int correctOptionId = -1;
 

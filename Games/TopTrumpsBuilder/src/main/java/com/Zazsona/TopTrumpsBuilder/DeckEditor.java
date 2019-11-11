@@ -5,10 +5,10 @@ import com.Zazsona.TopTrumpsBuilder.cards.Deck;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
 import java.security.InvalidParameterException;
 import java.util.concurrent.CancellationException;
@@ -68,45 +68,6 @@ public class DeckEditor
         embed.setDescription(descriptionText);
         channel.sendMessage(embed.build()).queue();
     }
-
-    /**
-     * Shows the main menu, and launches the sub-option based on user input.
-     * @return The edited deck
-     */
-    /*private Deck runMainMenu(FileManager fm)
-    {
-        try
-        {
-            sendEmbed("- Stats\n- Cards\n- Quit");
-            String input = getInput().getContentDisplay();
-            if (input.equalsIgnoreCase("name"))
-            {
-                editName(true, fm);
-            }
-            if (input.equalsIgnoreCase("stats") || input.equalsIgnoreCase("categories") || input.equalsIgnoreCase("category") || input.equalsIgnoreCase("categorys"))
-            {
-                editCategories(true);
-                fm.saveDeck(deck);
-            }
-            else if (input.equalsIgnoreCase("card") || input.equalsIgnoreCase("cards"))
-            {
-                runCardsMenu();
-            }
-            else if (input.equalsIgnoreCase("quit"))
-            {
-                return deck;
-            }
-            else
-            {
-                runMainMenu(fm);
-            }
-        }
-        catch (CancellationException e)
-        {
-            sendEmbed("Menu closed.");
-        }
-        return deck;
-    }*/
 
     /**
      * Shows the cards menu, and launches the sub-option based on user input.

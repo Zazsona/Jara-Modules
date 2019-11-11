@@ -3,15 +3,15 @@ package com.Zazsona.EmojiGuess;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Random;
 
-public class EmojiGuess extends GameCommand
+public class EmojiGuess extends ModuleGameCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)

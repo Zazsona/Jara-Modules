@@ -2,18 +2,18 @@ package com.Zazsona.DealOrNoDeal;
 
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 import java.time.Instant;
 import java.util.*;
 
-public class DealOrNoDeal extends GameCommand
+public class DealOrNoDeal extends ModuleGameCommand
 {
     private HashMap<Integer, Double> boxes;
     private long timeToAnswerLastDeal = 0;

@@ -6,16 +6,17 @@ import com.Zazsona.ChooseYourOwnAdventure.story.StoryNode;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
 import java.util.Random;
 
-public class ChooseYourOwnAdventure extends GameCommand
+public class ChooseYourOwnAdventure extends ModuleGameCommand
 {
     private boolean isLastSelectionOptionA;
 
@@ -30,7 +31,8 @@ public class ChooseYourOwnAdventure extends GameCommand
         MessageManager mm = new MessageManager();
         while (currentNode != null)
         {
-            EmbedBuilder embed = getStoryEmbed(currentNode, msgEvent.getGuild().getSelfMember());
+            EmbedBuilder embed = getEmbedStyle(msgEvent.getGuild().getSelfMember());
+            embed.setDescription(currentNode.getScenario()+"\n\n**A.** *"+currentNode.getOptionAText()+"*\n**B.** *"+currentNode.getOptionBText()+"*");
             channel.sendMessage(embed.build()).queue();
 
             lastNode = currentNode;
@@ -43,7 +45,7 @@ public class ChooseYourOwnAdventure extends GameCommand
                     if (currentNode == null || msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msg.getGuild().getId())+"quit"))
                     {
                         end(player, currentNode, lastNode, channel, mm);
-                        break;
+                        return;
                     }
 
                 }
@@ -51,7 +53,6 @@ public class ChooseYourOwnAdventure extends GameCommand
             }
 
         }
-
     }
 
     private void end(Member player, StoryNode currentNode, StoryNode lastNode, TextChannel channel, MessageManager mm)
@@ -69,24 +70,23 @@ public class ChooseYourOwnAdventure extends GameCommand
             {
                 boolean success = addNewStoryNode(mm, channel, player, lastNode, isLastSelectionOptionA);
                 if (success)
-                    channel.sendMessage("Page added successfully!").queue();
+                    channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Page added successfully!").build()).queue();
                 else
-                    channel.sendMessage("Page addition cancelled.").queue();
+                    channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Page addition cancelled!").build()).queue();
             }
         }
         else
         {
             ProfileManager.addProfile(player.getUser().getId(), currentNode.getNodeID());
-            channel.sendMessage("Progress saved. You can pick up from here next time!").queue();
+            channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Progress saved. You can pick up from here next time!").build()).queue();
         }
         deleteGameChannel();
     }
 
-    private EmbedBuilder getStoryEmbed(StoryNode sn, Member selfMember)
+    private EmbedBuilder getEmbedStyle(Member selfMember)
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("=== :crossed_swords: Choose Your Own Adventure :shield: ===");
-        embed.setDescription(sn.getScenario()+"\n\n**A.** *"+sn.getOptionAText()+"*\n**B.** *"+sn.getOptionBText()+"*");
         embed.setColor(CmdUtil.getHighlightColour(selfMember));
         return embed;
     }
@@ -96,7 +96,7 @@ public class ChooseYourOwnAdventure extends GameCommand
         int nodeID = ProfileManager.getProfileProgress(player.getId());
         if (nodeID != 0)
         {
-            channel.sendMessage("Continuing from where you left off...").queue();
+            channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Continuing from where you left off...").build()).queue();
         }
         return StoryManager.getStoryNode(nodeID);
     }
@@ -129,10 +129,8 @@ public class ChooseYourOwnAdventure extends GameCommand
                 "Everyone makes up and lives happily ever after. The end."
         };
         Random r = new Random();
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("=== :crossed_swords: Choose Your Own Adventure :shield: ===");
+        EmbedBuilder embed = getEmbedStyle(selfMember);
         embed.setDescription("**"+storyEnds[r.nextInt(storyEnds.length)]+"**\n\nWould you like to add the next page? (Y/N)");
-        embed.setColor(CmdUtil.getHighlightColour(selfMember));
         return embed;
     }
 
@@ -141,7 +139,7 @@ public class ChooseYourOwnAdventure extends GameCommand
         String scenario = "";
         String optionA = "";
         String optionB = "";
-        channel.sendMessage("Please enter a follow-up scenario (E.g, X does Y, what do you do?).\nUse "+SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit to cancel at any time.").queue();
+        channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Please enter a follow-up scenario (E.g, X does Y, what do you do?).\nUse "+SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit to cancel at any time.").build()).queue();
         while (scenario.equals(""))
         {
             Message msg = mm.getNextMessage(channel);
@@ -156,11 +154,11 @@ public class ChooseYourOwnAdventure extends GameCommand
                 }
                 else
                 {
-                    channel.sendMessage("That scenario is too long. Keep it under 300 characters.").queue();
+                    channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("That scenario is too long. Keep it under 300 characters.").build()).queue();
                 }
             }
         }
-        channel.sendMessage("Scenario set! Please enter the first action that can be taken (E.g, Do X.).\n(No need to include A. at the start.)").queue();
+        channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Scenario set! Please enter the first action that can be taken (E.g, Do X.).").build()).queue();
         while (optionA.equals(""))
         {
             Message msg = mm.getNextMessage(channel);
@@ -171,11 +169,13 @@ public class ChooseYourOwnAdventure extends GameCommand
                     return false;
                 if (validateNewOptionInput(messageContent, channel))
                 {
+                    if (messageContent.toLowerCase().startsWith("a."))
+                        messageContent = messageContent.substring(2).trim();
                     optionA = messageContent;
                 }
             }
         }
-        channel.sendMessage("Option A set! Please enter the action for option B (E.g, Do Y.).\n(No need to include B. at the start.)").queue();
+        channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Option A set! Please enter the action for option B (E.g, Do Y.).").build()).queue();
         while (optionB.equals(""))
         {
             Message msg = mm.getNextMessage(channel);
@@ -186,6 +186,8 @@ public class ChooseYourOwnAdventure extends GameCommand
                     return false;
                 if (validateNewOptionInput(messageContent, channel))
                 {
+                    if (messageContent.toLowerCase().startsWith("b."))
+                        messageContent = messageContent.substring(2).trim();
                     optionB = messageContent;
                 }
             }
@@ -203,12 +205,12 @@ public class ChooseYourOwnAdventure extends GameCommand
         String option = messageContent.toLowerCase().replaceAll("[^a-z0-9 ]", "");
         if (messageContent.length() > 200)
         {
-            channel.sendMessage("That's too long. Keep it under 200 characters.").queue();
+            channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("That's too long. Keep it under 200 characters.").build()).queue();
             return false;
         }
         else if (option.equalsIgnoreCase("a") || option.equalsIgnoreCase("b"))
         {
-            channel.sendMessage("Very clever. But that's not going to work.").queue();
+            channel.sendMessage(getEmbedStyle(channel.getGuild().getSelfMember()).setDescription("Very clever. But that's not going to work.").build()).queue();
             return false;
         }
         //We could block matching options here... But honestly, it could be interesting to see people use that to make different branches.

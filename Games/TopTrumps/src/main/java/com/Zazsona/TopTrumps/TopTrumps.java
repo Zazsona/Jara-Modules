@@ -5,13 +5,14 @@ import com.Zazsona.TopTrumps.cards.Deck;
 import com.Zazsona.TopTrumps.cards.Team;
 import com.Zazsona.TopTrumps.exceptions.GameOverException;
 import commands.CmdUtil;
-import module.GameCommand;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class TopTrumps extends GameCommand
+public class TopTrumps extends ModuleGameCommand
 {
     private LinkedList<Card> cardsInHolding = new LinkedList<>();
     private boolean useAI = false;

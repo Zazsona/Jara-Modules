@@ -3,11 +3,11 @@ package com.Zazsona.TopTrumps;
 import com.Zazsona.TopTrumps.cards.Deck;
 import com.Zazsona.TopTrumps.cards.Team;
 import commands.CmdUtil;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -66,29 +66,9 @@ public class Setup
 
     }
 
-    /*private void addTeam(Member founder, int teamNo)
-    {
-        if (teamNo <= 9)
-        {
-            MessageReaction addEmote = joinMessage.getReactions().get(joinMessage.getReactions().size()-1);
-            addEmote.removeReaction(founder.getUser()).queue();
-            addEmote.removeReaction().queue();
-            joinMessage.addReaction(((char) (0x31+(teamNo-1)))+"\u20E3").queue();
-            if (joinMessage.getReactions().size() < 9)
-            {
-                joinMessage.addReaction("\u25B6").queue();
-            }
-            TextChannel teamChannel = (TextChannel) gameCategory.createTextChannel("Team-"+teamNo).complete();
-            teamChannel.createPermissionOverride(founder.getGuild().getPublicRole()).setDeny(Permission.MESSAGE_READ).queue();
-            teamChannel.createPermissionOverride(founder).setAllow(Permission.MESSAGE_READ).queue();
-            Team team = new Team(teamChannel, null); //TODO: There's no way to split the cards.
-            grl.teams.add(team);
-        }
-    }*/
-
     private List<TextChannel> setupChannels(Guild guild, Member player, int teamCount)
     {
-        gameCategory = (Category) guild.getController().createCategory("Top Trumps").complete();
+        gameCategory = (Category) guild.createCategory("Top Trumps").complete();
         gameCategory.createPermissionOverride(guild.getSelfMember()).setAllow(Permission.MANAGE_PERMISSIONS).queue();
         for (int i = 0; i<teamCount; i++)
         {
@@ -101,7 +81,7 @@ public class Setup
 
     public void destroySetup()
     {
-        CmdUtil.getJDA().removeEventListener(grl);
+        gameCategory.getJDA().removeEventListener(grl);
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(gameCategory.getGuild().getSelfMember()));
         embed.setDescription("This game has ended.");

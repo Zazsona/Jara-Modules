@@ -3,17 +3,17 @@ package com.Zazsona.NaughtsAndCrosses;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.MessageManager;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.List;
 import java.util.Random;
 
-public class NaughtsAndCrosses extends GameCommand
+public class NaughtsAndCrosses extends ModuleGameCommand
 {
     private TextChannel channel;
     private Member player1;

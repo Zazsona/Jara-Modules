@@ -1,13 +1,13 @@
 package com.Zazsona.RockPaperScissors;
 
-import module.GameCommand;
 import jara.MessageManager;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Random;
 
-public class RockPaperScissors extends GameCommand
+public class RockPaperScissors extends ModuleGameCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)

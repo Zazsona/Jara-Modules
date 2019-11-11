@@ -2,16 +2,17 @@ package com.Zazsona.TopTrumpsBuilder;
 
 import com.Zazsona.TopTrumpsBuilder.cards.Deck;
 import commands.CmdUtil;
-import module.GameCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
+import module.ModuleGameCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class TopTrumpsBuilder extends GameCommand
+public class TopTrumpsBuilder extends ModuleGameCommand
 {
     private static final HashMap<String, LinkedList<String>> guildToEditingDecksMap = new HashMap<>();
 
@@ -44,7 +45,7 @@ public class TopTrumpsBuilder extends GameCommand
                     }
                     else
                     {
-                        CmdUtil.sendHelpInfo(msgEvent, getClass());
+                        CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
                     }
                 }
             }
@@ -55,7 +56,7 @@ public class TopTrumpsBuilder extends GameCommand
             }
             else
             {
-                CmdUtil.sendHelpInfo(msgEvent, getClass());
+                CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
             }
         }
         catch (IOException e)
