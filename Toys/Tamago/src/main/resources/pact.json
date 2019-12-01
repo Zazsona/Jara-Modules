@@ -1,0 +1,11 @@
+{
+  "key": "Tamago",
+  "aliases": [
+    "Tamagotchi",
+    "Pet",
+    "DigiPet"
+  ],
+  "category": "TOYS",
+  "targetVersion": "0.1",
+  "description": "Personal Pets"
+}
