@@ -6,7 +6,10 @@ import configuration.SettingsUtil;
 import jara.MessageManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public class JoinHandler
@@ -15,6 +18,8 @@ public class JoinHandler
     private Category quizCategory;
     private TextChannel questionsChannel;
     private boolean quizStarted;
+
+    private JoinMessageHandler jmh;
 
     public JoinHandler(Category quizCategory, TextChannel questionsChannel, HashMap<String, QuizTeam> quizTeams)
     {
@@ -29,6 +34,7 @@ public class JoinHandler
     public void stopAcceptingJoins()
     {
         quizStarted = true;
+        questionsChannel.getJDA().removeEventListener(jmh);
     }
 
     /**
@@ -38,55 +44,8 @@ public class JoinHandler
     public void acceptJoins(Guild guild)
     {
         GuildQuizConfig gqc = SettingsManager.getInstance().getGuildQuizSettings(guild.getId());
-        MessageManager mm = new MessageManager();
-        while (!quizStarted)
-        {
-            Message message = mm.getNextMessage(guild);
-            if (!quizStarted) //Second check in case quiz started while waiting for message
-            {
-                String msgContent = message.getContentDisplay();
-                if (msgContent.startsWith(SettingsUtil.getGuildCommandPrefix(guild.getId())+"join") && isAllowedToJoin(message.getMember(), gqc))
-                {
-                    if (!isMemberInTeam(message.getMember()))
-                    {
-                        String teamname = "";
-                        String params[] = msgContent.trim().split(" ");
-                        if (params.length > 1)
-                        {
-                            for (int i = 1; i<params.length; i++)
-                            {
-                                teamname += params[i]+" ";
-                            }
-                            teamname = teamname.trim();
-                        }
-                        else
-                        {
-                            teamname = message.getMember().getEffectiveName()+"'s Team";
-                        }
-                        if (quizTeams.containsKey(teamname.toUpperCase()))
-                        {
-                            joinTeam(teamname, message.getMember());
-                        }
-                        else
-                        {
-                            if (teamname.length() < 2 || teamname.length() > 99)
-                            {
-                                message.getChannel().sendMessage("Team names must be between 2 and 99 characters.").queue();
-                            }
-                            else
-                            {
-                                addTeam(teamname, message.getMember());
-                            }
-                        }
-                    }
-                    else
-                    {
-                        message.getChannel().sendMessage("You've already joined a team for this quiz.").queue();
-                    }
-
-                }
-            }
-        }
+        jmh = new JoinMessageHandler(gqc);
+        guild.getJDA().addEventListener(jmh);
     }
 
     /**
@@ -171,5 +130,65 @@ public class JoinHandler
             }
         }
         return false;
+    }
+
+    private class JoinMessageHandler extends ListenerAdapter
+    {
+        private GuildQuizConfig gqc;
+
+        public JoinMessageHandler(GuildQuizConfig gqc)
+        {
+            this.gqc = gqc;
+        }
+
+        @Override
+        public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event)
+        {
+            if (!quizStarted) //Second check in case quiz started while waiting for message
+            {
+                Message message = event.getMessage();
+                String msgContent = message.getContentDisplay();
+                if (msgContent.startsWith(SettingsUtil.getGuildCommandPrefix(message.getGuild().getId())+"join") && isAllowedToJoin(message.getMember(), gqc))
+                {
+                    if (!isMemberInTeam(message.getMember()))
+                    {
+                        String teamname = "";
+                        String params[] = msgContent.trim().split(" ");
+                        if (params.length > 1)
+                        {
+                            for (int i = 1; i<params.length; i++)
+                            {
+                                teamname += params[i]+" ";
+                            }
+                            teamname = teamname.trim();
+                        }
+                        else
+                        {
+                            teamname = message.getMember().getEffectiveName()+"'s Team";
+                        }
+                        if (quizTeams.containsKey(teamname.toUpperCase()))
+                        {
+                            joinTeam(teamname, message.getMember());
+                        }
+                        else
+                        {
+                            if (teamname.length() < 2 || teamname.length() > 99)
+                            {
+                                message.getChannel().sendMessage("Team names must be between 2 and 99 characters.").queue();
+                            }
+                            else
+                            {
+                                addTeam(teamname, message.getMember());
+                            }
+                        }
+                    }
+                    else
+                    {
+                        message.getChannel().sendMessage("You've already joined a team for this quiz.").queue();
+                    }
+
+                }
+            }
+        }
     }
 }
