@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Ban [@Member1] [@Member2] ... [@MemberN] (Delete Days) (Reason)"
+  ],
+  "description": "Bans all members mentioned for the reason specified, deleting previous messages from the specified number of days. If any members can't be banned, the command user will be informed of who and why.\n\nE.g: `/Ban @Bob @John 7 Being a muppet` will ban users \"Bob\" & \"John\" with the reason of being a muppet, and delete their messages from the last 7 days."
+}

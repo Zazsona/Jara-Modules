@@ -1,0 +1,10 @@
+{
+  "key": "MobileApp",
+  "aliases": [
+    "Mobile",
+    "App"
+  ],
+  "category": "ADMIN",
+  "targetVersion": "0.1",
+  "description": "Manage the app."
+}
