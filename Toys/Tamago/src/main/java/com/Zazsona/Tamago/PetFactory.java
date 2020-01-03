@@ -163,6 +163,7 @@ public class PetFactory
         }
         catch (IOException e)
         {
+            petMap = new HashMap<>();
             logger.error(e.getMessage());
         }
     }
