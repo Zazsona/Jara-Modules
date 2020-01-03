@@ -1,0 +1,16 @@
+{
+  "key": "Pokemon",
+  "aliases": [
+    "WhosThatPokemon",
+    "Who'sThatPokemon",
+    "Who'sThatPokemon?",
+    "PokeGuess",
+    "Pokémon",
+    "Who'sThatPokémon",
+    "WhosThatPokémon",
+    "Who'sThatPokémon?"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Name the Pokémon."
+}
