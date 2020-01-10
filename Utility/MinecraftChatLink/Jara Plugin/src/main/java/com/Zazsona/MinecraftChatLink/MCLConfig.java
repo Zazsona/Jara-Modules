@@ -68,13 +68,14 @@ public class MCLConfig extends ModuleConfig
                     embed.setDescription("Menu quit.");
                     msgEvent.getChannel().sendMessage(embed.build()).queue();
                 }
-                break;
+                return;
             }
             else if (content.equalsIgnoreCase("reset"))
             {
                 FileManager.resetIpForGuild(msgEvent.getGuild().getId());
                 embed.setDescription("Channel reset.");
                 msgEvent.getChannel().sendMessage(embed.build()).queue();
+                MinecraftMessageManager.getInstance(msgEvent.getGuild()).stopConnection();
                 return;
             }
             else
@@ -83,11 +84,15 @@ public class MCLConfig extends ModuleConfig
                 {
                     TextChannel channel = msg.getMentionedChannels().get(0);
                     setChannel(msgEvent, channel);
+                    if (isSetup)
+                    {
+                        MinecraftChatLinkCommand.sendChatLinkUUID(msgEvent.getGuild(), msgEvent.getMember().getUser());
+                    }
+                    new Thread(() -> MinecraftMessageManager.getInstance(msgEvent.getGuild()).startConnection()).start();
+                    return;
                 }
             }
         }
-        new Thread(() -> MinecraftMessageManager.getInstance(msgEvent.getGuild()).startConnection()).start();
-
     }
 
     @Override
@@ -140,12 +145,12 @@ public class MCLConfig extends ModuleConfig
      */
     private TextChannel getSavedChannel(Guild guild)
     {
-        String channelID = ChatLinkFileManager.getChannelIDForGuild(guild.getId());
-        if (channelID != null)
+        try
         {
+            String channelID = ChatLinkFileManager.getChannelIDForGuild(guild.getId());
             return guild.getTextChannelById(channelID);
         }
-        else
+        catch (NullPointerException e)
         {
             return null;
         }
