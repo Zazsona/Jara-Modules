@@ -1,0 +1,13 @@
+{
+  "key": "MinecraftChatLink",
+  "aliases": [
+    "MCCL",
+    "ChatLink",
+    "LinkChat",
+    "MCChatLink",
+	"MCChat"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Connects Minecraft server chat."
+}
