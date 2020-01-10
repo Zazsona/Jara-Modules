@@ -15,7 +15,7 @@ public class JaraChatLinkCommand implements CommandExecutor
             sender.sendMessage("[Commands]\n" +
                                        "Enable - Enables the plugin\n" +
                                        "Disable - Disables the plugin\n" +
-                                       "SetID - Sets the Discord ID of the bot to connect with");
+                                       "SetID - Sets the ChatLink ID of the Discord server to connect with");
         }
         else
         {
@@ -32,7 +32,7 @@ public class JaraChatLinkCommand implements CommandExecutor
             else if (args[0].equalsIgnoreCase("SetID"))
             {
                 if (sender.hasPermission("JaraChatLink.Config"))
-                    updateBotID(sender, args[args.length-1]);
+                    updateChatLinkID(sender, args[args.length-1]);
             }
         }
         return true;
@@ -46,7 +46,7 @@ public class JaraChatLinkCommand implements CommandExecutor
     private void updateEnabledState(CommandSender sender, boolean newState)
     {
         Settings.setEnabled(newState);
-        sender.sendMessage(ChatColor.GREEN+"Jara Chat Link is now "+((newState) ? ChatColor.BLUE+"enabled." : ChatColor.RED+"disabled.")+ChatColor.WHITE+"\nRestarting connection...");
+        sender.sendMessage(ChatColor.GREEN+"Jara Chat Link is now "+((newState) ? ChatColor.BLUE+"enabled." : ChatColor.RED+"disabled.")+ChatColor.WHITE+"\nRestarting connection... (This may take up to a minute)");
         new Thread(() -> MinecraftMessageManager.getInstance().startConnection()).start();
     }
 
@@ -55,10 +55,10 @@ public class JaraChatLinkCommand implements CommandExecutor
      * @param sender the command user
      * @param newID the bot ID
      */
-    private void updateBotID(CommandSender sender, String newID)
+    private void updateChatLinkID(CommandSender sender, String newID)
     {
-        Settings.setBotID(newID);
-        sender.sendMessage(ChatColor.GREEN+"Discord Bot ID set to "+newID+ChatColor.WHITE+"\nRestarting connection...");
+        Settings.setChatLinkID(newID);
+        sender.sendMessage(ChatColor.GREEN+"Jara ChatLink ID set to "+newID+ChatColor.WHITE+"\nRestarting connection... (This may take up to a minute)");
         new Thread(() -> MinecraftMessageManager.getInstance().startConnection()).start();
     }
 }

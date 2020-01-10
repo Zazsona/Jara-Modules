@@ -88,7 +88,7 @@ public class MinecraftMessageManager
                 if (receivedObject instanceof DiscordMessagePacket)
                 {
                     DiscordMessagePacket discordMessagePacket = (DiscordMessagePacket) receivedObject;
-                    if (discordMessagePacket.getBotID().equals(Settings.getBotID()))
+                    if (discordMessagePacket.getChatLinkUUID().equals(Settings.getChatLinkID()))
                     {
                         sendMessageToMinecraft(discordMessagePacket);
                     }
@@ -117,7 +117,7 @@ public class MinecraftMessageManager
         try
         {
             stopConnection();
-            if (Settings.isEnabled() && Settings.getBotID() != null)
+            if (Settings.isEnabled() && Settings.getChatLinkID() != null)
             {
                 serverSocket = new ServerSocket(PORT);
                 socket = serverSocket.accept();

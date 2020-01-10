@@ -31,21 +31,21 @@ public class Settings
     }
 
     /**
-     * Sets the Bot's Discord User ID. Only the bot with a matching ID can communicate with the server.
-     * @param newBotID the bot ID to set
+     * Sets the ChatLink ID. Only the bot and Discord server with a matching ID can communicate with the Minecraft server.
+     * @param newBotID the ChatLink ID to set
      */
-    public static void setBotID(String newBotID)
+    public static void setChatLinkID(String newBotID)
     {
-        plugin.getConfig().set("BotDiscordID", newBotID);
+        plugin.getConfig().set("ChatLinkID", newBotID);
         save();
     }
 
     /**
-     * Returns the Discord User ID that must match to communicate with a Discord Bot.
-     * @return the bot's user ID
+     * Returns the ChatLink ID that must match to communicate with a Discord Bot.
+     * @return the ChatLink ID
      */
-    public static String getBotID()
+    public static String getChatLinkID()
     {
-        return plugin.getConfig().getString("BotDiscordID");
+        return plugin.getConfig().getString("ChatLinkID");
     }
 }
