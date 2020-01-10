@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class DiscordMessagePacket implements Serializable
 {
-    private String botID;
+    private String chatLinkUUID;
     private String discordName;
     private String discordMessage;
 
-    public DiscordMessagePacket(String botID, String discordName, String discordMessage)
+    public DiscordMessagePacket(String chatLinkUUID, String discordName, String discordMessage)
     {
-        this.botID = botID;
+        this.chatLinkUUID = chatLinkUUID;
         this.discordName = discordName;
         this.discordMessage = discordMessage;
     }
@@ -36,12 +36,12 @@ public class DiscordMessagePacket implements Serializable
     }
 
     /**
-     * Gets botID
-     * @return botID
+     * Gets ChatLinkUUID
+     * @return ChatLinkUUID
      */
-    public String getBotID()
+    public String getChatLinkUUID()
     {
-        return botID;
+        return chatLinkUUID;
     }
 
     /**

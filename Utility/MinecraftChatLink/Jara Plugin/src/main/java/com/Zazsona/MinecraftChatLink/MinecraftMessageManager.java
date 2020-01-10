@@ -106,12 +106,16 @@ public class MinecraftMessageManager
         {
             try
             {
-                output.writeObject(new DiscordMessagePacket(Core.getShardManagerNotNull().getShards().get(0).getSelfUser().getId(), message.getMember().getEffectiveName(), message.getContentDisplay()));
+                output.writeObject(new DiscordMessagePacket(ChatLinkFileManager.getUUIDForGuild(guild.getId()), message.getMember().getEffectiveName(), message.getContentDisplay()));
                 output.flush();
             }
             catch (IOException e)
             {
                 startConnection();
+            }
+            catch (NullPointerException e)
+            {
+                stopConnection(); //The UUID has somehow been removed.
             }
         }
     }
@@ -169,15 +173,22 @@ public class MinecraftMessageManager
         try
         {
             stopConnection();
-            String ip = FileManager.getIpForGuild(guild.getId());
-            if (ip != null && ChatLinkFileManager.getChannelIDForGuild(guild.getId()) != null)
+            if (ChatLinkFileManager.isChatLinkConfigurationComplete(guild.getId()))
             {
-                socket = new Socket();
-                socket.connect(new InetSocketAddress(ip, PORT));
-                output = new ObjectOutputStream(socket.getOutputStream());
-                input = new ObjectInputStream(socket.getInputStream());
-                listenForMinecraftMessages();
-                instances.put(guild.getId(), this);
+                if (guild.getTextChannelById(ChatLinkFileManager.getChannelIDForGuild(guild.getId())) != null)
+                {
+                    String ip = FileManager.getIpForGuild(guild.getId());
+                    socket = new Socket();
+                    socket.connect(new InetSocketAddress(ip, PORT));
+                    output = new ObjectOutputStream(socket.getOutputStream());
+                    input = new ObjectInputStream(socket.getInputStream());
+                    listenForMinecraftMessages();
+                    instances.put(guild.getId(), this);
+                }
+            }
+            else
+            {
+                LOGGER.info("Could not start MinecraftChatLink for "+guild.getName()+".\nREASON: Missing configuration details.");
             }
         }
         catch (IOException e)
