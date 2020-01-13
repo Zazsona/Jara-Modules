@@ -6,9 +6,11 @@ public class MinecraftMessagePacket implements Serializable
 {
     private String minecraftUsername;
     private String messageContent;
+    private String chatLinkUUID;
 
-    public MinecraftMessagePacket(String minecraftUsername, String messageContent)
+    public MinecraftMessagePacket(String chatLinkUUID, String minecraftUsername, String messageContent)
     {
+        this.chatLinkUUID = chatLinkUUID;
         this.minecraftUsername = minecraftUsername;
         this.messageContent = messageContent;
     }
@@ -29,5 +31,15 @@ public class MinecraftMessagePacket implements Serializable
     public String getMessageContent()
     {
         return messageContent;
+    }
+
+
+    /**
+     * Gets ChatLinkUUID
+     * @return ChatLinkUUID
+     */
+    public String getChatLinkUUID()
+    {
+        return chatLinkUUID;
     }
 }
