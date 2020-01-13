@@ -51,7 +51,7 @@ public class MinecraftMessageManager
         {
             try
             {
-                output.writeObject(new MinecraftMessagePacket(username, messageContent));
+                output.writeObject(new MinecraftMessagePacket(Settings.getChatLinkID(), username, messageContent));
                 output.flush();
             }
             catch (IOException e)

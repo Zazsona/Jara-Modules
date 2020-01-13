@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import configuration.SettingsUtil;
-import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,12 +90,12 @@ public class ChatLinkFileManager
      * Gets the ID of the TextChannel to send/receive Minecraft messages to
      * @param guildID the guild to checks id
      * @return the channel
-     * @throws NullPointerException guild has no data
      */
-    public static String getChannelIDForGuild(String guildID) throws NullPointerException
+    public static String getChannelIDForGuild(String guildID)
     {
         getGuildToDataMap();
-        return guildToDataMap.get(guildID).textChannelID;
+        ChatLinkData cld = guildToDataMap.get(guildID);
+        return (cld == null) ? null : guildToDataMap.get(guildID).textChannelID;
     }
 
     /**
@@ -123,12 +122,15 @@ public class ChatLinkFileManager
     /**
      * Removes the TextChannel to send/receive Minecraft messages to
      * @param guildID the guild to remove the channel from
-     * @throws NullPointerException guild has no data
      */
-    public static void resetChannelForGuild(String guildID) throws NullPointerException
+    public static void resetChannelForGuild(String guildID)
     {
         getGuildToDataMap();
-        guildToDataMap.get(guildID).textChannelID = null;
+        ChatLinkData cld = guildToDataMap.get(guildID);
+        if (cld != null)
+        {
+            cld.textChannelID = null;
+        }
         save();
     }
 
@@ -136,12 +138,18 @@ public class ChatLinkFileManager
      * Gets the UUID for this guild's Minecraft link
      * @param guildID the guild to fetch data for
      * @return the UUID
-     * @throws NullPointerException guild has no data
      */
-    public static String getUUIDForGuild(String guildID) throws NullPointerException
+    public static String getUUIDForGuild(String guildID)
     {
-        getGuildToDataMap();
-        return guildToDataMap.get(guildID).UUID;
+        try
+        {
+            getGuildToDataMap();
+            return guildToDataMap.get(guildID).UUID;
+        }
+        catch (NullPointerException e)
+        {
+            return resetUUIDForGuild(guildID);
+        }
     }
 
     /**

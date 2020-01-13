@@ -115,7 +115,7 @@ public class MinecraftMessageManager
             }
             catch (NullPointerException e)
             {
-                stopConnection(); //The UUID has somehow been removed.
+                stopConnection();
             }
         }
     }
@@ -148,7 +148,15 @@ public class MinecraftMessageManager
                 if (receivedObject instanceof MinecraftMessagePacket)
                 {
                     MinecraftMessagePacket minecraftMessagePacket = (MinecraftMessagePacket) receivedObject;
-                    sendMessageToDiscord(guild, minecraftMessagePacket);
+                    if (ChatLinkFileManager.getUUIDForGuild(guild.getId()).equals(minecraftMessagePacket.getChatLinkUUID()))
+                    {
+                        sendMessageToDiscord(guild, minecraftMessagePacket);
+                    }
+                    else
+                    {
+                        stopConnection();
+                    }
+
                 }
             }
             catch (IOException | ClassNotFoundException e)

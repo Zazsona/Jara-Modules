@@ -61,23 +61,10 @@ public class MinecraftChatLinkCommand extends ModuleCommand
         return embed;
     }
 
-    private static String getUUID(String guildID)
-    {
-        try
-        {
-            return ChatLinkFileManager.getUUIDForGuild(guildID);
-        }
-        catch (NullPointerException e)
-        {
-            String UUID = ChatLinkFileManager.resetUUIDForGuild(guildID);
-            return UUID;
-        }
-    }
-
     public static void sendChatLinkUUID(Guild guild, User user)
     {
         user.openPrivateChannel().complete().sendMessage(getEmbedStyle(guild.getSelfMember()).setDescription(
-                "Minecraft UUID for "+guild.getName()+":\n`"+getUUID(guild.getId())+"`"
+                "Minecraft UUID for "+guild.getName()+":\n`"+ChatLinkFileManager.getUUIDForGuild(guild.getId())+"`"
         ).build()).queue();
     }
 }
