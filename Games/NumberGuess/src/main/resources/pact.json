@@ -1,0 +1,10 @@
+{
+  "key": "NumberGuess",
+  "aliases": [
+    "GuessTheNumber",
+    "ThinkingOfANumber"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Find the bot's number."
+}
