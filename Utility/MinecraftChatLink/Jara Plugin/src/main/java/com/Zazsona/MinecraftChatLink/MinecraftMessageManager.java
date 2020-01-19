@@ -1,6 +1,7 @@
 package com.Zazsona.MinecraftChatLink;
 
 import com.Zazsona.ChatLinkCommon.DiscordMessagePacket;
+import com.Zazsona.ChatLinkCommon.MessagePacket;
 import com.Zazsona.ChatLinkCommon.MinecraftMessagePacket;
 import com.Zazsona.minecraftCommon.FileManager;
 import commands.CmdUtil;
@@ -140,9 +141,9 @@ public class MinecraftMessageManager
     private void listenForMinecraftMessages()
     {
         listeningThread = Thread.currentThread();
-        while (ChatLinkFileManager.getChannelIDForGuild(guild.getId()) != null)
+        try
         {
-            try
+            while (ChatLinkFileManager.getChannelIDForGuild(guild.getId()) != null)
             {
                 Object receivedObject = input.readObject();
                 if (receivedObject instanceof MinecraftMessagePacket)
@@ -154,22 +155,19 @@ public class MinecraftMessageManager
                     }
                     else
                     {
-                        stopConnection();
+                        throw new IOException("Invalid server.");
                     }
 
                 }
             }
-            catch (IOException | ClassNotFoundException e)
-            {
-                startConnection();
-            }
-            catch (ClassCastException e)
-            {
-                //Ignore packet
-            }
+            stopConnection();
+            Thread.currentThread().interrupt();
         }
-        stopConnection();
-        Thread.currentThread().interrupt();
+        catch (IOException | ClassNotFoundException e)
+        {
+            startConnection();
+            return;
+        }
     }
 
     /**
@@ -189,9 +187,19 @@ public class MinecraftMessageManager
                     socket = new Socket();
                     socket.connect(new InetSocketAddress(ip, PORT));
                     output = new ObjectOutputStream(socket.getOutputStream());
+                    output.flush();
                     input = new ObjectInputStream(socket.getInputStream());
-                    listenForMinecraftMessages();
-                    instances.put(guild.getId(), this);
+                    boolean validConnection = runHandshake();
+                    if (validConnection)
+                    {
+                        listenForMinecraftMessages();
+                        instances.put(guild.getId(), this);
+                    }
+                    else
+                    {
+                        startConnection();
+                    }
+
                 }
             }
             else
@@ -203,7 +211,7 @@ public class MinecraftMessageManager
         {
             try
             {
-                Thread.sleep(1000*60);
+                Thread.sleep(1000*30);
             }
             catch (InterruptedException e1)
             {
@@ -241,6 +249,30 @@ public class MinecraftMessageManager
         catch (IOException e)
         {
             LoggerFactory.getLogger(this.getClass()).error(e.toString());
+        }
+    }
+
+    /**
+     * Basic handshake to verify UUIDs match
+     * @return true on valid connection.
+     */
+    private boolean runHandshake()
+    {
+        try
+        {
+            output.writeObject(new MessagePacket(ChatLinkFileManager.getUUIDForGuild(guild.getId())));
+            output.flush();
+            Object response = input.readObject();
+            if (response instanceof MessagePacket)
+            {
+                MessagePacket responseMessagePacket = (MessagePacket) response;
+                return ChatLinkFileManager.getUUIDForGuild(guild.getId()).equals(responseMessagePacket.getChatLinkUUID());
+            }
+            return false;
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            return false;
         }
     }
 

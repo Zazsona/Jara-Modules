@@ -1,6 +1,7 @@
 package com.Zazsona.MinecraftChatLink;
 
 import com.Zazsona.ChatLinkCommon.DiscordMessagePacket;
+import com.Zazsona.ChatLinkCommon.MessagePacket;
 import com.Zazsona.ChatLinkCommon.MinecraftMessagePacket;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -56,6 +57,9 @@ public class MinecraftMessageManager
             }
             catch (IOException e)
             {
+                Server server = Core.getPlugin(Core.class).getServer();
+                server.broadcastMessage(ChatColor.BLUE+"Lost Discord connection.");
+
                 System.err.println("Connection Lost. Restarting...\n"+e.toString());
                 startConnection();
             }
@@ -80,9 +84,11 @@ public class MinecraftMessageManager
     private void listenForDiscordMessages()
     {
         listeningThread = Thread.currentThread();
-        while (Settings.isEnabled())
+        Server server = Core.getPlugin(Core.class).getServer();
+        server.broadcastMessage(ChatColor.BLUE+"Connected to Discord!");
+        try
         {
-            try
+            while (Settings.isEnabled())
             {
                 Object receivedObject = input.readObject();
                 if (receivedObject instanceof DiscordMessagePacket)
@@ -94,18 +100,21 @@ public class MinecraftMessageManager
                     }
                     else
                     {
-                        stopConnection();
+                        throw new IOException("Invalid connection.");
                     }
                 }
             }
-            catch (IOException | ClassNotFoundException e)
-            {
-                System.err.println("Connection Lost. Restarting...\n"+e.toString());
-                startConnection();
-            }
+            stopConnection();
+            Thread.currentThread().interrupt();
         }
-        startConnection();
-        Thread.currentThread().interrupt();
+        catch (IOException | ClassNotFoundException | NullPointerException e)
+        {
+            server.broadcastMessage(ChatColor.BLUE+"Lost Discord connection.");
+
+            System.err.println("Connection Lost. Restarting...\n"+e.toString());
+            startConnection();
+            return;
+        }
     }
 
     /**
@@ -123,12 +132,23 @@ public class MinecraftMessageManager
                 socket = serverSocket.accept();
                 input = new ObjectInputStream(socket.getInputStream());
                 output = new ObjectOutputStream(socket.getOutputStream());
-                listenForDiscordMessages();
+                output.flush();
+                boolean validConnection = runHandshake();
+                if (validConnection)
+                {
+                    listenForDiscordMessages();
+                }
+                else
+                {
+                    throw new IOException("Invalid client.");
+                }
+
             }
         }
         catch (IOException e)
         {
-            System.err.println("Connection could not be established.\n"+e.toString());
+            System.err.println("Connection could not be established.\n"+e.toString()+"\nRetrying...");
+            startConnection();
         }
     }
 
@@ -162,6 +182,32 @@ public class MinecraftMessageManager
         catch (IOException e)
         {
             System.err.println(e.toString());
+        }
+    }
+
+    /**
+     * Basic handshake to verify UUIDs match
+     * @return true on valid connection.
+     */
+    private boolean runHandshake()
+    {
+        try
+        {
+            boolean isMatchingId = false;
+            Object response = input.readObject();
+            if (response instanceof MessagePacket)
+            {
+                MessagePacket responseMessagePacket = (MessagePacket) response;
+                isMatchingId = Settings.getChatLinkID().equals(responseMessagePacket.getChatLinkUUID());
+            }
+            output.writeObject(new MessagePacket(Settings.getChatLinkID()));
+            output.flush();
+            return isMatchingId;
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            return false;
         }
     }
 
