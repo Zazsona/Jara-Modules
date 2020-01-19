@@ -2,15 +2,14 @@ package com.Zazsona.ChatLinkCommon;
 
 import java.io.Serializable;
 
-public class DiscordMessagePacket implements Serializable
+public class DiscordMessagePacket extends MessagePacket implements Serializable
 {
-    private String chatLinkUUID;
     private String discordName;
     private String discordMessage;
 
     public DiscordMessagePacket(String chatLinkUUID, String discordName, String discordMessage)
     {
-        this.chatLinkUUID = chatLinkUUID;
+        super(chatLinkUUID);
         this.discordName = discordName;
         this.discordMessage = discordMessage;
     }
@@ -33,15 +32,6 @@ public class DiscordMessagePacket implements Serializable
     public String getDiscordMessage()
     {
         return discordMessage;
-    }
-
-    /**
-     * Gets ChatLinkUUID
-     * @return ChatLinkUUID
-     */
-    public String getChatLinkUUID()
-    {
-        return chatLinkUUID;
     }
 
     /**
