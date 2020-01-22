@@ -9,12 +9,12 @@ public class Team
 {
     private ArrayList<Member> members;
     private boolean isWhiteTeam;
+    private boolean isAITeam;
 
-    public Team(Member captain, boolean isWhiteTeam)
+    public Team(boolean isWhiteTeam)
     {
         this.isWhiteTeam = isWhiteTeam;
         members = new ArrayList<>();
-        members.add(captain);
     }
 
     public void addMember(Member member)
@@ -40,5 +40,15 @@ public class Team
     public String getTeamName()
     {
         return (isWhiteTeam()) ? "White Team" : "Blue Team";
+    }
+
+    public boolean isAITeam()
+    {
+        return isAITeam;
+    }
+
+    public void setAITeam(boolean useAI)
+    {
+        this.isAITeam = useAI;
     }
 }
