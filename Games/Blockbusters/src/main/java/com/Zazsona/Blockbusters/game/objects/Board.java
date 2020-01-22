@@ -19,30 +19,30 @@ public class Board
         int yTiles = 4;
         tiles = new Tile[xTiles][yTiles];
         usedChars = new ArrayList<>();
-        tiles[0][0] = new Tile(480, 532, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[0][1] = new Tile(480, 885, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[0][2] = new Tile(480, 1237, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[0][3] = new Tile(480, 1589, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[0][0] = new Tile(190, 133, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[0][1] = new Tile(190, 221, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[0][2] = new Tile(190, 309, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[0][3] = new Tile(190, 397, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
 
-        tiles[1][0] = new Tile(863, 709, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[1][1] = new Tile(863, 1062, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[1][2] = new Tile(863, 1414, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[1][3] = new Tile(863, 1766, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[1][0] = new Tile(286, 177, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[1][1] = new Tile(286, 266, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[1][2] = new Tile(286, 354, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[1][3] = new Tile(286, 442, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
 
-        tiles[2][0] = new Tile(1243, 532, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[2][1] = new Tile(1243, 885, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[2][2] = new Tile(1243, 1237, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[2][3] = new Tile(1243, 1589, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[2][0] = new Tile(381, 133, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[2][1] = new Tile(381, 221, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[2][2] = new Tile(381, 309, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[2][3] = new Tile(381, 397, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
 
-        tiles[3][0] = new Tile(1624, 709, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[3][1] = new Tile(1624, 1062, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[3][2] = new Tile(1624, 1414, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[3][3] = new Tile(1624, 1766, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[3][0] = new Tile(476, 177, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[3][1] = new Tile(476, 266, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[3][2] = new Tile(476, 354, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[3][3] = new Tile(476, 442, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
 
-        tiles[4][0] = new Tile(2005, 532, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[4][1] = new Tile(2005, 885, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[4][2] = new Tile(2005, 1237, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
-        tiles[4][3] = new Tile(2005, 1589, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[4][0] = new Tile(571, 133, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[4][1] = new Tile(571, 221, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[4][2] = new Tile(571, 309, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+        tiles[4][3] = new Tile(571, 397, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
     }
 
     private char getUniqueChar()
