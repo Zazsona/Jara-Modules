@@ -1,10 +1,12 @@
 package com.Zazsona.Blockbusters;
 
 import com.Zazsona.Blockbusters.game.BlockbustersUI;
+import com.Zazsona.Blockbusters.game.BlockbustersQuitException;
 import com.Zazsona.Blockbusters.game.objects.Team;
+import com.Zazsona.Blockbusters.game.objects.TileState;
 import commands.CmdUtil;
+import configuration.SettingsUtil;
 import jara.Core;
-import jara.MessageManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -18,17 +20,17 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.time.Instant;
 
-public class JaraBlockbustersUI implements BlockbustersUI //TODO: Add quits
+public class JaraBlockbustersUI implements BlockbustersUI //TODO: Nicer quits
 {
     private TextChannel channel;
-    private MessageManager mm;
-
+    private Thread quitThread;
+    private QuitListener quitListener;
+    private Team quitTeam;
     private Message questionMessage;
 
     public JaraBlockbustersUI(TextChannel channel)
     {
         this.channel = channel;
-        this.mm = new MessageManager();
     }
 
     @Override
@@ -56,13 +58,21 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Add quits
     }
 
     @Override
-    public Team waitForBuzzIn(Team whiteTeam, Team blueTeam)
+    public void dispose()
+    {
+        Core.getShardManagerNotNull().removeEventListener(quitListener);
+        quitThread.interrupt();
+    }
+
+    @Override
+    public Team waitForBuzzIn(Team whiteTeam, Team blueTeam) throws BlockbustersQuitException
     {
         BuzzerListener buzzerListener = new BuzzerListener(whiteTeam, blueTeam, questionMessage);
         Core.getShardManagerNotNull().addEventListener(buzzerListener);
         questionMessage.addReaction("\uD83D\uDECE").queue();
 
-        while (buzzerListener.getBuzzedTeam() == null)
+        while (buzzerListener.getBuzzedTeam() == null
+                && quitTeam == null)
         {
             try
             {
@@ -74,16 +84,19 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Add quits
             }
         }
         Core.getShardManagerNotNull().removeEventListener(buzzerListener);
+        if (quitTeam != null)
+            throw new BlockbustersQuitException(quitTeam);
         return buzzerListener.getBuzzedTeam();
     }
 
     @Override
-    public String getAnswer(Team answeringTeam, long secondsToAnswer)
+    public String getAnswer(Team answeringTeam, long secondsToAnswer) throws BlockbustersQuitException
     {
         AnswerListener answerListener = new AnswerListener(answeringTeam);
         Core.getShardManagerNotNull().addEventListener(answerListener);
         long startSecond = Instant.now().getEpochSecond();
-        while (answerListener.getAnswer() == null && Instant.now().getEpochSecond()-startSecond < secondsToAnswer)
+        while ((answerListener.getAnswer() == null && Instant.now().getEpochSecond()-startSecond < secondsToAnswer)
+                && quitTeam == null)
         {
             try
             {
@@ -95,17 +108,20 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Add quits
             }
         }
         Core.getShardManagerNotNull().removeEventListener(answerListener);
+        if (quitTeam != null)
+            throw new BlockbustersQuitException(quitTeam);
         return answerListener.getAnswer();
     }
 
 
 
     @Override
-    public String getLetterSelection(Team answeringTeam)
+    public String getLetterSelection(Team answeringTeam) throws BlockbustersQuitException
     {
         AnswerListener answerListener = new AnswerListener(answeringTeam);
         Core.getShardManagerNotNull().addEventListener(answerListener);
-        while (answerListener.getAnswer() == null || !(answerListener.getAnswer().length() == 1 && answerListener.getAnswer().toUpperCase().matches("[A-Z]")))
+        while ((answerListener.getAnswer() == null || !(answerListener.getAnswer().length() == 1 && answerListener.getAnswer().toUpperCase().matches("[A-Z]")))
+                && quitTeam == null)
         {
             try
             {
@@ -117,7 +133,36 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Add quits
             }
         }
         Core.getShardManagerNotNull().removeEventListener(answerListener);
+        if (quitTeam != null)
+        {
+            throw new BlockbustersQuitException(quitTeam);
+        }
+
         return answerListener.getAnswer();
+    }
+
+    @Override
+    public void listenForQuits(Team whiteTeam, Team blueTeam)
+    {
+        quitThread = new Thread(() ->
+                                {
+                                    quitListener = new QuitListener(whiteTeam, blueTeam);
+                                    Core.getShardManagerNotNull().addEventListener(quitListener);
+                                    while (whiteTeam.getMembers().size() > 0 && blueTeam.getMembers().size() > 0)
+                                    {
+                                        try
+                                        {
+                                            Thread.sleep(500);
+                                        }
+                                        catch (InterruptedException e)
+                                        {
+                                            //Do nothing
+                                        }
+                                    }
+                                    Core.getShardManagerNotNull().removeEventListener(quitListener);
+                                    quitTeam = (whiteTeam.getMembers().size() == 0) ? whiteTeam : blueTeam;
+                                });
+        quitThread.start();
     }
 
     private class BuzzerListener extends ListenerAdapter
@@ -188,6 +233,34 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Add quits
                     this.answer = event.getMessage().getContentDisplay();
                 }
             }
+        }
+    }
+
+    private class QuitListener extends ListenerAdapter
+    {
+        private Team whiteTeam;
+        private Team blueTeam;
+
+        public QuitListener(Team whiteTeam, Team blueTeam)
+        {
+            this.whiteTeam = whiteTeam;
+            this.blueTeam = blueTeam;
+        }
+
+        @Override
+        public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event)
+        {
+            super.onGuildMessageReceived(event);
+            String messageContent = event.getMessage().getContentDisplay();
+            if (event.getChannel().getId().equals(channel.getId()) && !event.getMember().getUser().isBot())
+            {
+                if (messageContent.equalsIgnoreCase("quit") || messageContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(event.getGuild().getId())+"quit"))
+                {
+                    whiteTeam.removeMember(event.getMember());
+                    blueTeam.removeMember(event.getMember());
+                }
+            }
+
         }
     }
 

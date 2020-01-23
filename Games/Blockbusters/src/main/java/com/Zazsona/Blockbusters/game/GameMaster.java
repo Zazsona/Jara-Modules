@@ -13,7 +13,7 @@ public class GameMaster
     private boolean isStarted;
     BlockbustersUI blockbustersUI;
 
-    public GameMaster(BlockbustersUI blockbustersUI, Team whiteTeam, Team blueTeam)
+    public GameMaster(BlockbustersUI blockbustersUI, Team whiteTeam, Team blueTeam) throws IOException
     {
         this.blueTeam = blueTeam;
         this.whiteTeam = whiteTeam;
@@ -58,23 +58,34 @@ public class GameMaster
         return isStarted;
     }
 
-    public Team run() throws IOException
+    public Team run() throws IOException, BlockbustersQuitException
     {
-        if (!isStarted)
+        try
         {
-            isStarted = true;
-            boolean isWhiteStart = new Random().nextBoolean();
-            TileState winState = takeTurn(isWhiteStart);
-            board.getBoardRenderer().render();
-            blockbustersUI.sendBoard(board.getBoardRenderer().getBoardImageFile());
+            if (!isStarted)
+            {
+                isStarted = true;
+                blockbustersUI.listenForQuits(whiteTeam, blueTeam);
+                boolean isWhiteStart = new Random().nextBoolean();
+                TileState winState = takeTurn(isWhiteStart);
+                board.getBoardRenderer().render();
+                blockbustersUI.sendBoard(board.getBoardRenderer().getBoardImageFile());
+                board.getBoardRenderer().deleteBoardImageFile();
+                isStarted = false;
+                return (winState == TileState.WHITE) ? whiteTeam : blueTeam;
+            }
+            return null;
+        }
+        catch (BlockbustersQuitException e)
+        {
+            blockbustersUI.dispose();
             board.getBoardRenderer().deleteBoardImageFile();
             isStarted = false;
-            return (winState == TileState.WHITE) ? whiteTeam : blueTeam;
+            throw e;
         }
-        return null;
     }
 
-    private TileState takeTurn(boolean isWhiteTurn) throws IOException
+    private TileState takeTurn(boolean isWhiteTurn) throws IOException, BlockbustersQuitException
     {
         board.getBoardRenderer().render();
         blockbustersUI.sendBoard(board.getBoardRenderer().getBoardImageFile());
@@ -101,7 +112,7 @@ public class GameMaster
             return winState;
     }
 
-    private TileState answerQuestion(Team team, Team opposingTeam, Question question)
+    private TileState answerQuestion(Team team, Team opposingTeam, Question question) throws BlockbustersQuitException
     {
         long answerSeconds = 10;
         long opposingAnswerSeconds = 30;

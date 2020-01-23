@@ -1,12 +1,16 @@
 package com.Zazsona.Blockbusters;
 
+import com.Zazsona.Blockbusters.game.BlockbustersQuitException;
 import com.Zazsona.Blockbusters.game.GameMaster;
 import com.Zazsona.Blockbusters.game.QuestionSheet;
 import com.Zazsona.Blockbusters.game.objects.Team;
 import com.Zazsona.Blockbusters.game.objects.TileState;
+import configuration.SettingsUtil;
+import exceptions.QuitException;
 import jara.Core;
 import module.ModuleCommand;
 import module.ModuleGameCommand;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -14,6 +18,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -39,29 +44,38 @@ public class BlockbustersCommand extends ModuleGameCommand
             teamJoinMessage.addReaction(BLUE_EMOJI).queue();
             teamJoinMessage.addReaction(CONFIRM_EMOJI).queue();
 
-            TeamReactionListener teamReactionListener = new TeamReactionListener(teamJoinMessage);
+            TeamReactionListener teamReactionListener = new TeamReactionListener(teamJoinMessage, msgEvent.getMember());
             Core.getShardManagerNotNull().addEventListener(teamReactionListener);
             while (!teamReactionListener.isTeamsConfirmed())
             {
                 try {Thread.sleep(500);} catch (InterruptedException e) {} //Do nothing on interrupt
             }
             Core.getShardManagerNotNull().removeEventListener(teamReactionListener);
-            initialiseAI(channel);
 
             JaraBlockbustersUI jaraBlockbustersUI = new JaraBlockbustersUI(msgEvent.getChannel());
             GameMaster gameMaster = new GameMaster(jaraBlockbustersUI, whiteTeam, blueTeam);
             Team winningTeam = gameMaster.run();
-            msgEvent.getChannel().sendMessage(winningTeam.getTeamName()+" are the winners!").queue();
-
-            deleteGameChannel();
+            msgEvent.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(msgEvent.getGuild().getSelfMember(), winningTeam.getTeamName()+" are the winners!")).queue();
+        }
+        catch (BlockbustersQuitException e)
+        {
+            msgEvent.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(msgEvent.getGuild().getSelfMember(), e.getQuittingTeam().getTeamName()+" have all quit! Game over.")).queue();
+        }
+        catch (QuitException e)
+        {
+            msgEvent.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(msgEvent.getGuild().getSelfMember(), "The game has been cancelled.")).queue();
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            LoggerFactory.getLogger(this.getClass()).error(e.toString());
+        }
+        finally
+        {
+            deleteGameChannel();
         }
     }
 
-    private void initialiseAI(TextChannel channel) //TODO: AI
+    /*private void initialiseAI(TextChannel channel) //TODO: AI
     {
         Team aiTeam = null;
         if (whiteTeam.getMembers().size() == 0)
@@ -75,22 +89,28 @@ public class BlockbustersCommand extends ModuleGameCommand
         if (aiTeam != null)
         {
             aiTeam.setAITeam(true);
+            aiTeam.addMember(channel.getGuild().getSelfMember());
             channel.sendMessage(aiTeam.getTeamName()+" doesn't have enough players, a CPU will join in.").queue();
         }
-    }
+    }*/
 
     public class TeamReactionListener extends ListenerAdapter
     {
         private boolean teamsConfirmed = false;
         private Message teamJoinMessage;
+        private Member gameOwner;
+        private boolean gameQuit = false;
 
-        public TeamReactionListener(Message teamJoinMessage)
+        public TeamReactionListener(Message teamJoinMessage, Member gameOwner)
         {
             this.teamJoinMessage = teamJoinMessage;
+            this.gameOwner = gameOwner;
         }
 
-        public boolean isTeamsConfirmed()
+        public boolean isTeamsConfirmed() throws QuitException
         {
+            if (gameQuit)
+                throw new QuitException(null);
             return teamsConfirmed;
         }
 
@@ -133,13 +153,20 @@ public class BlockbustersCommand extends ModuleGameCommand
                         }
                         break;
                     case CONFIRM_EMOJI:
-                        if (blueTeam.getMembers().size() > 0 || whiteTeam.getMembers().size() > 0)
+                        if (event.getMember().equals(gameOwner))
                         {
-                            teamsConfirmed = true;
+                            if (blueTeam.getMembers().size() > 0 && whiteTeam.getMembers().size() > 0) //TODO: Change or OR when adding AI
+                            {
+                                teamsConfirmed = true;
+                            }
+                            else
+                            {
+                                event.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(event.getGuild().getSelfMember(), "Insufficient Players.")).queue();
+                                teamJoinMessage.removeReaction(CONFIRM_EMOJI, event.getMember().getUser()).queue();
+                            }
                         }
                         else
                         {
-                            event.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(event.getGuild().getSelfMember(), "Insufficient Players.")).queue();
                             teamJoinMessage.removeReaction(CONFIRM_EMOJI, event.getMember().getUser()).queue();
                         }
                         break;
@@ -162,6 +189,36 @@ public class BlockbustersCommand extends ModuleGameCommand
                     case BLUE_EMOJI:
                         blueTeam.removeMember(event.getMember());
                         break;
+                }
+            }
+        }
+
+        @Override
+        public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event)
+        {
+            super.onGuildMessageReceived(event);
+            String messageContent = event.getMessage().getContentDisplay();
+            if (messageContent.equalsIgnoreCase("quit") || messageContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(event.getGuild().getId())+"quit"))
+            {
+                if (event.getChannel().getId().equals(teamJoinMessage.getChannel().getId()) && !event.getMember().getUser().isBot())
+                {
+                    if (event.getMember().equals(gameOwner))
+                    {
+                        gameQuit = true;
+                    }
+                    else
+                    {
+                        if (whiteTeam.getMembers().contains(event.getMember()))
+                        {
+                            whiteTeam.removeMember(event.getMember());
+                            teamJoinMessage.removeReaction(WHITE_EMOJI, event.getMember().getUser()).queue();
+                        }
+                        else if (blueTeam.getMembers().contains(event.getMember()))
+                        {
+                            whiteTeam.removeMember(event.getMember());
+                            teamJoinMessage.removeReaction(WHITE_EMOJI, event.getMember().getUser()).queue();
+                        }
+                    }
                 }
             }
         }
