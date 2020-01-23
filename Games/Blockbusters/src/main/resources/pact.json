@@ -1,0 +1,10 @@
+{
+  "key": "Blockbusters",
+  "aliases": [
+    "HexTrivia",
+    "Bustblocks"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Play Blockbusters."
+}

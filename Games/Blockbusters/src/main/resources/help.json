@@ -1,0 +1,6 @@
+{
+  "params": [
+    "Blockbusters"
+  ],
+  "description": "Starts a game of Blockbusters!\n\nTry to make a path from one side of the board to the other, while blocking your opponent.\nPick a letter tile to try and claim it, a question based on that letter will be presented and both teams will race to get the answer. Whoever is correct first claims the tile."
+}
