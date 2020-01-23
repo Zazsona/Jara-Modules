@@ -1,6 +1,7 @@
 package com.Zazsona.Blockbusters.game.objects;
 import com.Zazsona.Blockbusters.game.BoardRenderer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ public class Board
 
     private BoardRenderer boardRenderer;
 
-    public Board()
+    public Board() throws IOException
     {
         boardRenderer = new BoardRenderer(this);
         int xTiles = 5;

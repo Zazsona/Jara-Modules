@@ -22,11 +22,13 @@ public class BoardRenderer
     private String uuid;
     private Board board;
 
-    public BoardRenderer(Board board)
+    public BoardRenderer(Board board) throws IOException
     {
          this.uuid = UUID.randomUUID().toString();
          this.board = board;
          this.compositeFile = new File(SettingsUtil.getModuleDataDirectory().getPath()+"/Blockbusters/"+uuid+"-board.png");
+        compositeFile.mkdirs();
+        compositeFile.createNewFile();
     }
 
     public void render() throws IOException
@@ -76,6 +78,8 @@ public class BoardRenderer
     {
         if (!compositeFile.exists())
         {
+            compositeFile.mkdirs();
+            compositeFile.createNewFile();
             render();
         }
         return compositeFile;
