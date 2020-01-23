@@ -1,0 +1,3823 @@
+{
+  "A": [
+    {
+      "question": "What 'A' is the first animal listed in a dictionary?",
+      "answer": "Aardvark"
+    },
+    {
+      "question": "What 'A' is a putrid egg?",
+      "answer": "Addled"
+    },
+    {
+      "question": "What 'A' is what Edward VIII did?",
+      "answer": "Abdicated"
+    },
+    {
+      "question": "What 'A' forms the diet of a pangolin and the echidna?",
+      "answer": "Ants"
+    },
+    {
+      "question": "What 'A' is an exciting, dangerous or unusual undertaking, and sometimes goes before playground?",
+      "answer": "Adventure"
+    },
+    {
+      "question": "What 'A' is the river that runs through the town where Shakespeare was born?",
+      "answer": "Avon"
+    },
+    {
+      "question": "What 'A' is an intimate mixture of two or more metals?",
+      "answer": "Alloy"
+    },
+    {
+      "question": "What 'A' was the vessel into which the animals went two by two?",
+      "answer": "Ark"
+    },
+    {
+      "question": "What 'A' is the 'A' of 'A'-level?",
+      "answer": "Advanced"
+    },
+    {
+      "question": "What 'A' is a list of things to be dealt with at a meeting?",
+      "answer": "Agenda"
+    },
+    {
+      "question": "What 'A' is a person who is chronically unable to stop drinking beer, wine or spirits?",
+      "answer": "Alcoholic"
+    },
+    {
+      "question": "What 'A' is a chemical substance, often ethylene glycol, added to the water in a car's radiator in the winter?",
+      "answer": "Antifreeze"
+    },
+    {
+      "question": "What 'A' is a thing done, a segment of a play or opera, or to perform on the stage?",
+      "answer": "Act"
+    },
+    {
+      "question": "What 'A' is a pathological loss of appetite?",
+      "answer": "Anorexia"
+    },
+    {
+      "question": "What 'A' follows crab, love and toffee?",
+      "answer": "Apple"
+    },
+    {
+      "question": "What 'A' is the gemstone that is purple quartz?",
+      "answer": "Amethyst"
+    },
+    {
+      "question": "What 'A' was a female warrior in Greek legend, and is a South American river?",
+      "answer": "Amazon"
+    },
+    {
+      "question": "What 'A' is an allowance paid to a divorced or separated spouse?",
+      "answer": "Alimony"
+    },
+    {
+      "question": "What 'A' is a solution, a return hit and a response?",
+      "answer": "Answer"
+    },
+    {
+      "question": "What 'A' is a fever in sheep and cattle?",
+      "answer": "Anthrax"
+    },
+    {
+      "question": "What 'A' is the science of construction?",
+      "answer": "Architecture"
+    },
+    {
+      "question": "What 'A' is an orange-coloured fruit allied to the plum?",
+      "answer": "Apricot"
+    },
+    {
+      "question": "What 'A' are the 'building blocks' of matter?",
+      "answer": "Atoms"
+    },
+    {
+      "question": "What 'A' was the bird killed by the Ancient Mariner?",
+      "answer": "Albatross"
+    },
+    {
+      "question": "What 'A' were a top rock group of the 1960s?",
+      "answer": "Animals"
+    },
+    {
+      "question": "What 'A' comes before beta, Romeo and bet?",
+      "answer": "Alpha"
+    },
+    {
+      "question": "What 'A' is a positive answer?",
+      "answer": "Affirmative"
+    },
+    {
+      "question": "What 'A' is mistreatment?",
+      "answer": "Abuse"
+    },
+	{
+      "question": "What \u0027A\u0027 is the man in charge of a monastery?",
+      "answer": "Abbot"
+    },
+	{
+      "question": "What \u0027A\u0027 comes before suggestion, biography and mobile",
+      "answer": "Auto"
+    },
+    {
+      "question": "What \u0027A\u0027 is the English name for the sign of the zodiac called Sagittarius?",
+      "answer": "Archer"
+    },
+    {
+      "question": "What \u0027A\u0027 is the city normally associated with the black, hornless cattle from Angus?",
+      "answer": "Aberdeen"
+    },
+    {
+      "question": "What \u0027A\u0027 is a spell, or magic formula, used at the beginning of some conjurers\u0027 tricks?",
+      "answer": "Abracadabra"
+    },
+    {
+      "question": "What \u0027A\u0027 were Ralph Richardson, David Niven and Richard Burton?",
+      "answer": "Actors"
+    },
+    {
+      "question": "What \u0027A\u0027 is Britain\u0027s only poisonous snake?",
+      "answer": "Adder"
+    },
+    {
+      "question": "What \u0027A\u0027 is the German word for a motorway?\u003cBR\u003e",
+      "answer": "Autobahn"
+    },
+    {
+      "question": "What \u0027A\u0027 is the process of cutting off an arm or a leg?",
+      "answer": "Amputation"
+    },
+    {
+      "question": "What \u0027A\u0027 is an animal found in South Africa called a klipspringer?",
+      "answer": "Antelope"
+    },
+    {
+      "question": "What \u0027A\u0027 is the region round the North Pole?",
+      "answer": "Arctic"
+    },
+    {
+      "question": "What \u0027A\u0027 is a bridge for carrying water across a valley, that the Romans built in many places?\u003cBR\u003e",
+      "answer": "Aqueduct"
+    },
+    {
+      "question": "What \u0027A\u0027 has, as its ore, a substance called bauxite?",
+      "answer": "Aluminium"
+    },
+    {
+      "question": "What \u0027A\u0027 is demanded for refugees and is a home for lunatics?",
+      "answer": "Asylum"
+    },
+    {
+      "question": "What \u0027A\u0027 is a plea of having been -elsewhere at the material time?",
+      "answer": "Alibi"
+    },
+    {
+      "question": "What \u0027A\u0027 is vulnerable in the heel?",
+      "answer": "Achilles"
+    },
+    {
+      "question": "What \u0027A\u0027 are made into calvados and cider?",
+      "answer": "Apples"
+    },
+    {
+      "question": "What \u0027A\u0027 was the Prince of Saxe Coburg Gotha who married Queen Victoria?",
+      "answer": "Albert"
+    },
+    {
+      "question": "What \u0027A\u0027 were \u0027Murder Incorporated\u0027?",
+      "answer": "Assassins"
+    },
+    {
+      "question": "What \u0027A\u0027 led the knights of the Round Table?",
+      "answer": "Arthur"
+    },
+    {
+      "question": "What \u0027A\u0027 is something made by man?",
+      "answer": "Artifact"
+    },
+    {
+      "question": "What \u0027A\u0027 were Sweden\u0027s most successful singers?",
+      "answer": "Abba"
+    },
+    {
+      "question": "What \u0027A\u0027 is the square in EastEnders?",
+      "answer": "Albert"
+    },
+    {
+      "question": "What \u0027A\u0027 With the first name  Anthony married Princess Margaret?",
+      "answer": "Armstrong-Jones"
+    },
+    {
+      "question": "What \u0027A\u0027 is a long-running radio soap?",
+      "answer": "Archers"
+    },
+    {
+      "question": "What \u0027A\u0027 is a kind of nut?",
+      "answer": "Almond"
+    },
+    {
+      "question": "What \u0027A\u0027 is something (valuable) made in an earlier period?",
+      "answer": "Antique"
+    },
+    {
+      "question": "What \u0027A\u0027 directed the film Ghandi?",
+      "answer": "Attenborough"
+    },
+    {
+      "question": "What \u0027A\u0027 is white-skinned and pink-eyed?",
+      "answer": "Albino"
+    },
+    {
+      "question": "What \u0027A\u0027 is a room at the top?",
+      "answer": "Attic"
+    },
+    {
+      "question": "What \u0027A\u0027 is to stay?",
+      "answer": "Abide"
+    },
+    {
+      "question": "What \u0027A\u0027 are ludicrous actions?",
+      "answer": "Antics"
+    },
+    {
+      "question": "What \u0027A\u0027 had a spare rib?",
+      "answer": "Adam"
+    },
+    {
+      "question": "What \u0027A\u0027 is the opposite of diabolic?",
+      "answer": "Angelic"
+    },
+    {
+      "question": "What \u0027A\u0027 is a ghost?",
+      "answer": "Apparition"
+    },
+    {
+      "question": "What \u0027A\u0027 is the norm?",
+      "answer": "Average"
+    },
+    {
+      "question": "What \u0027A\u0027 is \u0027the granite city\u0027?",
+      "answer": "Aberdeen"
+    },
+    {
+      "question": "What \u0027A\u0027 is to irritate?",
+      "answer": "Annoy"
+    },
+    {
+      "question": "What \u0027A\u0027 is a mark used to indicate possession or a missing letter?",
+      "answer": "Apostophe"
+    },
+    {
+      "question": "What \u0027A\u0027 was the first major Allied victory of World War II?",
+      "answer": "Alamein"
+    },
+    {
+      "question": "What \u0027A\u0027 is the stake put up by poker players before drawing cards?",
+      "answer": "Ante"
+    },
+    {
+      "question": "What \u0027A\u0027 is the city with the world\u0027s oldest stock exchange?",
+      "answer": "Amsterdam"
+    },
+    {
+      "question": "What \u0027A\u0027 was the king of the gods in Egyptian mythology?",
+      "answer": "Ammon"
+    },
+    {
+      "question": "What \u0027A\u0027 means to stick fast to?",
+      "answer": "Adhere"
+    },
+    {
+      "question": "What \u0027A\u0027 is a star-like punctuation mark?",
+      "answer": "Asterisk"
+    },
+    {
+      "question": "What \u0027A\u0027 is the \u0027cradle continent\u0027 which produced the first man-like beings?",
+      "answer": "Africa"
+    },
+    {
+      "question": "What \u0027A\u0027 is an official language of South Africa?",
+      "answer": "Afrikaans"
+    },
+    {
+      "question": "What \u0027A\u0027 is one of the world\u0027s largest copper mines \u0026mdash; and a snake?",
+      "answer": "Anaconda"
+    },
+    {
+      "question": "What \u0027A\u0027 comes before drome, foil and gram?",
+      "answer": "Aero"
+    }
+  ],
+  "B": [
+    {
+      "question": "What \u0027B\u0027 is a drink made from malt and hops?",
+      "answer": "Beer"
+    },
+    {
+      "question": "What \u0027B\u0027 is a stimulating drink for invalids, and called tea?",
+      "answer": "Beef"
+    },
+    {
+      "question": "What \u0027B\u0027 are nomadic Arabs, who keep horses, cattle and sheep?",
+      "answer": "Bedouins"
+    },
+    {
+      "question": "What \u0027B\u0027 comes before bottle, bell and blood?",
+      "answer": "Blue"
+    },
+    {
+      "question": "What \u0027B\u0027 comes before death, pool and sea?",
+      "answer": "Black"
+    },
+    {
+      "question": "What \u0027B\u0027 are people of the West Pyrenees who are separatists?",
+      "answer": "Basques"
+    },
+    {
+      "question": "What \u0027B\u0027 is often oak, and is produced by the sun?",
+      "answer": "Beam"
+    },
+    {
+      "question": "What \u0027B\u0027 was the profession of Joey Maxim and Floyd Patterson?",
+      "answer": "Boxing"
+    },
+    {
+      "question": "What \u0027B\u0027 is a straw hat, with a flat crown and brim, often seen at Henley?",
+      "answer": "Boater"
+    },
+    {
+      "question": "What \u0027B\u0027 is a tree, cove and a window?",
+      "answer": "Bay"
+    },
+    {
+      "question": "What \u0027B\u0027 with a peculiar pronunciation is the castle of the Duke bf Rutland?",
+      "answer": "Belvoir"
+    },
+    {
+      "question": "What \u0027B\u0027 is the country whose civil aircraft marking is 0 0?",
+      "answer": "Belgium"
+    },
+    {
+      "question": "What \u0027B\u0027 is another name for lotto?",
+      "answer": "Bingo"
+    },
+    {
+      "question": "What \u0027B\u0027 is a shrub and a female singer?",
+      "answer": "Bush"
+    },
+    {
+      "question": "What \u0027B\u0027 is normally England\u0027s largest cereal crop?",
+      "answer": "Barley"
+    },
+    {
+      "question": "What \u0027B\u0027 are skippers, red admirals, and swallowtails?",
+      "answer": "Butterflies"
+    },
+    {
+      "question": "What \u0027B\u0027 is the name of the game played with battledore and shuttlecock?",
+      "answer": "Badminton"
+    },
+    {
+      "question": "What \u0027B\u0027 are Oxfordshire\u0027s most famous cakes?",
+      "answer": "Banbury"
+    },
+    {
+      "question": "What \u0027B\u0027 is the suit you are said to be wearing when you are naked?",
+      "answer": "Birthday"
+    },
+    {
+      "question": "What \u0027B\u0027 is a stock character in \u0027Cinderella\u0027, or a hotel page?",
+      "answer": "Buttons"
+    },
+    {
+      "question": "What \u0027B\u0027 is the canine symbol of Britain?",
+      "answer": "Bulldog"
+    },
+    {
+      "question": "What \u0027B\u0027 can be conical, can, spherical or mooring?",
+      "answer": "Buoy"
+    },
+    {
+      "question": "What \u0027B\u0027 is part of a theatre and something you do with your fists?",
+      "answer": "Box"
+    },
+    {
+      "question": "What \u0027B\u0027 has an airport called Templehof?",
+      "answer": "Berlin"
+    },
+    {
+      "question": "What \u0027B\u0027 is the capital of Yugoslavia?",
+      "answer": "Belgrade"
+    },
+    {
+      "question": "What \u0027B\u0027 comes before beard, stocking and whale?",
+      "answer": "Blue"
+    },
+    {
+      "question": "What \u0027B\u0027 is the national field game of the USA?",
+      "answer": "Baseball"
+    },
+    {
+      "question": "What \u0027B\u0027 can be mouse-eared or pipistrelle?",
+      "answer": "Bat"
+    },
+    {
+      "question": "What \u0027B\u0027 are marks of parenthesis in punctuation?",
+      "answer": "Brackets"
+    },
+    {
+      "question": "What \u0027B\u0027 made a plan that became the Health Service?",
+      "answer": "Beveridge"
+    },
+    {
+      "question": "What \u0027B\u0027 is an army officer\u0027s soldier servant?",
+      "answer": "Batman"
+    },
+    {
+      "question": "What \u0027B\u0027 comes before words and legs?",
+      "answer": "Bandy"
+    },
+    {
+      "question": "What \u0027B\u0027 is the hero of a strip cartoon and whose other name is Bruce Wayne?",
+      "answer": "Batman"
+    },
+    {
+      "question": "What \u0027B\u0027 is the type of saw used for logs and often referred to as Swedish?",
+      "answer": "Bow"
+    },
+    {
+      "question": "What \u0027B\u0027 is a lawyer raised to when he becomes a Judge?",
+      "answer": "Bench"
+    },
+    {
+      "question": "What \u0027B\u0027 is a kind of coarse fern that infests heath, moorland and mountain?",
+      "answer": "Bracken"
+    },
+    {
+      "question": "What \u0027B\u0027 is the colour that in this country signifies mourning?",
+      "answer": "Black"
+    },
+    {
+      "question": "What \u0027B\u0027 includes the Medulla oblongate, the pons and the cerebellum?",
+      "answer": "Brain"
+    },
+    {
+      "question": "What \u0027B\u0027 comes before alley, corner, and date?",
+      "answer": "Blind"
+    },
+    {
+      "question": "What \u0027B\u0027 was the scene of history\u0027s most famous tea party?",
+      "answer": "Boston"
+    },
+    {
+      "question": "What \u0027B\u0027 is an exchange of goods, insead of money?",
+      "answer": "Barter"
+    },
+    {
+      "question": "What \u0027B\u0027 was the ship whose crew colonised Pitcairn Island, before they burned the ship?",
+      "answer": "Bounty"
+    },
+    {
+      "question": "What \u0027B\u0027 is the ecclesiastical boss of a diocese?",
+      "answer": "Bishop"
+    },
+    {
+      "question": "What \u0027B\u0027 goes before pipe, up and lamp?",
+      "answer": "Blow"
+    },
+    {
+      "question": "What \u0027B\u0027 comes after Christmas, witness and letter?",
+      "answer": "Box"
+    },
+    {
+      "question": "What \u0027B\u0027 was the lump of wood on which people were beheaded?",
+      "answer": "Block"
+    },
+    {
+      "question": "What \u0027B\u0027 comes before spanner, room and office?",
+      "answer": "Box"
+    },
+    {
+      "question": "What \u0027B\u0027 are you said to kick when you die?",
+      "answer": "Bucket"
+    },
+    {
+      "question": "What \u0027B\u0027 is the name given to a special gravy or sauce jug?",
+      "answer": "Boat"
+    },
+    {
+      "question": "What \u0027B\u0027 is the second letter of the Greek alphabet?",
+      "answer": "Beta"
+    },
+    {
+      "question": "What \u0027B\u0027 divides into queens, workers and drones?",
+      "answer": "Bee"
+    },
+    {
+      "question": "What \u0027B\u0027 Is An Explosion Of Unburnt Gases In A Vehicles Exhaust Pipe?",
+      "answer": "Backfire"
+    },
+    {
+      "question": "What \u0027B\u0027 Is A Short Official Statement Issued As Soon As The News Is Shown?",
+      "answer": "Bulletin"
+    },
+    {
+      "question": "What \u0027B\u0027 Is Sometimes Used To Describe Flesh Tone Or Sometimes Used As A Synonym For Nude?",
+      "answer": "Buff"
+    },
+    {
+      "question": "What \u0027B\u0027 Was Stormed On The 14th July 1789, Starting The French Revolution?",
+      "answer": "Bastille"
+    },
+    {
+      "question": "What \u0027B\u0027 Is A Jewish Shaped Roll Made From Sweetened Yeast Dough With A Glazed Top?",
+      "answer": "Bagel"
+    },
+    {
+      "question": "What \u0027B\u0027 Is A Yeomon Of The Guard Or A Yeoman Warder At The Tower Of London?",
+      "answer": "Beefeater"
+    },
+    {
+      "question": "What \u0027B\u0027 Are Relentlessly Pursued By Twitchers And Ornitholigists?",
+      "answer": "Birds"
+    },
+    {
+      "question": "What \u0027B\u0027 Is The Ancient Art Of Pruning Tree Roots, To Produce Miniatures Of Parent Plants?",
+      "answer": "Bonsai"
+    },
+    {
+      "question": "What \u0027B\u0027 Is A Person Who Gives Help Especially Financial To An Institution Cause Or Person?",
+      "answer": "Benefactor"
+    },
+    {
+      "question": "What \u0027B\u0027 Is The Australian Name For A Narrow Lake Or Backwater?",
+      "answer": "Billabong"
+    },
+    {
+      "question": "What \u0027B\u0027 Has Varieties Called Painted Lady & Marbled White?",
+      "answer": "Butterfies"
+    },
+    {
+      "question": "What \u0027B\u0027 Is A Top Up Of A Previous Vaccine Or A Rocket Used To Launch A Space Vehicle?",
+      "answer": "Booster"
+    },
+    {
+      "question": "What \u0027B\u0027 Is Employed To Accompany And Give Physical Protection To A V.I.P?",
+      "answer": "Bodyguard"
+    }
+  ],
+  "C": [
+    {
+      "question": "What \u0027C\u0027 is connected with gambling and potatoes?",
+      "answer": "Chips"
+    },
+    {
+      "question": "What \u0027C\u0027 is the city associated with Godiva?",
+      "answer": "Coventry "
+    },
+    {
+      "question": "What \u0027C\u0027 is a person not in one of the armed services?",
+      "answer": "Civilian"
+    },
+    {
+      "question": "What \u0027C\u0027 are the dried flower buds of a type of myrtle, whose oil is suggested to relieve toothache?",
+      "answer": "Cloves"
+    },
+    {
+      "question": "What \u0027C\u0027 are Encke\u0027s seen in 1818, Biela\u0027s seen in 1826, and Donsti\u0027s seen in 1858?",
+      "answer": "Comets"
+    },
+    {
+      "question": "What \u0027C\u0027 is the force that tends to fly from the centre?",
+      "answer": "Centrifugal"
+    },
+    {
+      "question": "What \u0027C\u0027 is an artificer in wood?",
+      "answer": "Carpenter"
+    },
+    {
+      "question": "What \u0027C\u0027 are the artificial bends introduced into a motor racing course?",
+      "answer": "Chicanes"
+    },
+    {
+      "question": "What \u0027C\u0027 is what parents do at babies, and pigeons do in general?",
+      "answer": "Coo"
+    },
+    {
+      "question": "What \u0027C\u0027 was the first animal to communicate with humans by sign language?",
+      "answer": "Chimpanzee"
+    },
+    {
+      "question": "What \u0027C\u0027 is a prize given to someone who hasn\u0027t won a contest?",
+      "answer": "Consolation"
+    },
+    {
+      "question": "What \u0027C\u0027 when it is Greek or Russian, is full of icons?",
+      "answer": "Church"
+    },
+    {
+      "question": "What \u0027C\u0027 is a type of tank, or the leader of a tribe?",
+      "answer": "Chieftain"
+    },
+    {
+      "question": "What \u0027C\u0027 were the royalists who were opposed to the Cromwellian Roundheads?",
+      "answer": "Cavaliers"
+    },
+    {
+      "question": "What \u0027C\u0027 was the first name of the judge called Humphreys, who was a leading Buddhist?",
+      "answer": "Christmas"
+    },
+    {
+      "question": "What \u0027C\u0027 in billiards is the substance you put on the end of your cue?",
+      "answer": "Chalk"
+    },
+    {
+      "question": "What \u0027C\u0027 is the opuntia or prickly pear?",
+      "answer": "Cactus"
+    },
+    {
+      "question": "What \u0027C\u0027 is the vegetable that is used to represent coolness?",
+      "answer": "Cucumber"
+    },
+    {
+      "question": "What \u0027C\u0027 is a flexible string of connected metal links?",
+      "answer": "Chain "
+    },
+    {
+      "question": "What \u0027C\u0027 is the occupation of Karl Heinz Stockhausen?",
+      "answer": "Composer"
+    },
+    {
+      "question": "What \u0027C\u0027 means to go round to drum up votes?",
+      "answer": "Canvass"
+    },
+    {
+      "question": "What \u0027C\u0027 are cowboys\u0027 leather trousers without a seat?",
+      "answer": "Chaps"
+    },
+    {
+      "question": "What \u0027C\u0027 was British Prime Minister in 1978?",
+      "answer": "Callaghan"
+    },
+    {
+      "question": "What \u0027C\u0027 is the common constituent of soot, coal and diamonds?",
+      "answer": "Carbon"
+    },
+    {
+      "question": "What \u0027C\u0027 is the. city at the mouth of the Taft?",
+      "answer": "Cardiff"
+    },
+    {
+      "question": "What \u0027C\u0027 is Lutyens\u0027 monument for the fallen in Whitehall?",
+      "answer": "Cenotaph"
+    },
+    {
+      "question": "What \u0027C\u0027 comes before up, word and fire?",
+      "answer": "Catch"
+    },
+    {
+      "question": "What \u0027C\u0027 comes before stick, wick and light?",
+      "answer": "Candle"
+    },
+    {
+      "question": "What \u0027C\u0027 is the public building in which you\u0027re most likely to see a hammer-beam roof?",
+      "answer": "Church"
+    },
+    {
+      "question": "What \u0027C\u0027 is the cry of the crow and the rook, but not of the raven?",
+      "answer": "Caw"
+    },
+    {
+      "question": "What \u0027C\u0027 is a period of a hundred years?",
+      "answer": "Century"
+    },
+    {
+      "question": "What \u0027C\u0027 do you strike when you take down tents and move off?",
+      "answer": "Camp"
+    },
+    {
+      "question": "What \u0027C\u0027 can be alimentary, Regent\u0027s or Panama?",
+      "answer": "Canal"
+    },
+    {
+      "question": "What \u0027C\u0027 is the BBC\u0027s teletext service?",
+      "answer": "Ceefax"
+    },
+    {
+      "question": "What \u0027C\u0027 is the red pepper made from chillis?",
+      "answer": "Cayenne"
+    },
+    {
+      "question": "What \u0027C\u0027 is the country with the second largest area in the world?",
+      "answer": "Canada"
+    },
+    {
+      "question": "What \u0027C\u0027 is the standard unit of heat?",
+      "answer": "Calorie"
+    },
+    {
+      "question": "What \u0027C\u0027 is a large country house in France?",
+      "answer": "Chateau"
+    },
+    {
+      "question": "What \u0027C\u0027 did Mrs Malaprop really mean when she referred to the \u0027Allegories of the Nile\u0027 (because her English was as peculiar as her knowledge of natural history)?",
+      "answer": "Crocodiles"
+    },
+    {
+      "question": "What \u0027C\u0027 is unconsciousness from which you cannot be roused?",
+      "answer": "Coma"
+    },
+    {
+      "question": "What \u0027C\u0027 is a virus infection of the nose and throat?",
+      "answer": "Cold"
+    },
+    {
+      "question": "What \u0027C\u0027 are oriental eating utensils?",
+      "answer": "Chopsticks"
+    },
+    {
+      "question": "What \u0027C\u0027 is a powerful muscular spasm?",
+      "answer": "Cramp"
+    },
+    {
+      "question": "What \u0027C\u0027 is the shaking of the brain by a blow to the head?",
+      "answer": "Concussion"
+    },
+    {
+      "question": "What \u0027C\u0027 is transmission of disease by direct contact?",
+      "answer": "Contagion"
+    },
+    {
+      "question": "What \u0027C\u0027 is the circular window at the front of the eye?",
+      "answer": "Cornea"
+    },
+    {
+      "question": "What \u0027C\u0027 was a silent film comedian?",
+      "answer": "Chaplin"
+    },
+    {
+      "question": "What \u0027C\u0027 is an explosive release of air from the lungs?",
+      "answer": "Cough"
+    },
+    {
+      "question": "What \u0027C\u0027 is a computer language used almost exclusively for business work?",
+      "answer": "Cobol"
+    },
+    {
+      "question": "What \u0027C\u0027 is the world\u0027s most valuable fish roe?",
+      "answer": "Caviar"
+    },
+    {
+      "question": "What \u0027C\u0027 did Halley predict (in 1704) would return?",
+      "answer": "Comet"
+    },
+    {
+      "question": "What \u0027C\u0027 is a hiding place for valuables?",
+      "answer": "Cache"
+    },
+    {
+      "question": "What \u0027C\u0027 is a deep narrow hollow running through mountains?",
+      "answer": "Canyon"
+    },
+    {
+      "question": "What \u0027C\u0027 is used to send secret messages?",
+      "answer": "Code"
+    },
+    {
+      "question": "What \u0027C\u0027 is a timepiece?",
+      "answer": "Clock"
+    },
+    {
+      "question": "What \u0027C\u0027 Is Your Thoracic Cavity, Containing Heart And Lungs Or A Large Box?",
+      "answer": "Chest"
+    },
+    {
+      "question": "What \u0027C\u0027 Is Used As An Addition In Cooking That Is Far Hotter Than It\u0027s Name Implies?",
+      "answer": "Chilli"
+    }
+  ],
+  "D": [
+    {
+      "question": "What \u0027D\u0027 in the morse code go with dots?",
+      "answer": "Dashes"
+    },
+    {
+      "question": "What \u0027D\u0027 did England expect every man to do at Trafalgar?",
+      "answer": "Duty"
+    },
+    {
+      "question": "What \u0027D\u0027 is any flower that has many sets of petals?",
+      "answer": "Double"
+    },
+    {
+      "question": "What \u0027D\u0027 is an aimless scrawling, done while thinking about something else?",
+      "answer": "Doodle"
+    },
+    {
+      "question": "What \u0027D\u0027 is the adjective applied to the Middle Ages between the 5th and 8th centuries?",
+      "answer": "Dark"
+    },
+    {
+      "question": "What \u0027D\u0027 was the kind of man played by Patrick McGoohan when he was \u0027John Drake\u0027?",
+      "answer": "Danger"
+    },
+    {
+      "question": "What \u0027D\u0027 are thought to have worshipped something at Stonehenge?",
+      "answer": "Druids"
+    },
+    {
+      "question": "What \u0027D\u0027 goes before off, time and of wrath?",
+      "answer": "Day"
+    },
+    {
+      "question": "What \u0027D\u0027 is a woman played by a man in pantomine?",
+      "answer": "Dame"
+    },
+    {
+      "question": "What \u0027D\u0027 is the adjective applied to wines that aren\u0027t sweet?",
+      "answer": "Dry"
+    },
+    {
+      "question": "What \u0027D\u0027 goes before centre, line and cert?",
+      "answer": "Dead"
+    },
+    {
+      "question": "What \u0027D\u0027 is the two on dice, or an even score at tennis?",
+      "answer": "Deuce"
+    },
+    {
+      "question": "What \u0027D\u0027 wrote \u0027The Three Musketeers\u0027?",
+      "answer": "Dumas"
+    },
+    {
+      "question": "What \u0027D\u0027 is, or should be, the foundation of a pizza?",
+      "answer": "Dough"
+    },
+    {
+      "question": "What \u0027D\u0027 do you fancy rather too often if you are a toper?",
+      "answer": "Drink"
+    },
+    {
+      "question": "What \u0027D\u0027 was called Walt and created Donald Duck?",
+      "answer": "Disney"
+    },
+    {
+      "question": "What \u0027D\u0027 is a badger dog in Germany?",
+      "answer": "Dachhund"
+    },
+    {
+      "question": "What \u0027D\u0027 received a proposal of marriage, without a carriage, but with a bike made for two?",
+      "answer": "Daisy"
+    },
+    {
+      "question": "What \u0027D\u0027 is ten cents in US money?",
+      "answer": "Dime"
+    },
+    {
+      "question": "What \u0027D\u0027 is a warrigal, or Australian wild dog?",
+      "answer": "Dingo"
+    },
+    {
+      "question": "What \u0027D\u0027 was the name given to any extinct reptiles like the Iguanodon and Brontosaurus?",
+      "answer": "Dinosaurs"
+    },
+    {
+      "question": "What \u0027D\u0027 is a metal rod that shows when a car engine needs oil?",
+      "answer": "Dipstick"
+    },
+    {
+      "question": "What \u0027D\u0027 is the word used to describe the decorative arrangement of goods in a shop window?",
+      "answer": "Dressing"
+    },
+    {
+      "question": "What \u0027D\u0027 is a pile of snow made by the wind?",
+      "answer": "Drift"
+    },
+    {
+      "question": "What \u0027D\u0027 is associated with Grand Coulee, Kariba and Aswan?",
+      "answer": "Dam"
+    },
+    {
+      "question": "What \u0027D\u0027 were Boatswain, Diamond and Rufus, who belonged to Byron, Newton and Churchill?",
+      "answer": "Dogs"
+    },
+    {
+      "question": "What \u0027D\u0027 was a German called Rudolf who invented a compression ignition engine?",
+      "answer": "Diesel"
+    },
+    {
+      "question": "What \u0027D\u0027 comes before horse, ages and continent?",
+      "answer": "Dark"
+    },
+    {
+      "question": "What \u0027D\u0027 is usually shown by a red signal and means beware?",
+      "answer": "Danger"
+    },
+    {
+      "question": "What \u0027D\u0027 is to reduce in rank or importance?",
+      "answer": "Demote"
+    },
+    {
+      "question": "What \u0027D\u0027 is silly nonsense, or twaddle?",
+      "answer": "Drivel"
+    },
+    {
+      "question": "What \u0027D\u0027 is the way a particular community within a county speaks?",
+      "answer": "Dialect"
+    },
+    {
+      "question": "What \u0027D\u0027 is an author of plays?",
+      "answer": "Dramatist"
+    },
+    {
+      "question": "What \u0027D\u0027 in a pharmacy makes up the prescriptions?",
+      "answer": "Dispenser"
+    },
+    {
+      "question": "What \u0027D\u0027 is a light sleep?",
+      "answer": "Doze"
+    },
+    {
+      "question": "What \u0027D\u0027 comes before land, boat and world?",
+      "answer": "Dream"
+    },
+    {
+      "question": "What \u0027D\u0027 is a stoppered crystal container into which wine is transferred?",
+      "answer": "Decanter"
+    },
+    {
+      "question": "What \u0027D\u0027 comes before heat, end and pan?",
+      "answer": "Dead"
+    },
+    {
+      "question": "What \u0027D\u0027 comes before think, cross and time?",
+      "answer": "Double"
+    },
+    {
+      "question": "What \u0027D\u0027 Is Needed To Make Sense Of Scrambled Television Signals Transmitted By Satellite?",
+      "answer": "Decoder"
+    },
+    {
+      "question": "What \u0027D\u0027 Goes Before Work, Look And Trick To Mean Something Dishonest?",
+      "answer": "Dirty"
+    },
+    {
+      "question": "What \u0027D\u0027 Does A Drodometer Measure?",
+      "answer": "Dew"
+    },
+    {
+      "question": "What \u0027D\u0027 Is the Legal Dissolution Of A Lawful Marriage?",
+      "answer": "Divorce"
+    },
+    {
+      "question": "What \u0027D\u0027 Are Scribbled Patterns In Moments Of Tedium?",
+      "answer": "Doodles"
+    },
+    {
+      "question": "What \u0027D\u0027 Is Partner To Home, High And Wet?",
+      "answer": "Dry"
+    },
+    {
+      "question": "What \u0027D\u0027 Means Great Pleasure And The Name Of Something Edible Usually Pink And Turkish?",
+      "answer": "Delight"
+    },
+    {
+      "question": "What \u0027D\u0027 Means To Slice Neatly Into Small Cubes?",
+      "answer": "Dice"
+    },
+    {
+      "question": "What \u0027D\u0027 In Golf Is The Alternative Name For A No.1 Wood?",
+      "answer": "Driver"
+    }
+  ],
+  "E": [
+    {
+      "question": "What \u0027E\u0027 were the first people to make and wear parkas?",
+      "answer": "Eskimos"
+    },
+    {
+      "question": "What \u0027E\u0027 was hurled into a lake at the death of King Arthur",
+      "answer": "Excalibur"
+    },
+    {
+      "question": "What \u0027E\u0027 are big and little conrods in a car engine?",
+      "answer": "Ends"
+    },
+    {
+      "question": "What \u0027E\u0027 is what the French want when they shout \u0027Bis\u0027?",
+      "answer": "Encore"
+    },
+    {
+      "question": "What \u0027E\u0027 are the conventional rules of social or professional behaviour?",
+      "answer": "Etiquette"
+    },
+    {
+      "question": "What \u0027E\u0027 is an obsolete way of defining forty-five inches?",
+      "answer": "Ell"
+    },
+    {
+      "question": "What \u0027E\u0027 are little holes for laces?",
+      "answer": "Eyelets"
+    },
+    {
+      "question": "What \u0027E\u0027 means to breathe out, to come to an end, or to die?",
+      "answer": "Expire"
+    },
+    {
+      "question": "What \u0027E\u0027 comes after sure, to mean \u0027as might have been expected\u0027?",
+      "answer": "Enough"
+    },
+    {
+      "question": "What \u0027E\u0027 do you keep on people that you watch?",
+      "answer": "Eye"
+    },
+    {
+      "question": "What \u0027E\u0027 was the exclamation of Archimedes in his bath?",
+      "answer": "Eureka"
+    },
+    {
+      "question": "What \u0027E\u0027 is a riddle, puzzling thing, or something difficult to understand?",
+      "answer": "Enigma"
+    },
+    {
+      "question": "What \u0027E\u0027 goes before hall, bath and glass?",
+      "answer": "Eye"
+    },
+    {
+      "question": "What \u0027E\u0027 in the academic world are presided over by invigilators?",
+      "answer": "Examinations"
+    },
+    {
+      "question": "What \u0027E\u0027 means `to go beyond\u0027, especially a speed limit?",
+      "answer": "Exceed"
+    },
+    {
+      "question": "What \u0027E\u0027 are directed downwards at the start of a game of Bingo?",
+      "answer": "Eyes"
+    },
+    {
+      "question": "What \u0027E\u0027 decides what goes in a newspaper?",
+      "answer": "Editor"
+    },
+    {
+      "question": "What \u0027E\u0027 is to root out, or pull up by the roots?",
+      "answer": "Eradicate"
+    },
+    {
+      "question": "What \u0027E\u0027 is an organic catalyst?",
+      "answer": "Enzyme"
+    },
+    {
+      "question": "What \u0027E\u0027 comes after electric, sand and conger?",
+      "answer": "Eel"
+    },
+    {
+      "question": "What \u0027E\u0027 is the period between afternoon and night?",
+      "answer": "Evening"
+    },
+    {
+      "question": "What \u0027E\u0027 are two and two and two and two?",
+      "answer": "Eight"
+    },
+    {
+      "question": "What \u0027E\u0027 is the age at which you can vote in Britain?",
+      "answer": "Eighteen"
+    },
+    {
+      "question": "What \u0027E\u0027 do you raise as a sign of surprise or shock?",
+      "answer": "Eyebrows"
+    },
+    {
+      "question": "What \u0027E\u0027 is for ever and ever and ever?",
+      "answer": "Eternity"
+    },
+    {
+      "question": "What \u0027E\u0027 is a print made from an engraved copper plate?",
+      "answer": "Etching"
+    },
+    {
+      "question": "What \u0027E\u0027 is an exaggerated feeling of well-being usually based on over-confidence?",
+      "answer": "Euphoria"
+    },
+    {
+      "question": "What \u0027E\u0027 are you said to walk on when you go very gingerly for some reason?",
+      "answer": "Eggs"
+    },
+    {
+      "question": "What \u0027E\u0027 is a way of preserving the body after death?",
+      "answer": "Embalming"
+    },
+    {
+      "question": "What \u0027E\u0027 is a reflective poem of lamentation or regret?",
+      "answer": "Elegy"
+    },
+    {
+      "question": "What \u0027E\u0027 is a prohibition on commerce?",
+      "answer": "Embargo"
+    },
+    {
+      "question": "What \u0027E\u0027 invented the record player?",
+      "answer": "Edison"
+    },
+    {
+      "question": "What \u0027E\u0027 is a process used in metal plating?",
+      "answer": "Electrolysis"
+    },
+    {
+      "question": "What \u0027E\u0027 is ornamental needlework?",
+      "answer": "Embroidery"
+    },
+    {
+      "question": "What \u0027E\u0027 is a siliceous substance that fuses with metal?",
+      "answer": "Enamel"
+    },
+    {
+      "question": "What \u0027E\u0027 is agitation of mind?",
+      "answer": "Emotion"
+    },
+    {
+      "question": "What \u0027E\u0027 are species whose chances of survival are doubtful?",
+      "answer": "Endangered"
+    },
+    {
+      "question": "What \u0027E\u0027 are the glands that produce hormones?",
+      "answer": "Endocrine"
+    },
+    {
+      "question": "What \u0027E\u0027 is the opposite of an introvert?",
+      "answer": "Extrovert"
+    },
+    {
+      "question": "What \u0027E\u0027 comes before chair, going and rider?",
+      "answer": "Easy"
+    },
+    {
+      "question": "What \u0027E\u0027 comes before mark, trumpet and shot?",
+      "answer": "Ear"
+    },
+    {
+      "question": "What \u0027E\u0027 is where the sun rises?",
+      "answer": "East"
+    }
+  ],
+  "F": [
+    {
+      "question": "What \u0027F\u0027 do you cross in the House of Commons if you change party?",
+      "answer": "Floor"
+    },
+    {
+      "question": "What \u0027F\u0027 forms a birds plumage?",
+      "answer": "Feathers"
+    },
+    {
+      "question": "What \u0027F\u0027 are you sitting on when you shilly shally?",
+      "answer": "Fence"
+    },
+    {
+      "question": "What \u0027F\u0027 is a town in Wales, or a stone used to make sparks?",
+      "answer": "Flint"
+    },
+    {
+      "question": "What \u0027F\u0027 do you have in the pie when officiously concerned in something?",
+      "answer": "Finger"
+    },
+    {
+      "question": "What \u0027F\u0027 is the state that includes Palm Beach?",
+      "answer": "Florida"
+    },
+    {
+      "question": "What \u0027F is the source of linen and linseed oil?",
+      "answer": "Flax"
+    },
+    {
+      "question": "What \u0027F\u0027 disposes of stolen property, or keeps cows in a field?",
+      "answer": "Fence"
+    },
+    {
+      "question": "What \u0027F\u0027 is the biggest bone in the leg?",
+      "answer": "Femur"
+    },
+    {
+      "question": "What \u0027F\u0027 are among the favourite prey of grass-snakes and were once tadpoles?",
+      "answer": "Frogs"
+    },
+    {
+      "question": "What \u0027F\u0027 is the part of a view, or picture, nearest to the viewer?",
+      "answer": "Foreground"
+    },
+    {
+      "question": "What\t\u0027F\u0027 do you snap at an authority which you defy?",
+      "answer": "Fingers"
+    },
+    {
+      "question": "What \u0027F\u0027 is a tall, tapering champagne glass, or a member of the woodwind family?",
+      "answer": "Flute"
+    },
+    {
+      "question": "What \u0027F\u0027 is an inundation?",
+      "answer": "Food"
+    },
+    {
+      "question": "What \u0027F\u0027 is the spin you get into when you are in an agitated panic?",
+      "answer": "Flap"
+    },
+    {
+      "question": "What \u0027F\u0027 precedes glove, hunt and trot?",
+      "answer": "Fox"
+    },
+    {
+      "question": "What \u0027F\u0027 is hair that is a kinky mass of very tight curls?",
+      "answer": "Frizzy"
+    },
+    {
+      "question": "What \u0027F\u0027 is metaphorically said to be laid on with a trowel?",
+      "answer": "Flattery"
+    },
+    {
+      "question": "What\t\u0027F\u0027 are very close if they are called \u0027Dutch Cousins\u0027?",
+      "answer": "Friends"
+    },
+    {
+      "question": "What \u0027F\u0027 goes with duddy to mean old fogey?",
+      "answer": "Fuddy"
+    },
+    {
+      "question": "What \u0027F\u0027 is the thighbone?",
+      "answer": "Femur"
+    },
+    {
+      "question": "What \u0027F\u0027 is the tree that produces cones?",
+      "answer": "Fir"
+    },
+    {
+      "question": "What \u0027F\u0027 is a conclusion arrived at before hearing any evidence?",
+      "answer": "Foregone"
+    },
+    {
+      "question": "What \u0027F\u0027 is a ball wrongly served at tennis?",
+      "answer": "Fault"
+    },
+    {
+      "question": "What \u0027F\u0027 are studied by a biologist called an ichthyologist?",
+      "answer": "Fish"
+    },
+    {
+      "question": "What \u0027F\u0027 is a lucky accidental stroke?",
+      "answer": "Fluke"
+    },
+    {
+      "question": "What \u0027F\u0027 is the barb of an anchor, a whale\u0027s tail, or a happy accident?",
+      "answer": "Fluke"
+    },
+    {
+      "question": "What \u0027F\u0027 is a kind of sword, metal-coated paper or a frustrate?",
+      "answer": "Foil"
+    },
+    {
+      "question": "What \u0027F\u0027 is the sweetest of the simple sugars and is found in honey and fruit?",
+      "answer": "Fructose"
+    },
+    {
+      "question": "What \u0027F\u0027 contains your tarsals and metatarsals?",
+      "answer": "Foot"
+    },
+    {
+      "question": "What \u0027F\u0027 is the thing the Americans call \u0027Old Glory\u0027?",
+      "answer": "Flag"
+    },
+    {
+      "question": "What \u0027F\u0027 is a note played or sung below true pitch?",
+      "answer": "Flat"
+    },
+    {
+      "question": "What \u0027F\u0027 comes before dog, lighter and alarm?",
+      "answer": "Fire"
+    },
+    {
+      "question": "What \u0027F\u0027 is the art of planting, managing, and tending great numbers of trees?",
+      "answer": "Forestry"
+    },
+    {
+      "question": "What\t\u0027F\u0027 is the tree that shows your genealogy?",
+      "answer": "Family"
+    },
+    {
+      "question": "What \u0027F\u0027 is an ordinal of one?",
+      "answer": "First"
+    }
+  ],
+  "G": [
+    {
+      "question": "What \u0027G\u0027 is a comedian\u0027s stock in trade or something to stop you speaking?",
+      "answer": "Gag"
+    },
+    {
+      "question": "What \u0027G\u0027 was the pure knoght who sat in the siege perilous?",
+      "answer": "Galahad"
+    },
+    {
+      "question": "What \u0027G\u0027 is a glove thrown down, taken up, or used when driving a car or fencing?",
+      "answer": "Gauntlet"
+    },
+    {
+      "question": "What \u0027G\u0027 is the Milky Way?",
+      "answer": "Galaxy"
+    },
+    {
+      "question": "What \u0027G\u0027 was a gallows where executed criminals were hung?",
+      "answer": "Gibbet"
+    },
+    {
+      "question": "What \u0027G\u0027 is a kind of bread, beer, ale or snap?",
+      "answer": "Ginger"
+    },
+    {
+      "question": "What \u0027G\u0027 was stored in the Parthenon by the Turks in 1687 and resulted in its partial destruction?",
+      "answer": "Gunpowder"
+    },
+    {
+      "question": "What \u0027G\u0027 is a Sanskrit word meaning venerable, now used for any spiritual teacher?",
+      "answer": "Guru"
+    },
+    {
+      "question": "What \u0027G\u0027 means serious as an adjective or a hole in the",
+      "answer": "Grave"
+    },
+    {
+      "question": "What \u0027G\u0027 is a bridge from a ship to shore or a passage between seats?",
+      "answer": "Gangway"
+    },
+    {
+      "question": "What \u0027G\u0027 is an apparatus for producing hot water, or a hot spring?",
+      "answer": "Geyser"
+    },
+    {
+      "question": "What \u0027G\u0027 is the official robe of a university graduate?",
+      "answer": "Gown"
+    },
+    {
+      "question": "What \u0027G\u0027 is the ham of a hog and goes proverbially with spinach?",
+      "answer": "Gammon"
+    },
+    {
+      "question": "What \u0027G\u0027 do you do in a betting shop?",
+      "answer": "Gamble"
+    },
+    {
+      "question": "What \u0027G\u0027 is to chew away at something like a dog with a bone?",
+      "answer": "Gnaw"
+    },
+    {
+      "question": "What \u0027G\u0027 do you see in skeins and gaggles?",
+      "answer": "Geese"
+    },
+    {
+      "question": "What \u0027G\u0027 goes before eye, fleece and rod?",
+      "answer": "Golden"
+    },
+    {
+      "question": "What \u0027G\u0027 is an instrument called a stratocaster?",
+      "answer": "Guitar"
+    },
+    {
+      "question": "What \u0027G\u0027 was mustard with mutton said to be a sign?",
+      "answer": "Gluttony"
+    },
+    {
+      "question": "What \u0027G\u0027 was imprisoned for saying that the earth moved?",
+      "answer": "Galileo"
+    },
+    {
+      "question": "What \u0027G\u0027 is the professional occupation of Gary Player?",
+      "answer": "Golf"
+    },
+    {
+      "question": "What \u0027G\u0027 is the nickname for the Royal Artillery?",
+      "answer": "Gunners"
+    },
+    {
+      "question": "What \u0027G\u0027 is the carriage on which the coffins of soldiers and statesmen are often transported?",
+      "answer": "Gun"
+    },
+    {
+      "question": "What \u0027G\u0027 is an engineless aeroplane?",
+      "answer": "Glider"
+    },
+    {
+      "question": "What \u0027G\u0027 is the element with the atomic number seventy- nine?",
+      "answer": "Gold"
+    },
+    {
+      "question": "What \u0027G\u0027 are Welsh, Scots, Horse and Grenadier?",
+      "answer": "Guards"
+    },
+    {
+      "question": "What \u0027G\u0027 is a light volatile fuel oil?",
+      "answer": "Gasoline"
+    },
+    {
+      "question": "What \u0027G\u0027 is an Italian leather-maker?",
+      "answer": "Gucci"
+    },
+    {
+      "question": "What \u0027G\u0027 is to stand and gape or gawp?",
+      "answer": "Gawk"
+    },
+    {
+      "question": "What \u0027G\u0027 means of the stomach?",
+      "answer": "Gastic"
+    },
+    {
+      "question": "What \u0027G\u0027 comes before ball, keeper and licence?",
+      "answer": "Game"
+    },
+    {
+      "question": "What \u0027G\u0027 is the lower end of a flitch of salted bacon?",
+      "answer": "Gammon"
+    },
+    {
+      "question": "What \u0027G\u0027 Are You Said To Play To When You Blatantly Court Popularity?",
+      "answer": "Gallery"
+    },
+    {
+      "question": "What \u0027G\u0027 Is A Message That Has Been Corrupted In Transmission So Badly That It Cant Be Deciphered?",
+      "answer": "Garbled"
+    },
+    {
+      "question": "What \u0027G\u0027 Is Messy, Gooey And Jokingly Tipped Over People?",
+      "answer": "Gunge"
+    },
+    {
+      "question": "What \u0027G\u0027 Is Fragmented Rock Quarried For Use In Road Building, Ballast And Aggregate?",
+      "answer": "Gravel"
+    },
+    {
+      "question": "What \u0027G\u0027 Was A Large 3 Masted Ship Often Used By The Spanish Fleet?",
+      "answer": "Galleon"
+    }
+  ],
+  "H": [
+    {
+      "question": "What \u0027H\u0027 is a twenty fourth part of a mean solar day?",
+      "answer": "Hour"
+    },
+    {
+      "question": "What \u0027H\u0027 are both parents of a leveret?",
+      "answer": "Hares"
+    },
+    {
+      "question": "What \u0027H\u0027 is a point at which the fire brigade can connect to water?",
+      "answer": "Hydrant"
+    },
+    {
+      "question": "What \u0027H\u0027 is the great port on the Humber Estuary which is really called Kingston?",
+      "answer": "Hull"
+    },
+    {
+      "question": "What \u0027H\u0027 is the epithet applied to a parliament that lacks an effective majority?",
+      "answer": "Hung"
+    },
+    {
+      "question": "What \u0027H\u0027 can be a horse\u0027s joint, a white wine or a pawnshop?",
+      "answer": "Hock"
+    },
+    {
+      "question": "What \u0027H\u0027 is the red pigment of the blood?",
+      "answer": "Haemoglobin"
+    },
+    {
+      "question": "What \u0027H\u0027 is food for horses in the form of dried grass?",
+      "answer": "Hay"
+    },
+    {
+      "question": "What \u0027H\u0027 is grated to make a hot sauce for roast beef?",
+      "answer": "Horseradish"
+    },
+    {
+      "question": "What \u0027H\u0027 was the pirate captain in Peter Pan?",
+      "answer": "Hook"
+    },
+    {
+      "question": "What \u0027H\u0027 shows that silver is as it should be?",
+      "answer": "Hallmark"
+    },
+    {
+      "question": "What \u0027H\u0027 is the product that is hoped for by an Apiarist?",
+      "answer": "Honey"
+    },
+    {
+      "question": "What \u0027H\u0027 carries a lifeguard or pulls the cart?",
+      "answer": "Horse"
+    },
+    {
+      "question": "What \u0027H\u0027 was the deerstalker worn by Sherlock Holmes?",
+      "answer": "Hat"
+    },
+    {
+      "question": "What \u0027H\u0027 is pickled and made into a roll mop?",
+      "answer": "Herring"
+    },
+    {
+      "question": "What \u0027H\u0027 was one of the seven dwarfs?",
+      "answer": "Happy"
+    },
+    {
+      "question": "What \u0027H\u0027 pounces, petty, singles and sails, and is flown at game?",
+      "answer": "Hawk"
+    },
+    {
+      "question": "What \u0027H\u0027 is milk that has been treated to stop the cream rising?",
+      "answer": "Homogenised"
+    },
+    {
+      "question": "What \u0027H\u0027 is said to exist among thieves?",
+      "answer": "Honour"
+    },
+    {
+      "question": "What \u0027H\u0027 makes water, when combined with oxygen?",
+      "answer": "Hydrogen"
+    },
+    {
+      "question": "What \u0027H\u0027 strangled serpents in babyhood, and did tests of strength most of his life?",
+      "answer": "Hercules"
+    },
+    {
+      "question": "What \u0027H\u0027 is the preserving of health, often by means of cleanliness?",
+      "answer": "Hygiene"
+    },
+    {
+      "question": "What \u0027H\u0027 is an ancient children\u0027s game based on the idea of not treading on lines?",
+      "answer": "Hopscotch"
+    },
+    {
+      "question": "What \u0027H\u0027 is the opposite of perpendicular?",
+      "answer": "Horizontal"
+    },
+    {
+      "question": "What \u0027H\u0027 is a group of birds, proverbially said to have very good sight?",
+      "answer": "Hawks"
+    },
+    {
+      "question": "What \u0027H\u0027 is a mongrel or crossbreed?",
+      "answer": "Hybrid"
+    },
+    {
+      "question": "What \u0027H\u0027 is usually mentioned as the second of the three theological virtues?",
+      "answer": "Hope"
+    },
+    {
+      "question": "What \u0027H\u0027 is the flat bit at the end of a nail?",
+      "answer": "Head"
+    },
+    {
+      "question": "What \u0027H\u0027 is beautiful when it is calligraphy?",
+      "answer": "Handwriting"
+    },
+    {
+      "question": "What \u0027H\u0027 is a chart said to be \u0027cast\u0027 by an astrologer?",
+      "answer": "Horoscope"
+    },
+    {
+      "question": "What \u0027H\u0027 is a woman who has, or is going to inherit a lot of money?",
+      "answer": "Heiress"
+    },
+    {
+      "question": "What \u0027H\u0027 can be ball-pane, tack, sledge or claw?",
+      "answer": "Hammer"
+    }
+  ],
+  "I": [
+    {
+      "question": "What \u0027I\u0027 means to transfix or stick a spike through?",
+      "answer": "Impale"
+    },
+    {
+      "question": "What \u0027I\u0027 is the time so ancient that it is beyond memories?",
+      "answer": "Immemorial"
+    },
+    {
+      "question": "What \u0027I\u0027 was the major movement in French Art named after a Monet painting?",
+      "answer": "Impressionism"
+    },
+    {
+      "question": "What \u0027I\u0027 is dentine, especially when it\u0027s an elephant\u0027s tusks?",
+      "answer": "Ivory"
+    },
+    {
+      "question": "What \u0027I\u0027 is the order in classic architecture that has scrolled ends to the volutes on its columns?",
+      "answer": "Ionic"
+    },
+    {
+      "question": "What \u0027I\u0027 is a way of travelling with name, clothes and character concealed often resorted to - by royalty?",
+      "answer": "Incognito"
+    },
+    {
+      "question": "What \u0027I\u0027 is a device for burning garden or other rubbish?",
+      "answer": "Incinerator"
+    },
+    {
+      "question": "What \u0027I\u0027 is a US automobile track race called the \u0027Five H und red\u0027?",
+      "answer": "Indianapolis"
+    },
+    {
+      "question": "What \u0027I\u0027 is glowing with heat, like the filament of an electric light bulb?",
+      "answer": "Incandescent"
+    },
+    {
+      "question": "What \u0027I\u0027 has a desert called the Negev?",
+      "answer": "Israel"
+    },
+    {
+      "question": "What \u0027I\u0027 means to burst inwards and is sometimes applied to stars?",
+      "answer": "Implode"
+    },
+    {
+      "question": "What \u0027I\u0027 means to press, or wedge, as in the case of wisdom teeth that are too close?",
+      "answer": "Impact"
+    },
+    {
+      "question": "What \u0027I\u0027 obstructs or hinders?",
+      "answer": "Impedes"
+    },
+    {
+      "question": "What \u0027I\u0027 is a non-metallic element that produces purple vapour and is never found in nature, uncombined?",
+      "answer": "Iodine"
+    },
+    {
+      "question": "What \u0027I\u0027 is a very small child?",
+      "answer": "Infant"
+    },
+    {
+      "question": "What \u0027I\u0027 is a medicine administered via a syringe?",
+      "answer": "Injection"
+    },
+    {
+      "question": "What \u0027I\u0027 is to plunge a person below the surface of water?",
+      "answer": "Immerse"
+    },
+    {
+      "question": "What \u0027I\u0027 is a severe examination by questioning?",
+      "answer": "Interrogation"
+    },
+    {
+      "question": "What \u0027I\u0027 is one of the Balearic islands that live on importing tourists and exporting salt?",
+      "answer": "Ibiza"
+    },
+    {
+      "question": "What \u0027I\u0027 is important when applying for a job?",
+      "answer": "Interview"
+    },
+    {
+      "question": "What \u0027I\u0027 is a house made of ice and snow?",
+      "answer": "Igloo"
+    },
+    {
+      "question": "What \u0027I\u0027 is someone who puts perfection before practicality?",
+      "answer": "Idealist"
+    },
+    {
+      "question": "What \u0027I\u0027 is the chief river of Pakistan?",
+      "answer": "Indus"
+    },
+    {
+      "question": "What \u0027I\u0027 are colourless, odourless gasses?",
+      "answer": "Inert"
+    },
+    {
+      "question": "What \u0027I\u0027 is a persistent increase in the price of goods?",
+      "answer": "Inflation"
+    },
+    {
+      "question": "What \u0027I\u0027 is a contagious disease caused by a number of viruses?",
+      "answer": "Influenza"
+    },
+    {
+      "question": "What \u0027I\u0027 is to call forth?",
+      "answer": "Invoke"
+    },
+    {
+      "question": "What \u0027I\u0027 comes before play, course and twine?",
+      "answer": "Inter"
+    },
+    {
+      "question": "What \u0027I\u0027 is the elimination of segregation?",
+      "answer": "Integration"
+    },
+    {
+      "question": "What \u0027I\u0027 is the study of the resistance of organism to infection?",
+      "answer": "Immunology"
+    },
+    {
+      "question": "What \u0027I\u0027 is the severest degree of mental deficiency?",
+      "answer": "Idiocy"
+    },
+    {
+      "question": "What \u0027I\u0027 was a number one hit for John Lennon in 1965?",
+      "answer": "Imagine"
+    },
+    {
+      "question": "What \u0027I\u0027 are our chisel-like front teeth?",
+      "answer": "Incisors"
+    },
+    {
+      "question": "What \u0027I\u0027 means urgent or expressing command?",
+      "answer": "Imperative"
+    }
+  ],
+  "J": [
+    {
+      "question": "What \u0027J\u0027 is the central column in an aeroplane cock-pit that controls the elevators and ailerons?",
+      "answer": "Joystick"
+    },
+    {
+      "question": "What \u0027J\u0027 is an iota, whit, or tittle - anyway, something very small?",
+      "answer": "Jot"
+    },
+    {
+      "question": "What \u0027J\u0027 comes before frost, daw and boot?",
+      "answer": "Jack"
+    },
+    {
+      "question": "What \u0027J\u0027 is a general feeling of disorientation and fatigue, as a result of long flights?",
+      "answer": "Jetlag"
+    },
+    {
+      "question": "What \u0027J\u0027 Is the name given to people who climb chimneys",
+      "answer": "Jack"
+    },
+    {
+      "question": "What \u0027J\u0027 is the very short time preceded by the phrases \u0027I shan\u0027t be a...\u0027, and \u0027it won\u0027t take a...\u0027?",
+      "answer": "Jiffy"
+    },
+    {
+      "question": "What \u0027J\u0027 is the large Indonesian island in which fossils of homo erectus were found?",
+      "answer": "Java"
+    },
+    {
+      "question": "What \u0027J\u0027 sits in a box, has a foreman, is controlled by a bailiff and brings a verdict?",
+      "answer": "Jury"
+    },
+    {
+      "question": "What \u0027J\u0027 is a piece of an animal\u0027s body, as cut up for eating?",
+      "answer": "Joint"
+    },
+    {
+      "question": "What \u0027J\u0027 is a fool or clown in Shakespeare?",
+      "answer": "Jester"
+    },
+    {
+      "question": "What \u0027J\u0027 is a box that automatically plays records when a coin is inserted?",
+      "answer": "Jukebox"
+    },
+    {
+      "question": "What \u0027J\u0027 is to deride or scoff at?",
+      "answer": "Jeer"
+    },
+    {
+      "question": "What \u0027J\u0027 in the calendar is named after the Mother of the gods?",
+      "answer": "June"
+    },
+    {
+      "question": "What \u0027J\u0027 have you got when you are in a flustered state, caused by fright?",
+      "answer": "Jitters"
+    },
+    {
+      "question": "What \u0027J\u0027 is to cast someone off after you\u0027ve promised to marry them?",
+      "answer": "Jilt"
+    },
+    {
+      "question": "What \u0027J\u0027 is the Mick in the Rolling Stones?",
+      "answer": "Jagger"
+    },
+    {
+      "question": "What \u0027J\u0027 is a rider of race horses?",
+      "answer": "Jockey"
+    },
+    {
+      "question": "What \u0027J\u0027 is black, a type of aeroplane and a fast stream of water?",
+      "answer": "Jet"
+    },
+    {
+      "question": "What \u0027J\u0027 is the profession of collection and writing news?",
+      "answer": "Journalism"
+    },
+    {
+      "question": "What \u0027J\u0027 is the bone in which teeth are set?",
+      "answer": "Jaw"
+    },
+    {
+      "question": "What\t\u0027J\u0027 is applied to a prejudiced eye that sees only faults like that of a person with an upset liver?",
+      "answer": "Jaundiced"
+    },
+    {
+      "question": "What \u0027J\u0027 is reserved when a decision is delayed after a trial?",
+      "answer": "Judgement"
+    },
+    {
+      "question": "What\t\u0027J\u0027 is rubbish and an Oriental sailing boat?",
+      "answer": "Junk"
+    },
+    {
+      "question": "What \u0027J\u0027 are large veins of the neck?",
+      "answer": "Jugular"
+    },
+    {
+      "question": "What \u0027J\u0027 is to put at risk?",
+      "answer": "Jeopardize"
+    },
+    {
+      "question": "What \u0027J\u0027 is a tight fix?",
+      "answer": "Jam"
+    },
+    {
+      "question": "What \u0027J\u0027 is the berry used in making gin?",
+      "answer": "Juniper"
+    },
+    {
+      "question": "What \u0027J\u0027 comes before jet \u0026mdash; and after mumbo?",
+      "answer": "Jumbo"
+    },
+    {
+      "question": "What \u0027J\u0027 is either of two minerals both white to green in colour?",
+      "answer": "Jade"
+    },
+    {
+      "question": "What \u0027J\u0027 Is A Kind Of Very Popular Puzzle With Many Pieces?",
+      "answer": "Jigsaw"
+    },
+    {
+      "question": "What \u0027J\u0027 Is A Tinkle Or A Chime Or An Irritatingly Catchy Tune?",
+      "answer": "Jingle"
+    }
+  ],
+  "K": [
+    {
+      "question": "What \u0027K\u0027 is the name given to the pool in some gambling card games?",
+      "answer": "Kitty"
+    },
+    {
+      "question": "What \u0027K\u0027 may a cat look at?",
+      "answer": "King"
+    },
+    {
+      "question": "What \u0027K\u0027 are sheetbands and timber hitches?",
+      "answer": "Knots"
+    },
+    {
+      "question": "What \u0027K\u0027 is another name for the absolute zero temperature scale?",
+      "answer": "Kelvin"
+    },
+    {
+      "question": "What \u0027K\u0027 is the part of England where the first Borstal was founded?",
+      "answer": "Kent"
+    },
+    {
+      "question": "What \u0027K\u0027 in anatomy is the patella?",
+      "answer": "Kneecap"
+    },
+    {
+      "question": "What \u0027K\u0027 is the home of bourbon whiskey?",
+      "answer": "Kentucky"
+    },
+    {
+      "question": "What \u0027K\u0027 is a form of cabbage with curly leaves?",
+      "answer": "Kale"
+    },
+    {
+      "question": "What \u0027K\u0027 is the foot operated lever for starting a motorbike?",
+      "answer": "Kickstarter"
+    },
+    {
+      "question": "What \u0027K\u0027 is applied to close cousins because of the way they are greeted?",
+      "answer": "Kissing"
+    },
+    {
+      "question": "What \u0027K\u0027 is a garment called a filibeg?",
+      "answer": "Kilt"
+    },
+    {
+      "question": "What \u0027K\u0027 is a playing card showing a soldier or a servant?",
+      "answer": "Knave"
+    },
+    {
+      "question": "What \u0027K\u0027 is the Hindu god of Fire and Light?",
+      "answer": "Krishna"
+    },
+    {
+      "question": "What \u0027K\u0027 is what you do on a door?",
+      "answer": "Knock"
+    },
+    {
+      "question": "What \u0027K\u0027 is a school for young children?",
+      "answer": "Kindergarten"
+    },
+    {
+      "question": "What \u0027K\u0027 is to carry off by force for ransom?",
+      "answer": "Kidnap"
+    },
+    {
+      "question": "What \u0027K\u0027 contains a public telephone?",
+      "answer": "Kiosk"
+    },
+    {
+      "question": "What \u0027K\u0027 is used as an expletive, but means ladies underwear?",
+      "answer": "Knickers"
+    },
+    {
+      "question": "What \u0027K\u0027 is a famous make of camera?",
+      "answer": "Kodak"
+    },
+    {
+      "question": "What \u0027K\u0027 is a baby cat?",
+      "answer": "Kitten"
+    },
+    {
+      "question": "What \u0027K\u0027 is an Australian marsupial related to the wallaby?",
+      "answer": "Kangaroo"
+    },
+    {
+      "question": "What \u0027K\u0027 is an Australian bear?",
+      "answer": "Koala"
+    },
+    {
+      "question": "What \u0027K\u0027 is an instrument for winding, turning, tightening and locking?",
+      "answer": "Key"
+    },
+    {
+      "question": "What \u0027K\u0027 is the bone joint at the base of the finger?",
+      "answer": "Knuckle"
+    },
+    {
+      "question": "What \u0027K\u0027 is the recoil of a shotgun or rifle?",
+      "answer": "Kick"
+    },
+    {
+      "question": "What \u0027K\u0027 is used of difficult problems or of a string tied in several places?",
+      "answer": "Knotty"
+    },
+    {
+      "question": "What \u0027K\u0027 is to deprive of life?",
+      "answer": "Kill"
+    },
+    {
+      "question": "What \u0027K\u0027 is a smoked herring?",
+      "answer": "Kipper"
+    },
+    {
+      "question": "What \u0027K\u0027 in Tanzania is the highest peak in Africa?",
+      "answer": "Kilimanjaro"
+    },
+    {
+      "question": "What \u0027K\u0027 are knickers short for?",
+      "answer": "Knickerbockers"
+    },
+    {
+      "question": "What \u0027K\u0027 was the actor who won fame as Frankenstein?",
+      "answer": "Karloff"
+    },
+    {
+      "question": "What \u0027K\u0027 are makers of breakfast food?",
+      "answer": "Kellogs"
+    },
+    {
+      "question": "What \u0027K\u0027 is a long loose Japanese robe?",
+      "answer": "Kimono"
+    },
+    {
+      "question": "What \u0027K\u0027 are the low islands of Florida?",
+      "answer": "Keys"
+    },
+    {
+      "question": "What \u0027K\u0027 is a tower or stronghold?",
+      "answer": "Keep"
+    }
+  ],
+  "L": [
+    {
+      "question": "What \u0027L\u0027 is a small rock avalanche, or a huge majority in an election?",
+      "answer": "Landslide"
+    },
+    {
+      "question": "What \u0027L\u0027 can happen to a ship or help you with your shopping?",
+      "answer": "List"
+    },
+    {
+      "question": "What \u0027L\u0027 cannot change is spots",
+      "answer": "Leopard"
+    },
+    {
+      "question": "What\t\u0027L\u0027 is a baby hare?",
+      "answer": "Leveret"
+    },
+    {
+      "question": "What \u0027L\u0027 is the molten rock forced out of a volcano vent\u0027?",
+      "answer": "Lava"
+    },
+    {
+      "question": "What \u0027L\u0027 are the short poems that begin: \u0027There was an old man of Peru",
+      "answer": "Limericks"
+    },
+    {
+      "question": "What \u0027L\u0027 is the nearly round green fruit from citrus medica?",
+      "answer": "Lime"
+    },
+    {
+      "question": "What \u0027L\u0027 is where Theseus slew the Minotaur?",
+      "answer": "Labyrinth"
+    },
+    {
+      "question": "What \u0027L\u0027 comes before sentence, class and belt?",
+      "answer": "Life"
+    },
+    {
+      "question": "What \u0027L\u0027 is an item in an auction?",
+      "answer": "Lot"
+    },
+    {
+      "question": "What\t\u0027L\u0027 is the text of an opera?",
+      "answer": "Libretto"
+    },
+    {
+      "question": "What \u0027L\u0027 is a bloodsucking parasite, once much used by physicians?",
+      "answer": "Leech"
+    },
+    {
+      "question": "What \u0027L\u0027 comes in the form of kid, suede, or pigskin?",
+      "answer": "Leather"
+    },
+    {
+      "question": "What \u0027L\u0027 are the words of a pop song or a song in a",
+      "answer": "Lyrics"
+    },
+    {
+      "question": "In the RAF, what \u0027L\u0027 is the \u0027L\u0027 of \u0027LAC\u0027?",
+      "answer": "Leading"
+    },
+    {
+      "question": "What \u0027L\u0027 is another name for a maze?",
+      "answer": "Labyrinth"
+    },
+    {
+      "question": "What \u0027L\u0027 is a town with a population of more than five million in Peru?",
+      "answer": "Lima"
+    },
+    {
+      "question": "What \u0027L\u0027 is the kind of \u0027hanging about\u0027 that can be done with intent?",
+      "answer": "Loiter"
+    },
+    {
+      "question": "What \u0027L\u0027 is a German beer whose name means \u0027store\u0027 or `keeping\u0027?",
+      "answer": "Lager"
+    },
+    {
+      "question": "What \u0027L\u0027 comes before turn, wing and over?",
+      "answer": "Left"
+    },
+    {
+      "question": "What \u0027L\u0027 is the part of your ear where you wear an earring?",
+      "answer": "Lobe"
+    },
+    {
+      "question": "What \u0027L\u0027 is cloth made from flax fibres?",
+      "answer": "Linen"
+    },
+    {
+      "question": "What \u0027L\u0027 is a visible form of electro-magnetic radiation?",
+      "answer": "Light"
+    },
+    {
+      "question": "What \u0027L\u0027 do you gird up when you prepare for action?",
+      "answer": "Loins"
+    },
+    {
+      "question": "What \u0027L\u0027 comes before mark, lord and lubber?",
+      "answer": "Land"
+    },
+    {
+      "question": "What\t\u0027L\u0027 is a device for measuring a ship\u0027s speed or distance covered?",
+      "answer": "Log"
+    },
+    {
+      "question": "What\t\u0027L\u0027 is the part of the fig-tree associated with modesty?",
+      "answer": "Leaf"
+    },
+    {
+      "question": "What \u0027L\u0027 is another word for an attic?",
+      "answer": "Loft"
+    },
+    {
+      "question": "What\t\u0027L\u0027 is black or golden, and fetches game?",
+      "answer": "Labrador"
+    },
+    {
+      "question": "What \u0027L\u0027 are you told to use when you are being stupid?",
+      "answer": "Loaf"
+    },
+    {
+      "question": "What \u0027L\u0027 is made in the form of bobbin, pillow and needle point?",
+      "answer": "Lace"
+    },
+    {
+      "question": "What \u0027L\u0027 comes before guard, line and boat?",
+      "answer": "Life"
+    },
+    {
+      "question": "What \u0027L\u0027 is the drink with \u0027the totally tropical taste\u0027?",
+      "answer": "Lilt"
+    },
+    {
+      "question": "What \u0027L\u0027 is to treat someone as a celebrity or a big cat",
+      "answer": "Lionize"
+    },
+    {
+      "question": "What \u0027L\u0027 is a short, classifying phrase or name?",
+      "answer": "Label"
+    },
+    {
+      "question": "What \u0027L\u0027 is a building used for chemical research?",
+      "answer": "Laboratory"
+    },
+    {
+      "question": "What \u0027L\u0027 is a bounding line or terminal point?",
+      "answer": "Limit"
+    }
+  ],
+  "M": [
+    {
+      "question": "what \u0027M\u0027 is the longest running race in the Olympics?",
+      "answer": "Marathon"
+    },
+    {
+      "question": "What \u0027M\u0027 is a significant line through Greenwich?",
+      "answer": "Meridian"
+    },
+    {
+      "question": "What \u0027M\u0027 comes before pole, flower and fly?",
+      "answer": "May"
+    },
+    {
+      "question": "What \u0027M\u0027 is what Michael Jackson does when he appears to walk forward but actually moves backwards?",
+      "answer": "Moonwalking"
+    },
+    {
+      "question": "What \u0027M\u0027 is a flacon and King Arthur\u0027s magician?",
+      "answer": "Merlin"
+    },
+    {
+      "question": "What \u0027M\u0027 was slain by Theseus in a labyrinth?",
+      "answer": "Minotaur"
+    },
+    {
+      "question": "What \u0027M\u0027 founded the Moslem religion?",
+      "answer": "Mohammed"
+    },
+    {
+      "question": "What \u0027M\u0027 is the army officer below a lieutenant colonel and above a captain?",
+      "answer": "Major"
+    },
+    {
+      "question": "What \u0027M\u0027 comes before gas, marigold and mallow?",
+      "answer": "Marsh"
+    },
+    {
+      "question": "What \u0027M\u0027 is the opposite of minimum?",
+      "answer": "Maximum"
+    },
+    {
+      "question": "What \u0027M\u0027 is a tree with winged seeds that produces sugary syrup?",
+      "answer": "Maple"
+    },
+    {
+      "question": "What \u0027M\u0027 is the fruit tree on whose leaves silkworms feed?",
+      "answer": "Mulberry"
+    },
+    {
+      "question": "What \u0027M\u0027 are you said to get for old rope, if something comes easily?",
+      "answer": "Money"
+    },
+    {
+      "question": "What \u0027M\u0027 is the unlawful killing of one person by another?",
+      "answer": "Murder"
+    },
+    {
+      "question": "What \u0027M\u0027 goes with pestle for grinding and pounding?",
+      "answer": "Mortar"
+    },
+    {
+      "question": "What \u0027M\u0027 is a two-syllable word for the human race?",
+      "answer": "Mankind"
+    },
+    {
+      "question": "What \u0027M\u0027 is the planet fourth from the Sun?",
+      "answer": "Mars"
+    },
+    {
+      "question": "What \u0027M\u0027 is a fine-grained, reddish wood, much used by the cabinet makers?",
+      "answer": "Mahogany"
+    },
+    {
+      "question": "What \u0027M\u0027 are animals called capuchin, green and marmoset?",
+      "answer": "Monkeys"
+    },
+    {
+      "question": "What \u0027M\u0027 is an open-sea fish that lives in schools?",
+      "answer": "Mackerel"
+    },
+    {
+      "question": "What \u0027M\u0027 is the largest Balearic island?",
+      "answer": "Majorca"
+    },
+    {
+      "question": "What \u0027M\u0027 comes before ship, wife and summer?",
+      "answer": "Mid"
+    },
+    {
+      "question": "What \u0027M\u0027 is a shooting star?",
+      "answer": "Meteor"
+    },
+    {
+      "question": "What \u0027M\u0027 is a disease transmitted by mosquitoes?",
+      "answer": "Malaria"
+    },
+    {
+      "question": "What \u0027M\u0027 is a small book for handy use?",
+      "answer": "Manual"
+    },
+    {
+      "question": "What \u0027M\u0027 took the Pilgrim Fathers to America?",
+      "answer": "Mayflower"
+    },
+    {
+      "question": "What \u0027M\u0027 is a plant which goes well with lamb?",
+      "answer": "Mint"
+    },
+    {
+      "question": "What \u0027M\u0027 is an edible fungus?",
+      "answer": "Mushroom"
+    },
+    {
+      "question": "What \u0027M\u0027 governs the tides?",
+      "answer": "Moon"
+    },
+    {
+      "question": "What \u0027M\u0027 was the Roman god of war?",
+      "answer": "Mars"
+    },
+    {
+      "question": "What \u0027M\u0027 was a Gorgan with snakes for hair?",
+      "answer": "Medusa"
+    },
+    {
+      "question": "What \u0027M\u0027 is a vessel of hard material in which ingredients are pounded with a pestle?",
+      "answer": "Mortar"
+    },
+    {
+      "question": "What \u0027M\u0027 Is The Name Of The Metal That Is Liquid At Room Temperature?",
+      "answer": "Mercury"
+    }
+  ],
+  "N": [
+    {
+      "question": "What \u0027N\u0027 is the Himalayan country which is the home of the Gurkhas?",
+      "answer": "Nepal"
+    },
+    {
+      "question": "What \u0027N\u0027 when speaking of temperature is the equivalent of Zero",
+      "answer": "Nought"
+    },
+    {
+      "question": "What \u0027N\u0027 is the region of France famous for its beaches and its cheeses?",
+      "answer": "Normandy"
+    },
+    {
+      "question": "What \u0027N\u0027 is one less than ten?",
+      "answer": "Nine"
+    },
+    {
+      "question": "What \u0027N\u0027 is the most populous nation in Africa?",
+      "answer": "Nigeria"
+    },
+    {
+      "question": "What \u0027N\u0027 is a lump of gold?",
+      "answer": "Nugget"
+    },
+    {
+      "question": "What \u0027N\u0027 is the man who drew far-reaching conclusions from the drop of an apple?",
+      "answer": "Newton"
+    },
+    {
+      "question": "What \u0027N\u0027 is a small bunch of fragrant flowers?",
+      "answer": "Nosegay"
+    },
+    {
+      "question": "What \u0027N\u0027 is the number above the line in vulgar fractions?",
+      "answer": "Numerator"
+    },
+    {
+      "question": "What \u0027N\u0027 comes before out, club and gown?",
+      "answer": "Night"
+    },
+    {
+      "question": "What \u0027N\u0027 is very abundant in the air, and is a gas?",
+      "answer": "Nitrogen"
+    },
+    {
+      "question": "What \u0027N\u0027 is the proper name for both the notch in an arrow and the notches at each end of a bow to take the string?",
+      "answer": "Nock"
+    },
+    {
+      "question": "What \u0027N\u0027 means any bovine animal, and also \u0027Tidy\u0027?",
+      "answer": "Neat"
+    },
+    {
+      "question": "What \u0027N\u0027 is the only word that goes with fangled?",
+      "answer": "New"
+    },
+    {
+      "question": "What \u0027N\u0027 are now frequently tabloids?",
+      "answer": "Newspapers"
+    },
+    {
+      "question": "What \u0027N\u0027 is forty winks?",
+      "answer": "Nap"
+    },
+    {
+      "question": "What \u0027N\u0027 can be lace, tie or cloth?",
+      "answer": "Neck"
+    },
+    {
+      "question": "What \u0027N\u0027 are the tricks you can\u0027t teach an old dog?",
+      "answer": "New"
+    },
+    {
+      "question": "What \u0027N\u0027 is what a baby wears that needs constant changing?",
+      "answer": "Nappy"
+    },
+    {
+      "question": "What \u0027N\u0027 is a female goat or a child\u0027s nurse?",
+      "answer": "Nanny"
+    },
+    {
+      "question": "What \u0027N\u0027 is the popular name for an allergic skin irritation called urticaria?",
+      "answer": "Nettlerash"
+    },
+    {
+      "question": "What \u0027N\u0027 is a person or tribe who wanders from place to place?",
+      "answer": "Nomad"
+    },
+    {
+      "question": "What \u0027N\u0027 is a prize for physics, literature and peace?",
+      "answer": "Nobel"
+    },
+    {
+      "question": "What \u0027N\u0027 is a loony and a hard-shelled fruit?",
+      "answer": "Nut"
+    },
+    {
+      "question": "What \u0027N\u0027 comes after hair and before ball?",
+      "answer": "Net"
+    },
+    {
+      "question": "What \u0027N\u0027 are fibres that conduct stimuli to the brain?",
+      "answer": "Nerves"
+    },
+    {
+      "question": "What \u0027N\u0027 is expressing or implying denial?",
+      "answer": "Negative"
+    },
+    {
+      "question": "What \u0027N\u0027 is a halo?",
+      "answer": "Nimbus"
+    },
+    {
+      "question": "What \u0027N\u0027 is a decorative recess in a wall?",
+      "answer": "Niche"
+    },
+    {
+      "question": "What \u0027N\u0027 is trifling or persistently annoying?",
+      "answer": "Niggling"
+    },
+    {
+      "question": "What \u0027N\u0027 When Launched In 1994 Was The Main Rival To Microsofts Internet Explorer",
+      "answer": "Netscape"
+    }
+  ],
+  "O": [
+    {
+      "question": "What \u0027O\u0027 is a black woodwind instrument with a double reed?",
+      "answer": "Oboe"
+    },
+    {
+      "question": "What \u0027O\u0027 is used to mean the start of a war, of a disease, or of violence?",
+      "answer": "Outbreak"
+    },
+    {
+      "question": "What \u0027O\u0027 is a horse at very long odds, thought unlikely to be placed?",
+      "answer": "Outsider"
+    },
+    {
+      "question": "What \u0027O\u0027 goes before head, hear and heat?",
+      "answer": "Over"
+    },
+    {
+      "question": "What \u0027O\u0027 results in `no rooms\u0027 and is the curse of package tour hotels?",
+      "answer": "Overbooking"
+    },
+    {
+      "question": "What \u0027O\u0027 is sometimes one-sixteenth, and sometimes one-twelfth of a pound?",
+      "answer": "Ounce"
+    },
+    {
+      "question": "What \u0027O\u0027 is used to propel a rowing boat?",
+      "answer": "Oar"
+    },
+    {
+      "question": "What \u0027O\u0027 goes before post, look and standing?",
+      "answer": "Out"
+    },
+    {
+      "question": "What \u0027O\u0027 is the opposite of under?",
+      "answer": "Over"
+    },
+    {
+      "question": "What \u0027O\u0027 is a heavy article of clothing that can he an \u0027ulster\u0027 or a \u0027British warm\u0027?",
+      "answer": "Overcoat"
+    },
+    {
+      "question": "What \u0027O\u0027 has a reputation for wisdom and flies and hunts by night?",
+      "answer": "Owl"
+    },
+    {
+      "question": "What \u0027O\u0027 is a person who is larger than usual, and needs big clothes?",
+      "answer": "Outsize"
+    },
+    {
+      "question": "What \u0027O\u0027 goes before time, coat and cast?",
+      "answer": "Over"
+    },
+    {
+      "question": "What \u0027O\u0027 is the most used lubricant?",
+      "answer": "Oil"
+    },
+    {
+      "question": "What \u0027O\u0027 is a fruit, grown in Spain and Italy, that is sold green and black and produces oil?",
+      "answer": "Olive"
+    },
+    {
+      "question": "What \u0027O\u0027 is an unreasonably persistent idea or interest?",
+      "answer": "Obsession"
+    },
+    {
+      "question": "What \u0027O\u0027 is a vegetable, also used to make a yellow dye?",
+      "answer": "Onion"
+    },
+    {
+      "question": "What \u0027O\u0027 is the opposite of on?",
+      "answer": "Off"
+    },
+    {
+      "question": "What \u0027O\u0027 is one of the competing teams in the University Boat Race?",
+      "answer": "Oxford"
+    },
+    {
+      "question": "What \u0027O\u0027 is the opposite of pessimism?",
+      "answer": "Optimism"
+    },
+    {
+      "question": "What \u0027O\u0027 is a prize presented to actors and directors?",
+      "answer": "Oscar"
+    },
+    {
+      "question": "What \u0027O\u0027 is a child without parents?",
+      "answer": "Orphan"
+    },
+    {
+      "question": "What \u0027O\u0027 is a child without brothers and sisters?",
+      "answer": "Only"
+    },
+    {
+      "question": "What \u0027O\u0027 are international games held in a different country every four years?",
+      "answer": "Olympics"
+    },
+    {
+      "question": "What \u0027O\u0027 is the value rating for petrol?",
+      "answer": "Octane"
+    },
+    {
+      "question": "What \u0027O\u0027 is the longest river in South Africa?",
+      "answer": "Orange"
+    },
+    {
+      "question": "What \u0027O\u0027 means thoroughly stupid and is also applied to angles?",
+      "answer": "Obtuse"
+    },
+    {
+      "question": "What \u0027O\u0027 is commonplace or usual?",
+      "answer": "Ordinary"
+    },
+    {
+      "question": "What \u0027O\u0027 means to acquire or get?",
+      "answer": "Obtain"
+    }
+  ],
+  "P": [
+    {
+      "question": "What \u0027P\u0027 is a document demanding action which is signed by a lot of people?",
+      "answer": "Petition"
+    },
+    {
+      "question": "What \u0027P\u0027 is a comic strip created by Charles Schultz ?",
+      "answer": "Peanuts"
+    },
+    {
+      "question": "What \u0027P\u0027 was the name given to English 19th century colonists who grew rubber, tea, cotton, coffe and sugar?",
+      "answer": "Planters"
+    },
+    {
+      "question": "What \u0027P\u0027 is a horizontal bar for a cage bird to sit on?",
+      "answer": "Perch"
+    },
+    {
+      "question": "What \u0027P\u0027 is a dealer in ducks, hens, geese and turkeys?",
+      "answer": "Poulterer"
+    },
+    {
+      "question": "What \u0027P\u0027 is a black and white swimming bird that never flies?",
+      "answer": "Penguin"
+    },
+    {
+      "question": "What \u0027P\u0027 revolted in England in 1381?",
+      "answer": "Peasants"
+    },
+    {
+      "question": "What \u0027P\u0027 is a person who makes scent?",
+      "answer": "Perfumer"
+    },
+    {
+      "question": "What \u0027P\u0027 is the source of the starch called farina?",
+      "answer": "Potato"
+    },
+    {
+      "question": "What \u0027P\u0027 is the largest voracious predatory fish of English fresh water?",
+      "answer": "Pike"
+    },
+    {
+      "question": "What \u0027P\u0027 is a covering for a bed made of lots of little pieces of different material sewn together?",
+      "answer": "Patchwork"
+    },
+    {
+      "question": "What \u0027P\u0027 comes exclusively from Douro and is a wine?",
+      "answer": "Port"
+    },
+    {
+      "question": "What \u0027P\u0027 is a mustard pickle of mixed vegetables?",
+      "answer": "Piccalilli"
+    },
+    {
+      "question": "What \u0027P\u0027 is a red flower of the countryside worn on the UK's Remembrance Day?",
+      "answer": "Poppy"
+    },
+    {
+      "question": "What \u0027P\u0027 is a harbour-town with a customs office?",
+      "answer": "Port"
+    },
+    {
+      "question": "What \u0027P\u0027 is a Greek letter and represents the number 3.142 in mathematics?",
+      "answer": "PI"
+    },
+    {
+      "question": "What \u0027P\u0027 is a cat\u0027s foot?",
+      "answer": "Paw"
+    },
+    {
+      "question": "What \u0027P\u0027 are trains that carry people rather than goods?",
+      "answer": "Passenger"
+    },
+    {
+      "question": "What \u0027P\u0027 is a ride on the back and shoulders of another?",
+      "answer": "Piggyback"
+    },
+    {
+      "question": "What \u0027P\u0027 can mean a portion of history, a full stop, or a complete sentence?",
+      "answer": "Period"
+    },
+    {
+      "question": "What \u0027P\u0027 means failure in an exam, pulling out feathers or bravery?",
+      "answer": "Pluck"
+    },
+    {
+      "question": "What \u0027P\u0027 is the white, hard, tasteless wax used to make candles?",
+      "answer": "Parafin"
+    },
+    {
+      "question": "What \u0027P\u0027 is sixteen ounces?",
+      "answer": "Pound"
+    },
+    {
+      "question": "What \u0027P\u0027 is the colourful part of a flower?",
+      "answer": "Petal"
+    },
+    {
+      "question": "What \u0027P\u0027 is the European country that produces most of the world\u0027s cork?",
+      "answer": "Portugal"
+    },
+    {
+      "question": "What \u0027P\u0027 comes before hanger, chase and weight?",
+      "answer": "Paper"
+    },
+    {
+      "question": "What \u0027P\u0027 means many coloured?",
+      "answer": "Polychrome"
+    },
+    {
+      "question": "What \u0027P\u0027 is nightwear that comes in two pieces?",
+      "answer": "Pyjamas"
+    },
+    {
+      "question": "What \u0027P\u0027 is swearing to a statement that you know to be false?",
+      "answer": "Perjury"
+    },
+    {
+      "question": "What \u0027P\u0027 goes before fruit, flower and play?",
+      "answer": "Passion"
+    },
+    {
+      "question": "What \u0027P\u0027 is a support for a temporary bridge across a river?",
+      "answer": "Pontoon"
+    },
+    {
+      "question": "What \u0027P\u0027 goes before apple, marten and cone?",
+      "answer": "Pine"
+    },
+    {
+      "question": "What \u0027P\u0027 is said to be mightier than the sword?",
+      "answer": "Pen"
+    },
+    {
+      "question": "What \u0027P\u0027 were Socrates, Descartes, Bertrand Russell and Wittgenstein?",
+      "answer": "Philosophers"
+    },
+    {
+      "question": "What \u0027P\u0027 is a flat-bottomed boat, or a type of kick in rugby?",
+      "answer": "Punt"
+    }
+  ],
+  "Q": [
+    {
+      "question": "What \u0027Q\u0027 is a landing place, or wharf, for loading and unloading?",
+      "answer": "Quay"
+    },
+    {
+      "question": "What\t\u0027Q\u0027 means to flinch or cower away, but is also a little game bird?",
+      "answer": "Quail"
+    },
+    {
+      "question": "What \u0027Q\u0027 are the misgivings, doubts, or scruples of conscience?",
+      "answer": "Qualms"
+    },
+    {
+      "question": "What \u0027Q\u0027 is what the Americans call a shirker?",
+      "answer": "Quitter"
+    },
+    {
+      "question": "What \u0027Q\u0027 is a 25 cent piece?",
+      "answer": "Quarter"
+    },
+    {
+      "question": "What \u0027Q\u0027 has Brisbane as its capital?",
+      "answer": "Queensland"
+    },
+    {
+      "question": "What \u0027Q\u0027 is an Australian airline?",
+      "answer": "Quantas"
+    },
+    {
+      "question": "What \u0027Q\u0027 is a hunted animal?",
+      "answer": "Quarry"
+    },
+    {
+      "question": "What \u0027Q\u0027 is feeling sick?",
+      "answer": "Queasy"
+    },
+    {
+      "question": "What \u0027Q\u0027 Is An Acomplishment That Makes A Person Suitable For A Particular Job?",
+      "answer": "Qualification"
+    },
+    {
+      "question": "What \u0027Q\u0027 Is A Bedspread Especially Patchwork?",
+      "answer": "Quilt"
+    },
+    {
+      "question": "What \u0027Q\u0027 Would A Ship Be In If It Was Flying A Yellow Flag?",
+      "answer": "Quarantine"
+    },
+    {
+      "question": "What \u0027Q\u0027 Are Interrogative Sentences frequently Beginning With What, Where And When?",
+      "answer": "Questions"
+    },
+    {
+      "question": "What \u0027Q\u0027 Do You Need Four Of To Make One Whole?",
+      "answer": "Quarters"
+    },
+    {
+      "question": "What \u0027Q\u0027 Are Star Like Objects Some Of Which Are Up To 10 Billion Light Years Away?",
+      "answer": "Quasars"
+    },
+    {
+      "question": "What \u0027Q\u0027 Means The Same If You Put An S In Front Of It, Meaning Crush Or Stamp On?",
+      "answer": "Quash"
+    },
+    {
+      "question": "What \u0027Q\u0027 Sounds Like A Solution Or Door Opener, But Is A Wharf Where Ships Dock?",
+      "answer": "Quay"
+    },
+    {
+      "question": "What \u0027Q\u0027 Is The Crystal Whose Vibrations Control Clocks?",
+      "answer": "Quartz"
+    },
+    {
+      "question": "What \u0027Q\u0027 Is An Open Savoury Tart Made With A Variety Of Fillings?",
+      "answer": "Quich"
+    },
+    {
+      "question": "What \u0027Q\u0027 As A Verb Means To Question Or Inquire Into, Or To Doubt?",
+      "answer": "Query"
+    }
+  ],
+  "R": [
+    {
+      "question": "What \u0027R\u0027 is the light at the back of a vehicle that is red to warn other vehicles coming from behind ?",
+      "answer": "Rearlight"
+    },
+    {
+      "question": "What \u0027R\u0027 is the sort of deal that is harsh or unfair?",
+      "answer": "Raw"
+    },
+    {
+      "question": "What \u0027R\u0027 has a scut and is kept in a hutch?",
+      "answer": "Rabbit"
+    },
+    {
+      "question": "What \u0027R\u0027 is an inclined beam supporting a roof?",
+      "answer": "Rafter"
+    },
+    {
+      "question": "What \u0027R\u0027 is the slang that makes \u0027Apples and Pears\u0027 into `stairs\u0027?",
+      "answer": "Rhyming"
+    },
+    {
+      "question": "What \u0027R\u0027 is the fruit of the vine when it has been dried?",
+      "answer": "Raisin"
+    },
+    {
+      "question": "What \u0027R\u0027 is every action said to have?",
+      "answer": "Reaction"
+    },
+    {
+      "question": "What \u0027R\u0027 in South Africa is worth 100 cents?",
+      "answer": "Rand"
+    },
+    {
+      "question": "What \u0027R\u0027 can be described as pigeon\u0027s blood or cabocho and is a gemstone?",
+      "answer": "Ruby"
+    },
+    {
+      "question": "What \u0027R\u0027 is a sudden invasion by police to discover violations of the law?",
+      "answer": "Raid"
+    },
+    {
+      "question": "What \u0027R\u0027 is a small, tasty, red fruit, or a rude noise made with the lips?",
+      "answer": "Raspberry"
+    },
+    {
+      "question": "What \u0027R\u0027 are the bones that can be asternal, floating or false?",
+      "answer": "Ribs"
+    },
+    {
+      "question": "What \u0027R\u0027 is a track for trains?",
+      "answer": "Railway"
+    },
+    {
+      "question": "What \u0027R\u0027 is your backside, or means to bring up to maturity",
+      "answer": "Rear"
+    },
+    {
+      "question": "What \u0027R\u0027 is the sort of punch that is a blow on the back of the neck?",
+      "answer": "Rabbit"
+    },
+    {
+      "question": "What \u0027R\u0027 is an edible part of certain fish, or a type of small deer?",
+      "answer": "Row"
+    },
+    {
+      "question": "What \u0027R\u0027 is a long exchange of strokes in tennis?",
+      "answer": "Rally"
+    },
+    {
+      "question": "What\t\u0027R\u0027 is the sort of meeting where dogs or horses compete?",
+      "answer": "Race"
+    },
+    {
+      "question": "What \u0027R\u0027 means to ransack or search in an untidy way?",
+      "answer": "Rummage"
+    },
+    {
+      "question": "What \u0027R\u0027 is a keeper in a Royal park or a senior girl guide?",
+      "answer": "Ranger"
+    },
+    {
+      "question": "What \u0027R\u0027 is a colloquial term for a newspaper, usually the local one?",
+      "answer": "Rag"
+    },
+    {
+      "question": "What \u0027R\u0027 is someone who deals in stolen goods; but also means the earpiece of a telephone?",
+      "answer": "Receiver"
+    },
+    {
+      "question": "What \u0027R\u0027 is a word for \u0027stale\u0027 that is chiefly applied to butter?",
+      "answer": "Rancid"
+    },
+    {
+      "question": "What \u0027R\u0027 is a name for countless dogs and means \u0027King\u0027 in Latin?",
+      "answer": "Rex"
+    },
+    {
+      "question": "What \u0027R\u0027 is a musical performance given by one person?",
+      "answer": "Recital"
+    },
+    {
+      "question": "What \u0027R\u0027 is a fast current, like the water channelled into a mill?",
+      "answer": "Race"
+    },
+    {
+      "question": "What \u0027R\u0027 is carried by a viaduct?",
+      "answer": "Road"
+    },
+    {
+      "question": "What \u0027R\u0027 is the companion of Doctor Who, called K9?",
+      "answer": "Robot"
+    },
+    {
+      "question": "What \u0027R\u0027 is made into gloves to protect your hands, and into bicycle tyres?",
+      "answer": "Rubber"
+    },
+    {
+      "question": "What \u0027R\u0027 means quick?",
+      "answer": "Rapid"
+    },
+    {
+      "question": "What \u0027R\u0027 was the lover of Juliet?",
+      "answer": "Romeo"
+    }
+  ],
+  "S": [
+    {
+      "question": "What \u0027S\u0027 is a thing that a ruminant essentially has more than one of?",
+      "answer": "Stomach"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before irin, roller and engine?",
+      "answer": "Steam"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before block, price and stalls?",
+      "answer": "Starting"
+    },
+    {
+      "question": "What \u0027S\u0027 is a greyish-green herb used for stuffing duck, or used to describe a wise man?",
+      "answer": "Sage"
+    },
+    {
+      "question": "What \u0027S\u0027 is an English county which includes Exmoor, and the Cathedral city of Wells?",
+      "answer": "Somerset"
+    },
+    {
+      "question": "What \u0027S\u0027 precedes father, mother and ladder?",
+      "answer": "Step"
+    },
+    {
+      "question": "What \u0027S\u0027 comes after mill, gem and cherry?",
+      "answer": "Stone"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before charmer, bite and skin?",
+      "answer": "Snake"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before onion, board, and chicken?",
+      "answer": "Spring"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before Armada, onion and guitar?",
+      "answer": "Spanish"
+    },
+    {
+      "question": "What \u0027S\u0027 is a holy place or a protected place where birds live in peace?",
+      "answer": "Sanctuary"
+    },
+    {
+      "question": "What \u0027S\u0027 is a hunting expedition in Africa, or a park in England?",
+      "answer": "Safari"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before pancake, egg and broth?",
+      "answer": "Scotch"
+    },
+    {
+      "question": "What \u0027S\u0027 comes after cinema, television and rood?",
+      "answer": "Screen"
+    },
+    {
+      "question": "What \u0027S\u0027 is a North Yorkshire resort whose fair, Simon and Garfunkel sing about?",
+      "answer": "Scarborough"
+    },
+    {
+      "question": "What \u0027S\u0027 is a short gaiter, or the spawn of a shellfish?",
+      "answer": "Spat"
+    },
+    {
+      "question": "What \u0027S\u0027 is one more than sixteen?",
+      "answer": "Seventeen"
+    },
+    {
+      "question": "What \u0027S\u0027 is the fish which is the source of caviar?",
+      "answer": "Sturgeon"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before cloud, warning and porch?",
+      "answer": "Storm"
+    },
+    {
+      "question": "What \u0027S\u0027 is a pedigree stallion when he\u0027s a father?",
+      "answer": "Sire"
+    },
+    {
+      "question": "What \u0027S\u0027 is a Japanese drink made from rice?",
+      "answer": "Sake"
+    },
+    {
+      "question": "What \u0027S\u0027 is a fish that returns to its birthplace to spawn, and has given its name to one of the shades of pink?",
+      "answer": "Salmon"
+    },
+    {
+      "question": "What \u0027S\u0027 is a non-fattening sweetener?",
+      "answer": "Saccharin"
+    },
+    {
+      "question": "What \u0027S\u0027 precedes ladder, pink and trout?",
+      "answer": "Salmon"
+    },
+    {
+      "question": "What \u0027S\u0027 is a lump of wood supporting a railway track, or a gold circle in a pierced ear?",
+      "answer": "Sleeper"
+    },
+    {
+      "question": "What \u0027S\u0027 is the name for the longest and the shortest day of the year when the sun appears to stand still?",
+      "answer": "Solstice"
+    },
+    {
+      "question": "What \u0027S\u0027 is a secret agent?",
+      "answer": "Spy"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before plate, fir tree and lining?",
+      "answer": "Silver"
+    },
+    {
+      "question": "What \u0027S\u0027 is the wire fastener that holds a booklet together through the centrefold?",
+      "answer": "Staple"
+    },
+    {
+      "question": "What \u0027S\u0027 is a post for marking out territory, or is money placed in a bet?",
+      "answer": "Stake"
+    },
+    {
+      "question": "What \u0027S\u0027 is what you are told to pull up when your performance has been substandard?",
+      "answer": "Socks"
+    },
+    {
+      "question": "What \u0027S\u0027 is the favourite slang name for the potato?",
+      "answer": "Spud"
+    },
+    {
+      "question": "What \u0027S\u0027 is a system of steps in a country wall or fence, where people, but not animals can cross?",
+      "answer": "Stile"
+    },
+    {
+      "question": "What \u0027S\u0027 is the saucepan in which bones are boiled to make the basis of soups and sauces?",
+      "answer": "Stockpot"
+    },
+    {
+      "question": "What \u0027S\u0027 is a ship designed to sail under the sea?",
+      "answer": "Submarine"
+    },
+    {
+      "question": "What \u0027S\u0027 is another word for a water-ice?",
+      "answer": "Sorbet"
+    },
+    {
+      "question": "What \u0027S\u0027 goes before string, hand and fiddle?",
+      "answer": "Second"
+    },
+    {
+      "question": "What \u0027S\u0027 is a large-jawed predatory fish?",
+      "answer": "Shark"
+    },
+    {
+      "question": "What \u0027S\u0027 is an arachnid with a deadly tail?",
+      "answer": "Scorpion"
+    },
+    {
+      "question": "What \u0027S\u0027 is underwater diving with an aqualung?",
+      "answer": "Scuba"
+    },
+    {
+      "question": "What \u0027S\u0027 are ruminant woolly mammals?",
+      "answer": "Sheep"
+    },
+    {
+      "question": "What \u0027S\u0027 is a small crustacean with ten legs?",
+      "answer": "Shrimp"
+    },
+    {
+      "question": "What \u0027S\u0027 comes before worm, shape and wreck?",
+      "answer": "Ship"
+    },
+    {
+      "question": "What \u0027S\u0027 is a venue for the Olympic Games in 1988?",
+      "answer": "Seoul"
+    }
+  ],
+  "T": [
+    {
+      "question": "What \u0027T\u0027 goes before deck, measure and recorder?",
+      "answer": "Tape"
+    },
+    {
+      "question": "What \u0027T is an electric lamp filled with batteries that you carry around with you?",
+      "answer": "Torch"
+    },
+    {
+      "question": "What \u0027T\u0027 is the American word for a dinner-jacket?",
+      "answer": "Tuxedo"
+    },
+    {
+      "question": "What \u0027T\u0027 is a stiffened skirt worn by ballerinas?",
+      "answer": "Tutu"
+    },
+    {
+      "question": "What \u0027T\u0027 is the country that has had Prime Ministers called Ulusa and Ozal\u0027?",
+      "answer": "Turkey"
+    },
+    {
+      "question": "What \u0027T\u0027 is a slight squabble?",
+      "answer": "Tiff"
+    },
+    {
+      "question": "What \u0027T\u0027 is called a \u0027tin fish\u0027 by the Navy?",
+      "answer": "Torpedo"
+    },
+    {
+      "question": "What \u0027T is a small stream flowing into a river?",
+      "answer": "Tributary"
+    },
+    {
+      "question": "What \u0027T\u0027 comes from an ore called cassiterite?",
+      "answer": "tin"
+    },
+    {
+      "question": "What \u0027T\u0027 is a fishing vessel that uses a conical net dragged through the water?",
+      "answer": "Trawler"
+    },
+    {
+      "question": "What \u0027T\u0027 is a small wig for a bald patch?",
+      "answer": "Toupee"
+    },
+    {
+      "question": "What \u0027T\u0027 is where soldiers sleep when they are under canvas?",
+      "answer": "Tent"
+    },
+    {
+      "question": "What \u0027T is a red fruit eaten in salads, and treated as a vegetable?",
+      "answer": "Tomato"
+    },
+    {
+      "question": "What \u0027T was once capital of Spain, and famous for sword steel?",
+      "answer": "Toledo"
+    },
+    {
+      "question": "What \u0027T\u0027 are carried in the jawbone, and are made of dentine?",
+      "answer": "Teeth"
+    },
+    {
+      "question": "What \u0027T\u0027 is the day of the week that follows Monday?",
+      "answer": "Tuesday"
+    },
+    {
+      "question": "What \u0027T\u0027 is a projecting tooth seen in elephants, walruses, and wild boar?",
+      "answer": "Tusk"
+    },
+    {
+      "question": "What \u0027T\u0027 is the little wiggly bit by which a vine climbs and clings?",
+      "answer": "Tendril"
+    },
+    {
+      "question": "What \u0027T\u0027 is the name of the process by which hides are turned into leather?",
+      "answer": "Tanning"
+    },
+    {
+      "question": "What \u0027T\u0027 is the site of a rattlesnake\u0027s rattle?",
+      "answer": "Tail"
+    },
+    {
+      "question": "What \u0027T\u0027 was the best known film character played by Johnny Weismuller?",
+      "answer": "Tarzan"
+    },
+    {
+      "question": "What \u0027T\u0027 is a ship designed to carry liquid cargo in bulk?",
+      "answer": "Tanker"
+    },
+    {
+      "question": "What \u0027T\u0027 comes after reflecting, refracting or Schmidt?",
+      "answer": "Telescope"
+    },
+    {
+      "question": "What \u0027T\u0027 is a jewelled head-dress worn by women on grand occasions?",
+      "answer": "Tiara"
+    },
+    {
+      "question": "What \u0027T\u0027 is another word for lukewarm?",
+      "answer": "Tepid"
+    },
+    {
+      "question": "What \u0027T\u0027 is a rose prickle?",
+      "answer": "Thorn"
+    },
+    {
+      "question": "What \u0027T\u0027 is what a compositor sets?",
+      "answer": "Type"
+    },
+    {
+      "question": "What \u0027T\u0027 is a loudspeaker for reproducing high frequencies?",
+      "answer": "Tweeter"
+    },
+    {
+      "question": "What \u0027T\u0027 is the great river on which Newcastle stands?",
+      "answer": "Tyne"
+    },
+    {
+      "question": "What \u0027T\u0027 goes before water, set and paper?",
+      "answer": "Toilet"
+    },
+    {
+      "question": "What \u0027T\u0027 is the number made by multiplying a hundred by ten?",
+      "answer": "Thousand"
+    },
+    {
+      "question": "What \u0027T\u0027 is the art and science of fighting battles?",
+      "answer": "Tactics"
+    }
+  ],
+  "U": [
+    {
+      "question": "What \u0027U\u0027 are the mammary glands of a goat?",
+      "answer": "Udder"
+    },
+    {
+      "question": "What \u0027U\u0027 is the \u0027Sinister supporter of the Royal Arms?",
+      "answer": "Unicorn"
+    },
+    {
+      "question": "What \u0027U\u0027 is a person who arranges funerals?",
+      "answer": "Undertaker"
+    },
+    {
+      "question": "What \u0027U\u0027 is the name of a large citrus fruit produced by crossing grapefruit and tangerines?",
+      "answer": "Ugli"
+    },
+    {
+      "question": "What \u0027U\u0027 is the opposite of rural and means of the town?",
+      "answer": "Urban"
+    },
+    {
+      "question": "What \u0027U\u0027 means customary or occurring in ordinary circumstances",
+      "answer": "Usual"
+    },
+    {
+      "question": "What \u0027U\u0027 is a state within a state which includes Little Russia?",
+      "answer": "Ukraine"
+    },
+    {
+      "question": "What \u0027U\u0027 describes clothes, or hairdressing, designed to be suitable for men or women?",
+      "answer": "Unisex"
+    },
+    {
+      "question": "What\t\u0027U\u0027 hangs, roughly speaking, between the tonsils?",
+      "answer": "Uvula"
+    },
+    {
+      "question": "What \u0027U\u0027 were Cinderella\u0027s sisters?",
+      "answer": "Ugly"
+    },
+    {
+      "question": "What \u0027U\u0027 is disarmament by only one side?",
+      "answer": "Unilateral"
+    },
+    {
+      "question": "What \u0027U\u0027 is a bike used in circuses, with only one wheel?",
+      "answer": "Unicycle"
+    },
+    {
+      "question": "What \u0027U\u0027 is the mass of plants, shrubs and bushes, beneath the trees of a wood?",
+      "answer": "Undergrowth"
+    },
+    {
+      "question": "What \u0027U\u0027 is a word used for \u0027relax\u0027 which means to undo a coil, or remove from a bobbin?",
+      "answer": "Unwind"
+    },
+    {
+      "question": "What \u0027U\u0027 is incompletely cooked - like the best roast beef?",
+      "answer": "Underdone"
+    },
+    {
+      "question": "What \u0027U\u0027 is to make a mark under a word, or syllable, to show it is to be emphasised?",
+      "answer": "Underline"
+    },
+    {
+      "question": "What \u0027U\u0027 is another word for the Cosmos?",
+      "answer": "Universe"
+    },
+    {
+      "question": "What \u0027U\u0027 is a final demand or a threat?",
+      "answer": "Ultimatum"
+    },
+    {
+      "question": "What \u0027U\u0027 is an actor ready to take over someone else\u0027s part in an emergency?",
+      "answer": "Understudy"
+    },
+    {
+      "question": "What \u0027U\u0027 means on the first floor, or a higher storey?",
+      "answer": "Upstairs"
+    },
+    {
+      "question": "What \u0027U\u0027 goes before crust, cut and class?",
+      "answer": "Upper"
+    },
+    {
+      "question": "What \u0027U\u0027 is to move with a wavy motion?",
+      "answer": "Undulate"
+    },
+    {
+      "question": "What \u0027U\u0027 is a vase with a foot?",
+      "answer": "Urn"
+    },
+    {
+      "question": "What \u0027U\u0027 comes before Kingdom, Nations and States?",
+      "answer": "United"
+    },
+    {
+      "question": "What \u0027U\u0027 is a portable shield from the rain?",
+      "answer": "Umbrella"
+    },
+    {
+      "question": "What \u0027U\u0027 means adverse or unfavourable?",
+      "answer": "Untoward"
+    },
+    {
+      "question": "What \u0027U\u0027 comes before modern, violet and conservative?",
+      "answer": "Ultra"
+    },
+    {
+      "question": "What \u0027U\u0027 is to make someone sad?",
+      "answer": "Upset"
+    },
+    {
+      "question": "What \u0027U\u0027 is the highest in place or rank?",
+      "answer": "Uppermost"
+    }
+  ],
+  "V": [
+    {
+      "question": "What \u0027V\u0027 are thiamine, niacin, and riboflavin?",
+      "answer": "Vitamins"
+    },
+    {
+      "question": "What \u0027V\u0027 are stoats, weasels, and magpies to a gamekeeper?",
+      "answer": "Vermin"
+    },
+    {
+      "question": "What \u0027V\u0027 came into being between 1943 and 1952 and is called Paricutin?",
+      "answer": "Volcano"
+    },
+    {
+      "question": "What \u0027V\u0027 is a large tub or other vessel for brewing and dyeing?",
+      "answer": "Vat"
+    },
+    {
+      "question": "What \u0027V\u0027 is the Russian river which is the longest in Europe and has singing boatmen?",
+      "answer": "Volga"
+    },
+    {
+      "question": "What \u0027V\u0027 were made by Amati, Guarneri, and Stradivari",
+      "answer": "Violins"
+    },
+    {
+      "question": "What \u0027V\u0027 goes with vigour, and cleans the bath?",
+      "answer": "Vim"
+    },
+    {
+      "question": "What \u0027V\u0027 is a solemn undertaking or promise?",
+      "answer": "Vow"
+    },
+    {
+      "question": "What \u0027V\u0027 is a raptorial bird with a naked head and neck?",
+      "answer": "Vulture"
+    },
+    {
+      "question": "What \u0027V\u0027 makes a soft smooth glove, in which you find an iron hand?",
+      "answer": "Velvet"
+    },
+    {
+      "question": "What \u0027V\u0027 is a four-syllable word meaning a farewell?",
+      "answer": "Valediction"
+    },
+    {
+      "question": "What \u0027V\u0027 is what the wind does when it changes direction?",
+      "answer": "Veers"
+    },
+    {
+      "question": "What \u0027V\u0027 do you find in leaves, in rocks, or carrying blood to the heart?",
+      "answer": "Veins"
+    },
+    {
+      "question": "What \u0027V\u0027 was Sherlock Holmes\u0027 favourite instrument?",
+      "answer": "Violin"
+    },
+    {
+      "question": "What \u0027V\u0027 is a saint whose feast day is 14th February?",
+      "answer": "Valentine"
+    },
+    {
+      "question": "What \u0027V\u0027 means empty and often goes with null?",
+      "answer": "Void"
+    },
+    {
+      "question": "What \u0027V\u0027 is a salvo, or a shower of missiles, or a sequence of shots in tennis?",
+      "answer": "Volley"
+    },
+    {
+      "question": "What \u0027V\u0027 is a document needed for travel through certain countries?",
+      "answer": "Visa"
+    },
+    {
+      "question": "What \u0027V\u0027 is a fear of heights?",
+      "answer": "Vertigo"
+    },
+    {
+      "question": "What \u0027V\u0027 is a female fox?",
+      "answer": "Vixen"
+    },
+    {
+      "question": "What \u0027V\u0027 are the thirty-three essential parts of the spinal column?",
+      "answer": "Vertibrae"
+    },
+    {
+      "question": "What \u0027V\u0027 is a tax?",
+      "answer": "VAT"
+    },
+    {
+      "question": "What \u0027V\u0027 does something do when it quivers and shakes?",
+      "answer": "Vibrate"
+    },
+    {
+      "question": "What \u0027V\u0027 is an innoculation against disease?",
+      "answer": "Vaccination"
+    },
+    {
+      "question": "What \u0027V\u0027 was a Dutch painter, famous for sunflowers, whose surname was Van Gogh?",
+      "answer": "Vincent"
+    },
+    {
+      "question": "What \u0027V\u0027 are rats, mice and fleas?",
+      "answer": "Vermin"
+    },
+    {
+      "question": "What \u0027V\u0027 was a Scandinavian seaman or pirate?",
+      "answer": "Viking"
+    },
+    {
+      "question": "What \u0027V\u0027 is the city where you see the Bridge of Sighs?",
+      "answer": "Venice"
+    },
+    {
+      "question": "What \u0027V\u0027 is the poison secreted in snakes and bees?",
+      "answer": "Venom"
+    },
+    {
+      "question": "What \u0027V\u0027 is the zodiacal sign for someone born on September 1st?",
+      "answer": "Virgo"
+    },
+    {
+      "question": "What \u0027V\u0027 is someone who eats no animal products at all?",
+      "answer": "Vegan"
+    },
+    {
+      "question": "What \u0027V\u0027 is the opposite of vice?",
+      "answer": "Virtue"
+    },
+    {
+      "question": "What \u0027V\u0027 is a condiment used for pickling?",
+      "answer": "Vinegar"
+    }
+  ],
+  "W": [
+    {
+      "question": "What \u0027W\u0027 is \u0027under the bridge\u0027 when it is past history?",
+      "answer": "Water"
+    },
+    {
+      "question": "What \u0027W\u0027 is most likely to be produced in a distillery in Scotland?",
+      "answer": "Whisky"
+    },
+    {
+      "question": "What \u0027W\u0027 is a sea mammal that used to provide the so- called \u0027bones\u0027 for women\u0027s corsets?",
+      "answer": "Whale"
+    },
+    {
+      "question": "What \u0027W\u0027 was the place where Alice had her first adventures?",
+      "answer": "Wonderland"
+    },
+    {
+      "question": "What \u0027W\u0027 goes before base, chair and barrow?",
+      "answer": "Wheel"
+    },
+    {
+      "question": "What \u0027W\u0027 means feeble and is often applied to knees?",
+      "answer": "Weak"
+    },
+    {
+      "question": "What \u0027W\u0027 is a bet or stake?",
+      "answer": "Wager"
+    },
+    {
+      "question": "What \u0027W\u0027 means rich?",
+      "answer": "Wealthy"
+    },
+    {
+      "question": "What \u0027W\u0027 is a man who practises sorcery, one of whom lived in the Land of Oz?",
+      "answer": "Wizard"
+    },
+    {
+      "question": "What \u0027W\u0027 is a word used for a North American Indian dwelling?",
+      "answer": "Wigwam"
+    },
+    {
+      "question": "What \u0027W\u0027 comes before cream, up and away?",
+      "answer": "Whipped"
+    },
+    {
+      "question": "What \u0027W\u0027 is the tree up which the mistaken bark?",
+      "answer": "Wrong"
+    },
+    {
+      "question": "What \u0027W\u0027 is the popular name of the little white wood anemone?",
+      "answer": "Windflower"
+    },
+    {
+      "question": "What \u0027W\u0027 is supposed to be in league with the devil, has a black cat and rides on a broomstick?",
+      "answer": "Witch"
+    },
+    {
+      "question": "What \u0027W\u0027 did Daedalus use to fix wings to himself and his son?",
+      "answer": "Wax"
+    },
+    {
+      "question": "What \u0027W\u0027 do you cry when you give false alarms?",
+      "answer": "Wolf"
+    },
+    {
+      "question": "What \u0027W\u0027 causes rill erosion, gully erosion and sheet erosion?",
+      "answer": "Water"
+    },
+    {
+      "question": "What \u0027W\u0027 is armed conflict and have been called Boer, First and Second?",
+      "answer": "War"
+    },
+    {
+      "question": "What \u0027W\u0027 is the most northerly of the Pacific States of America?",
+      "answer": "Washington"
+    },
+    {
+      "question": "What \u0027W\u0027 is a cereal called triticum vulgare?",
+      "answer": "Wheat"
+    },
+    {
+      "question": "What \u0027W\u0027 is the chief agricultural product of Paarl in South Africa?",
+      "answer": "Wine"
+    },
+    {
+      "question": "What \u0027W\u0027 is an old-fashioned term for radio?",
+      "answer": "Wireless"
+    },
+    {
+      "question": "What \u0027W\u0027 is the slender rod carried by fairies and magicians?",
+      "answer": "Wand"
+    },
+    {
+      "question": "What \u0027W\u0027 likes trees and telegraph poles, and can be pied, great spotted, or green?",
+      "answer": "Woodpecker"
+    },
+    {
+      "question": "What \u0027W\u0027 is England\u0027s oldest public school?",
+      "answer": "Winchester"
+    },
+    {
+      "question": "What \u0027W\u0027 is the merry-thought or breast bone of a roast bird?",
+      "answer": "Wishbone"
+    },
+    {
+      "question": "What \u0027W\u0027 is a little tool for beating eggs or cream to a froth?",
+      "answer": "Whisk"
+    },
+    {
+      "question": "What \u0027W\u0027 is to talk under your breath, or in an undertone?",
+      "answer": "Whisper"
+    },
+    {
+      "question": "What \u0027W\u0027 is a thin cake of batter, is cooked with an iron, and also means talking rubbish?",
+      "answer": "Waffle"
+    },
+    {
+      "question": "What \u0027W\u0027 goes before cub, hound or whistle?",
+      "answer": "Wolf"
+    },
+    {
+      "question": "What \u0027W\u0027 is occidental?",
+      "answer": "West"
+    },
+    {
+      "question": "What \u0027W\u0027 is the noise a horse makes when it is pleased?",
+      "answer": "Whinny"
+    },
+    {
+      "question": "What \u0027W\u0027 is where a cargo ship unloads?",
+      "answer": "Wharf"
+    },
+    {
+      "question": "What \u0027W\u0027 is the world\u0027s largest mammal?",
+      "answer": "Whale"
+    }
+
+  ],
+  "X": [
+    {
+      "question": "What \u0027X\u0027 is a US brand associated with photocopying?",
+      "answer": "Xerox"
+    },
+    {
+      "question": "What \u0027X\u0027 is a colourless gas?",
+      "answer": "Xenon"
+    },
+    {
+      "question": "What \u0027X\u0027 is the element of symbol Xe?",
+      "answer": "Xenon"
+    },
+    {
+      "question": "What \u0027X\u0027 means to relate to, consist of, or resemble wood?",
+      "answer": "Xyloid"
+    },
+    {
+      "question": "What \u0027X\u0027 is to be shaped like a sword?",
+      "answer": "Xiphoid"
+    },
+    {
+      "question": "What \u0027X\u0027 is a musical instrument?",
+      "answer": "Xylophone"
+    },
+    {
+      "question": "What \u0027X\u0027 is Greek for 'wooden sound'?",
+      "answer": "Xylophone"
+    },
+    {
+      "question": "What \u0027X\u0027 is a member of the percussion classification?",
+      "answer": "Xylophone"
+    },
+    {
+      "question": "What \u0027X\u0027 is a non-natural part of an organism or biological system, such as a pesticide?",
+      "answer": "Xenobiotic"
+    },
+    {
+      "question": "What \u0027X\u0027 is an engraving on wood?",
+      "answer": "Xylograph"
+    },
+    {
+      "question": "What \u0027X\u0027 is the genus name for a type of squirrel found only in Africa?",
+      "answer": "Xerus"
+    }
+  ],
+  "Y": [
+    {
+      "question": "What \u0027Y\u0027 is a root called the sweet potato?",
+      "answer": "Yam"
+    },
+    {
+      "question": "What \u0027Y\u0027 goes before gods and merry gentlemen?",
+      "answer": "Ye"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a verb meaning to jerk or pull violently?",
+      "answer": "Yank"
+    },
+    {
+      "question": "What \u0027Y\u0027 produces little red berries and wood used for making bows?",
+      "answer": "Yew"
+    },
+    {
+      "question": "What \u0027Y\u0027 is the Abominable Snowman?",
+      "answer": "Yeti"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a sailing boat?",
+      "answer": "Yacht"
+    },
+    {
+      "question": "What \u0027Y\u0027 makes bread rise?",
+      "answer": "Yeast "
+    },
+    {
+      "question": "What \u0027Y\u0027 is made from fermented milk?",
+      "answer": "Yoghurt"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a pudding eaten with milk and is also an English county?",
+      "answer": "Yorkshire"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a tree often planted in graveyards?",
+      "answer": "Yew"
+    },
+    {
+      "question": "What \u0027Y\u0027 is an American university and a type of lock?",
+      "answer": "Yale"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a monetary unit of Japan\u0027s currency?",
+      "answer": "Yen"
+    },
+    {
+      "question": "What \u0027Y\u0027 is the festive season of Christmas time?",
+      "answer": "Yuletide"
+    },
+    {
+      "question": "What \u0027Y\u0027 is some three inches short of a metre?",
+      "answer": "Yard"
+    },
+    {
+      "question": "What \u0027Y\u0027 is to chatter aimlessly?",
+      "answer": "Yatter"
+    },
+    {
+      "question": "What \u0027Y\u0027 is the second-largest city in Japan?",
+      "answer": "Yokohama"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a walled and paved area open to the sky?",
+      "answer": "Yard"
+    },
+    {
+      "question": "What \u0027Y\u0027 is the part of an egg that can harbour Salmonella?",
+      "answer": "Yolk"
+    },
+    {
+      "question": "What \u0027Y\u0027 is when someone clever was not born?",
+      "answer": "Yesterday"
+    },
+    {
+      "question": "What \u0027Y\u0027 is a milk-producing animal?",
+      "answer": "Yak"
+    },
+    {
+      "question": "What \u0027Y\u0027 Is A Child Like Exclamation Of Happiness, Excitement And Anticipation?",
+      "answer": "Yippee"
+    },
+    {
+      "question": "What \u0027Y\u0027 Is An Annual Publication Bringing Information On A Specific Subject, Up To Date?",
+      "answer": "Yearbook"
+    }
+  ],
+  "Z": [
+    {
+      "question": "What \u0027Z\u0027 is a place for animal containment?",
+      "answer": "Zoo"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a type of Buddhism?",
+      "answer": "Zen"
+    },
+    {
+      "question": "What \u0027Z\u0027 is an island in the Indian Ocean?",
+      "answer": "Zanzibar"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a central African river?",
+      "answer": "Zambesi"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a striped black and white animal of the horse family?",
+      "answer": "Zebra"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a clothes fastener?",
+      "answer": "Zip"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a the opposite of zig?",
+      "answer": "Zag"
+    },
+    {
+      "question": "What \u0027Z\u0027 means to destroy or obliterate, particularly in relation to electricity?",
+      "answer": "Zap"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a Hyrulian magic wielder from a famous Nintendo franchise?",
+      "answer": "Zelda"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a famous pocket lighter company?",
+      "answer": "Zippo"
+    },
+    {
+      "question": "What \u0027Z\u0027 developed the Jara Discord bot?",
+      "answer": "Zazsona"
+    },
+    {
+      "question": "What \u0027Z\u0027 may rise from a grave?",
+      "answer": "Zombie"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a person said to have great energy or enthusiasm for a goal?",
+      "answer": "Zealot"
+    },
+    {
+      "question": "What \u0027Z\u0027 is the highest point?",
+      "answer": "Zenith"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a segmented area?",
+      "answer": "Zone"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a spot on the skin?",
+      "answer": "Zit"
+    },
+    {
+      "question": "What \u0027Z\u0027 means relating to animals?",
+      "answer": "Zoic"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a four-letter metal?",
+      "answer": "Zinc"
+    },
+    {
+      "question": "What \u0027Z\u0027 is to travel at a fast pace?",
+      "answer": "Zoom"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a common spell in the Dragon Quest RPGs?",
+      "answer": "Zoom"
+    },
+    {
+      "question": "What \u0027Z\u0027 is an empty quantity?",
+      "answer": "Zero"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a gentle breeze?",
+      "answer": "Zephyr"
+    },
+    {
+      "question": "What \u0027Z\u0027 is divided into twelve signs, from which fortunes can be read through a horoscope?",
+      "answer": "Zodiac"
+    },
+    {
+      "question": "What \u0027Z\u0027 is to move left and right alternatively?",
+      "answer": "Zigzag"
+    },
+    {
+      "question": "What \u0027Z\u0027 is used to describe something amusingly unconventional or idiosyncratic?",
+      "answer": "Zany"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a branch of Biology, focusing on the animal kingdom?",
+      "answer": "Zoology"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a cell stage during birth?",
+      "answer": "Zygote"
+    },
+    {
+      "question": "What \u0027Z\u0027 is a unit of information used by computers, representing one sextillion bytes?",
+      "answer": "Zettabyte"
+    }
+  ]
+}
