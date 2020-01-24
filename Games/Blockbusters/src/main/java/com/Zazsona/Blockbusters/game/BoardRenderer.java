@@ -42,8 +42,8 @@ public class BoardRenderer
 
             BufferedImage overlayImage = new BufferedImage(746, 575, BufferedImage.TYPE_INT_ARGB);
             Graphics gfx = overlayImage.getGraphics();
-            Font font = Font.createFont(Font.TRUETYPE_FONT, ModuleResourceLoader.getResourceStream(moduleContext.getModuleAttributes().getKey(), "com/zazsona/blockbusters/Square.ttf"));
-            gfx.setFont(font.deriveFont(50.0f));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, ModuleResourceLoader.getResourceStream(moduleContext.getModuleAttributes().getKey(), "com/zazsona/blockbusters/Xolonium-Bold.ttf"));
+            gfx.setFont(font.deriveFont(40.0f));
             gfx.setColor(Color.BLACK);
             int fontHeight = gfx.getFontMetrics().getHeight();
 
