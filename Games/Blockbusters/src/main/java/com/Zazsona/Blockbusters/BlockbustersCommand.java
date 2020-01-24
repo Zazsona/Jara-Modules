@@ -2,15 +2,11 @@ package com.Zazsona.Blockbusters;
 
 import com.Zazsona.Blockbusters.game.BlockbustersQuitException;
 import com.Zazsona.Blockbusters.game.GameMaster;
-import com.Zazsona.Blockbusters.game.QuestionSheet;
 import com.Zazsona.Blockbusters.game.objects.Team;
-import com.Zazsona.Blockbusters.game.objects.TileState;
 import configuration.SettingsUtil;
 import exceptions.QuitException;
 import jara.Core;
-import module.ModuleCommand;
 import module.ModuleGameCommand;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -37,7 +33,6 @@ public class BlockbustersCommand extends ModuleGameCommand
     {
         try
         {
-            QuestionSheet.getInstance();
             TextChannel channel = createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-Blockbusters", msgEvent.getMember());
             Message teamJoinMessage = channel.sendMessage(JaraBlockbustersUI.getEmbed(msgEvent.getGuild().getSelfMember(), "Select a team, then press OK to start.")).complete();
             teamJoinMessage.addReaction(WHITE_EMOJI).queue();
