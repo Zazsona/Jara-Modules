@@ -11,7 +11,8 @@ public class GameMaster
     private Team whiteTeam;
     private Board board;
     private boolean isStarted;
-    BlockbustersUI blockbustersUI;
+    private BlockbustersUI blockbustersUI;
+    private QuestionSheet questionSheet;
 
     public GameMaster(BlockbustersUI blockbustersUI, Team whiteTeam, Team blueTeam) throws IOException
     {
@@ -20,6 +21,7 @@ public class GameMaster
         this.board = new Board();
         this.isStarted = false;
         this.blockbustersUI = blockbustersUI;
+        this.questionSheet = new QuestionSheet();
     }
 
     /**
@@ -99,7 +101,7 @@ public class GameMaster
             letter = blockbustersUI.getLetterSelection(activeTeam);
             tile = board.getTile(letter);
         }
-        Question question = QuestionSheet.getInstance().getRandomQuestion(letter);
+        Question question = questionSheet.getRandomQuestion(letter);
         blockbustersUI.sendQuestion(question.getQuestionText());
         Team buzzedTeam = blockbustersUI.waitForBuzzIn(whiteTeam, blueTeam);
         TileState tileState = answerQuestion(buzzedTeam, (buzzedTeam.isWhiteTeam()) ? blueTeam : whiteTeam, question);
@@ -118,11 +120,11 @@ public class GameMaster
         long opposingAnswerSeconds = 30;
         blockbustersUI.sendAnswerResponse(team.getTeamName()+", what is your answer?\nYou've got "+answerSeconds+" seconds.");
         String answerAttempt = blockbustersUI.getAnswer(team, answerSeconds);
-        if (answerAttempt == null || !question.getQuestionAnswer().equalsIgnoreCase(answerAttempt))
+        if (answerAttempt == null || !question.isAnswerCorrect(answerAttempt))
         {
             blockbustersUI.sendAnswerResponse("Sorry, " + team.getTeamName() + ", looks like you didn't get it.\n" + opposingTeam.getTeamName() + ", you've got " + opposingAnswerSeconds + " seconds to answer.");
             String opposingAnswerAttempt = blockbustersUI.getAnswer(opposingTeam, opposingAnswerSeconds);
-            if (opposingAnswerAttempt == null || !question.getQuestionAnswer().equalsIgnoreCase(opposingAnswerAttempt))
+            if (opposingAnswerAttempt == null || !question.isAnswerCorrect(opposingAnswerAttempt))
             {
                 blockbustersUI.sendAnswerResponse("Nope! That's not it either. Nobody claims this tile.");
                 return TileState.UNCLAIMED;
