@@ -1,0 +1,12 @@
+{
+  "key": "Connect4",
+  "aliases": [
+    "C4",
+    "ConnectFour",
+    "FourInARow",
+    "4InARow"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Get four in a row."
+}

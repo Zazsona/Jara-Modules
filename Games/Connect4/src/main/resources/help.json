@@ -1,0 +1,7 @@
+{
+  "params": [
+    "Connect4",
+    "Connect4 AI [Easy|Normal|Hard|Proud]"
+  ],
+  "description": "Select a column to drop a counter. See if you can get four in a row!\nEnter \"AI\" to play against the bot."
+}
