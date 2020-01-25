@@ -1,5 +1,6 @@
 package com.Zazsona.Connect4;
 
+import com.Zazsona.Connect4.AI.AIPlayer;
 import com.Zazsona.Connect4.game.Board;
 import com.Zazsona.Connect4.game.Counter;
 import commands.CmdUtil;
@@ -21,6 +22,7 @@ public class Connect4 extends ModuleGameCommand
     private TextChannel channel;
     private Member player1;
     private Member player2;
+    private AIPlayer aiPlayer;
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -31,10 +33,19 @@ public class Connect4 extends ModuleGameCommand
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
         embed.setTitle("Connect 4");
 
+        if (parameters.length > 1)
+        {
+            if (parameters[1].equalsIgnoreCase("AI"))
+            {
+                aiPlayer = new AIPlayer(board, false);
+                player1 = msgEvent.getMember();
+                player2 = msgEvent.getGuild().getSelfMember();
+            }
+        }
         runGame(msgEvent, board, embed);
     }
 
-    private Counter getPlayerCounter(boolean isPlayer1)
+    public static Counter getPlayerCounter(boolean isPlayer1)
     {
         return (isPlayer1) ? BLUE : RED;
     }
@@ -51,13 +62,20 @@ public class Connect4 extends ModuleGameCommand
             {
                 sendBoard("", embed, board);
                 String selection = null;
-                while (selection == null || board.isColumnFull(selection))
+                if (aiPlayer != null && aiPlayer.isPlayer1() == isPlayer1Turn)
                 {
-                    selection = getInput(msgEvent, embed, mm, isPlayer1Turn, board);
-                    if (board.isColumnFull(selection))
-                        msgEvent.getChannel().sendMessage("That column is full! Please pick another.").queue();
+                    aiPlayer.takeTurn();
                 }
-                board.placeCounter(selection, getPlayerCounter(isPlayer1Turn));
+                else
+                {
+                    while (selection == null || board.isColumnFull(selection))
+                    {
+                        selection = getInput(msgEvent, embed, mm, isPlayer1Turn, board);
+                        if (board.isColumnFull(selection))
+                            msgEvent.getChannel().sendMessage("That column is full! Please pick another.").queue();
+                    }
+                    board.placeCounter(selection, getPlayerCounter(isPlayer1Turn));
+                }
                 winnerCounter = board.getWinner();
                 isPlayer1Turn = !isPlayer1Turn;
             }
@@ -145,7 +163,7 @@ public class Connect4 extends ModuleGameCommand
                     if (msg.getContentDisplay().equalsIgnoreCase("quit") || msg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(cmdMsgEvent.getGuild().getId()) + "quit"))
                     {
                         endGame(board, embed, getPlayerCounter(!msg.getMember().equals(player1))); //Invert the counter, so the winner is the opposition to the quitter
-                        return null;
+                        throw new QuitException();
                     }
                 }
                 if ((msg.getMember().equals(player1) && isPlayer1Turn) || (msg.getMember().equals(player2) && !isPlayer1Turn))
@@ -164,9 +182,7 @@ public class Connect4 extends ModuleGameCommand
      */
     private void assignPlayers(Member host, Member memberToSet, boolean setPlayer1)
     {
-        player1 = host;
-        player2 = host; //TODO: Uncomment
-        /*if (player1 == null && setPlayer1)
+        if (player1 == null && setPlayer1)
         {
             player1 = memberToSet;
             if (!player1.equals(host))
@@ -177,6 +193,6 @@ public class Connect4 extends ModuleGameCommand
         else if (player2 == null && !setPlayer1 && !memberToSet.equals(player1))
         {
             player2 = memberToSet;
-        }*/
+        }
     }
 }

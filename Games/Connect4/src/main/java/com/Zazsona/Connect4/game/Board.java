@@ -10,7 +10,7 @@ public class Board
 
     public Board()
     {
-         counters = new Counter[7][6];
+        counters = new Counter[7][6];
         for (int column = 0; column<counters.length; column++)
         {
             for (int row = 0; row < counters[column].length; row++)
@@ -19,6 +19,19 @@ public class Board
             }
         }
     }
+
+    private Board(Counter[][] originalCounters)
+    {
+        this.counters = new Counter[7][6];
+        for (int column = 0; column<counters.length; column++)
+        {
+            for (int row = 0; row < counters[column].length; row++)
+            {
+                counters[column][row] = originalCounters[column][row];
+            }
+        }
+    }
+
 
     /**
      * Gets the width of the board
@@ -271,4 +284,9 @@ public class Board
         return columnIndex;
     }
 
+    public Board clone()
+    {
+        Board board = new Board(counters);
+        return board;
+    }
 }
