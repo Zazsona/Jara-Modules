@@ -130,6 +130,18 @@ public class Board
         throw new ColumnFullException();
     }
 
+    public void removeCounter(int columnIndex)
+    {
+        for (int i = 0; i < counters[columnIndex].length; i++)
+        {
+            if (counters[columnIndex][i].equals(Counter.NONE) || i == getBoardHeight()-1)
+            {
+                counters[columnIndex][i-1] = NONE;
+                return;
+            }
+        }
+    }
+
     /**
      * Gets the winner of this game.
      * @return the winner's counter, the empty counter is the board is full, or null if there is no winner and the board has spaces.

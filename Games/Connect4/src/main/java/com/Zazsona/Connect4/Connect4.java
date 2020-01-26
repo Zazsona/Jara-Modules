@@ -1,5 +1,6 @@
 package com.Zazsona.Connect4;
 
+import com.Zazsona.Connect4.AI.AIDifficulty;
 import com.Zazsona.Connect4.AI.AIPlayer;
 import com.Zazsona.Connect4.game.Board;
 import com.Zazsona.Connect4.game.Counter;
@@ -33,15 +34,7 @@ public class Connect4 extends ModuleGameCommand
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
         embed.setTitle("Connect 4");
 
-        if (parameters.length > 1)
-        {
-            if (parameters[1].equalsIgnoreCase("AI"))
-            {
-                aiPlayer = new AIPlayer(board, false);
-                player1 = msgEvent.getMember();
-                player2 = msgEvent.getGuild().getSelfMember();
-            }
-        }
+        configureAI(msgEvent, board, parameters);
         runGame(msgEvent, board, embed);
     }
 
@@ -193,6 +186,41 @@ public class Connect4 extends ModuleGameCommand
         else if (player2 == null && !setPlayer1 && !memberToSet.equals(player1))
         {
             player2 = memberToSet;
+        }
+    }
+
+
+    private void configureAI(GuildMessageReceivedEvent msgEvent, Board board, String[] parameters)
+    {
+        if (parameters.length > 1)
+        {
+            if (parameters[1].equalsIgnoreCase("AI"))
+            {
+                if (parameters.length > 2)
+                {
+                    switch (parameters[2].toUpperCase())
+                    {
+                        case "EASY":
+                            aiPlayer = new AIPlayer(board, false, AIDifficulty.EASY);
+                            break;
+                        case "MEDIUM":
+                        case "STANDARD":
+                        case "NORMAL":
+                            aiPlayer = new AIPlayer(board, false, AIDifficulty.STANDARD);
+                            break;
+                        case "HARD":
+                        case "PROUD":
+                        case "CRITICAL":
+                            aiPlayer = new AIPlayer(board, false, AIDifficulty.HARD);
+                            break;
+                    }
+                }
+                else
+                    aiPlayer = new AIPlayer(board, false);
+
+                player1 = msgEvent.getMember();
+                player2 = msgEvent.getGuild().getSelfMember();
+            }
         }
     }
 }

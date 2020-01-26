@@ -44,75 +44,101 @@ public class AIPlayer
 
     public void takeTurn()
     {
-        Counter myCounter = Connect4.getPlayerCounter(isPlayer1);
-        int column = getBestMove(board, 0, myCounter);
-        board.placeCounter(column, myCounter);
+        int predictionDepth = getPredictionDepthLimit();
+        Node root = new Node(null, 0, 0, false);
+        addChildren(board.clone(), root, true, predictionDepth);
+
+        minimax(root, predictionDepth, true);
     }
 
-    private int getBestMove(Board board, int predictionDepth, Counter targetCounter)
+    private int minimax(Node parent, int depth, boolean isMaxPlayer)
     {
-        int[] values = getMoveValues(board, predictionDepth, targetCounter);
-        ArrayList<Integer> bestValueList = new ArrayList<>();
-        int bestColumnValue = Integer.MIN_VALUE;
-        for (int column = 0; column<values.length; column++)
+        if (depth == 0 || parent.isTerminal() || parent.getValue() != 0)
+            return parent.getValue();
+
+        if (isMaxPlayer)
         {
-            if (!board.isColumnFull(column) && values[column] >= bestColumnValue)
+            ArrayList<Node> bestChildren = new ArrayList<>();
+            int maxEval = Integer.MIN_VALUE;
+            for (Node child : parent.getChildren())
             {
-                if (values[column] > bestColumnValue)
+                if (child != null)
                 {
-                    bestColumnValue = values[column];
-                    bestValueList.clear();
+                    int eval = minimax(child, depth-1, false);
+                    if (eval >= maxEval)
+                    {
+                        if (eval > maxEval)
+                        {
+                            maxEval = eval;
+                            bestChildren.clear();
+                        }
+                        bestChildren.add(child);
+                    }
                 }
-                bestValueList.add(column);
             }
-        }
-        return bestValueList.get(new Random().nextInt(bestValueList.size()));
-    }
-
-    private int[] getMoveValues(Board board, int predictionDepth, Counter targetCounter)
-    {
-        int[] values = new int[board.getBoardWidth()];
-        for (int column = 0; column<board.getBoardWidth(); column++)
-        {
-            values[column] = getMoveValue(board, column, predictionDepth, targetCounter);
-        }
-        if (predictionDepth == 0)
-            System.out.println(targetCounter.name()+": A:"+values[0]+" B:"+values[1]+" C:"+values[2]+" D:"+values[3]+" E:"+values[4]+" F:"+values[5]+" G:"+values[6]);
-        return values;
-    }
-
-    private int getMoveValue(Board board, int column, int predictionDepth, Counter targetCounter)
-    {
-        if (!board.isColumnFull(column))
-        {
-            Board moveBoard = board.clone();
-            moveBoard.placeCounter(column, targetCounter);
-            Counter winState = moveBoard.getWinner();
-            if (winState == null)
+            if (depth == getPredictionDepthLimit())
             {
-                predictionDepth++;
-                if (predictionDepth < getPredictionDepthLimit() && !moveBoard.isBoardFull())
-                {
-                    Counter enemyCounter = (targetCounter == Counter.RED) ? Counter.BLUE : Counter.RED;
-                    int enemyColumn = getBestMove(moveBoard, predictionDepth, enemyCounter);
-                    moveBoard.placeCounter(enemyColumn, enemyCounter);
-                    int nextColumn = getBestMove(moveBoard, predictionDepth, targetCounter);
-                    return getMoveValue(moveBoard, nextColumn, predictionDepth, targetCounter);
-                }
-                return 0;
+                int childIndex = new Random().nextInt(bestChildren.size());
+                board.placeCounter(bestChildren.get(childIndex).getColumn(), Connect4.getPlayerCounter(isPlayer1));
             }
-            else if (winState == targetCounter) //If it's this player's win
-            {
-                return 100*(getPredictionDepthLimit()-predictionDepth);
-            }
-            else //If it's the opponent's win
-            {
-                return -(100*((getPredictionDepthLimit()+1)-predictionDepth));
-            }
+            return maxEval;
         }
         else
         {
-            return -(100*((getPredictionDepthLimit()+1)-predictionDepth)); //Column is full with no winner, bad result.
+            int minEval = Integer.MAX_VALUE;
+            for (Node child : parent.getChildren())
+            {
+                if (child != null)
+                {
+                    int eval = minimax(child, depth-1, false);
+                    if (eval < minEval)
+                    {
+                        minEval = eval;
+                    }
+
+                }
+            }
+            return minEval;
+        }
+    }
+
+    private void addChildren(Board childBoard, Node parent, boolean isMaxPlayer, int predictionDepth)
+    {
+        if (parent.getValue() == 0) //If it has a value, then it's a win/loss scenario (game over), so no point going further in the tree
+        {
+            Counter maxCounter = Connect4.getPlayerCounter(isPlayer1);
+            Counter minCounter = Connect4.getPlayerCounter(!isPlayer1);
+            for (int column = 0; column<board.getBoardWidth(); column++)
+            {
+                if (!childBoard.isColumnFull(column))
+                {
+                    childBoard.placeCounter(column, (isMaxPlayer) ? maxCounter : minCounter);
+                    Node childNode = new Node(parent, getMoveValue(childBoard, maxCounter, predictionDepth), column, isMaxPlayer);
+                    parent.addChild(column, childNode);
+                    if (predictionDepth > 0)
+                    {
+                        addChildren(childBoard.clone(), childNode, !isMaxPlayer, predictionDepth-1);
+                    }
+                    childBoard.removeCounter(column);
+                }
+            }
+        }
+    }
+
+    private int getMoveValue(Board board, Counter maxCounter, int depth)
+    {
+        Counter winState = board.getWinner();
+        if (winState == null)
+        {
+            return 0;
+        }
+        else if (winState == maxCounter) //If it's this player's win
+        {
+            return 1*depth;
+        }
+        else //If it's the opponent's win
+        {
+            return -1*depth;
         }
     }
 
@@ -121,12 +147,12 @@ public class AIPlayer
         switch (difficulty)
         {
             case EASY:
-                return 2;
+                return 1;
             case STANDARD:
                 return 3;
             case HARD:
-                return 4;
+                return 5;
         }
-        return 2;
+        return 3;
     }
 }
