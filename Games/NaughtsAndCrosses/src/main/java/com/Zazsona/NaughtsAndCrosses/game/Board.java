@@ -18,7 +18,10 @@ public class Board
         board = new Counter[3][3];
         for (int i = 0; i<board.length; i++)
         {
-            board[i] = originalBoard[i];
+            for (int j = 0; j<board[i].length; j++)
+            {
+                board[i][j] = originalBoard[i][j];
+            }
         }
     }
 
@@ -27,6 +30,16 @@ public class Board
         if (!isPositionOccupied(x, y))
         {
             board[x][y] = counter;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeCounter(int x, int y)
+    {
+        if (isPositionOccupied(x, y))
+        {
+            board[x][y] = Counter.NONE;
             return true;
         }
         return false;

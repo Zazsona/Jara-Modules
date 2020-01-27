@@ -1,5 +1,6 @@
 package com.Zazsona.NaughtsAndCrosses;
 
+import com.Zazsona.NaughtsAndCrosses.AI.AIPlayer;
 import com.Zazsona.NaughtsAndCrosses.game.Board;
 import com.Zazsona.NaughtsAndCrosses.game.Counter;
 import commands.CmdUtil;
@@ -22,6 +23,7 @@ public class NaughtsAndCrosses extends ModuleGameCommand
     private TextChannel channel;
     private Member player1;
     private Member player2;
+    private AIPlayer aiPlayer;
     private Board board;
     private EmbedBuilder embed = new EmbedBuilder();
     private MessageManager mm = new MessageManager();
@@ -43,11 +45,16 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         if (parameters.length > 1)
         {
             List<Member> membersMentioned = msgEvent.getMessage().getMentionedMembers();
-            membersMentioned.remove(player1);
             if (membersMentioned.size() > 0)
             {
                 player2 = membersMentioned.get(0);
                 channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe", player1, player2);
+            }
+            else if (parameters[1].equalsIgnoreCase("ai"))
+            {
+                aiPlayer = new AIPlayer(board, false);
+                player2 = msgEvent.getGuild().getSelfMember();
+                channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe");
             }
             else
             {
@@ -78,31 +85,37 @@ public class NaughtsAndCrosses extends ModuleGameCommand
             else
                 embed.setDescription("**Player 2, you're up!**\n\n"+drawBoard());
             channel.sendMessage(embed.build()).queue();
-
-            boolean placementSuccessful = false;
-            while (!placementSuccessful)
+            if (aiPlayer != null && activePlayer.equals(player2))
             {
-                Message msg = mm.getNextMessage(channel);
-                if (msg != null && !msg.getMember().getUser().isBot())
+                aiPlayer.takeTurn();
+            }
+            else
+            {
+                boolean placementSuccessful = false;
+                while (!placementSuccessful)
                 {
-                    String msgContent = msg.getContentDisplay();
-                    activePlayer = assignPlayer(activePlayer, msg);
+                    Message msg = mm.getNextMessage(channel);
+                    if (msg != null && !msg.getMember().getUser().isBot())
+                    {
+                        String msgContent = msg.getContentDisplay();
+                        activePlayer = assignPlayer(activePlayer, msg);
 
-                    if (msgContent.equalsIgnoreCase("quit") || msgContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
-                        throw new QuitException();
-                    else
-                        placementSuccessful = placeCounter(msgContent, getPlayerCounter(activePlayer));
+                        if (msgContent.equalsIgnoreCase("quit") || msgContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+                            throw new QuitException();
+                        else
+                            placementSuccessful = placeCounter(msgContent, getPlayerCounter(activePlayer));
+                    }
                 }
             }
             Counter winningCounter = board.getWinner();
             if (winningCounter == null)
                 takeTurn((activePlayer.equals(player1)) ? player2 : player1);
             else
-                endGame(getCounterPlayer(winningCounter));
+                endGame(winningCounter);
         }
         catch (QuitException e)
         {
-            endGame((player1.equals(activePlayer)) ? player2 : player1);
+            endGame((player1.equals(activePlayer)) ? getPlayerCounter(player2) : getPlayerCounter(player1));
         }
     }
 
@@ -228,14 +241,15 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         return null;
     }
 
-    private void endGame(Member winner)
+    private void endGame(Counter counter)
     {
-        if (winner == null)
+        if (counter == null || counter == Counter.NONE)
         {
             embed.setDescription(drawBoard()+"\n\nAnd that's a wrap, but no winner!");
         }
         else
         {
+            Member winner = getCounterPlayer(counter);
             embed.setDescription(drawBoard()+"\n\n**"+winner.getEffectiveName()+"** wins! Congratulations!");
         }
         channel.sendMessage(embed.build()).queue();
