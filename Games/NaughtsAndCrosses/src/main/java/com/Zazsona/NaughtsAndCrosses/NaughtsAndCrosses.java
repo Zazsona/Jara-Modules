@@ -1,7 +1,10 @@
 package com.Zazsona.NaughtsAndCrosses;
 
+import com.Zazsona.NaughtsAndCrosses.game.Board;
+import com.Zazsona.NaughtsAndCrosses.game.Counter;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
+import exceptions.QuitException;
 import jara.MessageManager;
 import module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -9,6 +12,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Random;
@@ -18,7 +22,7 @@ public class NaughtsAndCrosses extends ModuleGameCommand
     private TextChannel channel;
     private Member player1;
     private Member player2;
-    private String[][] board = new String[3][3];
+    private Board board;
     private EmbedBuilder embed = new EmbedBuilder();
     private MessageManager mm = new MessageManager();
 
@@ -27,25 +31,22 @@ public class NaughtsAndCrosses extends ModuleGameCommand
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
         embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-        for (int i = 0; i<board.length; i++)
-        {
-            board[i] = new String[]{" ", " ", " "};
-        }
 
-        Member activePlayer = setupPlayers(msgEvent, parameters);
+        Member activePlayer = setup(msgEvent, parameters);
         takeTurn(activePlayer);
     }
 
-    private Member setupPlayers(GuildMessageReceivedEvent msgEvent, String[] parameters)
+    private Member setup(GuildMessageReceivedEvent msgEvent, String[] parameters)
     {
+        board = new Board();
         player1 = msgEvent.getMember();
-
         if (parameters.length > 1)
         {
-            List<Member> membersWithName = msgEvent.getGuild().getMembersByEffectiveName(parameters[1], true);
-            if (membersWithName.size() > 0)
+            List<Member> membersMentioned = msgEvent.getMessage().getMentionedMembers();
+            membersMentioned.remove(player1);
+            if (membersMentioned.size() > 0)
             {
-                player2 = membersWithName.get(0);
+                player2 = membersMentioned.get(0);
                 channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe", player1, player2);
             }
             else
@@ -70,45 +71,50 @@ public class NaughtsAndCrosses extends ModuleGameCommand
 
     private void takeTurn(Member activePlayer)
     {
-        if (activePlayer != null)
+        try
         {
-            embed.setDescription("**"+activePlayer.getEffectiveName()+", you're up!**\n\n"+drawBoard());
-        }
-        else
-        {
-            embed.setDescription("**Waiting for Player2 to join by selecting a spot...**\n\n"+drawBoard());
-        }
+            if (activePlayer != null)
+                embed.setDescription("**"+activePlayer.getEffectiveName()+", you're up!**\n\n"+drawBoard());
+            else
+                embed.setDescription("**Player 2, you're up!**\n\n"+drawBoard());
+            channel.sendMessage(embed.build()).queue();
 
-        channel.sendMessage(embed.build()).queue();
-
-        Message posMsg = null;
-        boolean successfulPlacement = false;
-        String counter = getPlayerCounter(activePlayer);
-        while (posMsg == null || !posMsg.getMember().equals(activePlayer) || !successfulPlacement)
-        {
-            posMsg = mm.getNextMessage(channel);
-            if (posMsg.getContentDisplay().equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+            boolean placementSuccessful = false;
+            while (!placementSuccessful)
             {
-                endGame(null);
-            }
-            if (activePlayer == null && !posMsg.getMember().equals(player1))     //Finally fill in P2, if they have not yet been set.
-            {
-                player2 = posMsg.getMember();
-                activePlayer = player2;
-            }
-            successfulPlacement = applyPosition(posMsg.getContentDisplay(), counter);
-        }
-        Member winner = checkForWin();
-        if (winner == null)
-        {
-            Member nextPlayer = (activePlayer.equals(player1)) ? player2 : player1;
-            takeTurn(nextPlayer);
-        }
-        else
-        {
-            endGame(winner);
-        }
+                Message msg = mm.getNextMessage(channel);
+                if (msg != null && !msg.getMember().getUser().isBot())
+                {
+                    String msgContent = msg.getContentDisplay();
+                    activePlayer = assignPlayer(activePlayer, msg);
 
+                    if (msgContent.equalsIgnoreCase("quit") || msgContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
+                        throw new QuitException();
+                    else
+                        placementSuccessful = placeCounter(msgContent, getPlayerCounter(activePlayer));
+                }
+            }
+            Counter winningCounter = board.getWinner();
+            if (winningCounter == null)
+                takeTurn((activePlayer.equals(player1)) ? player2 : player1);
+            else
+                endGame(getCounterPlayer(winningCounter));
+        }
+        catch (QuitException e)
+        {
+            endGame((player1.equals(activePlayer)) ? player2 : player1);
+        }
+    }
+
+    @Nullable
+    private Member assignPlayer(Member activePlayer, Message msg)
+    {
+        if (activePlayer == null)
+        {
+            player2 = (msg.getMember().equals(player1)) ? null : msg.getMember();
+            activePlayer = player2;
+        }
+        return activePlayer;
     }
 
     private String drawBoard()
@@ -116,15 +122,15 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         StringBuilder boardBuilder = new StringBuilder();
         boardBuilder.append("```");
         boardBuilder.append("  +-----------+\n");
-        for (int i = 3; i>0; i--)
+        for (int row = 0; row<board.getBoardHeight(); row++)
         {
-            boardBuilder.append(i);
+            boardBuilder.append((row+1));
             boardBuilder.append(" | ");
-            boardBuilder.append(board[0][i-1]);
+            boardBuilder.append(getCounterDrawable(board.getCounterAtPosition(0, row)));
             boardBuilder.append(" | ");
-            boardBuilder.append(board[1][i-1]);
+            boardBuilder.append(getCounterDrawable(board.getCounterAtPosition(1, row)));
             boardBuilder.append(" | ");
-            boardBuilder.append(board[2][i-1]);
+            boardBuilder.append(getCounterDrawable(board.getCounterAtPosition(2, row)));
             boardBuilder.append(" |\n");
             boardBuilder.append("  +-----------+\n");
         }
@@ -133,127 +139,93 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         return boardBuilder.toString();
     }
 
-    private boolean applyPosition(String position, String counter)
+    private String getCounterDrawable(Counter counter)
     {
-        position = position.toLowerCase();
-        if (position.matches("[1-3][a-c]"))
+        switch (counter)
         {
-            char[] swapArray = position.toCharArray();
-            char temp = swapArray[0];
-            swapArray[0] = swapArray[1];
-            swapArray[1] = temp;
-            position = String.valueOf(swapArray);
+            case NAUGHT:
+                return "O";
+            case CROSS:
+                return "X";
+            case NONE:
+                return " ";
         }
-        if (position.matches("[a-c][1-3]"))
+        return "";
+    }
+
+    private boolean placeCounter(String input, Counter counter)
+    {
+        input = input.toUpperCase();
+        if (input.matches("[A-C][1-3]") || input.matches("[1-3][A-C]"))
         {
-            char[] positionChars = position.toCharArray();
-            int column = 0;
-            int row = 0;
-            switch (positionChars[0])
-            {
-                case 'a':
-                    column = 0;
-                    break;
-                case 'b':
-                    column = 1;
-                    break;
-                case 'c':
-                    column = 2;
-            }
-            switch (positionChars[1])
-            {
-                case '1':
-                    row = 0;
-                    break;
-                case '2':
-                    row = 1;
-                    break;
-                case '3':
-                    row = 2;
-                    break;
-            }
-            if (board[column][row].equals(" "))
-            {
-                board[column][row] = counter;
-                return true;
-            }
+            String firstToken = input.substring(0, 1);
+            String secondToken = input.substring(1, 2);
+            String columnToken = (firstToken.matches("[A-C]")) ? firstToken : secondToken;
+            String rowToken = (columnToken.equals(firstToken)) ? secondToken : firstToken;
+            int column = getTokenValue(columnToken);
+            int row = getTokenValue(rowToken);
+
+            if (!board.isPositionOccupied(column, row))
+                return board.placeCounter(column, row, counter);
             else
-            {
-                channel.sendMessage("That space is taken! Choose another.").queue();
-            }
+                channel.sendMessage(embed.setDescription("That space is taken!").build()).queue();
         }
         return false;
     }
 
-    private String getPlayerCounter(Member player)
+    private int getTokenValue(String token)
+    {
+        token = token.toUpperCase();
+        switch (token)
+        {
+            case "A":
+            case "1":
+                return 0;
+            case "B":
+            case "2":
+                return 1;
+            case "C":
+            case "3":
+                return 2;
+        }
+        return -1;
+    }
+
+    private Counter getPlayerCounter(Member player)
     {
         if (player1.equals(player))
         {
-            return "O";
+            return Counter.NAUGHT;
         }
         else
         {
-            return "X";
+            return Counter.CROSS;
         }
     }
 
-    private Member getCounterPlayer(String counter)
+    public static Counter getPlayerCounter(boolean isPlayer1)
     {
-        if (counter.equals("O"))
+        if (isPlayer1)
+        {
+            return Counter.NAUGHT;
+        }
+        else
+        {
+            return Counter.CROSS;
+        }
+    }
+
+    private Member getCounterPlayer(Counter counter)
+    {
+        if (counter == Counter.NAUGHT)
         {
             return player1;
         }
-        else if (counter.equals("X"))
+        else if (counter == Counter.CROSS)
         {
              return player2;
         }
         return null;
-    }
-
-    private Member checkForWin()
-    {
-        for (int column = 0; column<board.length; column++)
-        {
-            if (board[column][0].equals(board[column][1]) && board[column][1].equals(board[column][2]))
-            {
-                return getCounterPlayer(board[column][0]);
-            }
-        }
-        for (int row = 0; row<board[0].length; row++)
-        {
-            if (board[0][row].equals(board[1][row]) && board[1][row].equals(board[2][row]))
-            {
-                return getCounterPlayer(board[0][row]);
-            }
-        }
-        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]))
-        {
-            return getCounterPlayer(board[0][0]);
-        }
-        if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]))
-        {
-            return getCounterPlayer(board[0][2]);
-        }
-        if (!areMoreSpacesAvailable())
-        {
-            return (getCounterPlayer("O").getGuild().getSelfMember()); //TODO: HACK HACK HACK, change to endGame(null) when API supports deleteGameChannel() with just guild.
-        }
-        return null;
-    }
-
-    private boolean areMoreSpacesAvailable()
-    {
-        for (int column = 0; column<board.length; column++)
-        {
-            for (int row = 0; row<board[0].length; row++)
-            {
-                if (board[column][row].equals(" "))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private void endGame(Member winner)

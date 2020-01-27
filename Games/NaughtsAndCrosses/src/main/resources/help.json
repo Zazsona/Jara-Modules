@@ -1,7 +1,7 @@
 {
   "params": [
     "NaughtsAndCrosses",
-    "NaughtsAndCrosses (Player2)"
+    "NaughtsAndCrosses (@Player2)"
   ],
   "description": "Try to get 3 in a row of your counter, be it horizontally, vertically or diagonally.\nSelect spaces by entering, for example, 'A3'."
 }
