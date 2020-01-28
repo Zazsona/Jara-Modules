@@ -80,12 +80,12 @@ public class Board
 
     public Counter getWinner()
     {
-        if (isFull())
-            return Counter.NONE;
         if (isHorizontalWin(Counter.NAUGHT) || isVerticalWin(Counter.NAUGHT) || isDiagonalWin(Counter.NAUGHT))
             return Counter.NAUGHT;
         if (isHorizontalWin(Counter.CROSS) || isVerticalWin(Counter.CROSS) || isDiagonalWin(Counter.CROSS))
             return Counter.CROSS;
+        if (isFull())
+            return Counter.NONE;
 
         return null;
     }

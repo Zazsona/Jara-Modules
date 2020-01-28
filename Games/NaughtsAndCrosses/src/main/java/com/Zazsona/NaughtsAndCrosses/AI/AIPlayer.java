@@ -8,20 +8,21 @@ public class AIPlayer
 {
     private Board board;
     private boolean isPlayer1;
-    private final int DEPTH_LIMIT = 4;
+    private AIDifficulty difficulty;
 
-    public AIPlayer(Board board, boolean isPlayer1)
+    public AIPlayer(Board board, boolean isPlayer1, AIDifficulty difficulty)
     {
         this.board = board;
         this.isPlayer1 = isPlayer1;
+        this.difficulty = difficulty;
     }
 
     public void takeTurn()
     {
         Node root = new Node(0, 0, 0);
-        addChildren(board.clone(), root, true, DEPTH_LIMIT);
+        addChildren(board.clone(), root, true, getDifficultyDepth());
 
-        minimax(root, DEPTH_LIMIT, true);
+        minimax(root, getDifficultyDepth(), true);
     }
 
     private int minimax(Node parent, int depth, boolean isMaxPlayer)
@@ -42,7 +43,7 @@ public class AIPlayer
                     bestChild = child;
                 }
             }
-            if (depth == DEPTH_LIMIT)
+            if (depth == getDifficultyDepth())
             {
                 board.placeCounter(bestChild.getColumn(), bestChild.getRow(), NaughtsAndCrosses.getPlayerCounter(isPlayer1));
             }
@@ -102,5 +103,20 @@ public class AIPlayer
         {
             return -1*(depth+1);
         }
+    }
+
+    private int getDifficultyDepth()
+    {
+        switch (difficulty)
+        {
+
+            case EASY:
+                return 2;
+            case STANDARD:
+                return 5;
+            case HARD:
+                return 9;
+        }
+        return 5;
     }
 }

@@ -1,7 +1,8 @@
 {
   "params": [
     "NoughtsAndCrosses",
-    "NoughtsAndCrosses (@Player2)"
+    "NoughtsAndCrosses (@Player2)",
+    "NoughtsAndCrosses AI (Difficulty)"
   ],
-  "description": "Try to get 3 in a row of your counter, be it horizontally, vertically or diagonally.\nSelect spaces by entering, for example, 'A3'."
+  "description": "Try to get 3 in a row of your counter, be it horizontally, vertically or diagonally.\nSelect spaces by entering, for example, 'A3'.\n\nAI difficulties: Easy, Standard, Hard"
 }

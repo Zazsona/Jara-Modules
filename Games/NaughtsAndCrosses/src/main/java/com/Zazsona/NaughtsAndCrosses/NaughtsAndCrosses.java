@@ -1,5 +1,6 @@
 package com.Zazsona.NaughtsAndCrosses;
 
+import com.Zazsona.NaughtsAndCrosses.AI.AIDifficulty;
 import com.Zazsona.NaughtsAndCrosses.AI.AIPlayer;
 import com.Zazsona.NaughtsAndCrosses.game.Board;
 import com.Zazsona.NaughtsAndCrosses.game.Counter;
@@ -46,25 +47,15 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         {
             List<Member> membersMentioned = msgEvent.getMessage().getMentionedMembers();
             if (membersMentioned.size() > 0)
-            {
                 player2 = membersMentioned.get(0);
-                channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe", player1, player2);
-            }
             else if (parameters[1].equalsIgnoreCase("ai"))
-            {
-                aiPlayer = new AIPlayer(board, false);
-                player2 = msgEvent.getGuild().getSelfMember();
-                channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe");
-            }
-            else
-            {
-                channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe");
-            }
+                configureAI(msgEvent, parameters);
         }
-        else
-        {
+        if (player2 == null)
             channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe");
-        }
+        else
+            channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-TicTacToe", player1, player2);
+
         Random r = new Random();
         if (r.nextBoolean())
         {
@@ -117,6 +108,32 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         {
             endGame((player1.equals(activePlayer)) ? getPlayerCounter(player2) : getPlayerCounter(player1));
         }
+    }
+
+    private void configureAI(GuildMessageReceivedEvent msgEvent, String[] parameters)
+    {
+        if (parameters.length > 2)
+        {
+            switch (parameters[2].toUpperCase())
+            {
+                case "EASY":
+                    aiPlayer = new AIPlayer(board, false, AIDifficulty.EASY);
+                    break;
+                case "MEDIUM":
+                case "STANDARD":
+                case "NORMAL":
+                    aiPlayer = new AIPlayer(board, false, AIDifficulty.STANDARD);
+                    break;
+                case "HARD":
+                case "PROUD":
+                case "CRITICAL":
+                    aiPlayer = new AIPlayer(board, false, AIDifficulty.HARD);
+                    break;
+            }
+        }
+        else
+            aiPlayer = new AIPlayer(board, false, AIDifficulty.STANDARD);
+        player2 = msgEvent.getGuild().getSelfMember();
     }
 
     @Nullable
