@@ -1,5 +1,7 @@
 package com.Zazsona.Blockbusters;
 
+import com.Zazsona.Blockbusters.AI.AIDifficulty;
+import com.Zazsona.Blockbusters.AI.AIPlayer;
 import com.Zazsona.Blockbusters.game.BlockbustersQuitException;
 import com.Zazsona.Blockbusters.game.GameMaster;
 import com.Zazsona.Blockbusters.game.objects.Team;
@@ -7,6 +9,7 @@ import configuration.SettingsUtil;
 import exceptions.QuitException;
 import jara.Core;
 import module.ModuleGameCommand;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -25,6 +28,8 @@ public class BlockbustersCommand extends ModuleGameCommand
     private static final String BLUE_EMOJI = "\uD83D\uDD35";
     private static final String CONFIRM_EMOJI = "\uD83C\uDD97";
 
+    private AIDifficulty aiDifficulty = null;
+
     private Team whiteTeam = new Team(true);
     private Team blueTeam = new Team(false);
 
@@ -33,9 +38,11 @@ public class BlockbustersCommand extends ModuleGameCommand
     {
         try
         {
+            parseParameters(msgEvent.getGuild(), parameters);
             TextChannel channel = createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-Blockbusters", msgEvent.getMember());
             Message teamJoinMessage = channel.sendMessage(JaraBlockbustersUI.getEmbed(msgEvent.getGuild().getSelfMember(), "Select a team, then press OK to start.")).complete();
-            teamJoinMessage.addReaction(WHITE_EMOJI).queue();
+            if (aiDifficulty == null)
+                teamJoinMessage.addReaction(WHITE_EMOJI).queue(); //Bot always takes white team, so we don't want users on it.
             teamJoinMessage.addReaction(BLUE_EMOJI).queue();
             teamJoinMessage.addReaction(CONFIRM_EMOJI).queue();
 
@@ -48,7 +55,7 @@ public class BlockbustersCommand extends ModuleGameCommand
             Core.getShardManagerNotNull().removeEventListener(teamReactionListener);
 
             JaraBlockbustersUI jaraBlockbustersUI = new JaraBlockbustersUI(msgEvent.getChannel());
-            GameMaster gameMaster = new GameMaster(jaraBlockbustersUI, whiteTeam, blueTeam);
+            GameMaster gameMaster = new GameMaster(jaraBlockbustersUI, whiteTeam, blueTeam, aiDifficulty);
             Team winningTeam = gameMaster.run();
             msgEvent.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(msgEvent.getGuild().getSelfMember(), winningTeam.getTeamName()+" are the winners!")).queue();
         }
@@ -70,24 +77,44 @@ public class BlockbustersCommand extends ModuleGameCommand
         }
     }
 
-    /*private void initialiseAI(TextChannel channel) //TODO: AI
+    private void parseParameters(Guild guild, String[] parameters)
     {
-        Team aiTeam = null;
-        if (whiteTeam.getMembers().size() == 0)
+        if (parameters.length > 1)
         {
-            aiTeam = whiteTeam;
+            if (parameters[1].equalsIgnoreCase("ai"))
+            {
+                String difficulty = "STANDARD";
+                if (parameters.length > 2)
+                    difficulty = parameters[2];
+                initialiseAI(guild.getSelfMember(), difficulty);
+            }
         }
-        else if (blueTeam.getMembers().size() == 0)
+    }
+
+    private void initialiseAI(Member selfMember, String difficulty)
+    {
+        switch (difficulty.toUpperCase())
         {
-            aiTeam = blueTeam;
+            case "EASY":
+                aiDifficulty = AIDifficulty.EASY;
+                break;
+            case "MEDIUM":
+            case "STANDARD":
+            case "NORMAL":
+                aiDifficulty = AIDifficulty.STANDARD;
+                break;
+            case "HARD":
+            case "PROUD":
+            case "CRITICAL":
+                aiDifficulty = AIDifficulty.HARD;
+                break;
+            default:
+                aiDifficulty = AIDifficulty.STANDARD;
         }
-        if (aiTeam != null)
-        {
-            aiTeam.setAITeam(true);
-            aiTeam.addMember(channel.getGuild().getSelfMember());
-            channel.sendMessage(aiTeam.getTeamName()+" doesn't have enough players, a CPU will join in.").queue();
-        }
-    }*/
+        Team aiTeam = whiteTeam;
+        aiTeam.setAITeam(true);
+        aiTeam.addMember(selfMember);
+    }
 
     public class TeamReactionListener extends ListenerAdapter
     {
@@ -118,17 +145,20 @@ public class BlockbustersCommand extends ModuleGameCommand
                 switch (event.getReactionEmote().getName())
                 {
                     case WHITE_EMOJI:
-                        if (whiteTeam.getMembers().contains(event.getMember()))
+                        if (aiDifficulty == null)
                         {
-                            whiteTeam.removeMember(event.getMember());
-                        }
-                        else
-                        {
-                            whiteTeam.addMember(event.getMember());
-                            if (blueTeam.getMembers().contains(event.getMember()))
+                            if (whiteTeam.getMembers().contains(event.getMember()))
                             {
-                                blueTeam.removeMember(event.getMember());
-                                teamJoinMessage.removeReaction(BLUE_EMOJI, event.getMember().getUser()).queue();
+                                whiteTeam.removeMember(event.getMember());
+                            }
+                            else
+                            {
+                                whiteTeam.addMember(event.getMember());
+                                if (blueTeam.getMembers().contains(event.getMember()))
+                                {
+                                    blueTeam.removeMember(event.getMember());
+                                    teamJoinMessage.removeReaction(BLUE_EMOJI, event.getMember().getUser()).queue();
+                                }
                             }
                         }
                         break;
@@ -150,9 +180,15 @@ public class BlockbustersCommand extends ModuleGameCommand
                     case CONFIRM_EMOJI:
                         if (event.getMember().equals(gameOwner))
                         {
-                            if (blueTeam.getMembers().size() > 0 && whiteTeam.getMembers().size() > 0) //TODO: Change or OR when adding AI
+                            if (blueTeam.getMembers().size() > 0 && whiteTeam.getMembers().size() > 0)
                             {
-                                teamsConfirmed = true;
+                                if (blueTeam.getMembers().contains(gameOwner) || whiteTeam.getMembers().contains(gameOwner))
+                                    teamsConfirmed = true;
+                                else
+                                {
+                                    event.getChannel().sendMessage(JaraBlockbustersUI.getEmbed(event.getGuild().getSelfMember(), "You must join a team!")).queue();
+                                    teamJoinMessage.removeReaction(CONFIRM_EMOJI, event.getMember().getUser()).queue();
+                                }
                             }
                             else
                             {

@@ -65,4 +65,9 @@ public class Tile
     {
         this.tileState = tileState;
     }
+
+    protected Tile clone()
+    {
+        return new Tile(tileX, tileY, tileChar, tileState);
+    }
 }

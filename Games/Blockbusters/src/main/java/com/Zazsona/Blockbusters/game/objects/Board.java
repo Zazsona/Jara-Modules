@@ -1,5 +1,6 @@
 package com.Zazsona.Blockbusters.game.objects;
 import com.Zazsona.Blockbusters.game.BoardRenderer;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +45,39 @@ public class Board
         tiles[4][1] = new Tile(571, 221, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
         tiles[4][2] = new Tile(571, 309, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
         tiles[4][3] = new Tile(571, 397, String.valueOf(getUniqueChar()), TileState.UNCLAIMED);
+    }
+
+    private Board(Tile[][] originalTiles, ArrayList<String> originalUsedChars)
+    {
+        try
+        {
+            tiles = new Tile[originalTiles.length][originalTiles[0].length];
+            for (int column = 0; column<originalTiles.length; column++)
+            {
+                for (int row = 0; row<originalTiles[0].length; row++)
+                {
+                    tiles[column][row] = originalTiles[column][row].clone();
+                }
+            }
+            usedChars = (ArrayList<String>) originalUsedChars.clone();
+            boardRenderer = new BoardRenderer(this);
+        }
+        catch (IOException e)
+        {
+            LoggerFactory.getLogger(Board.class).error("Unable to create BoardRenderer.\n"+e.toString());
+        }
+    }
+
+    private Board(Tile[][] originalTiles)
+    {
+        tiles = new Tile[originalTiles.length][originalTiles[0].length];
+        for (int column = 0; column<originalTiles.length; column++)
+        {
+            for (int row = 0; row<originalTiles[0].length; row++)
+            {
+                tiles[column][row] = originalTiles[column][row].clone();
+            }
+        }
     }
 
     private char getUniqueChar()
@@ -100,7 +134,7 @@ public class Board
     }
 
 
-    public TileState getWinState()
+    public TileState getWinner()
     {
         for (int startY = 0; startY<tiles[0].length; startY++)
         {
@@ -202,6 +236,11 @@ public class Board
     public BoardRenderer getBoardRenderer()
     {
         return boardRenderer;
+    }
+
+    public Board clone()
+    {
+        return new Board(tiles, usedChars);
     }
 
 }

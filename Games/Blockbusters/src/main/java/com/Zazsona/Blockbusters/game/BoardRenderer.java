@@ -24,9 +24,9 @@ public class BoardRenderer
 
     public BoardRenderer(Board board) throws IOException
     {
-         this.uuid = UUID.randomUUID().toString();
-         this.board = board;
-         this.compositeFile = new File(SettingsUtil.getModuleDataDirectory().getPath()+"/Blockbusters/"+uuid+"-board.png");
+        this.uuid = UUID.randomUUID().toString();
+        this.board = board;
+        this.compositeFile = new File(SettingsUtil.getModuleDataDirectory().getPath()+"/Blockbusters/"+uuid+"-board.png");
         compositeFile.mkdirs();
         compositeFile.createNewFile();
     }

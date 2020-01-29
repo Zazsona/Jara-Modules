@@ -1,9 +1,9 @@
 package com.Zazsona.Blockbusters;
 
+import com.Zazsona.Blockbusters.AI.AIPlayer;
 import com.Zazsona.Blockbusters.game.BlockbustersUI;
 import com.Zazsona.Blockbusters.game.BlockbustersQuitException;
 import com.Zazsona.Blockbusters.game.objects.Team;
-import com.Zazsona.Blockbusters.game.objects.TileState;
 import commands.CmdUtil;
 import configuration.SettingsUtil;
 import jara.Core;
@@ -58,6 +58,12 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Nicer quits
     }
 
     @Override
+    public void sendAIMessage(String message)
+    {
+        channel.sendMessage(message).queue();
+    }
+
+    @Override
     public void dispose()
     {
         Core.getShardManagerNotNull().removeEventListener(quitListener);
@@ -65,18 +71,22 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Nicer quits
     }
 
     @Override
-    public Team waitForBuzzIn(Team whiteTeam, Team blueTeam) throws BlockbustersQuitException
+    public Team waitForBuzzIn(Team whiteTeam, Team blueTeam, AIPlayer aiPlayer) throws BlockbustersQuitException
     {
         BuzzerListener buzzerListener = new BuzzerListener(whiteTeam, blueTeam, questionMessage);
         Core.getShardManagerNotNull().addEventListener(buzzerListener);
         questionMessage.addReaction("\uD83D\uDECE").queue();
+        int aiBuzzInTime = (aiPlayer != null) ? aiPlayer.getRandomBuzzTimeMillis() : 0;
+        final int POLL_TIME = 100;
 
-        while (buzzerListener.getBuzzedTeam() == null
-                && quitTeam == null)
+        while (buzzerListener.getBuzzedTeam() == null && quitTeam == null)
         {
             try
             {
-                Thread.sleep(100);
+                Thread.sleep(POLL_TIME);
+                aiBuzzInTime -= POLL_TIME;
+                if (aiPlayer != null && aiBuzzInTime < 0)
+                    buzzerListener.buzzedTeam = (whiteTeam.isAITeam()) ? whiteTeam : blueTeam;
             }
             catch (InterruptedException e)
             {
@@ -112,8 +122,6 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Nicer quits
             throw new BlockbustersQuitException(quitTeam);
         return answerListener.getAnswer();
     }
-
-
 
     @Override
     public String getLetterSelection(Team answeringTeam) throws BlockbustersQuitException
