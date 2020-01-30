@@ -75,7 +75,7 @@ public class JaraBlockbustersUI implements BlockbustersUI //TODO: Nicer quits
     {
         BuzzerListener buzzerListener = new BuzzerListener(whiteTeam, blueTeam, questionMessage);
         Core.getShardManagerNotNull().addEventListener(buzzerListener);
-        questionMessage.addReaction("\uD83D\uDECE").queue();
+        questionMessage.addReaction("\uD83D\uDECE").complete(); //Make sure the buzzer is available before we count AIPlayer time, to give humans a fair chance.
         int aiBuzzInTime = (aiPlayer != null) ? aiPlayer.getRandomBuzzTimeMillis() : 0;
         final int POLL_TIME = 100;
 
