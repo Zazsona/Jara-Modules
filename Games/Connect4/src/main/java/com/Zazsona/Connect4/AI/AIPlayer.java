@@ -45,7 +45,7 @@ public class AIPlayer
     public void takeTurn()
     {
         int predictionDepth = getPredictionDepthLimit();
-        Node root = new Node(null, 0, 0, false);
+        Node root = new Node(null, 0, 0);
         addChildren(board.clone(), root, true, predictionDepth);
 
         minimax(root, predictionDepth, true);
@@ -90,7 +90,7 @@ public class AIPlayer
             {
                 if (child != null)
                 {
-                    int eval = minimax(child, depth-1, false);
+                    int eval = minimax(child, depth-1, true);
                     if (eval < minEval)
                     {
                         minEval = eval;
@@ -113,7 +113,7 @@ public class AIPlayer
                 if (!childBoard.isColumnFull(column))
                 {
                     childBoard.placeCounter(column, (isMaxPlayer) ? maxCounter : minCounter);
-                    Node childNode = new Node(parent, getMoveValue(childBoard, maxCounter, predictionDepth), column, isMaxPlayer);
+                    Node childNode = new Node(parent, getMoveValue(childBoard, maxCounter, predictionDepth), column);
                     parent.addChild(column, childNode);
                     if (predictionDepth > 0)
                     {
@@ -134,11 +134,11 @@ public class AIPlayer
         }
         else if (winState == maxCounter) //If it's this player's win
         {
-            return 1*depth;
+            return 1*(depth+1);
         }
         else //If it's the opponent's win
         {
-            return -1*depth;
+            return -1*(depth+1);
         }
     }
 

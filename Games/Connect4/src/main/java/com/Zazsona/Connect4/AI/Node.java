@@ -2,18 +2,16 @@ package com.Zazsona.Connect4.AI;
 
 public class Node
 {
-    private boolean isMaxPlayer;
     private Node parent;
     private Node[] children;
     private int value;
     private int column;
 
-    public Node(Node parent, int value, int column, boolean isMaxPlayer)
+    public Node(Node parent, int value, int column)
     {
         this.parent = parent;
         this.value = value;
         this.column = column;
-        this.isMaxPlayer = isMaxPlayer;
         children = new Node[7];
     }
 
@@ -26,18 +24,6 @@ public class Node
     {
         return value;
     }
-
-    public void setValue(int value)
-    {
-        this.value = value;
-    }
-
-    public Node getParent()
-    {
-        return parent;
-    }
-
-
 
     public boolean isTerminal()
     {
@@ -63,7 +49,4 @@ public class Node
     {
         children[column] = child;
     }
-
-
-
 }

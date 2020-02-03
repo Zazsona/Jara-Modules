@@ -199,21 +199,21 @@ public class Connect4 extends ModuleGameCommand
                 if (parameters.length > 2)
                 {
                     switch (parameters[2].toUpperCase())
-                    {
-                        case "EASY":
-                            aiPlayer = new AIPlayer(board, false, AIDifficulty.EASY);
-                            break;
-                        case "MEDIUM":
-                        case "STANDARD":
-                        case "NORMAL":
-                            aiPlayer = new AIPlayer(board, false, AIDifficulty.STANDARD);
-                            break;
-                        case "HARD":
-                        case "PROUD":
-                        case "CRITICAL":
-                            aiPlayer = new AIPlayer(board, false, AIDifficulty.HARD);
-                            break;
-                    }
+                {
+                    case "EASY":
+                        aiPlayer = new AIPlayer(board, false, AIDifficulty.EASY);
+                        break;
+                    case "MEDIUM":
+                    case "STANDARD":
+                    case "NORMAL":
+                        aiPlayer = new AIPlayer(board, false, AIDifficulty.STANDARD);
+                        break;
+                    case "HARD":
+                    case "PROUD":
+                    case "CRITICAL":
+                        aiPlayer = new AIPlayer(board, false, AIDifficulty.HARD);
+                        break;
+                }
                 }
                 else
                     aiPlayer = new AIPlayer(board, false);
