@@ -16,6 +16,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -26,15 +29,13 @@ public class NaughtsAndCrosses extends ModuleGameCommand
     private Member player2;
     private AIPlayer aiPlayer;
     private Board board;
-    private EmbedBuilder embed = new EmbedBuilder();
+    private BoardRenderer boardRenderer;
     private MessageManager mm = new MessageManager();
 
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
-        embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-
         Member activePlayer = setup(msgEvent, parameters);
         takeTurn(activePlayer);
     }
@@ -42,6 +43,7 @@ public class NaughtsAndCrosses extends ModuleGameCommand
     private Member setup(GuildMessageReceivedEvent msgEvent, String[] parameters)
     {
         board = new Board();
+        try {boardRenderer = new BoardRenderer(board);} catch (IOException e) {} //Leave null
         player1 = msgEvent.getMember();
         if (parameters.length > 1)
         {
@@ -72,10 +74,9 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         try
         {
             if (activePlayer != null)
-                embed.setDescription("**"+activePlayer.getEffectiveName()+", you're up!**\n\n"+drawBoard());
+                drawBoard("**"+activePlayer.getEffectiveName()+", you're up!**");
             else
-                embed.setDescription("**Player 2, you're up!**\n\n"+drawBoard());
-            channel.sendMessage(embed.build()).queue();
+                drawBoard("**Player 2, you're up!**");
             if (aiPlayer != null && activePlayer.equals(player2))
             {
                 aiPlayer.takeTurn();
@@ -147,7 +148,30 @@ public class NaughtsAndCrosses extends ModuleGameCommand
         return activePlayer;
     }
 
-    private String drawBoard()
+    private void drawBoard(String message)
+    {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(Color.decode("#738BDC"));
+        try
+        {
+            embed.setDescription(message);
+            if (boardRenderer != null)
+            {
+                boardRenderer.render();
+                File boardFile = boardRenderer.getBoardImageFile();
+                channel.sendMessage(embed.build()).addFile(boardFile).complete();
+            }
+            else
+                throw new NullPointerException("Board Renderer is null.");
+        }
+        catch (IOException | NullPointerException e)
+        {
+            embed.setDescription(message+"\n\n"+drawTextBoard());
+            channel.sendMessage(embed.build()).complete();
+        }
+    }
+
+    private String drawTextBoard()
     {
         StringBuilder boardBuilder = new StringBuilder();
         boardBuilder.append("```");
@@ -198,7 +222,7 @@ public class NaughtsAndCrosses extends ModuleGameCommand
             if (!board.isPositionOccupied(column, row))
                 return board.placeCounter(column, row, counter);
             else
-                channel.sendMessage(embed.setDescription("That space is taken!").build()).queue();
+                channel.sendMessage("That space is taken!").queue();
         }
         return false;
     }
@@ -262,14 +286,15 @@ public class NaughtsAndCrosses extends ModuleGameCommand
     {
         if (counter == null || counter == Counter.NONE)
         {
-            embed.setDescription(drawBoard()+"\n\nAnd that's a wrap, but no winner!");
+            drawBoard("And that's a wrap, but no winner!");
         }
         else
         {
             Member winner = getCounterPlayer(counter);
-            embed.setDescription(drawBoard()+"\n\n**"+winner.getEffectiveName()+"** wins! Congratulations!");
+            drawBoard("**"+winner.getEffectiveName()+"** wins! Congratulations!");
         }
-        channel.sendMessage(embed.build()).queue();
+        if (boardRenderer != null)
+            boardRenderer.deleteBoardImageFile();
         super.deleteGameChannel();
     }
 }
