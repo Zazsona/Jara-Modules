@@ -2,6 +2,7 @@ package com.Zazsona.WordSearch;
 
 import commands.CmdUtil;
 import configuration.SettingsUtil;
+import exceptions.QuitException;
 import jara.MessageManager;
 import module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,49 +12,35 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Random;
 
 public class WordSearch extends ModuleGameCommand
 {
     private TextChannel channel;
-    private HashMap<String, String> wordCoords;
-    private String[] words;
-    private boolean complete;
+    private Board board;
+    private BoardRenderer boardRenderer;
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
         try
         {
-            wordCoords = new HashMap<>();
-            channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-Crossword");
-            String wordsearch = buildGrid();
+            channel = super.createGameChannel(msgEvent.getChannel(), msgEvent.getMember().getEffectiveName()+"s-Wordsearch");
+            board = new Board();
+            boardRenderer = new BoardRenderer(board);
             MessageManager mm = new MessageManager();
             sendWelcomeMessage();
-            boolean inputValid = true;
-            while (true)
+            boolean isInputValid = false;
+            while (!board.isComplete())
             {
-                if (inputValid)
+                channel.sendFile(boardRenderer.getBoardImageFile()).complete();
+                while (!isInputValid)
                 {
-                    EmbedBuilder embedBuilder = new EmbedBuilder();
-                    embedBuilder.setDescription(wordsearch);
-                    embedBuilder.addField("Words", words[0]+"\n"+words[1], true);
-                    embedBuilder.addField("", words[2]+"\n"+words[3], true);
-                    embedBuilder.addField("", words[4]+"\n"+words[5], true);
-                    embedBuilder.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
-                    channel.sendMessage(embedBuilder.build()).queue();
-                    if (complete)
-                    {
-                        break;
-                    }
+                    Message msg = mm.getNextMessage(channel);
+                    isInputValid = checkInput(msg);
                 }
-                inputValid = checkInput(mm.getNextMessage(channel));
-                if (!inputValid && complete)
-                {
-                    break;
-                }
+                isInputValid = false;
             }
+            channel.sendFile(boardRenderer.getBoardImageFile()).complete();
             endGame();
         }
         catch (IOException e)
@@ -61,12 +48,18 @@ public class WordSearch extends ModuleGameCommand
             LoggerFactory.getLogger(getClass()).error(e.getMessage());
             msgEvent.getChannel().sendMessage("An error occurred when running the game.").queue();
             super.deleteGameChannel();
+            if (boardRenderer != null)
+                boardRenderer.dispose();
+        }
+        catch (QuitException e)
+        {
+            endGame();
         }
     }
     private void sendWelcomeMessage()
     {
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setDescription("Welcome to Word Search! Simply enter the co-ordinates of the word when you find it, and try to find all "+words.length+"!\nE.g: B5-F9");
+        embedBuilder.setDescription("Welcome to Word Search! Simply enter the co-ordinates of the word when you find it, and try to find all "+board.getWords().length+"!\nE.g: B5-F9");
         embedBuilder.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
         channel.sendMessage(embedBuilder.build()).queue();
     }
@@ -77,267 +70,71 @@ public class WordSearch extends ModuleGameCommand
         embedBuilder.setDescription("That's a wrap! Thanks for playing.");
         embedBuilder.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
         channel.sendMessage(embedBuilder.build()).queue();
+        boardRenderer.dispose();
         super.deleteGameChannel();
     }
 
-    private String buildGrid() throws IOException
+    private boolean checkInput(Message msg) throws IOException, QuitException
     {
-        String[][] board = new String[9][9];
-        words = new String[6];
-        for (int i = 0; i<words.length; i++)
+        try
         {
-            do
+            String input = msg.getContentDisplay();
+            input = input.toUpperCase().trim();
+            if (input.matches("[A-Z][1-9]-[A-Z][1-9]"))
             {
-                do
+                input = input.replace("-", "").replace(" ", "");
+                int startX = getLetterIndex(input.substring(0, 1));
+                int startY = Integer.parseInt(input.substring(1, 2))-1;
+                int endX = getLetterIndex(input.substring(2, 3));
+                int endY = Integer.parseInt(input.substring(3, 4))-1;
+                Word word = board.getWord(startX, startY, endX, endY);
+                if (word != null)
                 {
-                    words[i] = CmdUtil.getRandomWord(true).toUpperCase();
-                } while (words[i].length() > board.length-2);
-
-            } while (!placeWord(words[i], board));
-        }
-
-        Random r = new Random();
-        String[] letters = {"A", "A", "A", "B","B","B", "C", "C", "C", "C", "D","D","D", "E","E","E","E", "F","F", "G","G","G", "H", "I", "J", "K", "L","L","L", "M","M","M", "N","N", "O", "P","P", "Q", "R","R","R", "S", "S", "S", "S", "S", "S", "S", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        for (int x = 0; x<board.length; x++)
-        {
-            for (int y = 0; y<board[x].length; y++)
-            {
-                if (board[x][y] == null)
-                {
-                    board[x][y] = letters[r.nextInt(letters.length)];
+                    word.setFound(true);
+                    boardRenderer.markWord(word);
                 }
-            }
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("```  +-----------------------------------+ \n");
-        for (int x = 0; x<board.length; x++)
-        {
-            sb.append((x+1)).append(" ");
-            for (int y = 0; y<board[x].length; y++)
-            {
-                sb.append("| ").append(board[x][y]).append(" ");
-            }
-            sb.append("|\n  +-----------------------------------+\n");
-        }
-        sb.append("    A   B   C   D   E   F   G   H   I```");
-        return sb.toString();
-    }
-
-    private boolean placeWord(String word, String[][] board)
-    {
-        Random r = new Random();
-        for (int a = 2; a>-1; a--)  //We make 3 attempts to place the word. It may be impossible to fit a word, hence the limit.
-        {
-            try
-            {
-                int x = r.nextInt(board.length);
-                int y = r.nextInt(board[x].length); //Random location on the board
-
-                switch (r.nextInt(8))           //Each value represents a different direction. 360 degrees at 45 degree intervals.
+                else
                 {
-                    case 0:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x][y+i] != null)                                       //First check to ensure there is space for the word
-                            {
-                                if (!board[x][y+i].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)                                   //Place the word
-                        {
-                            board[x][y+i] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x, y+(word.length()-1)), word);
-                        break;
-                    case 1:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x+i][y+i] != null)
-                            {
-                                if (!board[x+i][y+i].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x+i][y+i] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x+(word.length()-1), y+(word.length()-1)), word);
-                        break;
-                    case 2:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x+i][y] != null)
-                            {
-                                if (!board[x+i][y].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x+i][y] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x+(word.length()-1), y), word);
-                        break;
-                    case 3:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x+i][y-i] != null)
-                            {
-                                if (!board[x+i][y-i].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x+i][y-i] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x+(word.length()-1), y-(word.length()-1)), word);
-                        break;
-                    case 4:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x][y-i] != null)
-                            {
-                                if (!board[x][y-i].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x][y-i] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x, y-(word.length()-1)), word);
-                        break;
-                    case 5:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x-i][y-i] != null)
-                            {
-                                if (!board[x-i][y-i].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x-i][y-i] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x-(word.length()-1), y-(word.length()-1)), word);
-                        break;
-                    case 6:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x-i][y] != null)
-                            {
-                                if (!board[x-i][y].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x-i][y] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x-(word.length()-1), y), word);
-                        break;
-                    case 7:
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            if (board[x-i][y+i] != null)
-                            {
-                                if (!board[x-i][y+i].equals(word.substring(i, i+1)))
-                                {
-                                    throw new ArrayIndexOutOfBoundsException("Position occupied.");
-                                }
-                            }
-                        }
-                        for (int i = 0; i<word.length(); i++)
-                        {
-                            board[x-i][y+i] = word.substring(i, i+1);
-                        }
-                        wordCoords.put(arrayIndexToGridIndex(x, y)+arrayIndexToGridIndex(x-(word.length()-1), y+(word.length()-1)), word);
-                        break;
+                    channel.sendMessage("Sorry, that's not it.").queue();
                 }
                 return true;
             }
-            catch (ArrayIndexOutOfBoundsException e)
+            else if (input.equals(SettingsUtil.getGuildCommandPrefix(msg.getGuild().getId()) + "QUIT"))
             {
-                if (a == 0)
-                {
-                    return false;
-                }
+                throw new QuitException();
             }
-        }
-        return false;
-    }
-
-    private String arrayIndexToGridIndex(int x, int y)
-    {
-        if (x < 9 && y < 9)
-        {
-            x += 1;
-            y += 65;
-            String result = String.valueOf((char) y).toUpperCase();
-            result += x;
-            return result;
-        }
-        return "";
-    }
-
-    private boolean checkInput(Message msg)
-    {
-        String input = msg.getContentDisplay();
-        input = input.toUpperCase().trim();
-        if (input.matches("[A-Z][1-9]-[A-Z][1-9]"))
-        {
-            input = input.replace("-", "").replace(" ", "");
-            String backwardsInput = (input.substring(input.length()-2)+input.substring(0, 2));
-            if (wordCoords.containsKey(input) || wordCoords.containsKey(backwardsInput))
-            {
-                int completeWords = 0;
-                for (int i = 0; i<words.length; i++)
-                {
-                    if (words[i].equals(wordCoords.get(input)) || words[i].equals(wordCoords.get(backwardsInput)))
-                    {
-                        words[i] = "~~*"+words[i]+"*~~";
-                        completeWords++;
-                    }
-                    else if (words[i].startsWith("~~"))
-                    {
-                        completeWords++;
-                    }
-                }
-                if (completeWords == words.length)
-                {
-                    complete = true;
-                }
-            }
-            else
-            {
-                channel.sendMessage("Sorry, that's not it.").queue();
-            }
-            return true;
-        }
-        else if (input.equals(SettingsUtil.getGuildCommandPrefix(msg.getGuild().getId()) + "QUIT"))
-        {
-            complete = true;
             return false;
         }
-        return false;
+        catch (IndexOutOfBoundsException e)
+        {
+            return false;
+        }
     }
+
+    private int getLetterIndex(String letter)
+    {
+        switch (letter)
+        {
+            case "A":
+                return 0;
+            case "B":
+                return 1;
+            case "C":
+                return 2;
+            case "D":
+                return 3;
+            case "E":
+                return 4;
+            case "F":
+                return 5;
+            case "G":
+                return 6;
+            case "H":
+                return 7;
+            case "I":
+                return 8;
+        }
+        throw new IndexOutOfBoundsException();
+    }
+
 }
