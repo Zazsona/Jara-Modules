@@ -122,14 +122,19 @@ public class JoinHandler
 
     private boolean isMemberInTeam(Member member)
     {
+        return getMemberTeam(member) != null;
+    }
+
+    private QuizTeam getMemberTeam(Member member)
+    {
         for (QuizTeam quizTeam : quizTeams.values())
         {
             if (quizTeam.isTeamMember(member))
             {
-                return true;
+                return quizTeam;
             }
         }
-        return false;
+        return null;
     }
 
     private class JoinMessageHandler extends ListenerAdapter
@@ -152,41 +157,52 @@ public class JoinHandler
                 {
                     if (!isMemberInTeam(message.getMember()))
                     {
-                        String teamname = "";
-                        String params[] = msgContent.trim().split(" ");
-                        if (params.length > 1)
-                        {
-                            for (int i = 1; i<params.length; i++)
-                            {
-                                teamname += params[i]+" ";
-                            }
-                            teamname = teamname.trim();
-                        }
-                        else
-                        {
-                            teamname = message.getMember().getEffectiveName()+"'s Team";
-                        }
-                        if (quizTeams.containsKey(teamname.toUpperCase()))
-                        {
-                            joinTeam(teamname, message.getMember());
-                        }
-                        else
-                        {
-                            if (teamname.length() < 2 || teamname.length() > 99)
-                            {
-                                message.getChannel().sendMessage("Team names must be between 2 and 99 characters.").queue();
-                            }
-                            else
-                            {
-                                addTeam(teamname, message.getMember());
-                            }
-                        }
+                        parseMessage(message, msgContent);
                     }
                     else
                     {
-                        message.getChannel().sendMessage("You've already joined a team for this quiz.").queue();
+                        QuizTeam oldTeam = getMemberTeam(message.getMember());
+                        oldTeam.removeTeamMember(message.getMember());
+                        if (!oldTeam.hasMembers())
+                        {
+                            oldTeam.getTeamChannel().delete().queue();
+                            quizTeams.remove(oldTeam.getTeamName().toUpperCase());
+                        }
+                        parseMessage(message, msgContent);
                     }
+                }
+            }
+        }
 
+        private void parseMessage(Message message, String msgContent)
+        {
+            String teamname = "";
+            String params[] = msgContent.trim().split(" ");
+            if (params.length > 1)
+            {
+                for (int i = 1; i<params.length; i++)
+                {
+                    teamname += params[i]+" ";
+                }
+                teamname = teamname.trim();
+            }
+            else
+            {
+                teamname = message.getMember().getEffectiveName()+"'s Team";
+            }
+            if (quizTeams.containsKey(teamname.toUpperCase()))
+            {
+                joinTeam(teamname, message.getMember());
+            }
+            else
+            {
+                if (teamname.length() < 2 || teamname.length() > 99)
+                {
+                    message.getChannel().sendMessage("Team names must be between 2 and 99 characters.").queue();
+                }
+                else
+                {
+                    addTeam(teamname, message.getMember());
                 }
             }
         }
