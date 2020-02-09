@@ -1,0 +1,12 @@
+{
+  "key": "VoteItOut",
+  "aliases": [
+    "VotingGame",
+	"VoteGame",
+	"TheVotingGame",
+	"TheVoteGame"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Vote for who fits the line."
+}
