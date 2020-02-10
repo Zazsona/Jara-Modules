@@ -1,6 +1,6 @@
 package com.Zazsona.Quiz.system;
 
-import com.Zazsona.Quiz.json.GuildQuizConfig;
+import com.Zazsona.Quiz.config.GuildQuizConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

@@ -1,4 +1,4 @@
-package com.Zazsona.Quiz.json;
+package com.Zazsona.Quiz.config;
 
 import java.io.Serializable;
 import java.util.ArrayList;

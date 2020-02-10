@@ -1,11 +1,13 @@
 package com.Zazsona.VoteItOut.game;
 
+import configuration.SettingsUtil;
 import jara.Core;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,7 @@ public class VoteItOutGame
     private Quips quips = new Quips();
     private GraphicsRenderer graphicsRenderer;
     private int failedRoundsInARow = 0;
+    private QuitListener quitListener;
 
     public VoteItOutGame(TextChannel channel, Member... members) throws IOException
     {
@@ -39,6 +42,8 @@ public class VoteItOutGame
             players[i] = new Player((i+1), members[i]);
         }
         graphicsRenderer = new GraphicsRenderer(gameUUID, players);
+        quitListener = new QuitListener();
+        Core.getShardManagerNotNull().addEventListener(quitListener);
     }
 
     public Player runGame()
@@ -52,7 +57,7 @@ public class VoteItOutGame
             if (winner.getPoints() >= 5)
                 return endGame(winner);
         }
-        if (failedRoundsInARow == 3)
+        if (failedRoundsInARow == 3 || quitListener.isQuit())
             return endGame(null);
 
         return runGame();
@@ -113,7 +118,7 @@ public class VoteItOutGame
         int voteTime = 1000*30;
         VoteListener voteListener = new VoteListener(votingMessage);
         Core.getShardManagerNotNull().addEventListener(voteListener);
-        while (voteListener.getVotes().size() != players.length && voteTime > 0)
+        while (voteListener.getVotes().size() != players.length && voteTime > 0 && !quitListener.isQuit())
         {
             try
             {
@@ -166,6 +171,8 @@ public class VoteItOutGame
 
     private Player endGame(Player winner)
     {
+        Core.getShardManagerNotNull().removeEventListener(quitListener);
+        graphicsRenderer.dispose();
         if (winner != null)
             channel.sendMessage(getVoteEmbedStyle(winner.getMember().getEffectiveName()+" wins! ...If this is really winning.")).queue();
         else
@@ -223,6 +230,38 @@ public class VoteItOutGame
                     return (i+1);
             }
             return -1;
+        }
+    }
+
+    private class QuitListener extends ListenerAdapter
+    {
+        private boolean quit;
+
+        protected boolean isQuit()
+        {
+            return quit;
+        }
+
+        @Override
+        public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event)
+        {
+            super.onGuildMessageReceived(event);
+            if (event.getChannel().equals(channel) && !event.getMember().getUser().isBot())
+            {
+                String messageContent = event.getMessage().getContentDisplay();
+                if (messageContent.equalsIgnoreCase("quit") || messageContent.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(event.getGuild().getId())+"quit"))
+                {
+                    Member member = event.getMember();
+                    for (Player player : players)
+                    {
+                        if (member.equals(player.getMember()))
+                        {
+                            quit = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.Zazsona.Quiz.system;
 
-import com.Zazsona.Quiz.json.TriviaJson;
-import com.Zazsona.Quiz.json.UserStats;
+import com.Zazsona.Quiz.config.TriviaJson;
+import com.Zazsona.Quiz.config.UserStats;
 import com.Zazsona.Quiz.quiz.QuizTeam;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
