@@ -454,41 +454,41 @@
     {
       "question": "What 'A' is the closest star excluding the sun?",
       "answers": [
-        "alpha centauri",
+        "Alpha Centauri",
         "alpha-centauri"
       ]
     },
     {
       "question": "What 'A' is the largest state in America?",
       "answers": [
-        "alaska"
+        "Alaska"
       ]
     },
     {
       "question": "What 'A' is the nationality of the composer Mozart?",
       "answers": [
-        "austrian",
+        "Austrian",
         "austria"
       ]
     },
     {
       "question": "What 'A' is the highest mountain range in South America?",
       "answers": [
-        "andes",
+        "Andes",
         "the andes"
       ]
     },
     {
       "question": "What 'A' was the best known profession for Amelia Earhart?",
       "answers": [
-        "aviator",
+        "Aviator",
         "aviation"
       ]
     },
     {
       "question": "What 'A' is the location holding beehives of honeybees?",
       "answers": [
-        "apiary"
+        "Apiary"
       ]
     },
     {
@@ -500,7 +500,7 @@
     {
       "question": "What 'A' is continent containing the French territory AdŽlie Land?",
       "answers": [
-        "antarctica"
+        "Antarctica"
       ]
     }
   ],
@@ -870,52 +870,59 @@
       ]
     },
     {
+      "question": "What \u0027B\u0027 is Pokemon #001?",
+      "answers": [
+        "Bulbasaur"
+      ]
+    },
+    {
       "question": "What 'B' was the rock group with George Harrison?",
       "answers": [
-        "beatles",
+        "Beatles",
         "the beatles"
       ]
     },
     {
       "question": "What 'B' was a classical composer who became deaf neat the end of his life?",
       "answers": [
-        "beethoven"
+        "Beethoven"
       ]
     },
     {
       "question": "What 'B' is the study of plants?",
       "answers": [
-        "botany"
+        "Botany"
       ]
     },
     {
       "question": "What 'B' is the German football team who won the 2013 Champions League?",
       "answers": [
-        "bayern munich"
+        "Bayern Munich",
+        "Bayvern"
       ]
     },
     {
       "question": "What 'B' is British city including the Balti Triangle?",
       "answers": [
-        "birmingham"
+        "Birmingham"
       ]
     },
     {
       "question": "What 'B' is a bodily function used in the first-aid abbreviation ABC?",
       "answers": [
-        "breathing"
+        "Breathing"
       ]
     },
     {
       "question": "What 'B' is the ore from which aluminium is extracted?",
       "answers": [
-        "bauxite"
+        "Bauxite"
       ]
     },
     {
       "question": "What 'B' is another name for the Somers Islands?",
       "answers": [
-        "bermuda",
+        "Bermuda",
         "bermuda triangle"
       ]
     }
@@ -1245,33 +1252,46 @@
     {
       "question": "What 'C' was the host for the 2009 Olympic Games?",
       "answers": [
-        "china"
+        "China"
+      ]
+    },
+    {
+      "question": "What 'C' is the primary ingredient in hummus?",
+      "answers": [
+        "Chickpea",
+        "Chickpeas"
+      ]
+    },
+    {
+      "question": "What 'C' is a country with a beaver as the national emblem?",
+      "answers": [
+        "Canada"
       ]
     },
     {
       "question": "What 'C' is the tropical line of latitude 23.5 degrees north of the equator?",
       "answers": [
-        "cancer",
+        "Cancer",
         "tropic of cancer"
       ]
     },
     {
       "question": "What 'C' is the type of food including Camembert?",
       "answers": [
-        "cheese"
+        "Cheese"
       ]
     },
     {
       "question": "What 'C' is the olympic sport which takes place in a velodrome?",
       "answers": [
-        "cycling"
+        "Cycling"
       ]
     },
 
     {
       "question": "What 'C' is a type of bird and archipelago in Spain?",
       "answers": [
-        "canary",
+        "Canary",
         "the canary islands",
         "canary islands"
       ]
@@ -1279,14 +1299,14 @@
     {
       "question": "What 'C' is the animal in which a group is called a caravan?",
       "answers": [
-        "camels",
+        "Camels",
         "camel"
       ]
     },
     {
       "question": "What 'C' is a British TV show which had Beverley Isherwood and Kathy Hynter?",
       "answers": [
-        "countdown"
+        "Countdown"
       ]
     }
   ],
@@ -1411,7 +1431,7 @@
       ]
     },
     {
-      "question": "What \u0027D\u0027 was the name given to any extinct reptiles like the iguanodon and brontosaurus?",
+      "question": "What \u0027D\u0027 was the name given to any extinct reptiles like the Iguanodon and Brontosaurus?",
       "answers": [
         "Dinosaurs",
         "Dinosaur"
@@ -1597,6 +1617,20 @@
       ]
     },
     {
+      "question": "What \u0027D\u0027 is the hardest rock?",
+      "answers": [
+        "Diamond",
+        "Diamonds"
+      ]
+    },
+    {
+      "question": "What \u0027D\u0027 is the street on which the British Prime Minister resides?",
+      "answers": [
+        "Downing",
+        "Downing Street"
+      ]
+    },
+    {
       "question": "What \u0027D\u0027 is sweet, and grows on palms in North Africa?",
       "answers": [
         "Date",
@@ -1613,20 +1647,35 @@
     {
       "question": "What 'D' is the largest stringed instrument in a classical orchestra?",
       "answers": [
-        "double bass",
+        "Double bass",
         "the double bass"
+      ]
+    },
+    {
+      "question": "What 'D' is used to measure the strength of electromagnetic signals?",
+      "answers": [
+        "Decibels",
+        "Decibel"
+      ]
+    },
+    {
+      "question": "What 'D' in mathematics describes the bottom number in a fraction?",
+      "answers": [
+        "Denominator",
+        "Denominators"
       ]
     },
     {
       "question": "What 'D' is the national flower of Wales?",
       "answers": [
-        "daffodil"
+        "Daffodil",
+        "Daffodils"
       ]
     },
     {
       "question": "What 'D' is, according to proverb, how still waters run?",
       "answers": [
-        "deep"
+        "Deep"
       ]
     },
     {
@@ -1958,19 +2007,32 @@
     {
       "question": "What 'E' is British city home to Murrayfield Stadium?",
       "answers": [
-        "edinburgh"
+        "Edinburgh"
+      ]
+    },
+    {
+      "question": "What 'E' is the only animal that can't jump?",
+      "answers": [
+        "Elephant",
+        "Elephants"
       ]
     },
     {
       "question": "What 'E' is British racecourse which holds the Derby?",
       "answers": [
-        "epsom"
+        "Epsom"
+      ]
+    },
+    {
+      "question": "What 'E' is one of only two known monotremes in the animal kingdom?",
+      "answers": [
+        "Echidna"
       ]
     },
     {
       "question": "What 'E' is a common condition causing inflamed, itchy and red skin?",
       "answers": [
-        "eczema"
+        "Eczema"
       ]
     }
   ],
@@ -1985,13 +2047,40 @@
     {
       "question": "What 'F' won the 2003 Formula One car racing championship?",
       "answers": [
-        "ferrari"
+        "Ferrari"
+      ]
+    },
+    {
+      "question": "What 'F' is produced by using Flint and Steel in Minecraft?",
+      "answers": [
+        "Fire",
+        "Fires"
+      ]
+    },
+    {
+      "question": "What 'F' is to escape from a hostile position?",
+      "answers": [
+        "Flee",
+        "Fled"
+      ]
+    },
+    {
+      "question": "What 'F' is someone who shoes horses?",
+      "answers": [
+        "Farrier",
+        "Farriers"
       ]
     },
     {
       "question": "What 'F' is the type of fruit which, according to proverb, tastes sweetest?",
       "answers": [
-        "forbidden"
+        "Forbidden"
+      ]
+    },
+    {
+      "question": "What 'F' is the country who gave the Statue of Liberty to the US?",
+      "answers": [
+        "France"
       ]
     },
     {
@@ -2523,13 +2612,25 @@
     {
       "question": "What 'G' is the British city which hosted the 2014 Commonwealth Games?",
       "answers": [
-        "glasgow"
+        "Glasgow"
+      ]
+    },
+    {
+      "question": "What 'G' has no vocal cord?",
+      "answers": [
+        "Giraffe"
+      ]
+    },
+    {
+      "question": "What 'G' is the world's biggest island?",
+      "answers": [
+        "Greenland"
       ]
     },
     {
       "question": "What 'G' are the Tate Modern, Tate Britain and White Cube types of?",
       "answers": [
-        "galleries",
+        "Galleries",
         "art galleries",
         "gallery",
         "art gallery"
@@ -2538,32 +2639,39 @@
     {
       "question": "What 'G' was the former currency of The Netherlands, prior to joining the Eurozone?",
       "answers": [
-        "guilder"
+        "Guilder"
       ]
     },
     {
       "question": "What 'G' is a clothes brand, or a hole in the ground?",
       "answers": [
-        "gap"
+        "Gap"
       ]
     },
     {
       "question": "What 'G' is the factor by which power or voltage is increased?",
       "answers": [
-        "gain"
+        "Gain"
       ]
     },
     {
       "question": "What 'G' is Blockbusters?",
       "answers": [
-        "game",
+        "Game",
         "games"
       ]
     },
     {
       "question": "What 'G' is a Pokemon type impervious to electric damage?",
       "answers": [
-        "ground"
+        "Ground"
+      ]
+    },
+    {
+      "question": "What 'G' is another term for the peanut?",
+      "answers": [
+        "Groundnut",
+        "Groundnuts"
       ]
     },
     {
@@ -2635,7 +2743,7 @@
     {
       "question": "What 'G' is the commonality between diamonds, rubies and emeralds?",
       "answers": [
-        "gem",
+        "Gem",
         "gems",
         "gemstones"
       ]
@@ -2845,6 +2953,13 @@
       ]
     },
     {
+      "question": "What \u0027H\u0027 is to not brag about one's accomplishments?",
+      "answers": [
+        "Humble",
+        "Humbleness"
+      ]
+    },
+    {
       "question": "What \u0027H\u0027 is a common element in natural air?",
       "answers": [
         "Hydrogen"
@@ -2857,10 +2972,109 @@
       ]
     },
     {
+      "question": "What \u0027H\u0027 is in ADHD?",
+      "answers": [
+        "Hyperactivity"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 is the scientific term for the big toe?",
+      "answers": [
+        "Hallux"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 is to unlawfully gain access?",
+      "answers": [
+        "Hack",
+        "Hacking"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 is a poor solution to a problem, particularly in software development?",
+      "answers": [
+        "Hack"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 is said to be a strong word?",
+      "answers": [
+        "Hate",
+        "Hating",
+        "Hatred",
+        "Hated"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 is a commonality in workshop tools?",
+      "answers": [
+        "Handle",
+        "Handles"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 is alternate terminology for a public username?",
+      "answers": [
+        "Handle",
+        "Handles"
+      ]
+    },
+    {
+      "question": "What \u0027H\u0027 often preceded a felon getting quartered?",
+      "answers": [
+        "Hung",
+        "Hang",
+        "Hanged"
+      ]
+    },
+    {
       "question": "What 'H' is the London Park home to Speaker's Corner?",
       "answers": [
         "hyde",
         "hyde park"
+      ]
+    },
+    {
+      "question": "What 'H' is a hedge dwelling creature, capable of swimming?",
+      "answers": [
+        "Hedgehog",
+        "Hedgehogs"
+      ]
+    },
+    {
+      "question": "What 'H' is on the Porsche logo?",
+      "answers": [
+        "Horse",
+        "Horses"
+      ]
+    },
+    {
+      "question": "What 'H' is a variety of jet that can take off vertically?",
+      "answers": [
+        "Harrier",
+        "Harrier Jet"
+      ]
+    },
+    {
+      "question": "What 'H' is an attribute of which diamond is greater than wood?",
+      "answers": [
+        "Hardness",
+        "Hard"
+      ]
+    },
+    {
+      "question": "What 'H' is a Marvel villain group, notably featured in the Captain America films?",
+      "answers": [
+        "Hail Hydra",
+        "Hydra"
+      ]
+    },
+    {
+      "question": "What 'H' is to contest a product's price?",
+      "answers": [
+        "Haggle",
+        "Haggling",
+        "Haggler"
       ]
     },
     {
@@ -2880,9 +3094,64 @@
       ]
     },
     {
+      "question": "What 'H' is defined by RGB values in computing?",
+      "answers": [
+        "Hue",
+        "Hues"
+      ]
+    },
+    {
+      "question": "What 'H' is a type of man-made home for an animal, particularly field creatures such as rabbits?",
+      "answers": [
+        "Hutch",
+        "Hutches"
+      ]
+    },
+    {
+      "question": "What 'H' is English for the Polish word 'Witaj'?",
+      "answers": [
+        "Hello",
+        "Hi"
+      ]
+    },
+    {
+      "question": "What 'H' is the scary elephant like creature from Winnie the Pooh?",
+      "answers": [
+        "Heffalump",
+        "Heffalumps"
+      ]
+    },
+    {
+      "question": "What 'H' is a massively populous omnivore?",
+      "answers": [
+        "Human",
+        "Humans"
+      ]
+    },
+    {
+      "question": "What 'H' is to describe a person effective with construction, crafting and tools?",
+      "answers": [
+        "Handy"
+      ]
+    },
+    {
+      "question": "What 'H' is a characteristic of a person to aids others?",
+      "answers": [
+        "Helpful"
+      ]
+    },
+    {
+      "question": "What 'H' is a character used in a system of pictorial writing, particularly that form used on ancient Egyptian monuments?",
+      "answers": [
+        "Hieroglyph",
+        "Hieroglyphs",
+        "Hieroglyphics"
+      ]
+    },
+    {
       "question": "What 'H' is a type of fuel with examples: coal, gas and oil?",
       "answers": [
-        "hydrocarbon",
+        "Hydrocarbon",
         "hydrocarbons",
         "hydro carbon",
         "hydro carbons"
@@ -3124,13 +3393,115 @@
     {
       "question": "What 'I' is the country home to the Shannon Airport?",
       "answers": [
-        "ireland"
+        "Ireland"
+      ]
+    },
+    {
+      "question": "What 'I' is the country home to the Dolomites?",
+      "answers": [
+        "Italy"
+      ]
+    },
+    {
+      "question": "What 'I' is the element represented by chemical symbol 'Fe'?",
+      "answers": [
+        "Iron"
+      ]
+    },
+    {
+      "question": "What 'I' is used to send signals from a TV remote to a TV?",
+      "answers": [
+        "Infrared",
+        "Infra red",
+        "Infra-red"
+      ]
+    },
+    {
+      "question": "What 'I' is the current point in time?",
+      "answers": [
+        "Instant"
+      ]
+    },
+    {
+      "question": "What 'I' is to distribute evenly in all directions?",
+      "answers": [
+        "Isotropic"
+      ]
+    },
+    {
+      "question": "What 'I' is in ICT?",
+      "answers": [
+        "Information",
+        "Info"
       ]
     },
     {
       "question": "What 'I' is the type of hands which, according to proverb, the devil makes work for?",
       "answers": [
-        "idle"
+        "Idle"
+      ]
+    },
+    {
+      "question": "What 'I' is a measurement made from putting three barleycorns in a line?",
+      "answers": [
+        "Inches",
+        "inch"
+      ]
+    },
+    {
+      "question": "What 'I' is a type of animal which have compound eyes?",
+      "answers": [
+        "Inches",
+        "inch"
+      ]
+    },
+    {
+      "question": "What 'I' represents the word used in the financial acronym IMF?",
+      "answers": [
+        "International"
+      ]
+    },
+    {
+      "question": "What 'I' is the country which founded the sport of polo?",
+      "answers": [
+        "Iran"
+      ]
+    },
+    {
+      "question": "What 'I' is the son of Abraham who was to be sacrificed in the Bible?",
+      "answers": [
+        "Isaac"
+      ]
+    },
+    {
+      "question": "What 'I' is the Isle containing Osborne House?",
+      "answers": [
+        "Isle of Wight",
+        "The isle of wight"
+      ]
+    },
+    {
+      "question": "What 'I' is the country who hosted the 2019 Eurovision competition?",
+      "answers": [
+        "Israel"
+      ]
+    },
+    {
+      "question": "What 'I' is the new name for the city previously known as Constantinople?",
+      "answers": [
+        "Istanbul"
+      ]
+    },
+    {
+      "question": "What 'I' goes with ebony in the song by Paul McCartney and Stevie Wonder?",
+      "answers": [
+        "Iran"
+      ]
+    },
+    {
+      "question": "What 'I' is the country which founded the sport of polo?",
+      "answers": [
+        "Iran"
       ]
     }
   ],
@@ -3400,9 +3771,16 @@
       ]
     },
     {
+      "question": "What \u0027J\u0027 is a female donkey?",
+      "answers": [
+        "Jenny",
+        "Jennies"
+      ]
+    },
+    {
       "question": "What 'J' was the name for the band Michael Jackson was part of when he was young?",
       "answers": [
-        "jackson five",
+        "Jackson Five",
         "the jackson five",
         "jackson 5",
         "the jackson 5"
@@ -3413,6 +3791,57 @@
       "answers": [
         "Johnny Depp",
         "Johnny"
+      ]
+    },
+    {
+      "question": "What 'J' is the initials of the writer Tolkien?",
+      "answers": [
+        "JRR",
+        "J.R.R",
+        "J.R.R.",
+        "J R R"
+      ]
+    },
+    {
+      "question": "What 'J' was the Biblical city the Good Samaritan was travelling to?",
+      "answers": [
+        "Jericho"
+      ]
+    },
+    {
+      "question": "What 'J' is an island, sweater and potato?",
+      "answers": [
+        "Jersey"
+      ]
+    },
+    {
+      "question": "What 'J' is the artist of 'Take Me Home, Country Roads'?",
+      "answers": [
+        "John Denver"
+      ]
+    },
+    {
+      "question": "What 'J' is the sport in which Neal Adams won an Olympic medal?",
+      "answers": [
+        "Judo"
+      ]
+    },
+    {
+      "question": "What 'J' was the husband of Juno in Roman mythology?",
+      "answers": [
+        "Jupiter"
+      ]
+    },
+    {
+      "question": "What 'J' was the 4th wife of King Henry VII?",
+      "answers": [
+        "Jane Seymour"
+      ]
+    },
+    {
+      "question": "What 'J' is well known UK company famous for their Christmas TV adverts?",
+      "answers": [
+        "John Lewis"
       ]
     }
   ],
@@ -3689,10 +4118,80 @@
       ]
     },
     {
+      "question": "What 'K' is 1024 bytes?",
+      "answers": [
+        "Kilobyte",
+        "Kilobytes"
+      ]
+    },
+    {
       "question": "What 'K' is the initials given to the Soviet secret police?",
       "answers": [
         "KGB",
         "K.G.B"
+      ]
+    },
+    {
+      "question": "What 'K' is the chamical symbol for Potassium?",
+      "answers": [
+        "K"
+      ]
+    },
+    {
+      "question": "What 'K' is the adversary of Donkey Kong?",
+      "answers": [
+        "King K. Rool",
+        "King K Rool",
+        "King Krool",
+        "KingKRool"
+      ]
+    },
+    {
+      "question": "What 'K' is Linux?",
+      "answers": [
+        "Kernel",
+        "The Kernel"
+      ]
+    },
+    {
+      "question": "What 'K' has the power to claim any land in the UK?",
+      "answers": [
+        "King",
+        "The King"
+      ]
+    },
+    {
+      "question": "What 'K' is a common household object that has a unique shape, allowing for metal rods to position themselves such that they no longer block a rotation?",
+      "answers": [
+        "Key",
+        "Keys"
+      ]
+    },
+    {
+      "question": "What 'K' is the Linux command to send a close request to a program?",
+      "answers": [
+        "Kill"
+      ]
+    },
+    {
+      "question": "What 'K' is a crime, though itself is used to punsh crime?",
+      "answers": [
+        "Kill",
+        "Killing"
+      ]
+    },
+    {
+      "question": "What 'K' is one-thousand?",
+      "answers": [
+        "Kilo",
+        "Kilos"
+      ]
+    },
+    {
+      "question": "What 'K' is a well-known piece of Scottish attire?",
+      "answers": [
+        "Kilt",
+        "Kilts"
       ]
     }
   ],
@@ -3952,13 +4451,85 @@
     {
       "question": "What 'L' is the British city home to the Aintree racecourse?",
       "answers": [
-        "liverpool"
+        "Liverpool"
+      ]
+    },
+    {
+      "question": "What 'L' is another term for Dictionary?",
+      "answers": [
+        "Lexicon"
+      ]
+    },
+    {
+      "question": "What 'L' is on the golden Flemish flag?",
+      "answers": [
+        "Lion"
       ]
     },
     {
       "question": "What 'L' is the commonly used name for nitrous oxide?",
       "answers": [
-        "laughing gas"
+        "Laughing gas"
+      ]
+    },
+    {
+      "question": "What 'L' is to be tall and thin?",
+      "answers": [
+        "Lanky"
+      ]
+    },
+    {
+      "question": "What 'L' is a production methodology, associated with low costs and overhead?",
+      "answers": [
+        "Lean"
+      ]
+    },
+    {
+      "question": "What 'L' is a name for an aspect ratio, often used by cinematic films?",
+      "answers": [
+        "Letterbox",
+        "Letterboxing",
+        "Letterboxed"
+      ]
+    },
+    {
+      "question": "What 'L' did Mahatma Gandhi train to become?",
+      "answers": [
+        "Lawyer"
+      ]
+    },
+    {
+      "question": "What 'L' is chemical symbol Pb for?",
+      "answers": [
+        "Lead"
+      ]
+    },
+    {
+      "question": "What 'L' are Tom Thumb, Tennis Ball and Winter Density varieties of?",
+      "answers": [
+        "Lettuce",
+        "Lettuces"
+      ]
+    },
+    {
+      "question": "What 'L' is in PLC in the context of business?",
+      "answers": [
+        "Limited",
+        "Public Limited Company",
+        "Limit"
+      ]
+    },
+    {
+      "question": "What 'L' is the city with the first underground railway?",
+      "answers": [
+        "London"
+      ]
+    },
+    {
+      "question": "What 'L' is responsible for the production of chlorophyll?",
+      "answers": [
+        "Leaf",
+        "Leaves"
       ]
     }
   ],
@@ -4177,15 +4748,15 @@
       ]
     },
     {
-      "question": "What \u0027M\u0027 means not shiny, having no lustre and is applied to paint?",
+      "question": "What \u0027M\u0027 is the metal of chemical symbol 'Hg'?",
       "answers": [
-        "Matt"
+        "Mercury"
       ]
     },
     {
-      "question": "What \u0027M\u0027 is a metallic element that is liquid at room temperature?",
+      "question": "What \u0027M\u0027 means not shiny, having no lustre and is applied to paint?",
       "answers": [
-        "Mercury"
+        "Matt"
       ]
     },
     {
@@ -4215,19 +4786,54 @@
     {
       "question": "What 'M' married British movie director Guy Ritchie?",
       "answers": [
-        "madonna"
+        "Madonna"
+      ]
+    },
+    {
+      "question": "What 'M' is the main antagonist in 'Sleeping Beauty'?",
+      "answers": [
+        "Maleficent"
+      ]
+    },
+    {
+      "question": "What 'M' is a type of party where members come in a mask or disguise?",
+      "answers": [
+        "Masquerade",
+        "Masquerades"
+      ]
+    },
+    {
+      "question": "What 'M' is a persona said to be a type of?",
+      "answers": [
+        "Mask",
+        "Masks"
+      ]
+    },
+    {
+      "question": "What 'M' is the capital city of Spain?",
+      "answers": [
+        "Madrid"
+      ]
+    },
+    {
+      "question": "What 'M' has The Sea of Tranquility?",
+      "answers": [
+        "Moon",
+        "The Moon"
       ]
     },
     {
       "question": "What 'M' is the name for the team who play their home matches at Old Trafford?",
       "answers": [
-        "manchester united"
+        "Manchester United",
+        "Man U",
+        "Manchester"
       ]
     },
     {
       "question": "What 'M' is a commonly occurring gas with chemical formula CH4?",
       "answers": [
-        "methane"
+        "Methane"
       ]
     },
     {
@@ -4240,13 +4846,13 @@
     {
       "question": "What 'M' is a mythological Greek character from which the drug morphine was named?",
       "answers": [
-        "morpheus"
+        "Morpheus"
       ]
     },
     {
       "question": "What 'M' is the country previously known as Burma?",
       "answers": [
-        "myanmar"
+        "Myanmar"
       ]
     }
   ],
@@ -4493,34 +5099,47 @@
       ]
     },
     {
+      "question": "What \u0027N\u0027 are cells found in the brain?",
+      "answers": [
+        "Neurons",
+        "Neuron"
+      ]
+    },
+    {
       "question": "What 'N' is the organelle of a living cell in which DNA is found?",
       "answers": [
-        "nucleus",
+        "Nucleus",
         "nuclei"
       ]
     },
     {
       "question": "What 'N' is home to Mount Everest?",
       "answers": [
-        "nepal"
+        "Nepal"
+      ]
+    },
+    {
+      "question": "What 'N' is the part of an atom with no charge?",
+      "answers": [
+        "Neutron"
       ]
     },
     {
       "question": "What 'N' is city home to the comedy duo Ant and Dec?",
       "answers": [
-        "newcastle"
+        "Newcastle"
       ]
     },
     {
       "question": "What 'N' is the British city home to the Trent Bridge cricket ground?",
       "answers": [
-        "nottingham"
+        "Nottingham"
       ]
     },
     {
       "question": "What 'N' was a leader who said 'an army marches on its stomach'?",
       "answers": [
-        "napoleon",
+        "Napoleon",
         "Napoleon Bonaparte",
         "Napoléon"
       ]
@@ -4528,7 +5147,41 @@
     {
       "question": "What 'N' is the mother of invention?",
       "answers": [
-        "necessity"
+        "Necessity"
+      ]
+    },
+    {
+      "question": "What 'N' is a type of sleep, or how a blanket lies?",
+      "answers": [
+        "Nap"
+      ]
+    },
+    {
+      "question": "What 'N' is a musical note if it is neither sharp nor flat?",
+      "answers": [
+        "Natural"
+      ]
+    },
+    {
+      "question": "What 'N' is the family of gasses housing neon, helium and xenon?",
+      "answers": [
+        "Noble",
+        "Noble Gasses",
+        "Noble Gas",
+        "Nobles"
+      ]
+    },
+    {
+      "question": "What 'N' is a nine-sided shape?",
+      "answers": [
+        "Nonagon",
+        "Nonagons"
+      ]
+    },
+    {
+      "question": "What 'N' represents no data in computing?",
+      "answers": [
+        "Null"
       ]
     }
   ],
@@ -4804,31 +5457,45 @@
     {
       "question": "What 'O' is the capital of Norway?",
       "answers": [
-        "oslo"
+        "Oslo"
+      ]
+    },
+    {
+      "question": "What 'O' did Joseph Priesley discover in 1774?",
+      "answers": [
+        "Oxygen"
+      ]
+    },
+    {
+      "question": "What 'O' has three hearts?",
+      "answers": [
+        "Octopus",
+        "Octopusses",
+        "Octopi"
       ]
     },
     {
       "question": "What 'O' is the study of birds?",
       "answers": [
-        "ornithology"
+        "Ornithology"
       ]
     },
     {
       "question": "What 'O' was the band including Liam and Noel Gallagher",
       "answers": [
-        "oasis"
+        "Oasis"
       ]
     },
     {
       "question": "What 'O' is the type of animal labeled 'bovine'?",
       "answers": [
-        "oxen"
+        "Oxen"
       ]
     },
     {
       "question": "What 'O' is a Shakespeare play and character who kills Desdemona?",
       "answers": [
-        "othello"
+        "Othello"
       ]
     },
     {
@@ -4840,20 +5507,20 @@
     {
       "question": "What 'O' is a constellation including the stars Bellatrix and Betelgeuse?",
       "answers": [
-        "orion"
+        "Orion"
       ]
     },
     {
       "question": "What 'O' is a type of food including chives?",
       "answers": [
-        "onions",
+        "Onions",
         "onion"
       ]
     },
     {
       "question": "What 'O' is a Greek branch of Christianity still flourishing in Russia?",
       "answers": [
-        "orthodox"
+        "Orthodox"
       ]
     }
   ],
@@ -5124,35 +5791,80 @@
       ]
     },
     {
+      "question": "What \u0027P\u0027 is chemical symbol 'K'?",
+      "answers": [
+        "Potassium"
+      ]
+    },
+    {
+      "question": "What \u0027P\u0027 is an American state?",
+      "answers": [
+        "Pennsylvania"
+      ]
+    },
+    {
+      "question": "What \u0027P\u0027 is someone who collects stamps?",
+      "answers": [
+        "Philatelist",
+        "Philatelists"
+      ]
+    },
+    {
+      "question": "What \u0027P\u0027 is the world's largest ocean?",
+      "answers": [
+        "Pacific",
+        "Pacific Ocean"
+      ]
+    },
+    {
+      "question": "What \u0027P\u0027 is a dried plum?",
+      "answers": [
+        "Prune",
+        "Prunes"
+      ]
+    },
+    {
       "question": "What 'P' contains Maris Pipers and King Edwards?",
       "answers": [
-        "potatoes",
+        "Potatoes",
         "potato"
+      ]
+    },
+    {
+      "question": "What 'P' is one of only two known monotremes in the animal kingdom?",
+      "answers": [
+        "Platypus"
       ]
     },
     {
       "question": "What 'P' does the second part of the medical profession GP stand for?",
       "answers": [
-        "practitioner"
+        "Practitioner"
+      ]
+    },
+    {
+      "question": "What 'P' is the national dish of Spain?",
+      "answers": [
+        "Paella"
       ]
     },
     {
       "question": "What 'P' is the mountain range forming a border between France and Spain?",
       "answers": [
-        "pyrenees",
+        "Pyrenees",
         "the pyrenees"
       ]
     },
     {
       "question": "What 'P' is the currency used by Spain prior to join the Eurozone?",
       "answers": [
-        "peseta"
+        "Peseta"
       ]
     },
     {
       "question": "What 'P' is the European city which is known by Praha in its native language?",
       "answers": [
-        "prague"
+        "Prague"
       ]
     }
   ],
@@ -5187,6 +5899,12 @@
       "question": "What \u0027Q\u0027 is a 25 cent piece?",
       "answers": [
         "Quarter"
+      ]
+    },
+    {
+      "question": "What 'Q' is the capital of Ecuador?",
+      "answers": [
+        "Quito"
       ]
     },
     {
@@ -5242,6 +5960,16 @@
       "question": "What \u0027Q\u0027 means the same if you put an s in front of it, meaning crush or stamp on?",
       "answers": [
         "Quash"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 owns all swans in the UK?",
+      "answers": [
+        "Queen",
+        "The Queen",
+        "Queens",
+        "Queeny",
+        "Queenie"
       ]
     },
     {
@@ -5369,6 +6097,135 @@
         "Quirk",
         "Quirks"
       ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is an alternate name for a British Pound?",
+      "answers": [
+        "Quid"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a swampy or marshy place?",
+      "answers": [
+        "Quag"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is to put an end to rebellion or disorder?",
+      "answers": [
+        "Quell",
+        "Quelling",
+        "Quelled"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a form of spoken reference in writing?",
+      "answers": [
+        "Quote",
+        "Quotes"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a cheese flavoured crisp?",
+      "answers": [
+        "Quavers",
+        "Quaver"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a minor criticism or objection?",
+      "answers": [
+        "Quibble",
+        "Quibbles"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a sudden feeling of usually disturbing emotion?",
+      "answers": [
+        "Qualm",
+        "Qualms"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is to meet the requirements for something?",
+      "answers": [
+        "Qualify",
+        "Qualifying",
+        "Qualified"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a long or arduous hunt for something?",
+      "answers": [
+        "Quest",
+        "Quests",
+        "Questing"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is the sound by made a species in the Anatidae family?",
+      "answers": [
+        "Quack",
+        "Quacks",
+        "Quacking"
+      ]
+    },
+    {
+      "question": "What 'Q' is the often specified on recipes?",
+      "answers": [
+        "Quantity",
+        "Quantities"
+      ]
+    },
+    {
+      "question": "What 'Q' is to put an end to something, or reject it as invalid?",
+      "answers": [
+        "Quash",
+        "Quashing"
+      ]
+    },
+    {
+      "question": "What 'Q' is a game about throwing rings onto poles?",
+      "answers": [
+        "Quoit",
+        "Quoits"
+      ]
+    },
+    {
+      "question": "What 'Q' is a four-wheel drive farm vehicle?",
+      "answers": [
+        "Quadbike",
+        "Quadbikes",
+        "Quad bike",
+        "Quad bikes",
+        "Quad-bike",
+        "Quad-bikes"
+      ]
+    },
+    {
+      "question": "What 'Q' is a deep pit for extracting minerals?",
+      "answers": [
+        "Quarry",
+        "Quarries"
+      ]
+    },
+    {
+      "question": "What 'Q' is to satisfy a thirst or craving?",
+      "answers": [
+        "Quench",
+        "Quenching",
+        "Quenched",
+        "Quenches"
+      ]
+    },
+    {
+      "question": "What \u0027Q\u0027 is a unit of quantum information?",
+      "answers": [
+        "Qubit",
+        "Qbit",
+        "Qubits",
+        "Qbits"
+      ]
     }
   ],
   "R": [
@@ -5385,6 +6242,39 @@
       "question": "What \u0027R\u0027 is the sort of deal that is harsh or unfair, or the state of meat before cooking?",
       "answers": [
         "Raw"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 is another name for the animal known as a 'cony'?",
+      "answers": [
+        "Rabbit",
+        "Rabbits"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 was the first Pokemon ever to be designed?",
+      "answers": [
+        "Rhyhorn"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 in Fairytales was the name of a little man the queen had to guess, else she would lose her baby?",
+      "answers": [
+        "Rumpelstiltskin"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 were the pipes of Pan made in mythology?",
+      "answers": [
+        "Reed",
+        "Reeds"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 are paper measures called equal to 500 sheets?",
+      "answers": [
+        "Ream",
+        "Reams"
       ]
     },
     {
@@ -5615,10 +6505,78 @@
       ]
     },
     {
+      "question": "What \u0027R\u0027 is Mike Wazowski's arch nemesis in the film 'Monster's Inc.'?",
+      "answers": [
+        "Randall"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 is a habit or pattern of behaviour that has become dull and unproductive but is hard to change?",
+      "answers": [
+        "Rut"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 is the alternative name for a Mountain Ash tree?",
+      "answers": [
+        "Rowan",
+        "Rowans"
+      ]
+    },
+    {
+      "question": "What \u0027R\u0027 scale is used to measure Earthquake intensity?",
+      "answers": [
+        "Richter",
+        "Richter Scale"
+      ]
+    },
+    {
       "question": "What 'R' is the US state with initials R.I?",
       "answers": [
-        "rhode island",
+        "Rhode Island",
         "rhode"
+      ]
+    },
+    {
+      "question": "What 'R' is a short repeated phrase in popular music and jazz, typically used as an introduction or refrain in a song?",
+      "answers": [
+        "Riff",
+        "Riffs",
+        "Riffing"
+      ]
+    },
+    {
+      "question": "What 'R' is the sound or movement of vomiting?",
+      "answers": [
+        "Retching",
+        "Retch"
+      ]
+    },
+    {
+      "question": "What 'R' is the process of boiling a liquid so that any vapour is liquefied and returned to the stock?",
+      "answers": [
+        "Reflux",
+        "Refluxing"
+      ]
+    },
+    {
+      "question": "What 'R' is a term to describe a poorly made structure, likely to collapse?",
+      "answers": [
+        "Rickety"
+      ]
+    },
+    {
+      "question": "What 'R' is the bending of light as it passes through an object?",
+      "answers": [
+        "Refraction",
+        "Refract"
+      ]
+    },
+    {
+      "question": "What 'R' is the bouncing of light as it hits an object?",
+      "answers": [
+        "Reflection",
+        "Reflect"
       ]
     }
   ],
@@ -6223,9 +7181,29 @@
       ]
     },
     {
+      "question": "What \u0027T\u0027 is the name of the Linux mascot?",
+      "answers": [
+        "Tux"
+      ]
+    },
+    {
+      "question": "What \u0027T\u0027 is the river that goes through London?",
+      "answers": [
+        "Thames",
+        "River Thames"
+      ]
+    },
+    {
+      "question": "What \u0027T\u0027 are flowers who bulbs were once exchanged as currency?",
+      "answers": [
+        "Tulips",
+        "Tulip"
+      ]
+    },
+    {
       "question": "What 'T' is the climate for hotter and more humid locations?",
       "answers": [
-        "tropical",
+        "Tropical",
         "tropics",
         "tropic"
       ]
@@ -6233,15 +7211,82 @@
     {
       "question": "What 'T' is the animal for which a baby is called a 'poult'?",
       "answers": [
-        "turkey",
+        "Turkey",
         "turkeys"
       ]
     },
     {
       "question": "What 'T' did Matthew collect before becoming a disciple of Jesus?",
       "answers": [
-        "taxes",
+        "Taxes",
         "tax"
+      ]
+    },
+    {
+      "question": "What 'T' is represented by a skull and crossbones warning on chemicals?",
+      "answers": [
+        "Toxicity",
+        "Toxic"
+      ]
+    },
+    {
+      "question": "What 'T' is a set of cards for predicting one's fortunes?",
+      "answers": [
+        "Tarot",
+        "Tarot Deck",
+        "Tarot Cards"
+      ]
+    },
+    {
+      "question": "What 'T' has 'The Fool' as a card?",
+      "answers": [
+        "Tarot",
+        "Tarot Deck",
+        "Tarot Cards"
+      ]
+    },
+    {
+      "question": "What 'T' is a Baker's Dozen?",
+      "answers": [
+        "Thirteen",
+        "13"
+      ]
+    },
+    {
+      "question": "What 'T' is the city that the famous wooden horse gained entry to?",
+      "answers": [
+        "Troy"
+      ]
+    },
+    {
+      "question": "What 'T' is British slang for tasteless or shoddy clothes, jewellery, or ornaments?",
+      "answers": [
+        "Tat"
+      ]
+    },
+    {
+      "question": "What 'T' is the modern country where the ancient city of Troy can be found?",
+      "answers": [
+        "Turkey"
+      ]
+    },
+    {
+      "question": "What 'T' is the feeling of someone slightly drunk?",
+      "answers": [
+        "Tipsy"
+      ]
+    },
+    {
+      "question": "What 'T' is a small rounded hill or mound?",
+      "answers": [
+        "Tump",
+        "Tumps"
+      ]
+    },
+    {
+      "question": "What 'T' is a branch of Biology for the classification of animals?",
+      "answers": [
+        "Taxonomy"
       ]
     }
   ],
@@ -6263,7 +7308,13 @@
     {
       "question": "What 'U' is the relative nicknamed by the US government?",
       "answers": [
-        "uncle sam"
+        "Uncle Sam"
+      ]
+    },
+    {
+      "question": "What 'U' is in UFO, in the field of needlework?",
+      "answers": [
+        "Unfinished"
       ]
     },
     {
@@ -6457,6 +7508,115 @@
       "answers": [
         "Upper"
       ]
+    },
+    {
+      "question": "What \u0027U\u0027 is often the result of using keys Ctrl+Z?",
+      "answers": [
+        "Undo"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is shadow or darkness?",
+      "answers": [
+        "Umbra"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is to join together as a single entity?",
+      "answers": [
+        "Unite",
+        "Unity",
+        "United"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is a communications link to a satellite?",
+      "answers": [
+        "Uplink"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is the act/process of keeping something in good condition?",
+      "answers": [
+        "Upkeep"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is to be arrogantly self-assertive?",
+      "answers": [
+        "Uppish"
+      ]
+    },
+,    {
+      "question": "What \u0027U\u0027 is to re-use materials to create something superior to the original product?",
+      "answers": [
+        "Upcycle"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is a small increase or slight upward trend?",
+      "answers": [
+        "Uptick"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is someone who lacks reaction or response to a event?",
+      "answers": [
+        "Unfazed"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is a punishment not based on or behaving according to what is morally right and fair?",
+      "answers": [
+        "Unjust",
+        "Unjustified"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is to maintain something, or confirm and support it?",
+      "answers": [
+        "Uphold",
+        "Upholding"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 describes something that can be applied to anything?",
+      "answers": [
+        "Universal",
+        "Universally"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 range from small, painful sores in the mouth to bedsores and serious lesions of the stomach or intestine?",
+      "answers": [
+        "Ulcers",
+        "Ulcer"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is the similarity between grams, litres, meters, bytes, volts, and amperes?",
+      "answers": [
+        "Unit of Measurement",
+        "Units of Measurement",
+        "Unit",
+        "Units",
+        "Measurement Units",
+        "Measurement Unit"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 is an individual thing regarded as single and complete, but which can also combine for a larger or more complex whole?",
+      "answers": [
+        "Unit",
+        "Units"
+      ]
+    },
+    {
+      "question": "What \u0027U\u0027 indicates the end of a quote?",
+      "answers": [
+        "Unquote",
+        "Unquotes"
+      ]
     }
   ],
   "V": [
@@ -6610,7 +7770,9 @@
     {
       "question": "What \u0027V\u0027 is an inoculation against disease?",
       "answers": [
-        "Vaccination"
+        "Vaccination",
+        "Vaccine",
+        "Vaccines"
       ]
     },
     {
@@ -6691,19 +7853,100 @@
     {
       "question": "What 'V' is the country home to the world's highest waterfall?",
       "answers": [
-        "venezuela"
+        "Venezuela"
+      ]
+    },
+    {
+      "question": "What 'V' is deer meat?",
+      "answers": [
+        "Venison"
+      ]
+    },
+    {
+      "question": "What 'V' is the hottest planet in the solar system?",
+      "answers": [
+        "Venus"
       ]
     },
     {
       "question": "What 'V' is the city used in many of Shakespeare's plays?",
       "answers": [
-        "venice"
+        "Venice"
+      ]
+    },
+    {
+      "question": "What 'V' is Marco Polo's home town?",
+      "answers": [
+        "Venice"
       ]
     },
     {
       "question": "What 'V' accompanies tomato juice in a Bloody Mary?",
       "answers": [
-        "vodka"
+        "Vodka"
+      ]
+    },
+    {
+      "question": "What 'V' is to make sure something is true, accurate and justified?",
+      "answers": [
+        "Verify",
+        "Verification",
+        "Verified"
+      ]
+    },
+    {
+      "question": "What 'V' is an angular point of a polygon, or the highest point of something?",
+      "answers": [
+        "Vertex",
+        "Vertices"
+      ]
+    },
+    {
+      "question": "What 'V' is a whirling mass of fluid or air, especially a whirlpool or whirlwind, forming a cone shape?",
+      "answers": [
+        "Vortex",
+        "Vortexes"
+      ]
+    },
+    {
+      "question": "What 'V' is the practice of designing flags?",
+      "answers": [
+        "Vexillography",
+        "Vexillology",
+        "Vexillographer"
+      ]
+    },
+    {
+      "question": "What 'V' is a substance diffused or suspended in the air, especially one normally liquid or solid?",
+      "answers": [
+        "Vapor",
+        "Vape"
+      ]
+    },
+    {
+      "question": "What 'V' is a category of words to illustrate an action?",
+      "answers": [
+        "Verb",
+        "Verbs"
+      ]
+    },
+    {
+      "question": "What 'V' is to convert something into glass?",
+      "answers": [
+        "Vitrify",
+        "Vitrification"
+      ]
+    },
+    {
+      "question": "What 'V' is the speed of an object in a particular direction?",
+      "answers": [
+        "Velocity"
+      ]
+    },
+    {
+      "question": "What 'V' means to go through something en route to a destination?",
+      "answers": [
+        "Via"
       ]
     }
   ],
@@ -6942,19 +8185,19 @@
     {
       "question": "What 'W' is the capital city of New Zealand?",
       "answers": [
-        "wellington"
+        "Wellington"
       ]
     },
     {
       "question": "What 'W' is the surname for the 2003 Wimbledon women's winner?",
       "answers": [
-        "williams"
+        "Williams"
       ]
     },
     {
       "question": "What 'W' is the English county known as 'Shakespeare's County'?",
       "answers": [
-        "warwickshire"
+        "Warwickshire"
       ]
     },
     {
@@ -6967,7 +8210,66 @@
     {
       "question": "What 'W' is called a vest in America?",
       "answers": [
-        "waistcoat"
+        "Waistcoat"
+      ]
+    },
+    {
+      "question": "What 'W' is a trait of someone who is good at gaining an advantage deceitfully?",
+      "answers": [
+        "Wily"
+      ]
+    },
+    {
+      "question": "What 'W' is a winged two-legged dragon with a barbed tail?",
+      "answers": [
+        "Wyvern"
+      ]
+    },
+    {
+      "question": "What 'W' is to dry up and wither?",
+      "answers": [
+        "Wizen",
+        "Weazen"
+      ]
+    },
+    {
+      "question": "What 'W' is a saw with a narrow blade and a handle at both ends, used typically by two people?",
+      "answers": [
+        "Whipsaw",
+        "Whipsaws"
+      ]
+    },
+    {
+      "question": "What 'W' is the moon as it gradually gets revealed by light?",
+      "answers": [
+        "Waxing"
+      ]
+    },
+    {
+      "question": "What 'W' is an overcast stitch?",
+      "answers": [
+        "Whipstitch"
+      ]
+    },
+    {
+      "question": "What 'W' is used for transportation, particularly in a garden?",
+      "answers": [
+        "Wheelbarrow",
+        "Wheelbarrows"
+      ]
+    },
+    {
+      "question": "What 'W' is a brown and grey aquatic Asian rail, the male of which develops black plumage and a red frontal shield?",
+      "answers": [
+        "Watercock",
+        "Watercocks"
+      ]
+    },
+    {
+      "question": "What 'W' is a man that practices magic?",
+      "answers": [
+        "Warlock",
+        "Warlocks"
       ]
     }
   ],
