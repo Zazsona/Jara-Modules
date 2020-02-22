@@ -3,6 +3,7 @@ package com.Zazsona.Blockbusters.AI;
 import com.Zazsona.Blockbusters.game.BlockbustersUI;
 import com.Zazsona.Blockbusters.game.objects.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -69,10 +70,10 @@ public class AIPlayer
             case EASY:
                 return 4000+(r.nextInt(6000));
             case HARD:
-                return 2000+r.nextInt(4000);
+                return 1000+r.nextInt(2000); //1s base so that player can read the question, to some degree.
             case STANDARD:
             default:
-                return 2000+(r.nextInt(6000));
+                return 2000+r.nextInt(4000);
         }
     }
 
@@ -93,7 +94,7 @@ public class AIPlayer
                 break;
             case STANDARD:
             default:
-                answer = (value <= 60) ? question.getQuestionAnswer()[0] : failLines[r.nextInt(failLines.length)];
+                answer = (value <= 70) ? question.getQuestionAnswer()[0] : failLines[r.nextInt(failLines.length)];
                 break;
         }
         blockbustersUI.sendAIMessage(answer);

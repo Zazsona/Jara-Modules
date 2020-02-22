@@ -6,6 +6,7 @@ import com.Zazsona.Blockbusters.game.objects.*;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Random;
 
 public class GameMaster
@@ -111,14 +112,22 @@ public class GameMaster
         String letter = null;
         Tile tile = null;
         Team activeTeam = (isWhiteTurn) ? whiteTeam : blueTeam;
-        blockbustersUI.sendAnswerResponse(activeTeam.getTeamName()+", pick a letter!");
         if (activeTeam.isAITeam() && aiPlayer != null)
         {
+
+            long startingMs = Instant.now().toEpochMilli();
             tile = aiPlayer.getTile();
             letter = tile.getTileChar();
+            long calculationTime = Instant.now().toEpochMilli()-startingMs;
+            if (calculationTime < 1000)
+                try {Thread.sleep(1000-calculationTime);} catch (InterruptedException e) {}; //2s wait so the player has time to prepare for the next question.
+            blockbustersUI.sendAIMessage("I'll take "+letter+"!");
+            try {Thread.sleep(500);} catch (InterruptedException e) {};
+
         }
         else
         {
+            blockbustersUI.sendAnswerResponse(activeTeam.getTeamName()+", pick a letter!");
             while (!board.isLetterOnBoard(letter) || (tile != null && tile.getTileState() != TileState.UNCLAIMED))
             {
                 letter = blockbustersUI.getLetterSelection(activeTeam);
