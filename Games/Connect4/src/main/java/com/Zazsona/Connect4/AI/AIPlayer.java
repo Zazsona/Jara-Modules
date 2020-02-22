@@ -113,9 +113,10 @@ public class AIPlayer
                 if (!childBoard.isColumnFull(column))
                 {
                     childBoard.placeCounter(column, (isMaxPlayer) ? maxCounter : minCounter);
-                    Node childNode = new Node(parent, getMoveValue(childBoard, maxCounter, predictionDepth), column);
+                    int moveValue = getMoveValue(childBoard, maxCounter, predictionDepth);
+                    Node childNode = new Node(parent, moveValue, column);
                     parent.addChild(column, childNode);
-                    if (predictionDepth > 0)
+                    if (predictionDepth > 0 && moveValue == 0)
                     {
                         addChildren(childBoard.clone(), childNode, !isMaxPlayer, predictionDepth-1);
                     }
@@ -147,12 +148,12 @@ public class AIPlayer
         switch (difficulty)
         {
             case EASY:
-                return 1;
+                return 2;
             case STANDARD:
-                return 3;
+                return 4;
             case HARD:
-                return 5;
+                return 6;
         }
-        return 3;
+        return 4;
     }
 }
