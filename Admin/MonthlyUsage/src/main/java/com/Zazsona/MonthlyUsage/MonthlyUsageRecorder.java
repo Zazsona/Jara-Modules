@@ -2,6 +2,9 @@ package com.Zazsona.MonthlyUsage;
 
 import configuration.SettingsUtil;
 import jara.Core;
+import jara.ModuleAttributes;
+import listeners.CommandListener;
+import listeners.ListenerManager;
 import module.ModuleLoad;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -20,8 +23,8 @@ public class MonthlyUsageRecorder extends ModuleLoad
     {
         fm = new FileManager();
         fm.restore();
-        CommandListener cmdListener = new CommandListener();
-        Core.getShardManagerNotNull().addEventListener(cmdListener);
+        GlobalCommandListener cmdListener = new GlobalCommandListener();
+        ListenerManager.registerListener(cmdListener);
 
 
         Timer autosaveScheduler = new Timer();
@@ -66,18 +69,12 @@ public class MonthlyUsageRecorder extends ModuleLoad
         broadcastScheduler.schedule(broadcastTask, broadcastTime.getTime());
     }
 
-    public class CommandListener extends ListenerAdapter
+    public class GlobalCommandListener extends CommandListener
     {
         @Override
-        public void onGuildMessageReceived(GuildMessageReceivedEvent event)
+        public void onCommandSuccess(GuildMessageReceivedEvent msgEvent, ModuleAttributes moduleAttributes)
         {
-            /*
-            Yes, this is very rough, but this has enough performance cost as it is. I don't want to be verifying it's a command here as well as for the main command loader.
-             */
-            if (event.getMessage().getContentDisplay().startsWith(SettingsUtil.getGuildCommandPrefix(event.getGuild().getId()).toString()))
-            {
-                fm.addUsage(event.getGuild().getId(), event.getAuthor().getId());
-            }
+            fm.addUsage(msgEvent.getGuild().getId(), msgEvent.getAuthor().getId());
         }
     }
 

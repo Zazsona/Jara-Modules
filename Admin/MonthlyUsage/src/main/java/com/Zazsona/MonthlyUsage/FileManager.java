@@ -25,79 +25,92 @@ public class FileManager implements Serializable
         return SettingsUtil.getModuleDataDirectory().getAbsolutePath()+"/CommandUsage.jara";
     }
 
-    public synchronized void save()
+    public void save()
     {
-        try
+        synchronized (this)
         {
-            File quoteFile = new File(getSavePath());
-            if (!quoteFile.exists())
+            try
             {
-                quoteFile.getParentFile().mkdirs();
-                quoteFile.createNewFile();
+                File quoteFile = new File(getSavePath());
+                if (!quoteFile.exists())
+                {
+                    quoteFile.getParentFile().mkdirs();
+                    quoteFile.createNewFile();
+                }
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(this);
+                FileOutputStream fos = new FileOutputStream(getSavePath());
+                PrintWriter pw = new PrintWriter(fos);
+                pw.print(json);
+                pw.close();
+                fos.close();
             }
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(this);
-            FileOutputStream fos = new FileOutputStream(getSavePath());
-            PrintWriter pw = new PrintWriter(fos);
-            pw.print(json);
-            pw.close();
-            fos.close();
+            catch (IOException e)
+            {
+                logger.error(e.getMessage());
+            }
         }
-        catch (IOException e)
-        {
-            logger.error(e.getMessage());
-        }
+
     }
 
-    public synchronized void restore()
+    public void restore()
     {
-        try
+        synchronized (this)
         {
-            File saveFile = new File(getSavePath());
-            if (saveFile.exists())
+            try
             {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String json = new String(Files.readAllBytes(saveFile.toPath()));
-                FileManager fm = gson.fromJson(json, FileManager.class);
-                this.commandUsage = fm.commandUsage;
-                this.lastReset = fm.lastReset;
+                File saveFile = new File(getSavePath());
+                if (saveFile.exists())
+                {
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String json = new String(Files.readAllBytes(saveFile.toPath()));
+                    FileManager fm = gson.fromJson(json, FileManager.class);
+                    this.commandUsage = (fm.commandUsage == null) ? new HashMap<>() : fm.commandUsage;
+                    this.lastReset = (fm.lastReset == 0) ? Instant.now().getEpochSecond() : fm.lastReset;
+                }
+                else
+                {
+                    commandUsage = new HashMap<>();
+                    lastReset = Instant.now().getEpochSecond();
+                }
             }
-            else
+            catch (IOException e)
             {
-                commandUsage = new HashMap<>();
-                lastReset = Instant.now().getEpochSecond();
+                logger.error(e.getMessage());
+                return;
             }
-
-        }
-        catch (IOException e)
-        {
-            logger.error(e.getMessage());
-            return;
         }
     }
 
     public void addUsage(String guildID, String userID)
     {
-        if (commandUsage.get(guildID) == null)
+        synchronized (this)
         {
-            commandUsage.put(guildID, new HashMap<>());
+            if (commandUsage.get(guildID) == null)
+            {
+                commandUsage.put(guildID, new HashMap<>());
+            }
+            if (!commandUsage.get(guildID).containsKey(userID))
+            {
+                commandUsage.get(guildID).put(userID, 1);
+            }
+            else
+            {
+                int recordedNum = commandUsage.get(guildID).get(userID);
+                recordedNum++;
+                commandUsage.get(guildID).put(userID, recordedNum);
+            }
         }
-        if (!commandUsage.get(guildID).containsKey(userID))
-        {
-            commandUsage.get(guildID).put(userID, 1);
-        }
-        else
-        {
-            int recordedNum = commandUsage.get(guildID).get(userID);
-            recordedNum++;
-            commandUsage.get(guildID).put(userID, recordedNum);
-        }
+
     }
 
     public void reset()
     {
-        commandUsage = new HashMap<>();
-        lastReset = OffsetDateTime.now(ZoneOffset.UTC).toEpochSecond();
+        synchronized (this)
+        {
+            commandUsage = new HashMap<>();
+            lastReset = Instant.now().getEpochSecond();
+        }
         save();
     }
 
