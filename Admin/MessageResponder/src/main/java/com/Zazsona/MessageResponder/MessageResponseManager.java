@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.CancellationException;
 
 public class MessageResponseManager extends ModuleCommand
@@ -107,19 +108,23 @@ public class MessageResponseManager extends ModuleCommand
         embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
         if (fm.doesGuildHaveResponses(channel.getGuild().getId()))
         {
-            ArrayList<String> responses = new ArrayList<>();
-            responses.addAll(fm.getMessageResponses(channel.getGuild().getId()).values());
+            HashMap<String, String> responsesMap = fm.getMessageResponses(channel.getGuild().getId());
+            ArrayList<String> keys = new ArrayList<>();
+            keys.addAll(responsesMap.keySet());
 
             int listingsPerPage = 15;
-            double totalPages = Math.ceil((double) responses.size()/(double) listingsPerPage);
+            double totalPages = Math.ceil((double) keys.size()/(double) listingsPerPage);
             int startingIndex = (listingsPerPage*pageNo)-listingsPerPage;
-            int endIndex = (responses.size() < startingIndex+listingsPerPage) ? responses.size() : (startingIndex+listingsPerPage);
+            int endIndex = (keys.size() < startingIndex+listingsPerPage) ? keys.size() : (startingIndex+listingsPerPage);
 
             StringBuilder listBuilder = new StringBuilder();
             for (int i = startingIndex; i<endIndex; i++)
             {
-                String responseSnippet = (responses.get(i).length() > 20) ? responses.get(i).substring(0, 20) : responses.get(i);
-                listBuilder.append(i).append(". ").append(responseSnippet).append("\n");
+                String key = keys.get(i);
+                String response = responsesMap.get(key);
+                String keySnippet = (key.length() > 20) ? key.substring(0, 20) : key;
+                String responseSnippet = (response.length() > 20) ? response.substring(0, 20) : response;
+                listBuilder.append(i).append(". ").append(keySnippet).append("\n").append("*").append(responseSnippet).append("*\n\n");
             }
             embed.setDescription(listBuilder.toString());
             embed.setFooter("Page "+pageNo+" / "+(int) totalPages, null);
