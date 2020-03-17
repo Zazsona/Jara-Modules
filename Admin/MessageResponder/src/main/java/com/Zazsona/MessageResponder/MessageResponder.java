@@ -25,7 +25,7 @@ public class MessageResponder extends ModuleLoad
         public void onGuildMessageReceived(GuildMessageReceivedEvent event)
         {
             String guildID = event.getGuild().getId();
-            if (fm.doesGuildHaveResponses(guildID))
+            if (fm.doesGuildHaveResponses(guildID) && !event.getMessage().getAuthor().isBot())
             {
                 String response = fm.getMessageResponses(guildID).get(event.getMessage().getContentRaw().toLowerCase());
                 if (response != null && SettingsUtil.getGuildSettings(guildID).isCommandEnabled("MessageResponder"))
