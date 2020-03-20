@@ -1,0 +1,7 @@
+{
+  "params": [
+    "PassTheBomb",
+    "PassTheBomb [Player1], (Player2)... (PlayerN)"
+  ],
+  "description": "Quick! You've only got a few seconds before the bomb explodes.\nState an item from the specified category before it blows, the longer you go on the less time you have."
+}

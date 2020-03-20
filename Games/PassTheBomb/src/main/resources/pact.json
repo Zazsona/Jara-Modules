@@ -1,0 +1,12 @@
+{
+  "key": "PassTheBomb",
+  "aliases": [
+    "HotPotato",
+    "BombPass",
+    "PassBomb",
+    "PTB"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "The snappy word game."
+}
