@@ -24,38 +24,21 @@ public class MCLConfig extends ModuleConfig
         MessageManager mm = new MessageManager();
         if (isSetup && ip == null || !isSetup)
         {
-            embed.setDescription("Current IP: "+((ip == null) ? "None" : ip)+"\n\nPlease set a default IP for Minecraft server commands, use reset to remove, or quit to cancel.");
-            msgEvent.getChannel().sendMessage(embed.build()).queue();
-
-            while (true)
-            {
-                Message msg = mm.getNextMessage(msgEvent.getChannel(), msgEvent.getMember());
-                String content = msg.getContentDisplay();
-                if (content.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit") || content.equalsIgnoreCase("quit"))
-                {
-                    if (!isSetup)
-                    {
-                        embed.setDescription("Menu quit.");
-                        msgEvent.getChannel().sendMessage(embed.build()).queue();
-                    }
-                    break;
-                }
-                else if (content.equalsIgnoreCase("reset"))
-                {
-                    FileManager.resetIpForGuild(msgEvent.getGuild().getId());
-                    embed.setDescription("IP reset.");
-                    msgEvent.getChannel().sendMessage(embed.build()).queue();
-                    return;
-                }
-                boolean success = setNewIpAddress(msgEvent, content);
-                if (success)
-                {
-                    break;
-                }
-            }
+            runIPMenu(msgEvent, isSetup, ip, embed, mm);
         }
+        runChannelMenu(msgEvent, isSetup, embed, mm);
+        if (isSetup)
+        {
+            MinecraftChatLinkCommand.sendChatLinkUUID(msgEvent.getGuild(), msgEvent.getMember().getUser());
+        }
+        MinecraftMessageManager.getInstance(msgEvent.getGuild()).stopConnection();
+        new Thread(() -> MinecraftMessageManager.getInstance(msgEvent.getGuild()).startConnection()).start();
+    }
+
+    private void runChannelMenu(GuildMessageReceivedEvent msgEvent, boolean isSetup, EmbedBuilder embed, MessageManager mm)
+    {
         TextChannel savedChannel = getSavedChannel(msgEvent.getGuild());
-        embed.setDescription("Current Channel: "+((savedChannel == null) ? "None" : textChannel.getName())+"\nPlease mention the channel to link Minecraft chat messages with, or `reset` to disable.");
+        embed.setDescription("Current Channel: "+((savedChannel == null) ? "None" : savedChannel.getName())+"\nPlease mention the channel to link Minecraft chat messages with, or `reset` to disable.");
         msgEvent.getChannel().sendMessage(embed.build()).queue();
         while (true)
         {
@@ -72,7 +55,8 @@ public class MCLConfig extends ModuleConfig
             }
             else if (content.equalsIgnoreCase("reset"))
             {
-                FileManager.resetIpForGuild(msgEvent.getGuild().getId());
+                ChatLinkFileManager.resetChannelForGuild(msgEvent.getGuild().getId());
+                ChatLinkFileManager.save();
                 embed.setDescription("Channel reset.");
                 msgEvent.getChannel().sendMessage(embed.build()).queue();
                 MinecraftMessageManager.getInstance(msgEvent.getGuild()).stopConnection();
@@ -84,13 +68,42 @@ public class MCLConfig extends ModuleConfig
                 {
                     TextChannel channel = msg.getMentionedChannels().get(0);
                     setChannel(msgEvent, channel);
-                    if (isSetup)
-                    {
-                        MinecraftChatLinkCommand.sendChatLinkUUID(msgEvent.getGuild(), msgEvent.getMember().getUser());
-                    }
-                    new Thread(() -> MinecraftMessageManager.getInstance(msgEvent.getGuild()).startConnection()).start();
                     return;
                 }
+            }
+        }
+    }
+
+    private void runIPMenu(GuildMessageReceivedEvent msgEvent, boolean isSetup, String ip, EmbedBuilder embed, MessageManager mm)
+    {
+        embed.setDescription("Current IP: "+((ip == null) ? "None" : ip)+"\n\nPlease set a default IP for Minecraft server commands, use reset to remove, or quit to cancel.");
+        msgEvent.getChannel().sendMessage(embed.build()).queue();
+
+        while (true)
+        {
+            Message msg = mm.getNextMessage(msgEvent.getChannel(), msgEvent.getMember());
+            String content = msg.getContentDisplay();
+            if (content.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId()) + "quit") || content.equalsIgnoreCase("quit"))
+            {
+                if (!isSetup)
+                {
+                    embed.setDescription("Menu quit.");
+                    msgEvent.getChannel().sendMessage(embed.build()).queue();
+                }
+                break;
+            }
+            else if (content.equalsIgnoreCase("reset"))
+            {
+                FileManager.resetIpForGuild(msgEvent.getGuild().getId());
+                FileManager.save();
+                embed.setDescription("IP reset.");
+                msgEvent.getChannel().sendMessage(embed.build()).queue();
+                break;
+            }
+            boolean success = setNewIpAddress(msgEvent, content);
+            if (success)
+            {
+                break;
             }
         }
     }
@@ -113,6 +126,7 @@ public class MCLConfig extends ModuleConfig
         if (ip.contains("."))
         {
             FileManager.setIpForGuild(msgEvent.getGuild().getId(), ip);
+            FileManager.save();
             embed.setDescription("Default Minecraft IP set to: "+ip);
             msgEvent.getChannel().sendMessage(embed.build()).queue();
             return true;
@@ -133,6 +147,7 @@ public class MCLConfig extends ModuleConfig
     private void setChannel(GuildMessageReceivedEvent msgEvent, TextChannel channelToSet)
     {
         ChatLinkFileManager.setChannelForGuild(channelToSet.getGuild().getId(), channelToSet.getId());
+        ChatLinkFileManager.save();
         EmbedBuilder embed = getDefaultEmbedStyle(msgEvent);
         embed.setDescription("Channel set.");
         msgEvent.getChannel().sendMessage(embed.build()).queue();

@@ -46,6 +46,8 @@ public class MinecraftChatLinkCommand extends ModuleCommand
                 {
                     if (parameters[2].equalsIgnoreCase("reset"))
                     {
+                        ChatLinkFileManager.resetUUIDForGuild(msgEvent.getGuild().getId());
+                        ChatLinkFileManager.save();
                         sendChatLinkUUID(msgEvent.getGuild(), msgEvent.getMember().getUser());
                     }
                 }

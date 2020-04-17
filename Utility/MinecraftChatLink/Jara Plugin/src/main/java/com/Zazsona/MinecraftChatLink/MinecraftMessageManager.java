@@ -136,7 +136,6 @@ public class MinecraftMessageManager
 
     /**
      * Waits for incoming messages from the Minecraft server, and sends them to Discord<br>
-     * In the case that the connection dies, this will attempt to reestablish it automatically.
      */
     private void listenForMinecraftMessages()
     {
@@ -160,13 +159,15 @@ public class MinecraftMessageManager
 
                 }
             }
-            stopConnection();
-            Thread.currentThread().interrupt();
         }
         catch (IOException | ClassNotFoundException e)
         {
-            startConnection();
-            return;
+            LOGGER.warn(e.toString());
+        }
+        finally
+        {
+            listeningThread = null;
+            stopConnection();
         }
     }
 
@@ -179,9 +180,9 @@ public class MinecraftMessageManager
         try
         {
             stopConnection();
-            if (ChatLinkFileManager.isChatLinkConfigurationComplete(guild.getId()))
+            while (ChatLinkFileManager.isChatLinkConfigurationComplete(guild.getId()) && guild.getTextChannelById(ChatLinkFileManager.getChannelIDForGuild(guild.getId())) != null)
             {
-                if (guild.getTextChannelById(ChatLinkFileManager.getChannelIDForGuild(guild.getId())) != null)
+                try
                 {
                     String ip = FileManager.getIpForGuild(guild.getId());
                     socket = new Socket();
@@ -192,32 +193,19 @@ public class MinecraftMessageManager
                     boolean validConnection = runHandshake();
                     if (validConnection)
                     {
-                        listenForMinecraftMessages();
                         instances.put(guild.getId(), this);
+                        listenForMinecraftMessages();
                     }
-                    else
-                    {
-                        startConnection();
-                    }
-
+                }
+                catch (IOException e)
+                {
+                    Thread.sleep(1000*30);
                 }
             }
-            else
-            {
-                LOGGER.info("Could not start MinecraftChatLink for "+guild.getName()+".\nREASON: Missing configuration details.");
-            }
         }
-        catch (IOException e)
+        catch (InterruptedException e)
         {
-            try
-            {
-                Thread.sleep(1000*30);
-            }
-            catch (InterruptedException e1)
-            {
-                //It's fine, just cut it short
-            }
-            startConnection();
+            LOGGER.warn("Connection listener closed.");
         }
     }
 
