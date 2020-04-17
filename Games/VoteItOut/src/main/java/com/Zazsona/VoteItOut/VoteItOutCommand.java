@@ -68,6 +68,7 @@ public class VoteItOutCommand extends ModuleGameCommand
 
     private class JoinListener extends ListenerAdapter
     {
+        private Object lock = new Object();
         private Message joinMessage;
         private EmbedBuilder joinEmbed;
         private Member gameOwner;
@@ -95,36 +96,42 @@ public class VoteItOutCommand extends ModuleGameCommand
         @Override
         public void onMessageReactionAdd(@Nonnull MessageReactionAddEvent event)
         {
-            super.onMessageReactionAdd(event);
-            if (!event.getMember().getUser().isBot() && (VoteItOutGame.getMaxPlayers() > players.size()+1) && event.getReactionEmote().getName().equals(JOIN_REACTION))
+            synchronized (lock)
             {
-                players.add(event.getMember());
-                joinEmbed.setFooter("Spaces Remaining: "+(VoteItOutGame.getMaxPlayers()-players.size()));
-                joinMessage.editMessage(joinEmbed.build()).complete();
-            }
-            else if (event.getMember().equals(gameOwner) && event.getReactionEmote().getName().equals(START_REACTION))
-            {
-                if (players.size() >= 2)
-                    isGameStart = true;
-                else
+                super.onMessageReactionAdd(event);
+                if (!event.getMember().getUser().isBot() && (VoteItOutGame.getMaxPlayers() > players.size()+1) && event.getReactionEmote().getName().equals(JOIN_REACTION))
                 {
-                    textChannel.sendMessage(getEmbedStyle(textChannel.getGuild().getSelfMember()).setDescription("Insufficient Players!").build()).queue();
-                    event.getReaction().removeReaction(event.getUser()).queue();
+                    players.add(event.getMember());
+                    joinEmbed.setFooter("Spaces Remaining: "+(VoteItOutGame.getMaxPlayers()-players.size()));
+                    joinMessage.editMessage(joinEmbed.build()).complete();
                 }
-            }
-            else if (!event.getMember().equals(event.getGuild().getSelfMember())) //Check, so that the initial reactions don't get removed
-            {
-                event.getReaction().removeReaction(event.getUser()).complete();
+                else if (event.getMember().equals(gameOwner) && event.getReactionEmote().getName().equals(START_REACTION))
+                {
+                    if (players.size() >= 2)
+                        isGameStart = true;
+                    else
+                    {
+                        textChannel.sendMessage(getEmbedStyle(textChannel.getGuild().getSelfMember()).setDescription("Insufficient Players!").build()).queue();
+                        event.getReaction().removeReaction(event.getUser()).queue();
+                    }
+                }
+                else if (!event.getMember().equals(event.getGuild().getSelfMember())) //Check, so that the initial reactions don't get removed
+                {
+                    event.getReaction().removeReaction(event.getUser()).complete();
+                }
             }
         }
 
         @Override
         public void onMessageReactionRemove(@Nonnull MessageReactionRemoveEvent event)
         {
-            super.onMessageReactionRemove(event);
-            players.remove(event.getMember());
-            joinEmbed.setFooter("Spaces Remaining: "+(VoteItOutGame.getMaxPlayers()-players.size()));
-            joinMessage.editMessage(joinEmbed.build()).complete();
+            synchronized (lock)
+            {
+                super.onMessageReactionRemove(event);
+                players.remove(event.getMember());
+                joinEmbed.setFooter("Spaces Remaining: "+(VoteItOutGame.getMaxPlayers()-players.size()));
+                joinMessage.editMessage(joinEmbed.build()).complete();
+            }
         }
     }
 }
