@@ -1,8 +1,8 @@
-package com.Zazsona.Quiz.quiz;
+package com.Zazsona.Quiz.api;
 
 import java.util.Random;
 
-public class Trivia
+public class TriviaResponse
 {
     public TriviaQuestion[] results;
 
@@ -14,40 +14,6 @@ public class Trivia
         private String question;
         private String correct_answer;
         private String[] incorrect_answers;
-
-        private String[] answers;
-        private int correct_answer_id;
-
-        public TriviaQuestion()
-        {
-            Random r = new Random();
-            answers = new String[incorrect_answers.length+1];
-            correct_answer_id = r.nextInt(answers.length);
-            for (int i = 0; i<answers.length; i++)
-            {
-                if (i < correct_answer_id)
-                    answers[i] = incorrect_answers[i];
-                else if (i == correct_answer_id)
-                    answers[i] = correct_answer;
-                else if (i > correct_answer_id)
-                    answers[i] = incorrect_answers[i-1];
-            }
-
-        }
-
-        public int getPoints()
-        {
-            switch (difficulty)
-            {
-                case "easy":
-                    return 1;
-                case "medium":
-                    return 2;
-                case "hard":
-                    return 3;
-            }
-            return 0;
-        }
 
         /**
          * Gets category
@@ -69,21 +35,43 @@ public class Trivia
         }
 
         /**
-         * Gets correct_answer_id
-         * @return correct_answer_id
+         * Gets type
+         *
+         * @return type
          */
-        public int getCorrectAnswerIndex()
+        public String getType()
         {
-            return correct_answer_id;
+            return type;
         }
 
         /**
-         * Gets answers
-         * @return answers
+         * Gets difficulty
+         *
+         * @return difficulty
          */
-        public String[] getAnswers()
+        public String getDifficulty()
         {
-            return answers;
+            return difficulty;
+        }
+
+        /**
+         * Gets correct_answer
+         *
+         * @return correct_answer
+         */
+        public String getCorrectAnswer()
+        {
+            return correct_answer;
+        }
+
+        /**
+         * Gets incorrect_answers
+         *
+         * @return incorrect_answers
+         */
+        public String[] getIncorrectAnswers()
+        {
+            return incorrect_answers;
         }
     }
 
