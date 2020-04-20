@@ -1,8 +1,8 @@
-package com.Zazsona.Quiz.system;
+package com.Zazsona.Quiz.stats;
 
-import com.Zazsona.Quiz.config.TriviaJson;
-import com.Zazsona.Quiz.config.UserStats;
+import com.Zazsona.Quiz.api.TriviaResponse;
 import com.Zazsona.Quiz.quiz.QuizTeam;
+import com.Zazsona.Quiz.quiz.Trivia;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -46,7 +46,7 @@ public class UserStatManager
         }
         catch (IOException e)
         {
-            logger.error("Unable to create Quiz Night user stats file.\n"+e.toString());
+            logger.error("Unable to create Quiz user stats file.\n"+e.toString());
             return null;
         }
     }
@@ -63,7 +63,7 @@ public class UserStatManager
         }
         catch (IOException e)
         {
-            logger.error("Unable to read Quiz Night user stats file.\n"+e.toString());
+            logger.error("Unable to read Quiz user stats file.\n"+e.toString());
         }
         return userStatMap;
     }
@@ -91,27 +91,21 @@ public class UserStatManager
         }
     }
 
-    public static void saveQuizNightStats(String winningTeamName, TriviaJson.TriviaQuestion[] questions, Collection<QuizTeam> teams)
+    public static void saveQuizStats(QuizTeam winningTeam, Trivia[] trivia, Collection<QuizTeam> teams)
     {
         restore();
         for (QuizTeam team : teams)
         {
-            boolean isWinningTeam = team.getTeamName().equalsIgnoreCase(winningTeamName);
-            for (Member member : team.getTeamMembers())
+            boolean isWinningTeam = team.equals(winningTeam);
+            for (Member member : team.getMembers())
             {
-                recordMemberStats(member.getUser(), team.getCorrectAnswers(), questions, isWinningTeam);
+                recordMemberStats(member.getUser(), team.getCorrectAnswers(), trivia, isWinningTeam);
             }
         }
         save();
     }
 
-    private static void recordMemberStats(User player, boolean[] correctAnswers, TriviaJson.TriviaQuestion[] questions, boolean winner)
-    {
-        recordMemberStats(player, correctAnswers, questions, questions.length, winner);
-        //There is no save here, as a save is conducted at the end of a quiz night.
-    }
-
-    public static void recordMemberStats(User player, boolean[] correctAnswers, TriviaJson.TriviaQuestion[] questions, int currentQuestion, boolean winner)
+    public static void recordMemberStats(User player, boolean[] correctAnswers, Trivia[] trivia, boolean winner)
     {
         int easyQuestions = 0;
         int easyQuestionsCorrect = 0;
@@ -120,25 +114,25 @@ public class UserStatManager
         int hardQuestions = 0;
         int hardQuestionsCorrect = 0;
 
-        for (int i = 0; i<currentQuestion; i++)
+        for (int i = 0; i<trivia.length; i++)
         {
-            switch (questions[i].difficulty)
+            switch (trivia[i].getPoints())
             {
-                case "easy":
+                case 1:
                     easyQuestions++;
                     if (correctAnswers[i])
                     {
                         easyQuestionsCorrect++;
                     }
                     break;
-                case "medium":
+                case 2:
                     mediumQuestions++;
                     if (correctAnswers[i])
                     {
                         mediumQuestionsCorrect++;
                     }
                     break;
-                case "hard":
+                case 3:
                     hardQuestions++;
                     if (correctAnswers[i])
                     {
@@ -157,7 +151,6 @@ public class UserStatManager
             int winCount = (winner) ? 1 : 0;
             userStatMap.put(player.getId(), new UserStats(1, easyQuestions, mediumQuestions, hardQuestions, winCount, easyQuestionsCorrect, mediumQuestionsCorrect, hardQuestionsCorrect));
         }
-        //There is no save here, as a save is conducted at the end of a quiz night.
     }
 
 

@@ -1,4 +1,4 @@
-package com.Zazsona.Quiz.config;
+package com.Zazsona.Quiz.stats;
 
 import java.io.Serializable;
 
