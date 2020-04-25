@@ -3,13 +3,18 @@ package com.Zazsona.Quiz.config;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DayJson implements Serializable
+public class DaySchedule implements Serializable
 {
     private ArrayList<Long> startSeconds;
 
-    public DayJson()
+    public DaySchedule()
     {
         startSeconds = new ArrayList<>();
+    }
+
+    private DaySchedule(DaySchedule daySchedule)
+    {
+        this.startSeconds = daySchedule.startSeconds;
     }
 
     public ArrayList<Long> getStartSeconds()
@@ -35,5 +40,10 @@ public class DayJson implements Serializable
     public boolean hasQuiz()
     {
         return (startSeconds.size() > 0);
+    }
+
+    public DaySchedule clone()
+    {
+        return new DaySchedule(this);
     }
 }

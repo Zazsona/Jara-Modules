@@ -1,6 +1,5 @@
-package com.Zazsona.Quiz.system;
+package com.Zazsona.Quiz.config;
 
-import com.Zazsona.Quiz.config.GuildQuizConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -15,14 +14,9 @@ import java.util.HashMap;
 
 public class SettingsManager
 {
-    /*
-    ====================================================================================================================
-                                                    Boilerplate
-
-     */
     private static transient SettingsManager settingsManager;
     private transient static Logger logger = LoggerFactory.getLogger(SettingsManager.class);
-    private HashMap<String, GuildQuizConfig> guildQuizConfigs;
+    private HashMap<String, QuizBuilder> guildQuizConfigs;
 
     private SettingsManager()
     {
@@ -55,7 +49,7 @@ public class SettingsManager
                 {
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
                     String json = new String(Files.readAllBytes(quizFile.toPath()));
-                    TypeToken<HashMap<String, GuildQuizConfig>> token = new TypeToken<HashMap<String, GuildQuizConfig>>() {};
+                    TypeToken<HashMap<String, QuizBuilder>> token = new TypeToken<HashMap<String, QuizBuilder>>() {};
                     settingsManager.guildQuizConfigs = gson.fromJson(json, token.getType());
                 }
                 else
@@ -94,36 +88,24 @@ public class SettingsManager
         }
     }
 
-    public GuildQuizConfig getGuildQuizSettings(String guildID)
+    public QuizBuilder getGuildQuizBuilder(String guildID)
     {
-        GuildQuizConfig gqc =  settingsManager.guildQuizConfigs.get(guildID);
-        if (gqc == null)
+        QuizBuilder quizBuilder =  settingsManager.guildQuizConfigs.get(guildID);
+        if (quizBuilder == null)
         {
-            gqc = new GuildQuizConfig(guildID);
-            settingsManager.guildQuizConfigs.put(guildID, gqc);
+            quizBuilder = new QuizBuilder(guildID);
+            settingsManager.guildQuizConfigs.put(guildID, quizBuilder);
         }
-        return gqc;
+        return quizBuilder;
     }
 
-    public void addGuildConfig(GuildQuizConfig gqc)
+    public void setQuizBuilder(QuizBuilder quizBuilder)
     {
-        settingsManager.guildQuizConfigs.put(gqc.getGuildID(), gqc);
+        settingsManager.guildQuizConfigs.replace(quizBuilder.getGuildID(), quizBuilder);
         save();
     }
 
-    public void updateGuildConfig(GuildQuizConfig gqc)
-    {
-        settingsManager.guildQuizConfigs.replace(gqc.getGuildID(), gqc);
-        save();
-    }
-
-    public void removeGuildConfig(GuildQuizConfig gqc)
-    {
-        settingsManager.guildQuizConfigs.remove(gqc.getGuildID());
-        save();
-    }
-
-    public void removeGuildConfig(String guildID)
+    public void removeQuizBuilder(String guildID)
     {
         settingsManager.guildQuizConfigs.remove(guildID);
         save();
@@ -137,15 +119,15 @@ public class SettingsManager
      * @param dayValue
      * @return
      */
-    public ArrayList<GuildQuizConfig> getDayQuizzes(int dayValue)
+    public ArrayList<QuizBuilder> getDayQuizzes(int dayValue)
     {
         restore();
-        ArrayList<GuildQuizConfig> todaysQuizzes = new ArrayList<>();
-        for (GuildQuizConfig guildQuizConfig : guildQuizConfigs.values())
+        ArrayList<QuizBuilder> todaysQuizzes = new ArrayList<>();
+        for (QuizBuilder quizBuilder : guildQuizConfigs.values())
         {
-            if (guildQuizConfig.getDay(dayValue).hasQuiz())
+            if (quizBuilder.getDay(dayValue).hasQuiz())
             {
-                todaysQuizzes.add(guildQuizConfig);
+                todaysQuizzes.add(quizBuilder);
             }
         }
         return todaysQuizzes;
@@ -161,11 +143,11 @@ public class SettingsManager
     {
         restore();
         ArrayList<String> todaysQuizzes = new ArrayList<>();
-        for (GuildQuizConfig guildQuizConfig : guildQuizConfigs.values())
+        for (QuizBuilder quizBuilder : guildQuizConfigs.values())
         {
-            if (guildQuizConfig.getDay(dayValue).hasQuiz())
+            if (quizBuilder.getDay(dayValue).hasQuiz())
             {
-                todaysQuizzes.add(guildQuizConfig.getGuildID());
+                todaysQuizzes.add(quizBuilder.getGuildID());
             }
         }
         return todaysQuizzes;
