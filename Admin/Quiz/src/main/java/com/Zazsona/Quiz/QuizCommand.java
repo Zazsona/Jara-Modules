@@ -1,5 +1,7 @@
 package com.Zazsona.Quiz;
 
+import com.Zazsona.Quiz.config.QuizBuilder;
+import com.Zazsona.Quiz.config.SettingsManager;
 import com.Zazsona.Quiz.quiz.Quiz;
 import configuration.SettingsUtil;
 import commands.CmdUtil;
@@ -11,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 
-public class Start extends ModuleCommand
+public class QuizCommand extends ModuleCommand
 {
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -21,8 +23,22 @@ public class Start extends ModuleCommand
             String operation = parameters[1].toLowerCase().trim();
             if (operation.equals("start"))
             {
-                Quiz qn = new Quiz();
-                qn.startQuiz(msgEvent.getGuild(), true);
+                QuizBuilder quizBuilder = SettingsManager.getInstance().getGuildQuizBuilder(msgEvent.getGuild().getId()).clone(); //Clone so we can modify countdown time, etc, just for this instance.
+                if (parameters.length > 2 && parameters[2].matches("[0-9]+"))
+                {
+                    int countdownSeconds = Integer.parseInt(parameters[2]);
+                    if (countdownSeconds >= 10 && countdownSeconds <= 600)
+                        quizBuilder.setJoinTimeSeconds(countdownSeconds);
+                    else
+                    {
+                        msgEvent.getChannel().sendMessage("Invalid countdown!\nCountdown must be between 10-600 seconds.").queue();
+                        return;
+                    }
+                }
+                else
+                    quizBuilder.setJoinTimeSeconds(30);
+                Quiz quiz = quizBuilder.build();
+                quiz.runQuiz();
             }
             else if (operation.equals("config") && SettingsUtil.getGuildSettings(msgEvent.getGuild().getId()).isPermitted(msgEvent.getMember(),"Config"))
             {
