@@ -1,7 +1,7 @@
 package com.Zazsona.Quiz;
 
-import com.Zazsona.Quiz.json.GuildQuizConfig;
-import com.Zazsona.Quiz.system.SettingsManager;
+import com.Zazsona.Quiz.config.QuizBuilder;
+import com.Zazsona.Quiz.config.SettingsManager;
 import configuration.GuildSettings;
 import configuration.SettingsUtil;
 import jara.MessageManager;
@@ -15,22 +15,24 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class QuizConfigWizard extends ModuleConfig
 {
     private MessageManager mm = new MessageManager();
-    private GuildQuizConfig gqc;
+    private QuizBuilder quizBuilder;
 
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, GuildSettings guildSettings, TextChannel textChannel, boolean isSetup) throws IOException
     {
-        gqc = SettingsManager.getInstance().getGuildQuizSettings(textChannel.getGuild().getId());
+        quizBuilder = SettingsManager.getInstance().getGuildQuizBuilder(textChannel.getGuild().getId());
         while (true)
         {
             EmbedBuilder embed = getDefaultEmbedStyle(msgEvent);
-            embed.setDescription("Configure quiz scheduling. Use this to run quizzes regularly in your server.\n\n**Schedule** - Add a quiz time\n**Roles** - Set who can join quizzes\n**Ping** - Ping everyone on quiz start\n**Quit** - Close config");
+            embed.setDescription("Configure quizzes\n\n**Schedule** - Add a regular quiz\n**Roles** - Set who can join quizzes\n**Ping** - Ping everyone on quiz start\n**Categories** - Set question categories\n**Quit** - Close config");
             msgEvent.getChannel().sendMessage(embed.build()).queue();
             Message input = getInput(msgEvent, textChannel);
             if (input == null)
@@ -45,7 +47,7 @@ public class QuizConfigWizard extends ModuleConfig
             else if (input.getContentDisplay().equalsIgnoreCase("schedule"))
             {
                 QuizConfigScheduleWizard qcsw = new QuizConfigScheduleWizard();
-                qcsw.run(msgEvent, textChannel, guildSettings, gqc, embed);
+                qcsw.run(msgEvent, textChannel, guildSettings, quizBuilder, embed);
             }
             else if (input.getContentDisplay().equalsIgnoreCase("roles"))
             {
@@ -54,6 +56,10 @@ public class QuizConfigWizard extends ModuleConfig
             else if (input.getContentDisplay().equalsIgnoreCase("ping"))
             {
                 togglePing(msgEvent, textChannel, embed);
+            }
+            else if (input.getContentDisplay().equalsIgnoreCase("categories"))
+            {
+                modifyCategories(msgEvent, textChannel, embed);
             }
             else
             {
@@ -92,7 +98,7 @@ public class QuizConfigWizard extends ModuleConfig
 
     private void togglePing(GuildMessageReceivedEvent msgEvent, TextChannel textChannel, EmbedBuilder embed)
     {
-        embed.setDescription("Would you like an everyone ping to occur when a scheduled quiz is about to begin? (Y/N)\nCurrent status: "+((gqc.isPingQuizAnnouncement()) ? "Enabled" : "Disabled"));
+        embed.setDescription("Would you like an everyone ping to occur when a scheduled quiz is about to begin? (Y/N)\nCurrent status: "+((quizBuilder.isPingOnCountdown()) ? "Enabled" : "Disabled"));
         textChannel.sendMessage(embed.build()).queue();
         Message input = getInput(msgEvent, textChannel);
         if (input != null)
@@ -101,14 +107,14 @@ public class QuizConfigWizard extends ModuleConfig
             response = response.toLowerCase();
             if (response.equals("y") || response.equals("enable") || response.equals("yes"))
             {
-                gqc.setPingQuizAnnouncement(true);
+                quizBuilder.setPingOnCountdown(true);
                 SettingsManager.getInstance().save();
                 embed.setDescription("Ping enabled.");
                 textChannel.sendMessage(embed.build()).queue();
             }
             else if (response.equals("n") || response.equals("disable") || response.equals("no"))
             {
-                gqc.setPingQuizAnnouncement(false);
+                quizBuilder.setPingOnCountdown(false);
                 SettingsManager.getInstance().save();
                 embed.setDescription("Ping disabled.");
                 textChannel.sendMessage(embed.build()).queue();
@@ -127,9 +133,9 @@ public class QuizConfigWizard extends ModuleConfig
     private String getCurrentPermittedRolesList(Guild guild)
     {
            StringBuilder sb = new StringBuilder();
-           if (gqc.getAllowedRoles().size() > 0)
+           if (quizBuilder.getRolesPermittedToJoin().size() > 0)
            {
-               for (String roleID : gqc.getAllowedRoles())
+               for (String roleID : quizBuilder.getRolesPermittedToJoin())
                {
                    sb.append(guild.getRoleById(roleID).getName()+", ");
                }
@@ -154,13 +160,91 @@ public class QuizConfigWizard extends ModuleConfig
             for (Role role : input.getMentionedRoles())
             {
                 if (addRoles)
-                    gqc.addAllowedRole(role.getId());
+                    quizBuilder.addAllowedRole(role.getId());
                 else
-                    gqc.removeAllowedRole(role.getId());
+                    quizBuilder.removeAllowedRole(role.getId());
             }
             SettingsManager.getInstance().save();
             embed.setDescription("Roles "+((addRoles) ? "added." : "removed."));
             textChannel.sendMessage(embed.build()).queue();
         }
+    }
+
+    private void modifyCategories(GuildMessageReceivedEvent msgEvent, TextChannel textChannel, EmbedBuilder embed)
+    {
+        ArrayList<Integer> categoryIDBlacklist = quizBuilder.getCategoriesBlacklist();
+        ArrayList<Integer> categoryIDWhitelist = new ArrayList<>();
+        for (int categoryID : quizBuilder.CATEGORY_IDs)
+            categoryIDWhitelist.add(categoryID);
+        categoryIDWhitelist.removeAll(categoryIDBlacklist);
+
+        StringBuilder blacklistedCategoriesListBuilder = new StringBuilder();
+        if (categoryIDBlacklist.size() > 0)
+        {
+            for (int categoryID : categoryIDBlacklist)
+                blacklistedCategoriesListBuilder.append(QuizBuilder.getCategoryName(categoryID)).append(", ");
+            blacklistedCategoriesListBuilder.setLength(blacklistedCategoriesListBuilder.length()-2);
+        }
+        else
+            blacklistedCategoriesListBuilder.append("None.");
+
+        StringBuilder whitelistedCategoriesListBuilder = new StringBuilder();
+        if (categoryIDWhitelist.size() > 0)
+        {
+            for (int categoryID : categoryIDWhitelist)
+                whitelistedCategoriesListBuilder.append(QuizBuilder.getCategoryName(categoryID)).append(", ");
+                whitelistedCategoriesListBuilder.setLength(whitelistedCategoriesListBuilder.length()-2);
+        }
+        else
+            whitelistedCategoriesListBuilder.append("None - Blacklist will not apply.");
+
+        embed.setDescription("Please enter `Enable [Category]` or `Disable [Category]`\nEnabled Categories: "+whitelistedCategoriesListBuilder.toString()+"\n\nDisabled Categories: "+blacklistedCategoriesListBuilder.toString());
+        textChannel.sendMessage(embed.build()).queue();
+        while (true)
+        {
+            Message input = getInput(msgEvent, textChannel);
+            if (input == null)
+                break;
+            else
+            {
+                String inputContent = input.getContentDisplay().toLowerCase();
+                if (inputContent.startsWith("enable"))
+                {
+                    String[] inputTokens = inputContent.split(" ");
+                    StringBuilder categoryNameBuilder = new StringBuilder();
+                    for (int i = 1; i<inputTokens.length; i++)
+                        categoryNameBuilder.append(inputTokens[i]).append(" ");
+                    int categoryID = QuizBuilder.getCategoryID(categoryNameBuilder.toString().trim());
+                    if (categoryID > -1)
+                    {
+                        quizBuilder.removeCategoriesFromBlacklist(categoryID);
+                        embed.setDescription("Enabled "+categoryNameBuilder.toString().trim());
+                        textChannel.sendMessage(embed.build()).queue();
+                        SettingsManager.getInstance().save();
+                    }
+                }
+                else if (inputContent.startsWith("disable"))
+                {
+                    String[] inputTokens = inputContent.split(" ");
+                    StringBuilder categoryNameBuilder = new StringBuilder();
+                    for (int i = 1; i<inputTokens.length; i++)
+                        categoryNameBuilder.append(inputTokens[i]).append(" ");
+                    int categoryID = QuizBuilder.getCategoryID(categoryNameBuilder.toString().trim());
+                    if (categoryID > -1)
+                    {
+                        quizBuilder.addCategoriesToBlacklist(categoryID);
+                        embed.setDescription("Disabled "+categoryNameBuilder.toString().trim());
+                        textChannel.sendMessage(embed.build()).queue();
+                        SettingsManager.getInstance().save();
+                    }
+                }
+                else
+                {
+                    embed.setDescription("Unrecognised input.\nUse `"+SettingsUtil.getGuildCommandPrefix(input.getGuild().getId())+"quit` to quit the category menu.");
+                    textChannel.sendMessage(embed.build()).queue();
+                }
+            }
+        }
+
     }
 }

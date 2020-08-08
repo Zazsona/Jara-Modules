@@ -1,9 +1,9 @@
 package com.Zazsona.Quiz;
 
-import com.Zazsona.Quiz.json.DayJson;
-import com.Zazsona.Quiz.json.GuildQuizConfig;
+import com.Zazsona.Quiz.config.DaySchedule;
+import com.Zazsona.Quiz.config.QuizBuilder;
 import com.Zazsona.Quiz.system.QuizScheduler;
-import com.Zazsona.Quiz.system.SettingsManager;
+import com.Zazsona.Quiz.config.SettingsManager;
 import configuration.GuildSettings;
 import configuration.SettingsUtil;
 import jara.MessageManager;
@@ -24,11 +24,11 @@ import java.util.Locale;
 public class QuizConfigScheduleWizard
 {
     private MessageManager mm = new MessageManager();
-    private GuildQuizConfig gqc;
+    private QuizBuilder quizBuilder;
 
-    public void run(GuildMessageReceivedEvent msgEvent, TextChannel textChannel, GuildSettings guildSettings, GuildQuizConfig gqc, EmbedBuilder embed) throws IOException
+    public void run(GuildMessageReceivedEvent msgEvent, TextChannel textChannel, GuildSettings guildSettings, QuizBuilder quizBuilder, EmbedBuilder embed) throws IOException
     {
-        this.gqc = gqc;
+        this.quizBuilder = quizBuilder;
         while (true)
         {
             embed.setDescription("Configure quiz scheduling. Use this to run quizzes regularly in your server.\n\n**List**\n**Add** [Day] [Time]\n**Remove** [Day] [Time]\n**Quit**");
@@ -54,17 +54,17 @@ public class QuizConfigScheduleWizard
                         zdt = getWeekDay(elements[1], zdt);
                         zdt = getTime(elements[2], zdt);
                         if (add)
-                            addScheduledQuiz(gqc, embed, zdt);
+                            addScheduledQuiz(quizBuilder, embed, zdt);
                         else
-                            deleteScheduledQuiz(gqc, embed, zdt);
+                            deleteScheduledQuiz(quizBuilder, embed, zdt);
                     }
                     else if (elements.length > 1)
                     {
                         zdt = getTime(elements[1], zdt);
                         if (add)
-                            addScheduledQuiz(gqc, embed, zdt);
+                            addScheduledQuiz(quizBuilder, embed, zdt);
                         else
-                            deleteScheduledQuiz(gqc, embed, zdt);
+                            deleteScheduledQuiz(quizBuilder, embed, zdt);
                     }
                     else
                     {
@@ -81,20 +81,20 @@ public class QuizConfigScheduleWizard
         }
     }
 
-    private void addScheduledQuiz(GuildQuizConfig gqc, EmbedBuilder embed, ZonedDateTime zdt)
+    private void addScheduledQuiz(QuizBuilder quizBuilderToSchedule, EmbedBuilder embed, ZonedDateTime zdt)
     {
         ZonedDateTime utc;
         utc = ZonedDateTime.ofInstant(Instant.ofEpochSecond(zdt.toEpochSecond()), ZoneOffset.UTC);
         long startOfDay = utc.withHour(0).withMinute(0).withSecond(0).toEpochSecond();
         long quizStart = zdt.toEpochSecond()-startOfDay;
-        gqc.getDay(utc.getDayOfWeek().getValue()).addStartSecond(quizStart);
-        QuizScheduler.tryQueueQuizForCurrentExecution(gqc);
-        SettingsManager.getInstance().updateGuildConfig(gqc);
+        quizBuilderToSchedule.getDay(utc.getDayOfWeek().getValue()).addStartSecond(quizStart);
+        QuizScheduler.tryQueueQuizForCurrentExecution(quizBuilderToSchedule);
+        SettingsManager.getInstance().setQuizBuilder(quizBuilderToSchedule);
         ZonedDateTime currentTimeUTC = ZonedDateTime.now(ZoneOffset.UTC);
         if (zdt.isAfter(currentTimeUTC.minusMinutes(Long.valueOf(5))) && zdt.isBefore(currentTimeUTC.plusMinutes(Long.valueOf(5))))
         {
             embed.setDescription("Weekly Quiz Added.\n" + zdt.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + "s - " + getFormattedTime(zdt.getHour(), zdt.getMinute(), zdt.getSecond()) +
-                    "\n\nNote: As this is in less than five minutes, it will not run today.\nTo run quizzes instantly, use "+SettingsUtil.getGuildCommandPrefix(gqc.getGuildID())+"Quiz Start");
+                    "\n\nNote: As this is in less than five minutes, it will not run today.\nTo run quizzes instantly, use "+SettingsUtil.getGuildCommandPrefix(quizBuilder.getGuildID())+"Quiz Start");
         }
         else
         {
@@ -103,17 +103,17 @@ public class QuizConfigScheduleWizard
 
     }
 
-    private void deleteScheduledQuiz(GuildQuizConfig gqc, EmbedBuilder embed, ZonedDateTime zdt)
+    private void deleteScheduledQuiz(QuizBuilder quizBuilderToUnschedule, EmbedBuilder embed, ZonedDateTime zdt)
     {
         ZonedDateTime utc;
         utc = ZonedDateTime.ofInstant(Instant.ofEpochSecond(zdt.toEpochSecond()), ZoneOffset.UTC);
         long startOfDay = utc.withHour(0).withMinute(0).withSecond(0).toEpochSecond();
         long quizStart = zdt.toEpochSecond()-startOfDay;
-        if (gqc.getDay(utc.getDayOfWeek().getValue()).isStartSecond(quizStart))
+        if (quizBuilderToUnschedule.getDay(utc.getDayOfWeek().getValue()).isStartSecond(quizStart))
         {
-            gqc.getDay(utc.getDayOfWeek().getValue()).removeStartSecond(quizStart);
-            SettingsManager.getInstance().updateGuildConfig(gqc);
-            QuizScheduler.removeQuizFromQueue(gqc.getGuildID(), quizStart);
+            quizBuilderToUnschedule.getDay(utc.getDayOfWeek().getValue()).removeStartSecond(quizStart);
+            SettingsManager.getInstance().setQuizBuilder(quizBuilderToUnschedule);
+            QuizScheduler.removeQuizFromQueue(quizBuilderToUnschedule.getGuildID(), quizStart);
             embed.setDescription("Weekly Quiz Removed.\n" + zdt.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + "s - " + getFormattedTime(zdt.getHour(), zdt.getMinute(), zdt.getSecond()));
         }
         else
@@ -122,7 +122,7 @@ public class QuizConfigScheduleWizard
         }
     }
 
-    public void parseAsParameters(GuildMessageReceivedEvent msgEvent, Collection<String> collection, TextChannel textChannel, GuildQuizConfig gqc, EmbedBuilder embed) throws IOException
+    public void parseAsParameters(GuildMessageReceivedEvent msgEvent, Collection<String> collection, TextChannel textChannel, QuizBuilder quizBuilder, EmbedBuilder embed) throws IOException
     {
 
     }
@@ -162,7 +162,7 @@ public class QuizConfigScheduleWizard
         }
         for (int i = 1; i<8; i++)
         {
-            DayJson day = gqc.getDay(i);
+            DaySchedule day = quizBuilder.getDay(i);
             for (Long startTime : day.getStartSeconds())
             {
                 long epochStartTime = startTime+secondOfWeekStart+(60*60*24*(i-1));
