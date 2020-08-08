@@ -1,9 +1,9 @@
 package com.Zazsona.Quiz.system;
 
-import com.Zazsona.Quiz.json.GuildQuizConfig;
+import com.Zazsona.Quiz.config.SettingsManager;
 import com.Zazsona.Quiz.quiz.Quiz;
+import com.Zazsona.Quiz.config.QuizBuilder;
 import configuration.SettingsUtil;
-import jara.Core;
 import module.ModuleLoad;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,19 +42,19 @@ public class QuizScheduler extends ModuleLoad
         }
     }
 
-    public static boolean tryQueueQuizForCurrentExecution(GuildQuizConfig gqc)
+    public static boolean tryQueueQuizForCurrentExecution(QuizBuilder quizBuilder)
     {
         ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
         long dayStartSecond = utc.withSecond(0).withMinute(0).withHour(0).toEpochSecond();
         long minStartTime = Instant.now().getEpochSecond();
         long maxStartTime = utc.withMinute(0).withSecond(0).withHour(0).plusDays(Long.valueOf(1)).toEpochSecond();
         boolean hasChangeOccurred = false;
-        for (Long startTime : gqc.getDay(utc.getDayOfWeek().getValue()).getStartSeconds())
+        for (Long startTime : quizBuilder.getDay(utc.getDayOfWeek().getValue()).getStartSeconds())
         {
             long epochStartTime = (dayStartSecond+startTime-(5*60)); //Subtract 5 minutes, as this starts the 5 minute start notice.
             if (epochStartTime > minStartTime && epochStartTime < maxStartTime)
             {
-                queueQuizForCurrentExecution(gqc.getGuildID(), startTime, dayStartSecond);
+                queueQuizForCurrentExecution(quizBuilder.getGuildID(), startTime, dayStartSecond);
                 hasChangeOccurred = true;
             }
         }
@@ -95,13 +95,13 @@ public class QuizScheduler extends ModuleLoad
             while (true)
             {
                 ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
-                ArrayList<GuildQuizConfig> quizConfigs = SettingsManager.getInstance().getDayQuizzes(utc.getDayOfWeek().getValue());
+                ArrayList<QuizBuilder> quizBuilders = SettingsManager.getInstance().getDayQuizzes(utc.getDayOfWeek().getValue());
                 long dayStartSecond = utc.withSecond(0).withMinute(0).withHour(0).toEpochSecond();
                 long resetSecond = utc.withMinute(0).withSecond(0).withHour(0).plusDays(Long.valueOf(1)).toEpochSecond();
                 int dayValue = utc.getDayOfWeek().getValue();
-                if (quizConfigs.size() > 0)
+                if (quizBuilders.size() > 0)
                 {
-                    quizConfigs.forEach((v) ->
+                    quizBuilders.forEach((v) ->
                     v.getDay(dayValue).getStartSeconds().forEach((v2) ->
                     queueQuizForCurrentExecution(v.getGuildID(), v2, dayStartSecond)));
                 }
@@ -114,8 +114,8 @@ public class QuizScheduler extends ModuleLoad
                         {
                             for (String guildID : quizMap.get(epochSecond))
                             {
-                                Quiz qn = new Quiz();
-                                Thread quizThread = new Thread(() -> qn.startQuiz(Core.getShardManager().getGuildById(guildID), false));
+                                QuizBuilder quizBuilder = SettingsManager.getInstance().getGuildQuizBuilder(guildID);
+                                Thread quizThread = new Thread(() -> quizBuilder.build().runQuiz()); //Build in the new thread, as the build process can take over a second, which could miss other scheduled items.
                                 quizThread.setName(guildID+"-Quiz");
                                 quizThread.start();
                             }
