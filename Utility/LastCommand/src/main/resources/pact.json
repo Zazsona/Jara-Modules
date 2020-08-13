@@ -1,0 +1,10 @@
+{
+  "key": "LastCommand",
+  "aliases": [
+    "LC",
+    "LaCo"
+  ],
+  "category": "UTILITY",
+  "targetVersion": "0.1",
+  "description": "Re-run the last command, and all parameters."
+}
