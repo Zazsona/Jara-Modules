@@ -1,0 +1,11 @@
+{
+  "key": "GoogleTranslateQuiz",
+  "aliases": [
+    "TranslateQuiz",
+    "TranslationQuiz",
+    "QuoteQuiz"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "What's the quote from?"
+}
