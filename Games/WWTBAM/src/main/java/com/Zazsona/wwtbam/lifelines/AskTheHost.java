@@ -28,53 +28,53 @@ public class AskTheHost
         switch (categoryId)
         {
             case 9: //General Knowledge
-                return 40;
+                return 75;
             case 10: //Books
-                return 15;
+                return 30;
             case 11: //Film
-                return 20;
+                return 30;
             case 12: //Music
-                return 20;
+                return 30;
             case 13: //Musicals and Theatre
-                return 7;
+                return 30;
             case 14: //Telly
-                return 30;
+                return 40;
             case 15: //Video Games
-                return 50;
+                return 75;
             case 16: //Board Games
-                return 30;
+                return 42;
             case 17: //Science
-                return 50;
+                return 55;
             case 18: //Computers
-                return 85;
+                return 95;
             case 19: //Maths
-                return 85;
+                return 90;
             case 20: //Mythology
-                return 10;
+                return 25;
             case 21: //Sports
-                return 5;
+                return 25;
             case 22: //Geography
-                return 15;
+                return 25;
             case 23: //History
-                return 20;
+                return 30;
             case 24: //Politics
-                return 10;
+                return 25;
             case 25: //Art
-                return 15;
+                return 25;
             case 26: //Celebrities
-                return 7;
+                return 25;
             case 27: //Animals
                 return 25;
             case 28: //Vehicles
-                return 35;
+                return 45;
             case 29: //Comics
-                return 35;
+                return 45;
             case 30: //Gadgets
-                return 85;
+                return 90;
             case 31: //Anime
-                return 40;
+                return 50;
             case 32: //Cartoons
-                return 40;
+                return 50;
         }
         return 0;
     }
@@ -128,7 +128,7 @@ public class AskTheHost
             case 30: //Gadgets
                 return "Oh! Oh! I'm a gadget! Pick me! Just like I'm going to pick ";
             case 31: //Anime
-                return "アヒル型ヘアブラシ, ";
+                return "Nani? Uh... ";
             case 32: //Cartoons
                 return "Ah, weekend mornings. It's all not coming back to me because I had no childhood. Internet says ";
         }

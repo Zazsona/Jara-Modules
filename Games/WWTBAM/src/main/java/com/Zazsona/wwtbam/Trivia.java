@@ -149,7 +149,7 @@ public class Trivia
     public EmbedBuilder getEmbed()
     {
         EmbedBuilder embed = new EmbedBuilder()
-                .setAuthor("Question "+(questionNo)+" - "+getCategory() + " || £"+getQuestionValue())
+                .setAuthor("Question "+(questionNo)+" - "+getCategory() + " || "+GameDriver.POUND_SIGN+getQuestionValue())
                 .setDescription(getQuestion());
         switch (difficulty)
         {

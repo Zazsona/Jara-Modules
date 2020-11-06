@@ -16,18 +16,20 @@ import java.awt.*;
 
 public class GameDriver
 {
+    public static final String POUND_SIGN = "\u00A3";
+
     private TextChannel channel;
     private Member selfMember;
     private Member player;
 
     private MessageManager mm;
     private TriviaDatabase triviaDatabase;
-    private int questionNo;
     private boolean fiftyFifty;
     private boolean phoneAFriend;
     private boolean askTheAudience;
     private boolean askTheHost;
     private boolean netSet;
+    private boolean netAchieved;
     private int netValue;
     private boolean gameOver;
 
@@ -102,7 +104,7 @@ public class GameDriver
         else
         {
             channel.sendMessage("Hmm...").queue();
-            try {Thread.sleep(2000);} catch (InterruptedException e) {};
+            try {Thread.sleep(1000);} catch (InterruptedException e) {};
             boolean correct = trivia.isAnswerCorrect(answer);
             if (correct)
                 advanceGameState(trivia);
@@ -119,14 +121,20 @@ public class GameDriver
 
     private void advanceGameState(Trivia trivia)
     {
-        channel.sendMessage("That's the correct answer! You've just won **£"+trivia.getQuestionValue()+"!**").queue();
+        channel.sendMessage("That's the correct answer! You've just won **"+POUND_SIGN+trivia.getQuestionValue()+"!**").queue();
         if (trivia.getQuestionValue() == 1000)
             netValue = 1000;
-        if (!netSet && netValue >= 1000)
+
+        if (netSet && !netAchieved)
         {
-            channel.sendMessage("\nNow, would you like to set your safety net at £"+(trivia.getQuestionValue()*2)+"? (Yes/No)").queue();
+            netAchieved = true;
+            netValue = trivia.getQuestionValue();
+        }
+        else if (!netSet && netValue >= 1000)
+        {
+            channel.sendMessage("\nNow, would you like to set your safety net at "+POUND_SIGN+(trivia.getQuestionValue()*2)+"? (Yes/No)").queue();
             Message message = mm.getNextMessage(channel, player);
-            boolean netSet = parseYesNoAnswer(message.getContentDisplay());
+            netSet = parseYesNoAnswer(message.getContentDisplay());
             if (netSet)
                 channel.sendMessage("Alright then, let's get you there. Computer, what's the next question?").queue();
         }
@@ -136,11 +144,11 @@ public class GameDriver
     {
         int loss = (trivia.getQuestionValue()/2)-netValue;
         if (voluntary)
-            channel.sendMessage("Not going to gamble for it? Boo-ring! Well, you played well, and get to go home with £"+trivia.getQuestionValue()/2+"!").queue(); //TODO: Sub-1000 is not doubled
+            channel.sendMessage("Not going to gamble for it? Boo-ring! Well, you played well, and get to go home with "+POUND_SIGN+trivia.getQuestionValue()/2+"!").queue(); //TODO: Sub-1000 is not doubled
         else if (netValue > 0 && loss > 0)
-            channel.sendMessage("I'm sorry, you've just *lost* £"+loss+". But you've still got your £"+netValue+" from your safety net. So it's not all bad! Thanks for playing.").queue();
+            channel.sendMessage("I'm sorry, you've just *lost* "+POUND_SIGN+loss+". But you've still got your "+POUND_SIGN+netValue+" from your safety net. So it's not all bad! Thanks for playing.").queue();
         else if (netValue > 0 && loss == 0)
-            channel.sendMessage("Sorry! That's the wrong answer! However, due to your safety net nothing's lost, and you're still going home with £"+netValue+"!").queue();
+            channel.sendMessage("Sorry! That's the wrong answer! However, due to your safety net nothing's lost, and you're still going home with "+POUND_SIGN+netValue+"!").queue();
         else if (netValue == 0)
             channel.sendMessage("Sorry, that's the wrong answer. You've done a bit naff haven't you? I'm afraid you'll be going home empty handed. Better luck next time!").queue();
         gameOver = true;
@@ -167,7 +175,7 @@ public class GameDriver
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("Who wants to be a Millionaire?");
-        embed.setDescription("Welcome to Who wants to be a Millionaire? I'm your host "+selfMember.getEffectiveName()+", and today "+player.getEffectiveName()+" is here hoping to win £1,000,000!\n\nYou know the game, get the questions correct to increase your winnings. Get a question wrong and you lose everything after your safety net. There are four lifelines you can use at any point should you get stuck, or you can safely leave at any time and keep the money.\n\n*With that said, let's play Who wants to be a Millionaire?*");
+        embed.setDescription("Welcome to Who wants to be a Millionaire? I'm your host "+selfMember.getEffectiveName()+", and today "+player.getEffectiveName()+" is here hoping to win "+POUND_SIGN+"1,000,000!\n\nYou know the game, get the questions correct to increase your winnings. Get a question wrong and you lose everything after your safety net. There are four lifelines you can use at any point should you get stuck, or you can safely leave at any time and keep the money.\n\n*With that said, let's play Who wants to be a Millionaire?*");
         embed.setColor(Color.GRAY);
         return embed.build();
     }
