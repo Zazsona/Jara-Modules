@@ -4,7 +4,9 @@
     "MinecraftServer",
     "MinecraftQuery",
     "MinecraftServerStatus",
-    "MCS"
+    "MCS",
+	"MinecraftStatus",
+	"MCStatus"
   ],
   "category": "UTILITY",
   "targetVersion": "0.1",
