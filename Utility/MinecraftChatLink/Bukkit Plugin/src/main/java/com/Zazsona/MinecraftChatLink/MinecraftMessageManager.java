@@ -1,8 +1,8 @@
-package com.Zazsona.MinecraftChatLink;
+package com.zazsona.MinecraftChatLink;
 
-import com.Zazsona.ChatLinkCommon.DiscordMessagePacket;
-import com.Zazsona.ChatLinkCommon.MessagePacket;
-import com.Zazsona.ChatLinkCommon.MinecraftMessagePacket;
+import com.zazsona.ChatLinkCommon.DiscordMessagePacket;
+import com.zazsona.ChatLinkCommon.MessagePacket;
+import com.zazsona.ChatLinkCommon.MinecraftMessagePacket;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 
@@ -44,15 +44,16 @@ public class MinecraftMessageManager
     /**
      * Sends the provided Discord message to the Minecraft server
      * @param username the Minecraft player's username
+     * @param uuid the Minecraft player's uuid
      * @param messageContent the Minecraft player's message
      */
-    public void sendMessageToDiscord(String username, String messageContent)
+    public void sendMessageToDiscord(String username, String uuid, String messageContent)
     {
         if (Settings.isEnabled() && output != null)
         {
             try
             {
-                output.writeObject(new MinecraftMessagePacket(Settings.getChatLinkID(), username, messageContent));
+                output.writeObject(new MinecraftMessagePacket(Settings.getChatLinkID(), username, uuid, messageContent));
                 output.flush();
             }
             catch (IOException e)

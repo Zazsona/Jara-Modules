@@ -1,4 +1,4 @@
-package com.Zazsona.MinecraftChatLink;
+package com.zazsona.MinecraftChatLink;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,25 +19,25 @@ public class ChatEventListener implements Listener
     @EventHandler (priority = EventPriority.LOWEST)
     public void onChatEvent(AsyncPlayerChatEvent e)
     {
-        MinecraftMessageManager.getInstance().sendMessageToDiscord(e.getPlayer().getDisplayName(), e.getMessage());
+        MinecraftMessageManager.getInstance().sendMessageToDiscord(e.getPlayer().getUniqueId().toString(), e.getPlayer().getDisplayName(), e.getMessage());
     }
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onPlayerJoinEvent(PlayerJoinEvent event)
     {
-        MinecraftMessageManager.getInstance().sendMessageToDiscord("", event.getPlayer().getDisplayName()+" joined the game.");
+        MinecraftMessageManager.getInstance().sendMessageToDiscord(event.getPlayer().getUniqueId().toString(), "", event.getPlayer().getDisplayName()+" joined the game.");
     }
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onPlayerLeaveEvent(PlayerQuitEvent event)
     {
-        MinecraftMessageManager.getInstance().sendMessageToDiscord("", event.getPlayer().getDisplayName()+" left the game.");
+        MinecraftMessageManager.getInstance().sendMessageToDiscord(event.getPlayer().getUniqueId().toString(), "",event.getPlayer().getDisplayName()+" left the game.");
     }
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onPlayerDeathEvent(PlayerDeathEvent event)
     {
-        MinecraftMessageManager.getInstance().sendMessageToDiscord("", event.getDeathMessage());
+        MinecraftMessageManager.getInstance().sendMessageToDiscord(event.getEntity().getUniqueId().toString(), "", event.getDeathMessage());
     }
 
 }

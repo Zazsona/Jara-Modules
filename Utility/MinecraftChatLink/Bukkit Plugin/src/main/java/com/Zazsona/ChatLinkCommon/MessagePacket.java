@@ -1,4 +1,4 @@
-package com.Zazsona.ChatLinkCommon;
+package com.zazsona.ChatLinkCommon;
 
 import java.io.Serializable;
 

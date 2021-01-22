@@ -1,4 +1,4 @@
-package com.Zazsona.MinecraftChatLink;
+package com.zazsona.MinecraftChatLink;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

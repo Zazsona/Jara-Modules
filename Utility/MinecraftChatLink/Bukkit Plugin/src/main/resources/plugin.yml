@@ -1,7 +1,7 @@
 name: JaraChatLink
 version: 1.0
 author: Zazsona
-main: com.Zazsona.MinecraftChatLink.Core
+main: com.zazsona.MinecraftChatLink.Core
 api-version: 1.14
 commands:
    JaraChatLink:
