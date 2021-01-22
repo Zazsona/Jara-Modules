@@ -163,7 +163,10 @@ public class MCLConfig extends ModuleConfig
         try
         {
             String channelID = ChatLinkFileManager.getChannelIDForGuild(guild.getId());
-            return guild.getTextChannelById(channelID);
+            if (channelID == null)
+                return null;
+            else
+                return guild.getTextChannelById(channelID);
         }
         catch (NullPointerException e)
         {

@@ -75,7 +75,7 @@ public class MinecraftMessageManager
     private EmbedBuilder getEmbed(TextChannel channel, MinecraftMessagePacket minecraftMessagePacket)
     {
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setAuthor(minecraftMessagePacket.getMinecraftUsername(), null, "https://minotar.net/avatar/"+ minecraftMessagePacket.getMinecraftUsername()+".png");
+        embed.setAuthor(minecraftMessagePacket.getMinecraftUsername(), null, "https://crafatar.com/avatars/"+minecraftMessagePacket.getUuid()+"?overlay=true.png");
         embed.setColor(CmdUtil.getHighlightColour(channel.getGuild().getSelfMember()));
         embed.setDescription(minecraftMessagePacket.getMessageContent());
         embed.setFooter("Minecraft");
@@ -91,7 +91,7 @@ public class MinecraftMessageManager
     {
         String channelID = ChatLinkFileManager.getChannelIDForGuild(guild.getId());
         TextChannel channel = guild.getTextChannelById(channelID);
-        if (channel != null)
+        if (channel != null && ChatLinkFileManager.getUUIDForGuild(guild.getId()).equals(minecraftMessagePacket.getChatLinkUUID()))
         {
             channel.sendMessage(getEmbed(channel, minecraftMessagePacket).build()).queue();
         }
@@ -103,7 +103,7 @@ public class MinecraftMessageManager
      */
     private void sendMessageToMinecraft(Message message)
     {
-        if (output != null && ChatLinkFileManager.getChannelIDForGuild(guild.getId()) != null)
+        if (output != null && ChatLinkFileManager.getChannelIDForGuild(guild.getId()) != null && instances.containsKey(message.getGuild().getId())) //Instances only contains guilds with valid connections
         {
             try
             {

@@ -6,12 +6,14 @@ public class MinecraftMessagePacket extends MessagePacket implements Serializabl
 {
     private String minecraftUsername;
     private String messageContent;
+    private String uuid;
 
-    public MinecraftMessagePacket(String chatLinkUUID, String minecraftUsername, String messageContent)
+    public MinecraftMessagePacket(String chatLinkUUID, String uuid, String minecraftUsername, String messageContent)
     {
         super(chatLinkUUID);
         this.minecraftUsername = minecraftUsername;
         this.messageContent = messageContent;
+        this.uuid = uuid;
     }
 
     /**
@@ -30,5 +32,15 @@ public class MinecraftMessagePacket extends MessagePacket implements Serializabl
     public String getMessageContent()
     {
         return messageContent;
+    }
+
+    /**
+     * Gets uuid
+     *
+     * @return uuid
+     */
+    public String getUuid()
+    {
+        return uuid;
     }
 }
