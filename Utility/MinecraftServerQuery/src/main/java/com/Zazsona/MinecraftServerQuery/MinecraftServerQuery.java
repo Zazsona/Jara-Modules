@@ -171,12 +171,15 @@ public class MinecraftServerQuery extends ModuleCommand
         stringBuilder.append("**Players: ** ").append(qr.players.online).append("/").append(qr.players.max).append("\n");
         if (qr.players.sample != null && qr.players.sample.length > 0)
         {
-            int playerLimit = (qr.players.sample.length < 3) ? qr.players.sample.length : 3;
+            int playerLimit = (qr.players.sample.length < 5) ? qr.players.sample.length : 5;
             for (int i = 0; i<playerLimit; i++)
             {
                 stringBuilder.append("*").append(qr.players.sample[i].name).append(", ");
             }
-            stringBuilder.append("...*\n");
+            if (qr.players.online > 5)
+                stringBuilder.append("...*\n");
+            else
+                stringBuilder.setLength(stringBuilder.length()-2);
         }
         stringBuilder.append("**MOTD:**\n");
         stringBuilder.append(buildMOTD(qr.description));
