@@ -1,0 +1,13 @@
+name: JaraChatLink
+version: 1.0
+author: Zazsona
+main: com.zazsona.jarachatlink.Core
+api-version: 1.16
+commands:
+   JaraChatLink:
+      description: JaraChatLink master command
+      usage: /JaraChatLink [Function] [Args]
+permissions:
+   JaraChatLink.Config:
+      description: Allows for config access
+      default: op
