@@ -1,4 +1,4 @@
-package com.Zazsona.jaraMinecraftProfile.json;
+package com.zazsona.jaraminecraftprofile.json;
 
 public class UsernameUUID
 {

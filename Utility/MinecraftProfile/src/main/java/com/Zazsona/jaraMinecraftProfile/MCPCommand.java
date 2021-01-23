@@ -1,11 +1,11 @@
-package com.Zazsona.jaraMinecraftProfile;
+package com.zazsona.jaraminecraftprofile;
 
-import com.Zazsona.jaraMinecraftProfile.data.PlayerData;
-import com.Zazsona.jaraMinecraftProfile.data.ResponseData;
-import com.Zazsona.jaraMinecraftProfile.data.StatusCode;
-import com.Zazsona.jaraMinecraftProfile.json.UsernameUUID;
-import com.Zazsona.minecraftCommon.FileManager;
+import com.zazsona.minecraftcommon.FileManager;
 import com.google.gson.Gson;
+import com.zazsona.jaraminecraftprofile.data.PlayerData;
+import com.zazsona.jaraminecraftprofile.data.ResponseData;
+import com.zazsona.jaraminecraftprofile.data.StatusCode;
+import com.zazsona.jaraminecraftprofile.json.UsernameUUID;
 import commands.CmdUtil;
 import module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -89,7 +89,7 @@ public class MCPCommand extends ModuleCommand
 
     private EmbedBuilder buildEmbed(EmbedBuilder embed, PlayerData playerData)
     {
-        embed.setThumbnail("https://minotar.net/armor/bust/"+playerData.getName()+"/100.png");
+        embed.setThumbnail("https://crafatar.com/renders/body/"+playerData.getUuid()+"?overlay=true");
         embed.setTitle("===== "+playerData.getName()+" =====");
         embed.addField("Name", playerData.getName(), true);
         embed.addField("Status", ((playerData.isOnline()) ? "Online" : "Offline"), true);

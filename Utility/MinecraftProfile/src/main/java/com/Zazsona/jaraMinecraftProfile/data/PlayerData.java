@@ -1,4 +1,4 @@
-package com.Zazsona.jaraMinecraftProfile.data;
+package com.zazsona.jaraminecraftprofile.data;
 
 import java.io.Serializable;
 

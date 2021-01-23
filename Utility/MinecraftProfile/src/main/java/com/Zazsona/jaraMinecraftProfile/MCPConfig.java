@@ -1,6 +1,6 @@
-package com.Zazsona.jaraMinecraftProfile;
+package com.zazsona.jaraminecraftprofile;
 
-import com.Zazsona.minecraftCommon.FileManager;
+import com.zazsona.minecraftcommon.FileManager;
 import configuration.GuildSettings;
 import configuration.SettingsUtil;
 import jara.MessageManager;

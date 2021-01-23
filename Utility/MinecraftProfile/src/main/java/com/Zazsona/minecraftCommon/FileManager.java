@@ -1,4 +1,4 @@
-package com.Zazsona.minecraftCommon;
+package com.zazsona.minecraftcommon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

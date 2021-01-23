@@ -1,9 +1,8 @@
-package com.Zazsona.jaraMinecraftProfile;
+package com.zazsona.jaraminecraftprofile;
 
-import com.Zazsona.jaraMinecraftProfile.data.PlayerData;
-import com.Zazsona.jaraMinecraftProfile.data.RequestData;
-import com.Zazsona.jaraMinecraftProfile.data.ResponseData;
-import com.Zazsona.jaraMinecraftProfile.data.StatusCode;
+import com.zazsona.jaraminecraftprofile.data.RequestData;
+import com.zazsona.jaraminecraftprofile.data.ResponseData;
+import com.zazsona.jaraminecraftprofile.data.StatusCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

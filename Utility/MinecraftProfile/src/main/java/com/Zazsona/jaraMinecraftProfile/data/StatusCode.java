@@ -1,4 +1,4 @@
-package com.Zazsona.jaraMinecraftProfile.data;
+package com.zazsona.jaraminecraftprofile.data;
 
 public enum StatusCode
 {
