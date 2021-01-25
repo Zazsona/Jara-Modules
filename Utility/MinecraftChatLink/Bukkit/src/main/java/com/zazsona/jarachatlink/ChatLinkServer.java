@@ -22,7 +22,6 @@ public class ChatLinkServer
     private Socket socket;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private boolean serverStopped = false;
 
     public ChatLinkServer() throws IOException
     {
@@ -33,7 +32,7 @@ public class ChatLinkServer
     {
         try
         {
-            while (Settings.isEnabled() && Settings.getLinkId() != null && !serverStopped)
+            while (Settings.isEnabled() && Settings.getLinkId() != null && !serverSocket.isClosed())
             {
                 Bukkit.getLogger().log(Level.INFO, "Waiting for Jara...");
                 socket = serverSocket.accept();
@@ -46,10 +45,11 @@ public class ChatLinkServer
                 {
                     Bukkit.getLogger().log(Level.INFO, "Id match. Listening for messages...");
                     linkDiscordMessages();
-                    stopClientConnection();
                 }
                 else
                     Bukkit.getLogger().log(Level.INFO, "Jara client attempted to connect, but gave incorrect id.");
+                stopClientConnection();
+
             }
             throw new IOException("Server stopped or disabled.");
         }
@@ -67,7 +67,6 @@ public class ChatLinkServer
                 serverSocket.close();
             serverSocket = null;
             stopClientConnection();
-            serverStopped = true;
         }
         catch (IOException e)
         {

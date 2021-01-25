@@ -24,7 +24,6 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
-import java.util.concurrent.TimeoutException;
 
 public class ChatLinkClient
 {
@@ -38,7 +37,7 @@ public class ChatLinkClient
     private Socket socket;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private boolean clientStopped;
+    private boolean clientManuallyStopped;
     private Thread pingThread;
 
     public static ChatLinkClient getInstance(String guildId)
@@ -62,9 +61,9 @@ public class ChatLinkClient
     {
         try
         {
-            clientStopped = false;
+            clientManuallyStopped = false;
             guildChatLink = ChatLinkData.getInstance().getGuild(guildId);
-            while (!clientStopped && guildChatLink != null)
+            while (!clientManuallyStopped && guildChatLink != null)
             {
                 try
                 {
@@ -83,10 +82,11 @@ public class ChatLinkClient
                         pingThread = new Thread(() -> runPingLoop());
                         pingThread.start();
                         linkMinecraftMessages();
-                        stopClient();
                     }
                     else
                         logger.info("Minecraft server attempted to connect, but gave incorrect id.");
+                    stopClient();
+                    clientManuallyStopped = false;
                 }
                 catch (SocketTimeoutException | ConnectException e)
                 {
@@ -116,7 +116,7 @@ public class ChatLinkClient
             input = null;
             output = null;
             pingThread.interrupt();
-            clientStopped = true;
+            clientManuallyStopped = true;
         }
         catch (IOException e)
         {
@@ -210,6 +210,7 @@ public class ChatLinkClient
         catch (IOException e)
         {
             stopClient();
+            clientManuallyStopped = false;
         }
         catch (InterruptedException e)
         {
