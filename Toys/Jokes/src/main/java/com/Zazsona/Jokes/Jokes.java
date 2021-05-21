@@ -108,6 +108,14 @@ public class Jokes extends ModuleCommand
         jokes.add("And God said to John, come forth and you shall be granted eternal life." + "\n" + "But John came fifth and won a toaster.");
         jokes.add("What do you get when you cross the Atlantic Ocean with the Titanic?\nHalfway.");
         jokes.add("How do you get idiots out of a tree?\nWave to them.");
+		jokes.add("I invented a new word!\nPlagiarism!");
+		jokes.add("Did you hear about the mathematician who's afraid of negative numbers?\nHe'll stop at nothing to avoid them!");
+		jokes.add("Yesterday I saw a guy spill all his Scrabble letters on the road. I asked him, \"What’s the word on the street?\"");
+		jokes.add("Why did the chicken go to the séance?\nTo get to the other side.");
+		jokes.add("Where are average things manufactured?\nThe satisfactory.");
+		jokes.add("Why don't Calculus students throw house parties?\nBecause you should never drink and derive.");
+		jokes.add("What do you call a parade of rabbits hopping backwards?\nA receding hare-line.");
+		
         return jokes;
     }
 
