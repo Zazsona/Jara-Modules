@@ -23,13 +23,13 @@ public class PokemonCommand extends ModuleGameCommand
 
             String[] pokemon = new PokemonList().getPokemon();
             Random r = new Random();
-            int DexNo = r.nextInt(pokemon.length);
-            String StrDexNo = Integer.toString(DexNo + 1);  //Arrays start a 0, Pokemon do not
-            while (StrDexNo.length() < 3)       //Padding with 0s as this is what the asset file does.
+            int dexNo = r.nextInt(pokemon.length);
+            String dexNoStr = Integer.toString(dexNo + 1);  //Arrays start at 0, Pokemon do not
+            while (dexNoStr.length() < 3)       //Padding with 0s as this is what the asset file does.
             {
-                StrDexNo = "0" + StrDexNo;
+                dexNoStr = "0" + dexNoStr;
             }
-            String URL = "http://assets.pokemon.com/assets/cms2/img/pokedex/full/" + StrDexNo + ".png";
+            String URL = "http://assets.pokemon.com/assets/cms2/img/pokedex/full/" + dexNoStr + ".png";
             embed.setImage(URL);
             embed.setAuthor("Who's That Pokemon?");
             msgEvent.getChannel().sendMessage(embed.build()).queue();
@@ -39,13 +39,13 @@ public class PokemonCommand extends ModuleGameCommand
             embed.setThumbnail("https://i.imgur.com/wXSYWpN.png");
             embed.setImage(null);
             Message msgAnswer = new MessageManager().getNextMessage(msgEvent.getChannel());
-            if (msgAnswer.getContentDisplay().toLowerCase().contains(pokemon[DexNo].toLowerCase()))
+            if (msgAnswer.getContentDisplay().toLowerCase().contains(pokemon[dexNo].toLowerCase()))
             {
-                embed.setDescription("Gotcha! It's "+pokemon[DexNo]+"!");
+                embed.setDescription("Gotcha! It's #"+dexNoStr+", "+pokemon[dexNo]+"!");
             }
             else
             {
-                embed.setDescription("Sorry, it's "+pokemon[DexNo]+".");
+                embed.setDescription("Sorry, it's #"+dexNoStr+", "+pokemon[dexNo]+".");
             }
             msgEvent.getChannel().sendMessage(embed.build()).queue();
         }
