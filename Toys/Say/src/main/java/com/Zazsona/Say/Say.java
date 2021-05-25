@@ -25,10 +25,7 @@ public class Say extends ModuleCommand
             {
                 messageContent.append(parameters[i]).append(" ");
             }
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
-            embed.setDescription(messageContent.toString());
-            channel.sendMessage(embed.build()).queue();
+            channel.sendMessage(messageContent.toString()).queue();
         }
         else
         {
