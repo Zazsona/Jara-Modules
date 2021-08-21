@@ -1,6 +1,6 @@
-package com.Zazsona.CoinFlip;
+package com.zazsona.coinflip;
 
-import module.ModuleCommand;
+import com.zazsona.jara.module.ModuleCommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Random;

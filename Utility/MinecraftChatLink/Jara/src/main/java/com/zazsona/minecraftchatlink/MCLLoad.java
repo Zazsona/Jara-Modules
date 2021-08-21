@@ -1,10 +1,8 @@
 package com.zazsona.minecraftchatlink;
 
+import com.zazsona.jara.module.ModuleLoad;
 import com.zazsona.minecraftchatlink.data.ChatLinkData;
 import com.zazsona.minecraftchatlink.data.GuildChatLink;
-import jara.Core;
-import module.ModuleLoad;
-import net.dv8tion.jda.api.entities.Guild;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;

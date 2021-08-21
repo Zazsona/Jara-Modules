@@ -1,12 +1,12 @@
 package com.zazsona.minecraftchatlink;
 
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.GuildSettings;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleConfig;
 import com.zazsona.minecraftchatlink.data.ChatLinkData;
 import com.zazsona.minecraftchatlink.data.GuildChatLink;
 import com.zazsona.minecraftcommon.FileManager;
-import configuration.GuildSettings;
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleConfig;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;

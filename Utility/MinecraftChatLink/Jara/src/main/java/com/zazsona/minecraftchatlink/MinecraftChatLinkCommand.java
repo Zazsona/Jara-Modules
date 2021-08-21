@@ -1,17 +1,16 @@
 package com.zazsona.minecraftchatlink;
 
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.GuildSettings;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import com.zazsona.minecraftchatlink.data.ChatLinkData;
 import com.zazsona.minecraftchatlink.data.GuildChatLink;
-import commands.CmdUtil;
-import configuration.GuildSettings;
-import configuration.SettingsUtil;
-import module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;

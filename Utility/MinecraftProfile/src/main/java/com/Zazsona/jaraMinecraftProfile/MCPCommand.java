@@ -1,13 +1,13 @@
 package com.zazsona.jaraminecraftprofile;
 
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import com.zazsona.minecraftcommon.FileManager;
 import com.google.gson.Gson;
 import com.zazsona.jaraminecraftprofile.data.PlayerData;
 import com.zazsona.jaraminecraftprofile.data.ResponseData;
 import com.zazsona.jaraminecraftprofile.data.StatusCode;
 import com.zazsona.jaraminecraftprofile.json.UsernameUUID;
-import commands.CmdUtil;
-import module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

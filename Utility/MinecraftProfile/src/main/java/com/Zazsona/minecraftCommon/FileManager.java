@@ -3,7 +3,7 @@ package com.zazsona.minecraftcommon;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import configuration.SettingsUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

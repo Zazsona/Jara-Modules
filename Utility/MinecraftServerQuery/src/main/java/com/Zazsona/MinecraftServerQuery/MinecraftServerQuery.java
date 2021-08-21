@@ -1,9 +1,9 @@
-package com.Zazsona.MinecraftServerQuery;
+package com.zazsona.minecraftserverquery;
 
-import com.Zazsona.minecraftCommon.FileManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
+import com.zazsona.minecraftCommon.FileManager;
 import com.google.gson.Gson;
-import commands.CmdUtil;
-import module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

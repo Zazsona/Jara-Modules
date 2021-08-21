@@ -1,10 +1,10 @@
 package com.zazsona.jaraminecraftprofile;
 
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.GuildSettings;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleConfig;
 import com.zazsona.minecraftcommon.FileManager;
-import configuration.GuildSettings;
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleConfig;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
