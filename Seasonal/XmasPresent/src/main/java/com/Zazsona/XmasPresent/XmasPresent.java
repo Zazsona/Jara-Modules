@@ -1,6 +1,6 @@
-package com.Zazsona.XmasPresent;
+package com.zazsona.xmaspresent;
 
-import module.ModuleGameCommand;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 import java.util.Random;

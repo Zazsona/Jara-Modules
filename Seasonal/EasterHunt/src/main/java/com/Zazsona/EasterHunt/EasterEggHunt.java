@@ -1,9 +1,9 @@
-package com.Zazsona.EasterHunt;
+package com.zazsona.easterhunt;
 
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleGameCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;

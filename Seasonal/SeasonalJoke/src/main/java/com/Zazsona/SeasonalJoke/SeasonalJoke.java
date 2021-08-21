@@ -1,7 +1,7 @@
-package com.Zazsona.SeasonalJoke;
+package com.zazsona.seasonaljoke;
 
-import commands.CmdUtil;
-import module.ModuleGameCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

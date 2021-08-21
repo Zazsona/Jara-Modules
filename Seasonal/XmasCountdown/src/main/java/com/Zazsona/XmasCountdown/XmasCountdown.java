@@ -1,8 +1,8 @@
-package com.Zazsona.XmasCountdown;
+package com.zazsona.xmascountdown;
 
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import module.ModuleCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
