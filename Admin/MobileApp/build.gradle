@@ -2,23 +2,22 @@ plugins {
     id 'java'
 	id 'maven'
 }
-
-version '1.0'
-
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    jcenter()
-	
-	maven {
-        url  "https://dl.bintray.com/zazsona/Maven" 
+    maven {
+        url 'https://m2.dv8tion.net/releases'
+    }
+    maven {
+        url = uri("https://maven.pkg.github.com/zazsona/jara")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+        }
     }
 }
-sourceSets {
-    main.java.srcDir "src/main/java"
-    test.java.srcDir "src/test/java"
-}
+
 dependencies {
-	compile 'com.Zazsona:Jara:1.0'
+	compile 'com.zazsona:jara:1.0'
 }
