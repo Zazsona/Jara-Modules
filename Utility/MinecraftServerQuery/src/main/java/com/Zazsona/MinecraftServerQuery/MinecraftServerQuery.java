@@ -41,7 +41,8 @@ public class MinecraftServerQuery extends ModuleCommand
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
             embedBuilder.setTitle("==== MC Server Status ====");
-            embedBuilder.setDescription("**Server**: "+parameters[1]+"\n**Status:** Unavailable");
+            String serverName = (parameters.length > 1) ? parameters[1] : FileManager.getIpForGuild(msgEvent.getGuild().getId());
+            embedBuilder.setDescription("**Server**: "+serverName+"\n**Status:** Unavailable");
             msgEvent.getChannel().sendMessage(embedBuilder.build()).queue();
         }
     }

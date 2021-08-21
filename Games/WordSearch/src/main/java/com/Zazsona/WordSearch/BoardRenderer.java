@@ -20,7 +20,7 @@ public class BoardRenderer
     private BufferedImage boardImage;
     private Graphics2D gfx;
 
-    public BoardRenderer(Board board) throws IOException
+    public BoardRenderer(Board board) throws IOException, FontFormatException
     {
         this.uuid = UUID.randomUUID().toString();
         this.board = board;
@@ -30,35 +30,28 @@ public class BoardRenderer
         createBaseBoard();
     }
 
-    private void createBaseBoard() throws IOException
+    private void createBaseBoard() throws IOException, FontFormatException
     {
-        try
+        boardImage = ImageIO.read(ModuleResourceLoader.getResourceStream(MODULE_CONTEXT.getModuleAttributes().getKey(), "com/zazsona/wordsearch/BoardBackground.png"));
+        gfx = (Graphics2D) boardImage.getGraphics();
+        Font font = Font.createFont(Font.TRUETYPE_FONT, ModuleResourceLoader.getResourceStream(MODULE_CONTEXT.getModuleAttributes().getKey(), "com/zazsona/wordsearch/JetBrainsMono-ExtraBold.ttf"));
+        gfx.setFont(font.deriveFont(24.0f));
+        int fontHeight = gfx.getFontMetrics().getHeight();
+        for (int x = 0; x<board.getBoardWidth(); x++)
         {
-            boardImage = ImageIO.read(ModuleResourceLoader.getResourceStream(MODULE_CONTEXT.getModuleAttributes().getKey(), "com/zazsona/wordsearch/BoardBackground.png"));
-            gfx = (Graphics2D) boardImage.getGraphics();
-            Font font = Font.createFont(Font.TRUETYPE_FONT, ModuleResourceLoader.getResourceStream(MODULE_CONTEXT.getModuleAttributes().getKey(), "com/zazsona/wordsearch/JetBrainsMono-ExtraBold.ttf"));
-            gfx.setFont(font.deriveFont(24.0f));
-            int fontHeight = gfx.getFontMetrics().getHeight();
-            for (int x = 0; x<board.getBoardWidth(); x++)
+            for (int y = 0; y<board.getBoardHeight(); y++)
             {
-                for (int y = 0; y<board.getBoardHeight(); y++)
-                {
-                    Coordinates coordinates = getCoordinatesForBoardPosition(x, y);
-                    String letter = board.getLetter(x, y);
-                    int fontWidth = gfx.getFontMetrics().stringWidth(letter);
-                    gfx.drawString(letter, (coordinates.x-fontWidth/2), (coordinates.y+fontHeight/3));
-                }
+                Coordinates coordinates = getCoordinatesForBoardPosition(x, y);
+                String letter = board.getLetter(x, y);
+                int fontWidth = gfx.getFontMetrics().stringWidth(letter);
+                gfx.drawString(letter, (coordinates.x-fontWidth/2), (coordinates.y+fontHeight/3));
             }
-            for (int i = 0; i<board.getWords().length; i++)
-            {
-                gfx.drawString(board.getWords()[i].getWord(), WORDLIST_COORDINATES.x, (WORDLIST_COORDINATES.y+(fontHeight*(i+1))));
-            }
-            ImageIO.write(boardImage, "PNG", boardFile);
         }
-        catch (FontFormatException e)
+        for (int i = 0; i<board.getWords().length; i++)
         {
-            throw new IOException(e);
+            gfx.drawString(board.getWords()[i].getWord(), WORDLIST_COORDINATES.x, (WORDLIST_COORDINATES.y+(fontHeight*(i+1))));
         }
+        ImageIO.write(boardImage, "PNG", boardFile);
     }
 
     public void markWord(Word word) throws IOException
@@ -84,7 +77,7 @@ public class BoardRenderer
         ImageIO.write(boardImage, "PNG", boardFile);
     }
 
-    public File getBoardImageFile() throws IOException
+    public File getBoardImageFile() throws IOException, FontFormatException
     {
         if (!boardFile.exists())
         {

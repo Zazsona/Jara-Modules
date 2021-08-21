@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class WordSearch extends ModuleGameCommand
@@ -43,8 +44,9 @@ public class WordSearch extends ModuleGameCommand
             channel.sendFile(boardRenderer.getBoardImageFile()).complete();
             endGame();
         }
-        catch (IOException e)
+        catch (IOException | FontFormatException e)
         {
+            e.printStackTrace();
             LoggerFactory.getLogger(getClass()).error(e.getMessage());
             msgEvent.getChannel().sendMessage("An error occurred when running the game.").queue();
             super.deleteGameChannel();
