@@ -1,13 +1,11 @@
 package com.zazsona.reminder;
 
-import com.Zazsona.ReminderCore.Reminder;
-import com.Zazsona.ReminderCore.ReminderManager;
-import com.Zazsona.ReminderCore.enums.GroupType;
-import com.Zazsona.ReminderCore.enums.RepetitionType;
 import com.zazsona.jara.commands.CmdUtil;
 import com.zazsona.jara.module.ModuleCommand;
-import commands.CmdUtil;
-import module.ModuleCommand;
+import com.zazsona.remindercore.Reminder;
+import com.zazsona.remindercore.ReminderManager;
+import com.zazsona.remindercore.enums.GroupType;
+import com.zazsona.remindercore.enums.RepetitionType;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

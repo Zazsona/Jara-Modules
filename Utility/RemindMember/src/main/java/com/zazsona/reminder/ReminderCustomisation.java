@@ -1,7 +1,7 @@
-package com.Zazsona.Reminder;
+package com.zazsona.reminder;
 
-import configuration.SettingsUtil;
-import jara.MessageManager;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.SettingsUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

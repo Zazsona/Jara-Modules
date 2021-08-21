@@ -1,14 +1,13 @@
-package com.Zazsona.RemoveReminder;
+package com.zazsona.removereminder;
 
-import com.Zazsona.ReminderCore.Reminder;
-import com.Zazsona.ReminderCore.ReminderManager;
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleCommand;
+import com.zazsona.remindercore.Reminder;
+import com.zazsona.remindercore.ReminderManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +78,7 @@ public class DeleteReminder extends ModuleCommand
             }
             else
             {
-                noticeEmbed.setDescription("Unknown option. Please use "+SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId())+"quit to stop removing reminders.");
+                noticeEmbed.setDescription("Unknown option. Please use "+ SettingsUtil.getGuildCommandPrefix(msgEvent.getGuild().getId())+"quit to stop removing reminders.");
                 msg.getChannel().sendMessage(noticeEmbed.build()).queue();
             }
         }

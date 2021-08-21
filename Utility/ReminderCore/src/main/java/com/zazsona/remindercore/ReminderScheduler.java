@@ -1,7 +1,7 @@
-package com.Zazsona.ReminderCore;
+package com.zazsona.remindercore;
 
-import com.Zazsona.ReminderCore.enums.TimeType;
-import module.ModuleLoad;
+import com.zazsona.jara.module.ModuleLoad;
+import com.zazsona.remindercore.enums.TimeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
-package com.Zazsona.Reminder;
+package com.zazsona.reminder;
 
-import com.Zazsona.ReminderCore.ReminderManager;
-import module.ModuleLoad;
+import com.zazsona.jara.module.ModuleLoad;
+import com.zazsona.remindercore.ReminderManager;
 import org.slf4j.LoggerFactory;
 
 public class ReminderCoreCheck extends ModuleLoad

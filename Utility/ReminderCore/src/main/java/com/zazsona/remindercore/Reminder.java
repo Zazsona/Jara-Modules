@@ -1,9 +1,9 @@
-package com.Zazsona.ReminderCore;
+package com.zazsona.remindercore;
 
-import com.Zazsona.ReminderCore.enums.GroupType;
-import com.Zazsona.ReminderCore.enums.RepetitionType;
-import commands.CmdUtil;
-import jara.Core;
+import com.zazsona.jara.Core;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.remindercore.enums.GroupType;
+import com.zazsona.remindercore.enums.RepetitionType;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 

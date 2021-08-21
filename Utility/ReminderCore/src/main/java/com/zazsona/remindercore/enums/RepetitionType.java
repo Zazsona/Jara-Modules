@@ -1,4 +1,4 @@
-package com.Zazsona.ReminderCore.enums;
+package com.zazsona.remindercore.enums;
 
 public enum RepetitionType
 {

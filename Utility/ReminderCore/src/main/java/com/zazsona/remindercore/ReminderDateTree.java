@@ -1,4 +1,4 @@
-package com.Zazsona.ReminderCore;
+package com.zazsona.remindercore;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;

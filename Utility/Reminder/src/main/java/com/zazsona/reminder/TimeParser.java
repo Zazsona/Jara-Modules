@@ -1,8 +1,7 @@
-package com.Zazsona.Reminder;
+package com.zazsona.reminder;
 
-import com.Zazsona.ReminderCore.enums.RepetitionType;
-import com.sun.org.apache.xpath.internal.operations.Number;
-import configuration.SettingsUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.remindercore.enums.RepetitionType;
 
 import java.time.ZonedDateTime;
 

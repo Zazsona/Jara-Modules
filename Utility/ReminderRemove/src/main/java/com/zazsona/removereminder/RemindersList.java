@@ -1,7 +1,7 @@
-package com.Zazsona.RemindersList;
+package com.zazsona.removereminder;
 
-import com.Zazsona.ReminderCore.Reminder;
-import com.Zazsona.ReminderCore.ReminderManager;
+import com.zazsona.remindercore.Reminder;
+import com.zazsona.remindercore.ReminderManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.ArrayList;
