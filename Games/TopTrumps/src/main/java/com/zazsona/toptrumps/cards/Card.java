@@ -1,4 +1,4 @@
-package com.Zazsona.TopTrumps.cards;
+package com.zazsona.toptrumps.cards;
 
 import java.io.Serializable;
 

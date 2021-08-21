@@ -1,7 +1,7 @@
-package com.Zazsona.TopTrumpsBuilder;
+package com.zazsona.toptrumpsbuilder;
 
-import com.Zazsona.TopTrumpsBuilder.cards.Deck;
-import configuration.SettingsUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.toptrumpsbuilder.cards.Deck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

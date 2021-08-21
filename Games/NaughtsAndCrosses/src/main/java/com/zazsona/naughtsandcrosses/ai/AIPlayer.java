@@ -1,8 +1,8 @@
-package com.Zazsona.NaughtsAndCrosses.AI;
+package com.zazsona.naughtsandcrosses.ai;
 
-import com.Zazsona.NaughtsAndCrosses.NaughtsAndCrosses;
-import com.Zazsona.NaughtsAndCrosses.game.Board;
-import com.Zazsona.NaughtsAndCrosses.game.Counter;
+import com.zazsona.naughtsandcrosses.NaughtsAndCrosses;
+import com.zazsona.naughtsandcrosses.game.Board;
+import com.zazsona.naughtsandcrosses.game.Counter;
 
 public class AIPlayer
 {

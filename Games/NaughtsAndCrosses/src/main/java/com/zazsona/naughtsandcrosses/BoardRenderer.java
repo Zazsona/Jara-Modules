@@ -1,9 +1,9 @@
-package com.Zazsona.NaughtsAndCrosses;
+package com.zazsona.naughtsandcrosses;
 
-import com.Zazsona.NaughtsAndCrosses.game.Board;
-import com.Zazsona.NaughtsAndCrosses.game.Counter;
-import configuration.SettingsUtil;
-import jara.ModuleResourceLoader;
+import com.zazsona.jara.ModuleResourceLoader;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.naughtsandcrosses.game.Board;
+import com.zazsona.naughtsandcrosses.game.Counter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

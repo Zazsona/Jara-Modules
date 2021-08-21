@@ -1,8 +1,8 @@
-package com.Zazsona.TopTrumpsBuilder;
+package com.zazsona.toptrumpsbuilder;
 
-import com.Zazsona.TopTrumpsBuilder.cards.Deck;
-import commands.CmdUtil;
-import module.ModuleGameCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleGameCommand;
+import com.zazsona.toptrumpsbuilder.cards.Deck;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;

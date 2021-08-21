@@ -1,8 +1,7 @@
-package com.Zazsona.WordSearch;
+package com.zazsona.wordsearch;
 
-import configuration.SettingsUtil;
-import jara.ModuleResourceLoader;
-import org.slf4j.LoggerFactory;
+import com.zazsona.jara.ModuleResourceLoader;
+import com.zazsona.jara.configuration.SettingsUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

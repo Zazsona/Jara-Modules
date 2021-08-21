@@ -1,4 +1,4 @@
-package com.Zazsona.Trivia;
+package com.zazsona.trivia;
 
 public class TriviaJson
 {

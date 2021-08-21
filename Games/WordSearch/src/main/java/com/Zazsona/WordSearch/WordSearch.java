@@ -1,10 +1,10 @@
-package com.Zazsona.WordSearch;
+package com.zazsona.wordsearch;
 
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import exceptions.QuitException;
-import jara.MessageManager;
-import module.ModuleGameCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.exceptions.QuitException;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;

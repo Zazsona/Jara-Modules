@@ -1,4 +1,4 @@
-package com.Zazsona.NaughtsAndCrosses.AI;
+package com.zazsona.naughtsandcrosses.ai;
 
 import java.util.ArrayList;
 import java.util.List;

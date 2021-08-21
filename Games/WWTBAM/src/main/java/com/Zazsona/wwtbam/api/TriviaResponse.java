@@ -1,4 +1,4 @@
-package com.Zazsona.wwtbam.api;
+package com.zazsona.wwtbam.api;
 
 import java.util.Random;
 

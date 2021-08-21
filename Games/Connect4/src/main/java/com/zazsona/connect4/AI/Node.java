@@ -1,4 +1,4 @@
-package com.Zazsona.Connect4.AI;
+package com.zazsona.connect4.AI;
 
 public class Node
 {

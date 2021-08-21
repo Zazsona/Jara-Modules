@@ -1,8 +1,8 @@
-package com.Zazsona.NumberGuess;
+package com.zazsona.numberguess;
 
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleGameCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

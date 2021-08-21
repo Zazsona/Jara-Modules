@@ -1,7 +1,7 @@
 package com.Zazsona.VoteItOut.game;
 
-import configuration.SettingsUtil;
-import jara.Core;
+import com.zazsona.jara.Core;
+import com.zazsona.jara.configuration.SettingsUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

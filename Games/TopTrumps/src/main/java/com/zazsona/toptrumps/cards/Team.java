@@ -1,4 +1,4 @@
-package com.Zazsona.TopTrumps.cards;
+package com.zazsona.toptrumps.cards;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;

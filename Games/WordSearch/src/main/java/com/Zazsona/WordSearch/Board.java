@@ -1,8 +1,8 @@
-package com.Zazsona.WordSearch;
+package com.zazsona.wordsearch;
 
-import com.Zazsona.WordSearch.exception.InsufficientLengthException;
-import com.Zazsona.WordSearch.exception.SpaceReservedException;
-import commands.CmdUtil;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.wordsearch.exception.InsufficientLengthException;
+import com.zazsona.wordsearch.exception.SpaceReservedException;
 
 import java.io.IOException;
 import java.util.Random;

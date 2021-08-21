@@ -1,9 +1,10 @@
-package com.Zazsona.wwtbam;
+package com.zazsona.wwtbam;
 
-import com.Zazsona.wwtbam.api.TokenResponse;
-import com.Zazsona.wwtbam.api.TriviaResponse;
 import com.google.gson.Gson;
-import commands.CmdUtil;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.wwtbam.Trivia;
+import com.zazsona.wwtbam.api.TokenResponse;
+import com.zazsona.wwtbam.api.TriviaResponse;
 
 import java.util.ArrayList;
 import java.util.Random;

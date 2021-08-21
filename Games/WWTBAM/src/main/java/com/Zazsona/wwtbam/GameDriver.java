@@ -1,11 +1,11 @@
-package com.Zazsona.wwtbam;
+package com.zazsona.wwtbam;
 
-import com.Zazsona.wwtbam.lifelines.AskTheAudience;
-import com.Zazsona.wwtbam.lifelines.AskTheHost;
-import com.Zazsona.wwtbam.lifelines.FiftyFifty;
-import com.Zazsona.wwtbam.lifelines.PhoneAFriend;
-import configuration.SettingsUtil;
-import jara.MessageManager;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.wwtbam.lifelines.AskTheAudience;
+import com.zazsona.wwtbam.lifelines.AskTheHost;
+import com.zazsona.wwtbam.lifelines.FiftyFifty;
+import com.zazsona.wwtbam.lifelines.PhoneAFriend;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

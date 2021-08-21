@@ -1,8 +1,8 @@
-package com.Zazsona.ChooseYourOwnAdventure;
+package com.zazsona.chooseyourownadventure;
 
-import com.Zazsona.ChooseYourOwnAdventure.profile.ProfileManager;
-import com.Zazsona.ChooseYourOwnAdventure.story.StoryManager;
-import com.Zazsona.ChooseYourOwnAdventure.story.StoryNode;
+import com.zazsona.chooseyourownadventure.profile.ProfileManager;
+import com.zazsona.chooseyourownadventure.story.StoryManager;
+import com.zazsona.chooseyourownadventure.story.StoryNode;
 import com.zazsona.jara.MessageManager;
 import com.zazsona.jara.commands.CmdUtil;
 import com.zazsona.jara.configuration.SettingsUtil;

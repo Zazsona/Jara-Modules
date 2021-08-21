@@ -1,7 +1,7 @@
 package com.Zazsona.VoteItOut.game;
 
-import configuration.SettingsUtil;
-import jara.ModuleResourceLoader;
+import com.zazsona.jara.ModuleResourceLoader;
+import com.zazsona.jara.configuration.SettingsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

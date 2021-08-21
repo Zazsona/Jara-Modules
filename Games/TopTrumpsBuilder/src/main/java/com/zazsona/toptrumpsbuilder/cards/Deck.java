@@ -1,6 +1,4 @@
-package com.Zazsona.TopTrumpsBuilder.cards;
-
-import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
+package com.zazsona.toptrumpsbuilder.cards;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
@@ -103,10 +101,10 @@ public class Deck implements Serializable
      * Adds a card to the deck
      * @param card the card to add
      * @return true on success
-     * @throws DuplicateName a card with that name already exists in the deck
+     * @throws IllegalArgumentException a card with that name already exists in the deck
      * @throws IndexOutOfBoundsException the deck is full (30 cards)
      */
-    public boolean addCard(Card card) throws DuplicateName, IndexOutOfBoundsException
+    public boolean addCard(Card card) throws IllegalArgumentException, IndexOutOfBoundsException
     {
         if (cards.size() >= 30)
         {
@@ -116,7 +114,7 @@ public class Deck implements Serializable
         {
             if (existingCard.getName().equalsIgnoreCase(card.getName()))
             {
-                throw new DuplicateName("A card with this name already exists!");
+                throw new IllegalArgumentException("A card with this name already exists!");
             }
         }
         return cards.add(card);

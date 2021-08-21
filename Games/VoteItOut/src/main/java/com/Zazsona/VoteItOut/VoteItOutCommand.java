@@ -1,9 +1,9 @@
 package com.Zazsona.VoteItOut;
 
 import com.Zazsona.VoteItOut.game.VoteItOutGame;
-import commands.CmdUtil;
-import jara.Core;
-import module.ModuleGameCommand;
+import com.zazsona.jara.Core;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

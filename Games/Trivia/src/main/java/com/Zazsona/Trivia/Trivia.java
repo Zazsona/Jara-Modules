@@ -1,10 +1,10 @@
-package com.Zazsona.Trivia;
+package com.zazsona.trivia;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import commands.CmdUtil;
-import jara.MessageManager;
-import module.ModuleGameCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleGameCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

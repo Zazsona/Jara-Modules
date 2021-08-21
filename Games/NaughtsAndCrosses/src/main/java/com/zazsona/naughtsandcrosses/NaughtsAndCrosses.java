@@ -1,14 +1,13 @@
-package com.Zazsona.NaughtsAndCrosses;
+package com.zazsona.naughtsandcrosses;
 
-import com.Zazsona.NaughtsAndCrosses.AI.AIDifficulty;
-import com.Zazsona.NaughtsAndCrosses.AI.AIPlayer;
-import com.Zazsona.NaughtsAndCrosses.game.Board;
-import com.Zazsona.NaughtsAndCrosses.game.Counter;
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import exceptions.QuitException;
-import jara.MessageManager;
-import module.ModuleGameCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.exceptions.QuitException;
+import com.zazsona.jara.module.ModuleGameCommand;
+import com.zazsona.naughtsandcrosses.ai.AIDifficulty;
+import com.zazsona.naughtsandcrosses.ai.AIPlayer;
+import com.zazsona.naughtsandcrosses.game.Board;
+import com.zazsona.naughtsandcrosses.game.Counter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

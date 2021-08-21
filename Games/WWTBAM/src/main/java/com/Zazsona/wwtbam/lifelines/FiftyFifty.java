@@ -1,7 +1,7 @@
-package com.Zazsona.wwtbam.lifelines;
+package com.zazsona.wwtbam.lifelines;
 
-import com.Zazsona.wwtbam.TriviaDatabase;
-import com.Zazsona.wwtbam.Trivia;
+import com.zazsona.wwtbam.Trivia;
+import com.zazsona.wwtbam.TriviaDatabase;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class FiftyFifty

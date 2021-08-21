@@ -1,8 +1,8 @@
-package com.Zazsona.TopTrumps;
+package com.zazsona.toptrumps;
 
-import com.Zazsona.TopTrumps.cards.Card;
-import com.Zazsona.TopTrumps.cards.Deck;
-import configuration.SettingsUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.toptrumps.cards.Card;
+import com.zazsona.toptrumps.cards.Deck;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;

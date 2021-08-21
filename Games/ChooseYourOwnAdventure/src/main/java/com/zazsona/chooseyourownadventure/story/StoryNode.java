@@ -1,4 +1,4 @@
-package com.Zazsona.ChooseYourOwnAdventure.story;
+package com.zazsona.chooseyourownadventure.story;
 
 import java.io.Serializable;
 

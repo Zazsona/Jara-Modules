@@ -1,4 +1,4 @@
-package com.Zazsona.TopTrumpsBuilder.cards;
+package com.zazsona.toptrumpsbuilder.cards;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;

@@ -1,4 +1,4 @@
-package com.Zazsona.NaughtsAndCrosses.game;
+package com.zazsona.naughtsandcrosses.game;
 
 public class Board
 {

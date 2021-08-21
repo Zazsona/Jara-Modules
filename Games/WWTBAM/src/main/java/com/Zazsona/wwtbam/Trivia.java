@@ -1,8 +1,7 @@
-package com.Zazsona.wwtbam;
+package com.zazsona.wwtbam;
 
-import com.Zazsona.wwtbam.api.TriviaResponse;
+import com.zazsona.wwtbam.api.TriviaResponse;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.awt.*;

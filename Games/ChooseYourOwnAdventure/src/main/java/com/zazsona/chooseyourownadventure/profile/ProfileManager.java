@@ -1,4 +1,4 @@
-package com.Zazsona.ChooseYourOwnAdventure.profile;
+package com.zazsona.chooseyourownadventure.profile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProfileManager

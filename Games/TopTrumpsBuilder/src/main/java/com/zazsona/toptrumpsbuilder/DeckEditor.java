@@ -1,15 +1,14 @@
-package com.Zazsona.TopTrumpsBuilder;
+package com.zazsona.toptrumpsbuilder;
 
-import com.Zazsona.TopTrumpsBuilder.cards.Card;
-import com.Zazsona.TopTrumpsBuilder.cards.Deck;
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import jara.MessageManager;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.toptrumpsbuilder.cards.Card;
+import com.zazsona.toptrumpsbuilder.cards.Deck;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
 import java.security.InvalidParameterException;
 import java.util.concurrent.CancellationException;
 
@@ -275,7 +274,7 @@ public class DeckEditor
                 boolean success = deck.addCard(card);
             }
         }
-        catch (CancellationException | DuplicateName | IndexOutOfBoundsException e)
+        catch (CancellationException | IllegalArgumentException | IndexOutOfBoundsException e)
         {
             sendEmbed(e.getMessage());
         }
@@ -301,7 +300,7 @@ public class DeckEditor
                 deck.addCard(newCard);
             }
         }
-        catch (CancellationException | DuplicateName e)
+        catch (CancellationException | IllegalArgumentException e)
         {
             sendEmbed(e.getMessage());
         }

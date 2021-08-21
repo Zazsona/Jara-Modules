@@ -1,4 +1,4 @@
-package com.Zazsona.WordSearch.exception;
+package com.zazsona.wordsearch.exception;
 
 public class InsufficientLengthException extends Exception
 {

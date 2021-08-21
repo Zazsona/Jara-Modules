@@ -1,4 +1,4 @@
-package com.Zazsona.WordSearch;
+package com.zazsona.wordsearch;
 
 public class Word
 {

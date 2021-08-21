@@ -1,7 +1,7 @@
-package com.Zazsona.TopTrumps;
+package com.zazsona.toptrumps;
 
-import com.Zazsona.TopTrumps.cards.Card;
-import com.Zazsona.TopTrumps.cards.Deck;
+import com.zazsona.toptrumps.cards.Card;
+import com.zazsona.toptrumps.cards.Deck;
 
 public class AI
 {
