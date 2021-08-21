@@ -1,7 +1,8 @@
-package com.zazsona.quoterandom;
+package com.zazsona.quoterecall;
 
 import com.zazsona.jara.commands.CmdUtil;
 import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import com.zazsona.quote.FileManager;
 import com.zazsona.quote.Quote;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -12,7 +13,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class RecallQuote
+public class RecallQuote extends ModuleCommand
 {
 
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
@@ -36,7 +37,14 @@ public class RecallQuote
                 if (quote.attachmentUrl != null)
                 {
                     embed.setTitle(quote.name, quote.attachmentUrl);
-                    embed.setImage(quote.attachmentUrl);
+                    if (quote.attachmentUrl.endsWith(".png") || quote.attachmentUrl.endsWith(".jpg") || quote.attachmentUrl.endsWith(".gif"))
+                    {
+                        embed.setImage(quote.attachmentUrl);
+                    }
+                    else
+                    {
+                        embed.getDescriptionBuilder().append("\n\n").append(quote.attachmentUrl);
+                    }
                 }
             }
             else
@@ -45,6 +53,10 @@ public class RecallQuote
                 embed.setDescription("Error: Unable to locate quote.");
             }
             msgEvent.getChannel().sendMessage(embed.build()).queue();
+        }
+        else
+        {
+            CmdUtil.sendHelpInfo(msgEvent, getModuleAttributes().getKey());
         }
 
     }

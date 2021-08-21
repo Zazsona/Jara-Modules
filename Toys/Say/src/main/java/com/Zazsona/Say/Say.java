@@ -1,8 +1,7 @@
-package com.Zazsona.Say;
+package com.zazsona.say;
 
-import commands.CmdUtil;
-import module.ModuleCommand;
-import net.dv8tion.jda.api.EmbedBuilder;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

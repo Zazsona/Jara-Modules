@@ -1,8 +1,8 @@
-package com.Zazsona.WouldYouRather;
+package com.zazsona.wouldyourather;
 
 import com.google.gson.Gson;
-import commands.CmdUtil;
-import module.ModuleCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

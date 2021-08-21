@@ -1,8 +1,8 @@
-package com.Zazsona.QuoteDelete;
+package com.zazsona.quotedelete;
 
-import com.Zazsona.Quote.FileManager;
-import commands.CmdUtil;
-import module.ModuleCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
+import com.zazsona.quote.FileManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

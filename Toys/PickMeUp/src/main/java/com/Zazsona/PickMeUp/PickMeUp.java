@@ -1,7 +1,7 @@
-package com.Zazsona.PickMeUp;
+package com.zazsona.pickmeup;
 
-import commands.CmdUtil;
-import module.ModuleCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

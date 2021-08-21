@@ -1,8 +1,8 @@
-package com.Zazsona.QuoteRandom;
+package com.zazsona.quoterandom;
 
-import com.Zazsona.Quote.FileManager;
-import com.Zazsona.Quote.Quote;
-import module.ModuleCommand;
+import com.zazsona.jara.module.ModuleCommand;
+import com.zazsona.quote.FileManager;
+import com.zazsona.quote.Quote;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.ArrayList;

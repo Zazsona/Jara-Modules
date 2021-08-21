@@ -1,7 +1,7 @@
-package com.Zazsona.Timecard;
+package com.zazsona.timecard;
 
-import commands.CmdUtil;
-import module.ModuleCommand;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.module.ModuleCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

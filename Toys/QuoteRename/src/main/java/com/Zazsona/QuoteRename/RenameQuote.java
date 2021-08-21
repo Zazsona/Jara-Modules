@@ -1,11 +1,11 @@
-package com.Zazsona.QuoteRename;
+package com.zazsona.quoterename;
 
-import com.Zazsona.Quote.FileManager;
-import com.Zazsona.Quote.Quote;
-import commands.CmdUtil;
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleCommand;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.commands.CmdUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleCommand;
+import com.zazsona.quote.FileManager;
+import com.zazsona.quote.Quote;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

@@ -1,10 +1,9 @@
-package com.Zazsona.WouldYouRather;
+package com.zazsona.wouldyourather;
 
-import commands.admin.config.ConfigMain;
-import configuration.GuildSettings;
-import configuration.SettingsUtil;
-import jara.MessageManager;
-import module.ModuleConfig;
+import com.zazsona.jara.MessageManager;
+import com.zazsona.jara.configuration.GuildSettings;
+import com.zazsona.jara.configuration.SettingsUtil;
+import com.zazsona.jara.module.ModuleConfig;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;

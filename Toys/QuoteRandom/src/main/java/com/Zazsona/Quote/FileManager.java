@@ -1,9 +1,9 @@
-package com.Zazsona.Quote;
+package com.zazsona.quote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import configuration.SettingsUtil;
+import com.zazsona.jara.configuration.SettingsUtil;
 import net.dv8tion.jda.api.entities.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

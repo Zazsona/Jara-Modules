@@ -1,4 +1,4 @@
-package com.Zazsona.Quote;
+package com.zazsona.quote;
 
 import java.io.Serializable;
 
