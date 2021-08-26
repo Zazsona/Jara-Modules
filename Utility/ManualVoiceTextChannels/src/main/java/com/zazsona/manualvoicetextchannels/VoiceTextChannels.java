@@ -29,7 +29,7 @@ public class VoiceTextChannels extends ModuleCommand
                 {
                     TextChannel tc = (TextChannel) vc.getParent().createTextChannel("Text-"+vc.getName()).complete();
                     tc.putPermissionOverride(msgEvent.getGuild().getPublicRole()).setDeny(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
-                    sendScreenshareURL(vc.getGuild(), vc, tc);
+                    sendWelcomeMessage(vc.getGuild(), vc, tc);
                     voiceToTextChannel.put(vc.getId(), tc);
                     for (Member member : vc.getMembers())
                     {
@@ -140,16 +140,12 @@ public class VoiceTextChannels extends ModuleCommand
         }
     }
 
-    private void sendScreenshareURL(Guild guild, VoiceChannel vc, TextChannel tc)
+    private void sendWelcomeMessage(Guild guild, VoiceChannel vc, TextChannel tc)
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(guild.getSelfMember()));
         embed.setThumbnail("https://i.imgur.com/hvphthX.png");
-        embed.setDescription("Screenshare URL: https://discordapp.com/channels/"+guild.getId()+"/"+vc.getId());
-        Message ssMsg = tc.sendMessage(embed.build()).complete();
-        if (guild.getSelfMember().getPermissions().contains(Permission.MESSAGE_MANAGE) || tc.getPermissionOverride(guild.getSelfMember()).getAllowed().contains(Permission.MESSAGE_MANAGE))
-        {
-            ssMsg.pin().queue();
-        }
+        embed.setDescription("Welcome to the text channel for **"+vc.getName()+"**!\nAnyone joining the voice channel will automatically be added, and this channel will be deleted once everyone leaves.");
+        tc.sendMessage(embed.build()).queue();
     }
 }

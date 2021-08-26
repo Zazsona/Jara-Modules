@@ -44,7 +44,7 @@ public class VoiceTextChannelsLoader extends ModuleLoad
                             channel.createPermissionOverride(member).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
                         }
                     }
-                    sendScreenshareURL(event.getGuild(), event.getChannelJoined(), channel);
+                    sendWelcomeMessage(event.getGuild(), event.getChannelJoined(), channel);
                     voiceToTextChannel.put(event.getChannelJoined().getId(), channel);
                 }
             }
@@ -115,7 +115,7 @@ public class VoiceTextChannelsLoader extends ModuleLoad
                             channel.createPermissionOverride(member).setAllow(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE).queue();
                         }
                     }
-                    sendScreenshareURL(event.getGuild(), event.getChannelJoined(), channel);
+                    sendWelcomeMessage(event.getGuild(), event.getChannelJoined(), channel);
                     voiceToTextChannel.put(event.getChannelJoined().getId(), channel);
                 }
             }
@@ -132,17 +132,13 @@ public class VoiceTextChannelsLoader extends ModuleLoad
         }*/
     }
 
-    private void sendScreenshareURL(Guild guild, VoiceChannel vc, TextChannel tc)
+    private void sendWelcomeMessage(Guild guild, VoiceChannel vc, TextChannel tc)
     {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(CmdUtil.getHighlightColour(guild.getSelfMember()));
         embed.setThumbnail("https://i.imgur.com/hvphthX.png");
-        embed.setDescription("Screenshare URL: https://discordapp.com/channels/"+guild.getId()+"/"+vc.getId());
-        Message ssMsg = tc.sendMessage(embed.build()).complete();
-        if (guild.getSelfMember().getPermissions().contains(Permission.MESSAGE_MANAGE) || tc.getPermissionOverride(guild.getSelfMember()).getAllowed().contains(Permission.MESSAGE_MANAGE))
-        {
-            ssMsg.pin().queue();
-        }
+        embed.setDescription("Welcome to the text channel for **"+vc.getName()+"**!\nAnyone joining the voice channel will automatically be added, and this channel will be deleted once everyone leaves.");
+        tc.sendMessage(embed.build()).queue();
     }
 
     public static FileManager getFileManager()
