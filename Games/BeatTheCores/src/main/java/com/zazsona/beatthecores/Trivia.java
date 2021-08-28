@@ -16,7 +16,6 @@ public class Trivia
     private String[] answers;
     private int correctAnswerIndex;
     private int difficulty;
-    private int fiftyFiftyIndex = -1;
     private int questionNo;
 
     public Trivia(TriviaResponse.TriviaQuestion response, int questionNo)
@@ -105,7 +104,7 @@ public class Trivia
             return false;
     }
 
-    public boolean isAnswerValid(String answer) //TODO: Reject 50/50 ruleouts
+    public boolean isAnswerValid(String answer)
     {
         if (answer.toLowerCase().matches("option [1-"+answers.length+"]"))
         {
@@ -149,7 +148,7 @@ public class Trivia
     public EmbedBuilder getEmbed()
     {
         EmbedBuilder embed = new EmbedBuilder()
-                .setAuthor("Question "+(questionNo)+" - "+getCategory() + " || "+GameDriver.POUND_SIGN+getQuestionValue())
+                .setAuthor("Question "+(questionNo)+" - "+getCategory())
                 .setDescription(getQuestion());
         switch (difficulty)
         {
@@ -171,68 +170,13 @@ public class Trivia
         }
         for (int i = 0; i<answers.length; i++)
         {
-            if (fiftyFiftyIndex > -1 && (i != correctAnswerIndex && i != fiftyFiftyIndex))
-                embed.addField("~~Option "+(i+1)+"~~", "~~"+answers[i]+"~~", true);
-            else
-                embed.addField("Option "+(i+1), answers[i], true);
+            embed.addField("Option "+(i+1), answers[i], true);
         }
         return embed;
-    }
-
-    public void activateFiftyFifty()
-    {
-        Random r = new Random();
-        int remainingWrongAnswerIndex = r.nextInt(answers.length);
-        if (remainingWrongAnswerIndex != correctAnswerIndex)
-        {
-            fiftyFiftyIndex = remainingWrongAnswerIndex;
-        }
-        else
-        {
-            activateFiftyFifty();
-        }
     }
 
     public int getQuestionNo()
     {
         return questionNo;
-    }
-
-    public int getQuestionValue()
-    {
-        switch (questionNo)
-        {
-            case 1:
-                return 100;
-            case 2:
-                return 200;
-            case 3:
-                return 300;
-            case 4:
-                return 500;
-            case 5:
-                return 1000;
-            case 6:
-                return 2000;
-            case 7:
-                return 4000;
-            case 8:
-                return 8000;
-            case 9:
-                return 16000;
-            case 10:
-                return 32000;
-            case 11:
-                return 64000;
-            case 12:
-                return 125000;
-            case 13:
-                return 250000;
-            case 14:
-                return 500000;
-            case 15:
-                return 1000000;
-        }
-        return 0;
     }
 }
