@@ -1,0 +1,11 @@
+{
+  "key": "Millionaire",
+  "aliases": [
+    "WWTBAM",
+	"WhoWantsToBeAMillionaire",
+	"WhoWantsToBeAMillionaire?"
+  ],
+  "category": "GAMES",
+  "targetVersion": "0.1",
+  "description": "Who wants to be a millionaire?"
+}
