@@ -1,13 +1,13 @@
 package com.zazsona.beatthecores;
 
-public class CoreChallengeBet
+public class CoreChallengeOffer
 {
     private int coreCount;
     private int coreTime;
     private int playerTime;
     private int prizeCash;
 
-    public CoreChallengeBet(int coreCount, int coreTime, int playerTime, int prizeCash)
+    public CoreChallengeOffer(int coreCount, int coreTime, int playerTime, int prizeCash)
     {
         this.coreCount = coreCount;
         this.coreTime = coreTime;
