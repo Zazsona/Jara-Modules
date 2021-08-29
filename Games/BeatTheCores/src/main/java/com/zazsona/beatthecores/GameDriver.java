@@ -9,11 +9,14 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.awt.*;
+import java.lang.management.ManagementFactory;
+import java.sql.Time;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.TimeoutException;
 
 public class GameDriver
 {
@@ -55,8 +58,7 @@ public class GameDriver
             {
                 CoreChallengeOffer[] offers = getChallengeOffers(cashBuilderPerformance);
                 CoreChallengeOffer selectedOffer = selectOffer(offers);
-                // TODO: ADD TIMER.
-                runCoreChallengeQuestions(selectedOffer);
+                boolean isPlayerWin = runCoreChallengeQuestions(selectedOffer);
             }
             else
                 endGame(false);
@@ -64,6 +66,10 @@ public class GameDriver
         catch (CancellationException e)
         {
             endGame(true);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -178,12 +184,12 @@ public class GameDriver
         }
     }
 
-    private void runCoreChallengeQuestions(CoreChallengeOffer offer) throws CancellationException
+    private boolean runCoreChallengeQuestions(CoreChallengeOffer offer) throws CancellationException, InterruptedException
     {
+        boolean isPlayerTurn = true;
         try
         {
             Random r = new Random();
-            boolean isPlayerTurn = true;
             int questionNo = 0;
 
             float minCorrectChance = 0.33f;
@@ -192,16 +198,24 @@ public class GameDriver
             float step = (maxCorrectChance - minCorrectChance) / coresRange;
             float coresCorrectChance = minCorrectChance + ((offer.getCoreCount() - minCores) * step);
 
+            ChallengeTimer challengeTimer = new ChallengeTimer(offer.getPlayerTime() * 1000, offer.getCoreTime() * 1000);
+            challengeTimer.setTimerMode(true);
+            challengeTimer.start();
             while (true)
             {
+                challengeTimer.setTimerMode(isPlayerTurn);
+                long remainingTime = (isPlayerTurn) ? challengeTimer.getRemainingPlayerTimeMs() : challengeTimer.getRemainingCoresTimeMs();
                 questionNo++;
                 DifficultyLevel difficultyLevel = (r.nextBoolean()) ? DifficultyLevel.EASY : DifficultyLevel.MEDIUM;
                 Trivia trivia = triviaDatabase.getTrivia(questionNo, difficultyLevel);
                 EmbedBuilder triviaEmbed = trivia.getEmbed().setColor(Color.RED);
+                triviaEmbed.setTitle(String.format("Time: %ds", remainingTime / 1000));
                 channel.sendMessage(triviaEmbed.build()).complete();
                 if (isPlayerTurn)
                 {
-                    Message msg = mm.getNextMessage(channel, player);
+                    Message msg = mm.getNextMessage(channel, player, (int) challengeTimer.getRemainingPlayerTimeMs()); // TODO: I should definitely change this to take a long in Jara core. Why on Earth is it an int!? Should be fine for now though.
+                    if (msg == null)
+                        throw new TimeoutException();
                     String answer = msg.getContentDisplay().trim();
                     if (answer.equalsIgnoreCase("quit") || answer.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
                         throw new CancellationException("Game quit.");
@@ -213,7 +227,7 @@ public class GameDriver
                         if (correct)
                         {
                             EmbedBuilder embedBuilder = getEmbedStyle();
-                            embedBuilder.setDescription(String.format("Correct! **Cores** are up!"));
+                            embedBuilder.setDescription(String.format("Correct! **Cores** are up with **%ds** on the clock!", (challengeTimer.getRemainingCoresTimeMs() / 1000)));
                             channel.sendMessage(embedBuilder.build()).complete();
                             isPlayerTurn = false;
                         }
@@ -222,15 +236,22 @@ public class GameDriver
                 else
                 {
                     int questionWordCount = trivia.getQuestion().split(" ").length + trivia.getAnswers().length;
-                    float averageHumanWordsPerSecond = 3.75f;
+                    float averageHumanWordsPerSecond = 5.0f;
                     int readingTime = Math.round(questionWordCount / averageHumanWordsPerSecond) * 1000; // Milliseconds for the average human to read the question
-                    Thread.sleep(readingTime);
+                    boolean timeout = challengeTimer.getRemainingCoresTimeMs() <= readingTime;
+                    if (timeout)
+                    {
+                        Thread.sleep(challengeTimer.getRemainingCoresTimeMs());
+                        throw new TimeoutException();
+                    }
+                    else
+                        Thread.sleep(readingTime);
                     float correctRoll = r.nextFloat();
                     if (correctRoll < coresCorrectChance)
                     {
                         channel.sendMessage(trivia.getCorrectAnswer()).complete();
                         EmbedBuilder embedBuilder = getEmbedStyle();
-                        embedBuilder.setDescription(String.format("Correct! **%s** is up!", player.getEffectiveName()));
+                        embedBuilder.setDescription(String.format("Correct! **%s** is up with **%ds** on the clock!", player.getEffectiveName(), (challengeTimer.getRemainingPlayerTimeMs() / 1000)));
                         channel.sendMessage(embedBuilder.build()).complete();
                         isPlayerTurn = true;
                     }
@@ -253,9 +274,13 @@ public class GameDriver
                 }
             }
         }
-        catch (InterruptedException e)
+        catch (TimeoutException e)
         {
-            e.printStackTrace();
+            if (!isPlayerTurn)
+                channel.sendMessage(getEmbedStyle().setDescription(String.format("The Cores have run out of time!\n**%s** has won **%s%d**!", player.getEffectiveName(), POUND_SIGN, offer.getPrizeCash())).build()).queue();
+            else
+                channel.sendMessage(getEmbedStyle().setDescription(String.format("%s has run out of time!\n**The Cores** are the winners!", player.getEffectiveName())).build()).queue();
+            return !isPlayerTurn;
         }
     }
 

@@ -153,17 +153,14 @@ public class Trivia
         switch (difficulty)
         {
             case 1:
-                embed.setTitle("Easy");
                 embed.setThumbnail("https://i.imgur.com/M0axget.png");
                 embed.setColor(Color.decode("#38BC23"));
                 break;
             case 2:
-                embed.setTitle("Medium");
                 embed.setThumbnail("https://i.imgur.com/IlYb9PC.png");
                 embed.setColor(Color.decode("#247AAF"));
                 break;
             case 3:
-                embed.setTitle("Hard");
                 embed.setThumbnail("https://i.imgur.com/0hdxuiX.png");
                 embed.setColor(Color.decode("#FF2626"));
                 break;
