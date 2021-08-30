@@ -1,11 +1,9 @@
 {
-  "key": "Millionaire",
+  "key": "BeatTheCores",
   "aliases": [
-    "WWTBAM",
-	"WhoWantsToBeAMillionaire",
-	"WhoWantsToBeAMillionaire?"
+    "BTC"
   ],
   "category": "GAMES",
   "targetVersion": "0.1",
-  "description": "Who wants to be a millionaire?"
+  "description": "Put your brain to the metal."
 }

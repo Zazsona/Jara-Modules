@@ -1,3 +1,3 @@
 {
-  "description": "Climb the trivia ladder to see if you can reach one million!"
+  "description": "Build up some cash and bet it against a trivia challenge offer from multiple CPU cores. The more cores the harder the challenge - But don't get too cocky!\n\nThis game starts with up to five trivia to build up some cash. The more cash you get, the higher the offers you will receive.\nEach offer sets the amount of cash you can win, as well as how many cores you'll be taking on and how much time they have on their clock. The more cores the smarter they'll be!\nChallenging the cores forms a turn-based trivia round. Get a question correct to switch turns and stop your clock. Get a question wrong though, and the trivia will stick with you and your clock will keep counting down. Have the cores run out of time to win!"
 }
