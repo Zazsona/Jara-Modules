@@ -1,9 +1,0 @@
-{
-  "key": "Kazoo",
-  "aliases": [
-    "Kazood"
-    ],
-  "category": "AUDIO",
-  "targetVersion": "0.1",
-  "description": "Plays the kazoo."
-}
