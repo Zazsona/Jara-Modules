@@ -26,11 +26,11 @@ public class Report extends ModuleCommand
         reportSB.append("Version: ").append(Core.getVersion()).append("\n");
         reportSB.append("Uptime: ").append(CmdUtil.formatMillisecondsToHhMmSs(ManagementFactory.getRuntimeMXBean().getUptime())).append("\n");
         reportSB.append("DateTime: ").append(OffsetDateTime.now(guildSettings.getTimeZoneId()).format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"))).append(" (").append(guildSettings.getTimeZoneId().getDisplayName(TextStyle.NARROW_STANDALONE, Locale.ENGLISH)).append(")\n");
-        reportSB.append("Shard: ").append(msgEvent.getJDA().getShardInfo().getShardId()).append("/").append(msgEvent.getJDA().getShardInfo().getShardTotal()).append("\n");
+        reportSB.append("Shard Id: ").append(msgEvent.getJDA().getShardInfo().getShardId()).append(" (Total: ").append(msgEvent.getJDA().getShardInfo().getShardTotal()).append(")\n");
         reportSB.append("Server: ").append(msgEvent.getGuild().getName()).append("\n");
         reportSB.append("Channel: #").append(msgEvent.getChannel().getName()).append("\n");
         reportSB.append("Ping: ").append(msgEvent.getGuild().getJDA().getRestPing().complete()).append("ms\n");
-        reportSB.append("Command Author: ").append(msgEvent.getAuthor().getName()).append("#").append(msgEvent.getAuthor().getDiscriminator());
+        reportSB.append("Command User: ").append(msgEvent.getAuthor().getName()).append("#").append(msgEvent.getAuthor().getDiscriminator());
         if (msgEvent.getMember().getNickname() != null)
         {
             reportSB.append(" (").append(msgEvent.getMember().getNickname()).append(")");   //Display guild specific nickname, too.
