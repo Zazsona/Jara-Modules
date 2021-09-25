@@ -8,16 +8,21 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Random;
 
 public class PokemonCommand extends ModuleGameCommand
 {
+    private static HashMap<String, Integer> userIdToCaptureStreak;
 
     @Override
     public void run(GuildMessageReceivedEvent msgEvent, String... parameters)
     {
         try
         {
+            if (userIdToCaptureStreak == null)
+                userIdToCaptureStreak = new HashMap<>();
+
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(CmdUtil.getHighlightColour(msgEvent.getGuild().getSelfMember()));
 
@@ -39,13 +44,23 @@ public class PokemonCommand extends ModuleGameCommand
             embed.setThumbnail("https://i.imgur.com/wXSYWpN.png");
             embed.setImage(null);
             Message msgAnswer = new MessageManager().getNextMessage(msgEvent.getChannel());
+
+            String userId = msgEvent.getMember().getId();
+            int captureStreak = (userIdToCaptureStreak.containsKey(userId)) ? userIdToCaptureStreak.get(userId) : 0;
             if (msgAnswer.getContentDisplay().toLowerCase().contains(pokemon[dexNo].toLowerCase()))
             {
-                embed.setDescription("Gotcha! It's #"+dexNoStr+", "+pokemon[dexNo]+"!");
+                captureStreak++;
+                embed.getDescriptionBuilder().append("Gotcha! It's #"+dexNoStr+", "+pokemon[dexNo]+"!");
+                if (captureStreak > 1)
+                    embed.getDescriptionBuilder().append("\n").append("_Capture Streak: ").append(captureStreak).append("_");
+                userIdToCaptureStreak.put(userId, captureStreak);
             }
             else
             {
                 embed.setDescription("Sorry, it's #"+dexNoStr+", "+pokemon[dexNo]+".");
+                if (captureStreak > 1)
+                    embed.getDescriptionBuilder().append("\n").append("_Lost Streak: ").append(captureStreak).append("_");
+                userIdToCaptureStreak.remove(userId);
             }
             msgEvent.getChannel().sendMessage(embed.build()).queue();
         }
