@@ -213,8 +213,10 @@ public class GameDriver
                 channel.sendMessage(triviaEmbed.build()).complete();
                 if (isPlayerTurn)
                 {
+                    if (challengeTimer.getRemainingPlayerTimeMs() <= 0) // Just in case the time runs out while sending the trivia embed...
+                        throw new TimeoutException();
                     Message msg = mm.getNextMessage(channel, player, (int) challengeTimer.getRemainingPlayerTimeMs()); // TODO: I should definitely change this to take a long in Jara core. Why on Earth is it an int!? Should be fine for now though.
-                    if (msg == null)
+                    if (msg == null || challengeTimer.getRemainingPlayerTimeMs() <= 0)
                         throw new TimeoutException();
                     String answer = msg.getContentDisplay().trim();
                     if (answer.equalsIgnoreCase("quit") || answer.equalsIgnoreCase(SettingsUtil.getGuildCommandPrefix(channel.getGuild().getId())+"quit"))
